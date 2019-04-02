@@ -59,17 +59,30 @@ public class LoginController implements Initializable {
 		{
 			 try {
 				 	User U=us.connect(login.getText());
-				 	//System.out.println(U.getRoles());
-				 	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/frontIndex.fxml"));   
-				 	Parent front = fxmlLoader.load();          
-				 	FrontIndexController controller = fxmlLoader.<FrontIndexController>getController();
-				 	controller.setUser(U);
-				 	
-	                Scene scene = new Scene(front);
+                                        if(U.getRoles()=="admin")
+                                        {
+                                            
+				 	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/backIndex.fxml"));   
+				 	Parent back = fxmlLoader.load();
+                                        Scene scene = new Scene(back);
 	               
 	                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 	                stage.show();
 	                stage.setScene(scene);
+                                        }
+                                        else {
+				 	//System.out.println(U.getRoles());
+				 	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/frontIndex.fxml"));   
+				 	Parent front = fxmlLoader.load();          
+				 	FrontIndexController controller = fxmlLoader.<FrontIndexController>getController();
+				 	controller.setUser(U);Scene scene = new Scene(front);
+	               
+	                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+	                stage.show();
+	                stage.setScene(scene);
+                                        }
+				 	
+	                
 	                
 	            } catch (IOException ex) {
 	                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
@@ -78,8 +91,7 @@ public class LoginController implements Initializable {
 		else
 		{
                         errot.setText("Verifier vos données");
-			errot.setVisible(true);
-                        
+			errot.setVisible(true); 
 		}
     }
     
