@@ -13,7 +13,7 @@ public class Connexion {
 	private Connexion() {
 		try {
 			con=DriverManager.getConnection(url,name,password);
-			System.out.println("connexion établie");
+			System.out.println("connexion etablie");
 		}
 		catch (SQLException ex)
 		{
