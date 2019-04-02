@@ -89,7 +89,7 @@
                                     <Font size="96.0" />
                                  </font>
                               </Label>
-                              <ListView layoutX="594.0" layoutY="219.0" prefHeight="540.0" prefWidth="330.0" />
+                              <ListView fx:id="listRec" layoutX="594.0" layoutY="219.0" onMouseClicked="#remplirChamps" prefHeight="540.0" prefWidth="330.0" />
                               <Label layoutX="685.0" layoutY="170.0" text="Mes Réclamations">
                                  <font>
                                     <Font size="19.0" />

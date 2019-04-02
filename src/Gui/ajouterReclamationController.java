@@ -15,6 +15,8 @@ import java.util.ResourceBundle;
 import Entities.Reclamation;
 import Entities.User;
 import Services.ReclamationService;
+import java.text.DateFormat;
+import java.util.Iterator;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,11 +24,13 @@ import javafx.collections.ObservableList;
 
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 
 import javafx.scene.layout.AnchorPane;
 
@@ -62,6 +66,8 @@ public class ajouterReclamationController implements Initializable
         private Button espaceRec;
         @FXML
         private Label userName;
+        @FXML
+        private ListView<Reclamation> listRec;
 	
 	public User getUser() {
 		return user;
@@ -73,18 +79,12 @@ public class ajouterReclamationController implements Initializable
 	@Override
 	public void initialize(URL url, ResourceBundle rb) 
 	{
-
-           // date_col.setCellValueFactory(new PropertyValueFactory<>("date"));
-           // img_col.setCellValueFactory(new PropertyValueFactory<>("image"));
-           // real_col.setCellValueFactory(new PropertyValueFactory<>("realisateur")); 
-           // ObservableList<article> oblist=FXCollections.observableArrayList();
-
-		   
 		Platform.runLater(() -> {
 			ObservableList<String> list = FXCollections.observableArrayList();
 			ReclamationService r= new ReclamationService();
 			list=r.getusersreclamer(user.getId());	
 			userReclamer.setItems(list);
+                        afficherReclamations();
 	    });
 		
 	}
@@ -106,7 +106,7 @@ public class ajouterReclamationController implements Initializable
 	{
 		ObservableList<String> list = FXCollections.observableArrayList();
 		ReclamationService r= new ReclamationService();
-		list=r.getDateuserreclamer(userReclamer.getValue().toString(),serviceRendu.getValue().toString());
+		list=r.getDateuserreclamer(userReclamer.getValue(),serviceRendu.getValue());
 		dateService.setItems(list);
 	}
 	
@@ -125,7 +125,36 @@ public class ajouterReclamationController implements Initializable
 		java.sql.Date dateReclamation = new java.sql.Date(localdate.getTime());
 		Reclamation rec = new Reclamation(motif.getText(),description.getText(),userReclameId,userId,dateReclamation,0,0,0,serviceId,dateRealisation);
 		recServ.ajouterRaclamation(rec);
-		
-		
+                afficherReclamations();
 	}
+        
+        public void afficherReclamations()
+        {
+            ReclamationService r= new ReclamationService();
+            ObservableList<Reclamation> list = FXCollections.observableArrayList();
+            list=r.afficherReclamation();
+            listRec.setItems(list);
+        }
+
+    @FXML
+    private void remplirChamps(MouseEvent event) {
+     
+        ReclamationService recServ= new ReclamationService();
+        
+        if(event.getClickCount()==2)
+        {
+            Reclamation rec= new Reclamation();
+            rec= listRec.getSelectionModel().getSelectedItem();
+            motif.setText(rec.getObjet());
+            description.setText(rec.getDescription());
+            String userReclamerName=recServ.getUserName(rec.getUserReclame());
+            userReclamer.setValue(userReclamerName);
+            String serviceName=recServ.getServiceName(rec.getIdServiceRealise());
+            serviceRendu.setValue(serviceName);
+            String dateRealisation = rec.getDateRealisation().toString();
+	    dateService.setValue(dateRealisation);
+        }
+            
+        
+    }
 }

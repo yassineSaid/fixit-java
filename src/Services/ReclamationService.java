@@ -160,17 +160,18 @@ public class ReclamationService
 		 }
 		 return -1;	 
 	 }
-        public ObservableList<Reclamation> getDateuserreclamer()
+        public ObservableList<Reclamation> afficherReclamation()
         {
             try
             {
-                Reclamation rec = new Reclamation();
+                
                 ObservableList<Reclamation> list = FXCollections.observableArrayList();
 		// to correct idUserDemandeur -> idUserOffreur
 		PreparedStatement pt=c.prepareStatement("Select * From Reclamation");
                 ResultSet rs= pt.executeQuery();
                 while(rs.next())
                 {
+                    Reclamation rec = new Reclamation();
                     rec.setObjet(rs.getString("Object"));
                     rec.setDescription(rs.getString("Description"));
                     rec.setUserReclame(rs.getInt("userreclame"));
@@ -179,9 +180,8 @@ public class ReclamationService
                     rec.setSeen(rs.getInt("seen"));
                     rec.setTraite(rs.getInt("Traite"));
                     rec.setArchive(rs.getInt("archive"));
-                    rec.setDateRealisation(rs.getDate("datRealisation"));
+                    rec.setDateRealisation(rs.getDate("dateRealisation"));
                     rec.setIdServiceRealise(rs.getInt("idServiceRealise"));
-                    
                     list.add(rec);
                 }
                  return list;
@@ -193,7 +193,45 @@ public class ReclamationService
             }
             return null;
         }
-         
+        
+        public String getUserName(int userId)
+        {
+            try
+            {
+                PreparedStatement pt=c.prepareStatement("SELECT userName from User where id=?");
+                pt.setInt(1, userId);
+                ResultSet rs= pt.executeQuery();
+                while(rs.next())
+                {
+                    return rs.getString("username");
+                }
+            }
+            catch(SQLException ex)
+            {
+                System.out.println(ex);
+            }       
+            return "aaa";
+        }
+        
+        
+        public String getServiceName(int serviceId)
+        {
+            try
+            {
+                PreparedStatement pt=c.prepareStatement("SELECT Nom from Service where id=?");
+                pt.setInt(1, serviceId);
+                ResultSet rs= pt.executeQuery();
+                while(rs.next())
+                {
+                    return rs.getString("Nom");
+                }
+            }
+            catch(SQLException ex)
+            {
+                System.out.println(ex);
+            }       
+            return "aaa";
+        }
          
 	 
 }

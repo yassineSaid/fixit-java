@@ -78,8 +78,7 @@ public class LoginController implements Initializable {
 		else
 		{
                         errot.setText("Verifier vos données");
-			errot.setVisible(true);
-                        
+			errot.setVisible(true); 
 		}
     }
     

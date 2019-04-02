@@ -42,10 +42,7 @@ public class Reclamation
 
 	@Override
 	public String toString() {
-		return "Reclamation [id=" + id + ", objet=" + objet + ", description=" + description + ", userReclame="
-				+ userReclame + ", userReclamant=" + userReclamant + ", dateReclamation=" + dateReclamation + ", seen="
-				+ seen + ", traite=" + traite + ", archive=" + archive + ", idServiceRealise=" + idServiceRealise
-				+ ", dateRealisation=" + dateRealisation + "]";
+		return dateReclamation+"\n"+objet+ "\n" +description;
 	}
 
 	public int getId()
