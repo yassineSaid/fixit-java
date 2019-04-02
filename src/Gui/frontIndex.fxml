@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.effect.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="1000.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.FrontIndexController">
+   <children>
+      <ImageView fitHeight="897.0" fitWidth="903.0" layoutX="345.0" layoutY="79.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.1;">
+         <image>
+            <Image url="@../Resources/marker.png" />
+         </image>
+      </ImageView>
+      <AnchorPane prefHeight="1000.0" prefWidth="284.0" style="-fx-background-color: #00AB47;">
+         <children>
+            <Button fx:id="espaceServ" layoutX="59.0" layoutY="292.0" mnemonicParsing="false" onAction="#espaceServAction" prefHeight="25.0" prefWidth="127.0" text="Espace Service" />
+            <Button fx:id="espaceOut" layoutX="59.0" layoutY="395.0" mnemonicParsing="false" onAction="#espaceOutAction" prefHeight="25.0" prefWidth="127.0" text="Espace Outils" />
+            <Button fx:id="espaceProd" layoutX="59.0" layoutY="487.0" mnemonicParsing="false" onAction="#espaceProdAction" prefHeight="25.0" prefWidth="127.0" text="Espace Produit" />
+            <Button fx:id="espaceRec" layoutX="44.0" layoutY="595.0" mnemonicParsing="false" onAction="#espaceRecAction" prefHeight="31.0" prefWidth="157.0" text="Espace Reclamation" />
+            <Button layoutX="59.0" layoutY="692.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="127.0" text="Espace Annonce" />
+            <Label layoutX="44.0" layoutY="60.0" prefHeight="141.0" prefWidth="240.0" text="    FIX" textAlignment="RIGHT" textFill="WHITE">
+               <font>
+                  <Font size="96.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <Label layoutX="265.0" layoutY="59.0" prefHeight="143.0" prefWidth="142.0" text=" IT" textAlignment="RIGHT" textFill="#00ab47">
+         <font>
+            <Font size="96.0" />
+         </font>
+      </Label>
+      <AnchorPane layoutX="284.0" prefHeight="10.0" prefWidth="1018.0" style="-fx-background-color: #4B4B4B;">
+         <children>
+            <Label fx:id="userName" layoutX="638.0" layoutY="2.0" prefHeight="54.0" prefWidth="372.0" text="Mustapha Belhaj" textFill="WHITE">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
