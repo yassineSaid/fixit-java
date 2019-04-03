@@ -28,12 +28,16 @@ import javafx.stage.Stage;
  */
 public class BackIndexController implements Initializable {
 
+    @FXML
+    private Button espaceOutil;
+
+    
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
     }    
       @FXML
     private Button service;
@@ -54,7 +58,26 @@ public class BackIndexController implements Initializable {
             stage.setScene(scene);
             
         } catch (IOException ex) {
+            System.out.println(ex);
+        }
+    }
+
+    @FXML
+    private void espaceOutil(ActionEvent event) {
+         try {
+			
+		 			 
+		 	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/EspaceOutilBack.fxml"));   
+		 	Parent Rec = fxmlLoader.load();         
+                        Scene scene = new Scene(Rec);
+           
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.show();
+            stage.setScene(scene);
+            
+        } catch (IOException ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex);
         }
     }
 private User user;

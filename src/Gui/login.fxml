@@ -7,42 +7,41 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
-<AnchorPane id="AnchorPane" prefHeight="1000.0" prefWidth="1300.0" style="-fx-background-color: #00AB47;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.LoginController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1300.0" style="-fx-background-color: #00AB47;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.LoginController">
    <children>
-      <AnchorPane layoutX="721.0" layoutY="104.0" prefHeight="800.0" prefWidth="547.0" style="-fx-background-color: #FFFFFF;">
+      <AnchorPane layoutX="702.0" layoutY="59.0" prefHeight="650.0" prefWidth="547.0" style="-fx-background-color: #FFFFFF;">
          <children>
-            <Button fx:id="connexion" layoutX="173.0" layoutY="651.0" mnemonicParsing="false" onAction="#connexionAction" prefHeight="47.0" prefWidth="140.0" text="Login" />
-            <TextField fx:id="login" layoutX="124.0" layoutY="400.0" prefHeight="47.0" prefWidth="336.0" promptText="Login" />
+            <Button fx:id="connexion" layoutX="196.0" layoutY="561.0" mnemonicParsing="false" onAction="#connexionAction" prefHeight="47.0" prefWidth="140.0" text="Login" />
+            <TextField fx:id="login" layoutX="98.0" layoutY="343.0" prefHeight="47.0" prefWidth="336.0" promptText="Login" />
             <Label layoutX="161.0" layoutY="268.0" prefHeight="56.0" prefWidth="240.0" text="Se connecter" textFill="#00ab47">
                <font>
                   <Font size="33.0" />
                </font>
             </Label>
-            <PasswordField fx:id="password" layoutX="124.0" layoutY="469.0" prefHeight="47.0" prefWidth="336.0" promptText="Password" />
-            <Label fx:id="errot" layoutX="124.0" layoutY="589.0" prefHeight="35.0" prefWidth="292.0" text="Label" textFill="RED">
+            <PasswordField fx:id="password" layoutX="98.0" layoutY="412.0" prefHeight="47.0" prefWidth="336.0" promptText="Password" />
+            <Label fx:id="errot" alignment="CENTER" layoutX="98.0" layoutY="500.0" prefHeight="35.0" prefWidth="336.0" text="Label" textFill="RED">
                <font>
                   <Font size="21.0" />
                </font>
             </Label>
-            <ImageView fitHeight="194.0" fitWidth="198.0" layoutX="161.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="194.0" fitWidth="198.0" layoutX="173.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Resources/marker.png" />
                </image>
             </ImageView>
          </children>
       </AnchorPane>
-      <Label layoutX="89.0" layoutY="132.0" prefHeight="252.0" prefWidth="547.0" text="Bienvenue sur" textAlignment="CENTER" textFill="WHITE">
+      <Label alignment="CENTER" layoutX="40.0" layoutY="21.0" prefHeight="252.0" prefWidth="547.0" text="Bienvenue sur" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font size="80.0" />
          </font>
       </Label>
-      <Label layoutX="189.0" layoutY="371.0" prefHeight="194.0" prefWidth="388.0" text="FIXIT" textFill="WHITE">
+      <Label alignment="CENTER" layoutX="120.0" layoutY="219.0" prefHeight="194.0" prefWidth="388.0" text="FIXIT" textFill="WHITE">
          <font>
             <Font size="120.0" />
          </font>
       </Label>
-      <ImageView fitHeight="293.0" fitWidth="272.0" layoutX="189.0" layoutY="570.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="293.0" fitWidth="272.0" layoutX="178.0" layoutY="429.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Resources/marker.png" />
          </image>
