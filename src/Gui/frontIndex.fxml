@@ -8,7 +8,6 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane id="AnchorPane" prefHeight="1000.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.FrontIndexController">
 
 <AnchorPane id="frontIndex" prefHeight="1000.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.FrontIndexController">
 
@@ -20,12 +19,6 @@
       </ImageView>
       <AnchorPane prefHeight="1000.0" prefWidth="284.0" style="-fx-background-color: #00AB47;">
          <children>
-
-            <Button fx:id="espaceServ" layoutX="-1.0" layoutY="292.0" mnemonicParsing="false" onAction="#espaceServAction" prefHeight="66.0" prefWidth="284.0" text="Espace Service" />
-            <Button fx:id="espaceOut" layoutX="-1.0" layoutY="391.0" mnemonicParsing="false" onAction="#espaceOutAction" prefHeight="66.0" prefWidth="284.0" text="Espace Outils" />
-            <Button fx:id="espaceProd" layoutY="483.0" mnemonicParsing="false" onAction="#espaceProdAction" prefHeight="66.0" prefWidth="284.0" text="Espace Produit" />
-            <Button fx:id="espaceRec" layoutY="592.0" mnemonicParsing="false" onAction="#espaceRecAction" prefHeight="66.0" prefWidth="284.0" text="Espace Reclamation" />
-            <Button layoutX="-1.0" layoutY="692.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="284.0" text="Espace Annonce" />
 
             <Button fx:id="espaceServ" layoutX="79.0" layoutY="404.0" mnemonicParsing="false" onAction="#espaceServAction" prefHeight="25.0" prefWidth="127.0" text="Espace Service" />
             <Button fx:id="espaceOut" layoutX="79.0" layoutY="464.0" mnemonicParsing="false" onAction="#espaceOutAction" prefHeight="25.0" prefWidth="127.0" text="Espace Outils" />
@@ -40,7 +33,6 @@
                </font>
             </Label>
 
-            <Button fx:id="espaceAvis" layoutX="-1.0" layoutY="784.0" mnemonicParsing="false" onAction="#noterAction" prefHeight="66.0" prefWidth="284.0" text="Noter l'application" />
 
             <ImageView fx:id="photo" fitHeight="211.0" fitWidth="200.0" layoutX="42.0" layoutY="133.0" pickOnBounds="true" preserveRatio="true">
                <image>

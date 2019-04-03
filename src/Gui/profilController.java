@@ -1,6 +1,7 @@
 package Gui;
 
 import Entities.User;
+import Services.UserService;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
@@ -65,7 +66,9 @@ public class profilController implements Initializable {
     }    
     @FXML
     private void modifierAction(ActionEvent event) {
-        
+        System.out.println("clicked");
+        UserService us=new UserService();
+        us.modifierNomPrenom(user, nom.getText(), prenom.getText());
     }
     
 }

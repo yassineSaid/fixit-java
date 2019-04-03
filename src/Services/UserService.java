@@ -58,8 +58,19 @@ public class UserService {
 		}
 		return null;
 	}
-        public void modifierNomPrenom()
+        public void modifierNomPrenom(User U,String nom,String prenom)
         {
-            
+            try
+		{
+			PreparedStatement pt=C.prepareStatement("UPDATE user SET firstname=?,lastname=? WHERE id=?");
+			pt.setString(1, nom);
+			pt.setString(2, prenom);
+			pt.setInt(3, U.getId());
+			pt.execute();
+		} catch (SQLException e) {
+                    System.out.println(e.getCause());
+			e.printStackTrace();
+		}
+            //return U;
         }
 }

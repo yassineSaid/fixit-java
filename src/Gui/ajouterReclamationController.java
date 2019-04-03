@@ -97,7 +97,7 @@ public class ajouterReclamationController implements Initializable
 
                         frontIndexController.setUser(user);
                         frontIndexController.initialize(null, null);
-			ObservableList<String> list = FXCollections.observableArrayList();
+			//ObservableList<String> list = FXCollections.observableArrayList();
 
 			ReclamationService r= new ReclamationService();
 			list=r.getusersreclamer(user.getId());	

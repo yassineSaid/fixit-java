@@ -145,9 +145,6 @@ public class FrontIndexController implements Initializable {
 
 
     @FXML
-    private void noterAction(ActionEvent event) {
-
-    @FXML
     private void profilAction(ActionEvent event) {
         try {
 			
