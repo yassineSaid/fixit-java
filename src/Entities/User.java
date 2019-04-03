@@ -2,7 +2,7 @@ package Entities;
 
 public class User {
 	private int id;
-	private String email,username,firstname,lastname,roles;
+	private String email,username,firstname,lastname,roles,image;
 	public int getId() {
 		return id;
 	}
@@ -39,6 +39,14 @@ public class User {
 	public void setRoles(String role) {
 		this.roles = role;
 	}
+        public String getImage() {
+            return image;
+        }
+
+        public void setImage(String image) {
+            this.image = image;
+        }
+        
 
         @Override
         public String toString() {
