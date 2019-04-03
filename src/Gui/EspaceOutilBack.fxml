@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" style="-fx-background-color: #CCCCCC;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.BackIndexController">
+<AnchorPane id="AnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" style="-fx-background-color: #CCCCCC;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.EspaceOutilBackController">
    <children>
       <AnchorPane prefHeight="700.0" prefWidth="263.0" style="-fx-background-color: #9F9F9F;">
          <children>
@@ -18,7 +18,7 @@
                </image>
             </ImageView>
             <Button layoutX="12.0" layoutY="188.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="234.0" text="Espace Service" />
-            <Button fx:id="espaceOutil" layoutX="13.0" layoutY="274.0" mnemonicParsing="false" onAction="#espaceOutil" prefHeight="51.0" prefWidth="234.0" text="Espace Outils" />
+            <Button layoutX="13.0" layoutY="274.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="234.0" text="Espace Outils" />
             <Button layoutX="15.0" layoutY="354.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="234.0" text="Espace Produits" />
             <Button layoutX="15.0" layoutY="429.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="234.0" text="Espace Réclamations" />
             <Button layoutX="15.0" layoutY="500.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="234.0" text="Espace Paiement" />
@@ -35,5 +35,12 @@
             <Font size="52.0" />
          </font>
       </Label>
+      <TableView fx:id="table" layoutX="348.0" layoutY="208.0" prefHeight="379.0" prefWidth="566.0">
+        <columns>
+          <TableColumn fx:id="id" prefWidth="75.0" text="id" />
+          <TableColumn fx:id="nom" prefWidth="75.0" text="nom" />
+            <TableColumn fx:id="logo" prefWidth="75.0" text="logo" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>

@@ -34,6 +34,20 @@ public class Outil {
     }
     public Outil() {
     }
+
+    public Outil(int id, String nom, int quantite, int dureeMaximale, int prix, String adresse, int codePostal, String ville, String image, int idCategorieOutils) {
+        this.id = id;
+        this.nom = nom;
+        this.quantite = quantite;
+        this.dureeMaximale = dureeMaximale;
+        this.prix = prix;
+        this.adresse = adresse;
+        this.codePostal = codePostal;
+        this.ville = ville;
+        this.image = image;
+        this.idCategorieOutils = idCategorieOutils;
+    }
+    
     
     
 

@@ -18,6 +18,13 @@ public class CategorieOutil {
         this.nom = nom;
         this.logo = logo;
     }
+
+    public CategorieOutil(int id, String nom, String logo) {
+        this.id = id;
+        this.nom = nom;
+        this.logo = logo;
+    }
+    
     public CategorieOutil() {
     }
     
