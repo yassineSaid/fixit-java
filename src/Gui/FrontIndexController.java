@@ -6,6 +6,7 @@
 package Gui;
 
 import Entities.User;
+import Services.Utils;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -59,7 +60,8 @@ public class FrontIndexController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Platform.runLater(() -> {
-	    	userName.setText(user.getFirstname()+" "+user.getLastname());
+                if(user!=null)
+                    userName.setText(Utils.upperCaseFirst(user.getFirstname())+" "+Utils.upperCaseFirst(user.getLastname()));
 	    });
     }    
 
@@ -77,6 +79,25 @@ public class FrontIndexController implements Initializable {
 
     @FXML
     private void espaceRecAction(ActionEvent event) {
+        try {
+			
+		 			 
+		 	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/ajouterReclamation.fxml"));   
+		 	Parent Rec = fxmlLoader.load();          
+		 	ajouterReclamationController controller = fxmlLoader.<ajouterReclamationController>getController();
+		 	controller.setUser(this.getUser());
+                        Scene scene = new Scene(Rec);
+           
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.show();
+            stage.setScene(scene);
+            
+        } catch (IOException ex) {
+            System.out.println(ex);
+        }
+    }
+    @FXML
+    private void profilAction(ActionEvent event) {
         try {
 			
 		 			 

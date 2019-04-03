@@ -37,6 +37,8 @@ import javafx.scene.layout.AnchorPane;
 public class ajouterReclamationController implements Initializable 
 {
 	@FXML
+	private FrontIndexController frontIndexController;
+	@FXML
 	private Tab interfaceAjout;
 	@FXML
 	private TabPane Tabwidget;
@@ -80,6 +82,8 @@ public class ajouterReclamationController implements Initializable
 	public void initialize(URL url, ResourceBundle rb) 
 	{
 		Platform.runLater(() -> {
+                        frontIndexController.setUser(user);
+                        frontIndexController.initialize(null, null);
 			ObservableList<String> list = FXCollections.observableArrayList();
 			ReclamationService r= new ReclamationService();
 			list=r.getusersreclamer(user.getId());	
