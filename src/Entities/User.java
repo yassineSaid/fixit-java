@@ -40,5 +40,11 @@ public class User {
 		this.roles = role;
 	}
 
+        @Override
+        public String toString() {
+            return username;
+        }
+        
+
 	
 }

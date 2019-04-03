@@ -42,6 +42,8 @@ public class FrontIndexController implements Initializable {
     private Label userName;
     
     private User user;
+    @FXML
+    private Button espaceAvis;
 	
 	
 	public User getUser() {
@@ -93,6 +95,10 @@ public class FrontIndexController implements Initializable {
         } catch (IOException ex) {
             System.out.println(ex);
         }
+    }
+
+    @FXML
+    private void noterAction(ActionEvent event) {
     }
     
 }
