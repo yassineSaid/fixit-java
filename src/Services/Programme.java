@@ -1,5 +1,6 @@
 package Services;
 
+import Entities.categorie_produit;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -37,6 +38,7 @@ public class Programme extends Application {
 	}
 	public static void main(String[] args) throws ParseException {
 		launch(args);
+                
 	}
 
 }
