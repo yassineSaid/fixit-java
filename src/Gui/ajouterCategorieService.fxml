@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" style="-fx-background-color: #CCCCCC;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.AjouterCategorieServiceController">
+    <children>
+        <fx:include fx:id="backIndex" source="backIndex.fxml" />
+      <ImageView fitHeight="541.0" fitWidth="694.0" layoutX="569.0" layoutY="116.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.2;">
+         <image>
+            <Image url="@../Resources/marker.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="629.0" layoutY="41.0" prefHeight="51.0" prefWidth="469.0" text="Bienvenue sur FIXIT" textFill="#00ab47">
+         <font>
+            <Font size="52.0" />
+         </font>
+      </Label>
+      <TabPane layoutX="263.0" layoutY="116.0" prefHeight="586.0" prefWidth="1039.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Liste des Catégories">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="categorie" layoutX="54.0" layoutY="23.0" prefHeight="384.0" prefWidth="845.0">
+                          <columns>
+                              <TableColumn fx:id="idCatAff" prefWidth="79.0" text="id" />
+                            <TableColumn fx:id="nomCatAff" onEditCommit="#modifierNom" prefWidth="201.0" text="nom" />
+                              <TableColumn fx:id="descriptionCatAff" prefWidth="382.0" text="description" />
+                          </columns>
+                        </TableView>
+                        <Button fx:id="supprimer" layoutX="924.0" layoutY="62.0" mnemonicParsing="false" onAction="#supprimer" prefHeight="25.0" prefWidth="79.0" text="supprimer" />
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Ajouter une Catégorie">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="25.0" layoutY="122.0" prefHeight="36.0" prefWidth="94.0" text="Nom ">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="nomCat" layoutX="141.0" layoutY="120.0" prefHeight="39.0" prefWidth="286.0" />
+                        <Label layoutX="25.0" layoutY="194.0" prefHeight="36.0" prefWidth="131.0" text="Description">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="ajoutCat" layoutX="242.0" layoutY="419.0" mnemonicParsing="false" onAction="#ajouterCat" prefHeight="30.0" prefWidth="84.0" text="Ajouter" />
+                        <TextArea fx:id="descriptionCat" layoutX="141.0" layoutY="194.0" prefHeight="200.0" prefWidth="286.0" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>
