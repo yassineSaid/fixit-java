@@ -45,6 +45,7 @@ public class UserService {
 				U.setLastname(rs.getString("lastname"));
 				U.setId(rs.getInt("id"));
 				U.setUsername(rs.getString("username"));
+				U.setImage(rs.getString("image"));
 				if (rs.getString("roles").contains("ADMIN"))
 					U.setRoles("admin");
 				else
@@ -57,4 +58,19 @@ public class UserService {
 		}
 		return null;
 	}
+        public void modifierNomPrenom(User U,String nom,String prenom)
+        {
+            try
+		{
+			PreparedStatement pt=C.prepareStatement("UPDATE user SET firstname=?,lastname=? WHERE id=?");
+			pt.setString(1, prenom);
+			pt.setString(2, nom);
+			pt.setInt(3, U.getId());
+			pt.execute();
+		} catch (SQLException e) {
+                    System.out.println(e.getCause());
+			e.printStackTrace();
+		}
+            //return U;
+        }
 }
