@@ -7,6 +7,9 @@ package Gui;
 
 import Entities.User;
 import Services.Utils;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -22,6 +25,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 /**
@@ -41,6 +46,8 @@ public class FrontIndexController implements Initializable {
     private Button espaceRec;
     @FXML
     private Label userName;
+    @FXML
+    private ImageView photo;
     
     private User user;
 	
@@ -61,10 +68,47 @@ public class FrontIndexController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         Platform.runLater(() -> {
                 if(user!=null)
+                {
                     userName.setText(Utils.upperCaseFirst(user.getFirstname())+" "+Utils.upperCaseFirst(user.getLastname()));
+                    loadImage();
+                    
+                }
+                    
+                
 	    });
     }    
+    @FXML
+    private void loadImage()
+    {
+        File currDir = new File(System.getProperty("user.dir", "."));
+        System.out.println(currDir.toPath().getRoot().toString());
+        String path="file:"+currDir.toPath().getRoot().toString()+"wamp64\\www\\fixit\\web\\uploads\\images\\user\\"+user.getImage();
+        Image image = new Image(path);  
+        photo.setImage(image);
+        Image img = photo.getImage();
+        if (img != null) {
+            double w = 0;
+            double h = 0;
 
+            double ratioX = photo.getFitWidth() / img.getWidth();
+            double ratioY = photo.getFitHeight() / img.getHeight();
+
+            double reducCoeff = 0;
+            if(ratioX >= ratioY) {
+                reducCoeff = ratioY;
+            } else {
+                reducCoeff = ratioX;
+            }
+
+            w = img.getWidth() * reducCoeff;
+            h = img.getHeight() * reducCoeff;
+
+            photo.setX((photo.getFitWidth() - w) / 2);
+            photo.setY((photo.getFitHeight() - h) / 2);
+
+        }
+    }
+    
     @FXML
     private void espaceServAction(ActionEvent event) {
     }
@@ -101,9 +145,9 @@ public class FrontIndexController implements Initializable {
         try {
 			
 		 			 
-		 	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/ajouterReclamation.fxml"));   
+		 	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/profil.fxml"));   
 		 	Parent Rec = fxmlLoader.load();          
-		 	ajouterReclamationController controller = fxmlLoader.<ajouterReclamationController>getController();
+		 	profilController controller = fxmlLoader.<profilController>getController();
 		 	controller.setUser(this.getUser());
                         Scene scene = new Scene(Rec);
            

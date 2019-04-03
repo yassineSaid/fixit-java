@@ -45,6 +45,7 @@ public class UserService {
 				U.setLastname(rs.getString("lastname"));
 				U.setId(rs.getInt("id"));
 				U.setUsername(rs.getString("username"));
+				U.setImage(rs.getString("image"));
 				if (rs.getString("roles").contains("ADMIN"))
 					U.setRoles("admin");
 				else
@@ -57,4 +58,8 @@ public class UserService {
 		}
 		return null;
 	}
+        public void modifierNomPrenom()
+        {
+            
+        }
 }
