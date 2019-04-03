@@ -63,8 +63,8 @@ public class UserService {
             try
 		{
 			PreparedStatement pt=C.prepareStatement("UPDATE user SET firstname=?,lastname=? WHERE id=?");
-			pt.setString(1, nom);
-			pt.setString(2, prenom);
+			pt.setString(1, prenom);
+			pt.setString(2, nom);
 			pt.setInt(3, U.getId());
 			pt.execute();
 		} catch (SQLException e) {

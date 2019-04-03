@@ -69,6 +69,10 @@ public class profilController implements Initializable {
         System.out.println("clicked");
         UserService us=new UserService();
         us.modifierNomPrenom(user, nom.getText(), prenom.getText());
+        user=us.connect(user.getUsername());
+        frontIndexController.setUser(user);
+        frontIndexController.initialize(null, null);
+     
     }
     
 }
