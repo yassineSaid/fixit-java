@@ -60,6 +60,7 @@ public class AvisFrontController implements Initializable {
             AvisService avisSer = new AvisService();
             avis = avisSer.getUserAvis(this.getUser().getId());
             System.out.println(avis.getId());
+            frontIndexController.getEspaceAvis().setStyle("-fx-background-color: #f4f4f4");
             if (avis == null) {
                 ObservableList<String> list = FXCollections.observableArrayList("Non Satisfait", "Moyennement Satisfait", "Totalement Satisfait");
                 satisfaction.setItems(list);
