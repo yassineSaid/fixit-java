@@ -9,10 +9,10 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.StackPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.profilController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="690.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.profilController">
    <children>
       <fx:include fx:id="frontIndex" source="frontIndex.fxml" />
-      <AnchorPane layoutX="294.0" layoutY="66.0" prefHeight="935.0" prefWidth="1307.0" />
+      <AnchorPane layoutX="294.0" layoutY="66.0" prefHeight="690.0" prefWidth="1300.0" />
       <TabPane fx:id="Tabwidget" layoutX="284.0" prefHeight="760.0" prefWidth="1016.0" tabClosingPolicy="UNAVAILABLE">
          <tabs>
             <Tab fx:id="interfaceAjout" text="Profil">

@@ -8,9 +8,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="backIndex" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1300.0" style="-fx-background-color: #CCCCCC;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.BackIndexController">
+<AnchorPane id="backIndex" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="690.0" prefWidth="1300.0" style="-fx-background-color: #CCCCCC;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.BackIndexController">
    <children>
-      <AnchorPane prefHeight="700.0" prefWidth="263.0" style="-fx-background-color: #9F9F9F;">
+      <AnchorPane prefHeight="690.0" prefWidth="263.0" style="-fx-background-color: #9F9F9F;">
          <children>
             <ImageView fitHeight="158.0" fitWidth="131.0" layoutX="61.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                <image>
