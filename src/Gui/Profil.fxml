@@ -67,10 +67,32 @@
                               <Font size="19.0" />
                            </font>
                         </Label>
-                        <ImageView fx:id="photo" fitHeight="214.0" fitWidth="200.0" layoutX="696.0" layoutY="216.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="photo" fitHeight="214.0" fitWidth="200.0" layoutX="635.0" layoutY="216.0" pickOnBounds="true" preserveRatio="true" />
                      </children>
                   </AnchorPane>
                </content>
+            </Tab>
+            <Tab text="Langues parlées">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" stylesheets="@../Resources/style.css">
+                     <children>
+                        <TableView fx:id="table" layoutX="36.0" layoutY="250.0" prefHeight="399.0" prefWidth="566.0">
+                          <columns>
+                            <TableColumn fx:id="langue" prefWidth="344.0" text="Langue" />
+                              <TableColumn fx:id="supprimer" prefWidth="221.0" style="-fx-alignment: CENTER;" text="Action" />
+                          </columns>
+                        </TableView>
+                        <Separator layoutX="245.0" layoutY="151.0" prefHeight="15.0" prefWidth="528.0" />
+                        <Label layoutX="357.0" layoutY="115.0" text="Modifez les langues que vous parlez">
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="listLangues" layoutX="36.0" layoutY="193.0" prefHeight="31.0" prefWidth="227.0" promptText="Sélectionnez une langue" />
+                        <Button fx:id="ajouter" layoutX="300.0" layoutY="193.0" mnemonicParsing="false" onAction="#ajouterAction" prefHeight="31.0" prefWidth="152.0" text="Ajouter" />
+                     </children>
+                  </AnchorPane>
+              </content>
             </Tab>
          </tabs>
       </TabPane>
