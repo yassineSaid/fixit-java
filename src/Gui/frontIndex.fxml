@@ -59,7 +59,10 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Button fx:id="espaceAvis" layoutX="79.0" layoutY="715.0" mnemonicParsing="false" onAction="#espaceAvisAction" text="Espace Avis" />
+            <Button fx:id="espaceAvis" layoutY="640.0" mnemonicParsing="false" onAction="#espaceAvisAction" prefHeight="50.0" prefWidth="284.0" styleClass="menuButton" stylesheets="@../Resources/style.css" text="Espace Avis">
+               <font>
+                  <Font name="Calibri Bold" size="20.0" />
+               </font></Button>
 
          </children>
       </AnchorPane>

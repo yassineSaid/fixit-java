@@ -57,28 +57,25 @@ public class AvisFrontController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         Platform.runLater(() -> {
             Avis avis = new Avis();
-            AvisService avisSer= new AvisService();
-            avis=avisSer.getUserAvis(this.getUser().getId());
+            AvisService avisSer = new AvisService();
+            avis = avisSer.getUserAvis(this.getUser().getId());
             System.out.println(avis.getId());
-            if(avis==null)
-            {
-                ObservableList<String> list = FXCollections.observableArrayList("Non Satisfait","Moyennement Satisfait","Totalement Satisfait");
-             satisfaction.setItems(list);
+            if (avis == null) {
+                ObservableList<String> list = FXCollections.observableArrayList("Non Satisfait", "Moyennement Satisfait", "Totalement Satisfait");
+                satisfaction.setItems(list);
                 modifier_note.setVisible(false);
                 rating.setRating(0.0);
                 frontIndexController.setUser(user);
                 frontIndexController.initialize(null, null);
-            }
-            else
-            {
+            } else {
                 noter.setVisible(false);
                 modifier_note.setVisible(true);
-                rating.setRating((double)avis.getNote());
+                rating.setRating((double) avis.getNote());
                 satisfaction.setValue(avis.getSatisfaction());
                 description.setText(avis.getDescription());
             }
-             
-	    });
+
+        });
     }    
 
     @FXML
