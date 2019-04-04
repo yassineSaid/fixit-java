@@ -31,7 +31,7 @@
                           <columns>
                               <TableColumn fx:id="idCatAff" prefWidth="79.0" text="id" />
                             <TableColumn fx:id="nomCatAff" onEditCommit="#modifierNom" prefWidth="201.0" text="nom" />
-                              <TableColumn fx:id="descriptionCatAff" prefWidth="382.0" text="description" />
+                              <TableColumn fx:id="descriptionCatAff" onEditCommit="#modifierDescription" prefWidth="382.0" text="description" />
                           </columns>
                         </TableView>
                         <Button fx:id="supprimer" layoutX="924.0" layoutY="62.0" mnemonicParsing="false" onAction="#supprimer" prefHeight="25.0" prefWidth="79.0" text="supprimer" />

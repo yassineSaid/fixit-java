@@ -29,6 +29,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 
 /**
  * FXML Controller class
@@ -73,7 +74,9 @@ public class AjouterCategorieServiceController implements Initializable {
     idCatAff.setCellValueFactory(new PropertyValueFactory<>("id"));
     nomCatAff.setCellValueFactory(new PropertyValueFactory<>("nom"));
     descriptionCatAff.setCellValueFactory(new PropertyValueFactory<>("description"));
-    
+    categorie.setEditable(true);
+    nomCatAff.setCellFactory(TextFieldTableCell.forTableColumn());
+    descriptionCatAff.setCellFactory(TextFieldTableCell.forTableColumn());
     categorie.setItems(null);
     categorie.setItems(data);
            }
@@ -113,13 +116,28 @@ public class AjouterCategorieServiceController implements Initializable {
 
     @FXML
     private void modifierNom(TableColumn.CellEditEvent<CategorieService, String> event) {
+        categorie.setEditable(true);
         CategorieServiceService cs = new CategorieServiceService();
         CategorieService cat=categorie.getSelectionModel().getSelectedItem();
         cat.setNom(event.getNewValue());
+        cs.modifierCategorie(cat);
         
       this.initialize(null, null);
         
     }
+
+
+    @FXML
+    private void modifierDescription(TableColumn.CellEditEvent<CategorieService, String> event) {
+        categorie.setEditable(true);
+        CategorieServiceService cs = new CategorieServiceService();
+        CategorieService cat=categorie.getSelectionModel().getSelectedItem();
+        cat.setDescription(event.getNewValue());
+        cs.modifierCategorie(cat);
+        
+      this.initialize(null, null);
+    }
+
 
   
 
