@@ -52,6 +52,8 @@ public class FrontIndexController implements Initializable {
     private User user;
     @FXML
     private Button espaceAvis;
+    @FXML
+    private Button profil;
 	
 	
 	public User getUser() {
@@ -79,7 +81,6 @@ public class FrontIndexController implements Initializable {
                 
 	    });
     }    
-    @FXML
     private void loadImage()
     {
         File currDir = new File(System.getProperty("user.dir", "."));
@@ -164,5 +165,26 @@ public class FrontIndexController implements Initializable {
         }
 
     }
+
+    @FXML
+    private void espaceAvisAction(ActionEvent event) {
+         try {
+			
+		 			 
+		 	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/avisFront.fxml"));   
+		 	Parent Rec = fxmlLoader.load();          
+		 	AvisFrontController controller = fxmlLoader.<AvisFrontController>getController();
+		 	controller.setUser(this.getUser());
+                        Scene scene = new Scene(Rec);
+           
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.show();
+            stage.setScene(scene);
+            
+        } catch (IOException ex) {
+            System.out.println(ex);
+        }
+    }
+    
     
 }

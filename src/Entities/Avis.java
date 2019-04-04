@@ -10,8 +10,30 @@ public class Avis
 	private String description;
 	private int note;
 	private String satisfaction;
-	private int idUser;
+	private User user;
+
+        public Avis(int id, String description, int note, String satisfaction, User user) {
+            this.id = id;
+            this.description = description;
+            this.note = note;
+            this.satisfaction = satisfaction;
+            this.user = user;
+        }
+
+    public Avis(String description, int note, String satisfaction, User user) {
+        this.description = description;
+        this.note = note;
+        this.satisfaction = satisfaction;
+        this.user = user;
+    }
+
+    public Avis() {
+    }
+        
+        
 	
+        
+        
 	
 	public int getId()
 	{
@@ -59,16 +81,15 @@ public class Avis
 	{
 		this.satisfaction = satisfaction;
 	}
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 	
 	
-	public int getIdUser()
-	{
-		return idUser;
-	}
 	
-	
-	public void setIdUser(int idUser)
-	{
-		this.idUser = idUser;
-	}
 }
