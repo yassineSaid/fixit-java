@@ -23,12 +23,30 @@
       <AnchorPane prefHeight="760.0" prefWidth="284.0" style="-fx-background-color: #00AB47;">
          <children>
 
-            <Button fx:id="espaceServ" layoutX="79.0" layoutY="344.0" mnemonicParsing="false" onAction="#espaceServAction" prefHeight="25.0" prefWidth="127.0" text="Espace Service" />
-            <Button fx:id="espaceOut" layoutX="79.0" layoutY="404.0" mnemonicParsing="false" onAction="#espaceOutAction" prefHeight="25.0" prefWidth="127.0" text="Espace Outils" />
-            <Button fx:id="espaceProd" layoutX="79.0" layoutY="472.0" mnemonicParsing="false" onAction="#espaceProdAction" prefHeight="25.0" prefWidth="127.0" text="Espace Produit" />
-            <Button fx:id="espaceRec" layoutX="65.0" layoutY="533.0" mnemonicParsing="false" onAction="#espaceRecAction" prefHeight="31.0" prefWidth="157.0" text="Espace Reclamation" />
-            <Button layoutX="79.0" layoutY="600.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="127.0" text="Espace Annonce" />
-            <Button fx:id="profil" layoutX="79.0" layoutY="672.0" mnemonicParsing="false" onAction="#profilAction" prefHeight="25.0" prefWidth="127.0" text="Profil" />
+            <Button fx:id="espaceServ" layoutY="340.0" mnemonicParsing="false" onAction="#espaceServAction" prefHeight="50.0" prefWidth="284.0" styleClass="menuButton" stylesheets="@../Resources/style.css" text="Espace Service">
+               <font>
+                  <Font name="Calibri Bold" size="20.0" />
+               </font></Button>
+            <Button fx:id="espaceOut" layoutY="390.0" mnemonicParsing="false" onAction="#espaceOutAction" prefHeight="50.0" prefWidth="284.0" styleClass="menuButton" stylesheets="@../Resources/style.css" text="Espace Outils">
+               <font>
+                  <Font name="Calibri Bold" size="20.0" />
+               </font></Button>
+            <Button fx:id="espaceProd" layoutY="440.0" mnemonicParsing="false" onAction="#espaceProdAction" prefHeight="50.0" prefWidth="284.0" styleClass="menuButton" stylesheets="@../Resources/style.css" text="Espace Produit">
+               <font>
+                  <Font name="Calibri Bold" size="20.0" />
+               </font></Button>
+            <Button fx:id="espaceRec" layoutY="490.0" mnemonicParsing="false" onAction="#espaceRecAction" prefHeight="50.0" prefWidth="284.0" styleClass="menuButton" stylesheets="@../Resources/style.css" text="Espace Reclamation">
+               <font>
+                  <Font name="Calibri Bold" size="20.0" />
+               </font></Button>
+            <Button layoutY="540.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="284.0" styleClass="menuButton" stylesheets="@../Resources/style.css" text="Espace Annonce">
+               <font>
+                  <Font name="Calibri Bold" size="20.0" />
+               </font></Button>
+            <Button fx:id="profil" layoutY="590.0" mnemonicParsing="false" onAction="#profilAction" prefHeight="50.0" prefWidth="284.0" styleClass="menuButton" stylesheets="@../Resources/style.css" text="Profil">
+               <font>
+                  <Font name="Calibri Bold" size="20.0" />
+               </font></Button>
             <Label alignment="CENTER_RIGHT" layoutX="41.0" layoutY="26.0" prefHeight="77.0" prefWidth="240.0" text="    FIX" textAlignment="RIGHT" textFill="WHITE">
 
                <font>

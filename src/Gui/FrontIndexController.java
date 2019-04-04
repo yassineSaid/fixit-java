@@ -48,69 +48,117 @@ public class FrontIndexController implements Initializable {
     private Label userName;
     @FXML
     private ImageView photo;
-    
+
     private User user;
     @FXML
     private Button espaceAvis;
-	
-	
-	public User getUser() {
-		return user;
-	}
+    @FXML
+    private Button profil;
 
+    public User getUser() {
+        return user;
+    }
 
-	public void setUser(User user) {
-		this.user = user;
-	}
-        
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Button getEspaceServ() {
+        return espaceServ;
+    }
+
+    public void setEspaceServ(Button espaceServ) {
+        this.espaceServ = espaceServ;
+    }
+
+    public Button getEspaceOut() {
+        return espaceOut;
+    }
+
+    public void setEspaceOut(Button espaceOut) {
+        this.espaceOut = espaceOut;
+    }
+
+    public Button getEspaceProd() {
+        return espaceProd;
+    }
+
+    public void setEspaceProd(Button espaceProd) {
+        this.espaceProd = espaceProd;
+    }
+
+    public Button getEspaceRec() {
+        return espaceRec;
+    }
+
+    public void setEspaceRec(Button espaceRec) {
+        this.espaceRec = espaceRec;
+    }
+
+    public Button getEspaceAvis() {
+        return espaceAvis;
+    }
+
+    public void setEspaceAvis(Button espaceAvis) {
+        this.espaceAvis = espaceAvis;
+    }
+
+    public Button getProfil() {
+        return profil;
+    }
+
+    public void setProfil(Button profil) {
+        this.profil = profil;
+    }
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Platform.runLater(() -> {
-                if(user!=null)
-                {
-                    userName.setText(Utils.upperCaseFirst(user.getFirstname())+" "+Utils.upperCaseFirst(user.getLastname()));
-                    loadImage();
-                    
-                }
-                    
-                
-	    });
-    }    
-    @FXML
-    private void loadImage()
-    {
-        File currDir = new File(System.getProperty("user.dir", "."));
-        System.out.println(currDir.toPath().getRoot().toString());
-        String path="file:"+currDir.toPath().getRoot().toString()+"wamp64\\www\\fixit\\web\\uploads\\images\\user\\"+user.getImage();
-        Image image = new Image(path);  
-        photo.setImage(image);
-        Image img = photo.getImage();
-        if (img != null) {
-            double w = 0;
-            double h = 0;
+            if (user != null) {
+                userName.setText(Utils.upperCaseFirst(user.getFirstname()) + " " + Utils.upperCaseFirst(user.getLastname()));
+                loadImage();
 
-            double ratioX = photo.getFitWidth() / img.getWidth();
-            double ratioY = photo.getFitHeight() / img.getHeight();
-
-            double reducCoeff = 0;
-            if(ratioX >= ratioY) {
-                reducCoeff = ratioY;
-            } else {
-                reducCoeff = ratioX;
             }
 
-            w = img.getWidth() * reducCoeff;
-            h = img.getHeight() * reducCoeff;
+        });
+    }
 
-            photo.setX((photo.getFitWidth() - w) / 2);
-            photo.setY((photo.getFitHeight() - h) / 2);
+    @FXML
+    private void loadImage() {
+        File currDir = new File(System.getProperty("user.dir", "."));
+        System.out.println(currDir.toPath().getRoot().toString());
+        if (user.getImage() != null) {
+            String path = "file:" + currDir.toPath().getRoot().toString() + "wamp64\\www\\fixit\\web\\uploads\\images\\user\\" + user.getImage();
+            Image image = new Image(path);
+            photo.setImage(image);
+            Image img = photo.getImage();
+            if (img != null) {
+                double w = 0;
+                double h = 0;
 
+                double ratioX = photo.getFitWidth() / img.getWidth();
+                double ratioY = photo.getFitHeight() / img.getHeight();
+
+                double reducCoeff = 0;
+                if (ratioX >= ratioY) {
+                    reducCoeff = ratioY;
+                } else {
+                    reducCoeff = ratioX;
+                }
+
+                w = img.getWidth() * reducCoeff;
+                h = img.getHeight() * reducCoeff;
+
+                photo.setX((photo.getFitWidth() - w) / 2);
+                photo.setY((photo.getFitHeight() - h) / 2);
+
+            }
         }
     }
-    
+
     @FXML
     private void espaceServAction(ActionEvent event) {
     }
@@ -126,43 +174,40 @@ public class FrontIndexController implements Initializable {
     @FXML
     private void espaceRecAction(ActionEvent event) {
         try {
-			
-		 			 
-		 	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/ajouterReclamation.fxml"));   
-		 	Parent Rec = fxmlLoader.load();          
-		 	ajouterReclamationController controller = fxmlLoader.<ajouterReclamationController>getController();
-		 	controller.setUser(this.getUser());
-                        Scene scene = new Scene(Rec);
-           
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/ajouterReclamation.fxml"));
+            Parent Rec = fxmlLoader.load();
+            ajouterReclamationController controller = fxmlLoader.<ajouterReclamationController>getController();
+            controller.setUser(this.getUser());
+            Scene scene = new Scene(Rec);
+
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.show();
             stage.setScene(scene);
-            
+
         } catch (IOException ex) {
             System.out.println(ex);
         }
     }
-
 
     @FXML
     private void profilAction(ActionEvent event) {
         try {
-			
-		 			 
-		 	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/profil.fxml"));   
-		 	Parent Rec = fxmlLoader.load();          
-		 	profilController controller = fxmlLoader.<profilController>getController();
-		 	controller.setUser(this.getUser());
-                        Scene scene = new Scene(Rec);
-           
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/profil.fxml"));
+            Parent Rec = fxmlLoader.load();
+            profilController controller = fxmlLoader.<profilController>getController();
+            controller.setUser(this.getUser());
+            Scene scene = new Scene(Rec);
+
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.show();
             stage.setScene(scene);
-            
+
         } catch (IOException ex) {
             System.out.println(ex);
         }
 
     }
-    
+
 }
