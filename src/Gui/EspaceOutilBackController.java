@@ -6,6 +6,7 @@
 package Gui;
 
 import Entities.CategorieOutil;
+import Services.CategorieOutilService;
 import Services.Connexion;
 import java.net.URL;
 import java.sql.Connection;
@@ -18,7 +19,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.collections.ObservableList;
+
+import javafx.scene.control.Button;
+import javafx.event.ActionEvent;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 
 /**
  * FXML Controller class
@@ -35,6 +41,8 @@ public class EspaceOutilBackController implements Initializable {
     private TableColumn<CategorieOutil, String> nom;
     @FXML
     private TableColumn<CategorieOutil, String> logo;
+    @FXML
+    private Button supprimer;
     
     private ObservableList<CategorieOutil> data;
 
@@ -64,6 +72,30 @@ public class EspaceOutilBackController implements Initializable {
         }
 
 	    });
-    }    
+        table.setEditable(true);
+        nom.setCellFactory(TextFieldTableCell.forTableColumn());
+    }  
+
+    @FXML
+    private void supprimer(ActionEvent event) {
+        
+        CategorieOutilService cc =new CategorieOutilService();
+        cc.supprimerCategorie(table.getSelectionModel().getSelectedItem().getId());
+        this.initialize(null, null);
+    }
+    @FXML
+    private void modifierNom(TableColumn.CellEditEvent<CategorieOutil, String> event) {
+        table.setEditable(true);
+        CategorieOutilService cs = new CategorieOutilService();
+        CategorieOutil cat=table.getSelectionModel().getSelectedItem();
+        cat.setNom(event.getNewValue());
+        cs.modifierCategorie(cat);
+        
+      this.initialize(null, null);
+        
+    }
+
+    
+    
     
 }

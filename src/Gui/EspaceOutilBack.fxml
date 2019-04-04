@@ -21,12 +21,17 @@
             <Font size="52.0" />
          </font>
       </Label>
-      <TableView fx:id="table" layoutX="348.0" layoutY="208.0" prefHeight="379.0" prefWidth="566.0">
+      <TableView fx:id="table" layoutX="425.0" layoutY="176.0" prefHeight="379.0" prefWidth="562.0">
         <columns>
-          <TableColumn fx:id="id" prefWidth="75.0" text="id" />
-          <TableColumn fx:id="nom" prefWidth="75.0" text="nom" />
-            <TableColumn fx:id="logo" prefWidth="75.0" text="logo" />
+          <TableColumn fx:id="id" prefWidth="102.0" text="id" />
+          <TableColumn fx:id="nom" onEditCommit="#modifierNom" prefWidth="112.0" text="nom" />
+            <TableColumn fx:id="logo" prefWidth="147.0" text="logo" />
         </columns>
       </TableView>
+      <Button contentDisplay="CENTER" layoutX="739.0" layoutY="620.0" mnemonicParsing="false" onAction="#supprimer" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: #FF0000;" text="Supprimer" textFill="#f8f7f7">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
