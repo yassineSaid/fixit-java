@@ -15,6 +15,7 @@ import Entities.User;
 import Services.CategorieServiceService;
 import Services.Connexion;
 import Services.ReclamationService;
+import java.io.File;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,6 +31,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  * FXML Controller class
@@ -56,6 +59,9 @@ public class AjouterCategorieServiceController implements Initializable {
     private ObservableList<CategorieService> data;
     @FXML
     private Button supprimer;
+    private CategorieService categ;
+    @FXML
+    private ImageView photo;
 
     /**
      * Initializes the controller class.
@@ -79,6 +85,10 @@ public class AjouterCategorieServiceController implements Initializable {
     descriptionCatAff.setCellFactory(TextFieldTableCell.forTableColumn());
     categorie.setItems(null);
     categorie.setItems(data);
+    
+        //Image image=new Image("file:\\Users\\SELON\\Desktop\\unnamed.png");
+         
+        //photo.setImage(image);
            }
         catch(Exception e){
             System.out.println(e);
@@ -136,7 +146,25 @@ public class AjouterCategorieServiceController implements Initializable {
         cs.modifierCategorie(cat);
         
       this.initialize(null, null);
+      
+        Image image=new Image("file:\\wamp64\\www\\fixit\\web\\uploads\\images\\categorieService\\"+categorie.getSelectionModel().getSelectedItem().getImage());
+         
+        photo.setImage(image);
     }
+
+    @FXML
+    private void img(TableColumn.CellEditEvent<CategorieService, String> event) {
+        Image image=new Image("file:\\wamp64\\www\\fixit\\web\\uploads\\images\\categorieService\\"+categorie.getSelectionModel().getSelectedItem().getImage());
+         
+        photo.setImage(image);
+    }
+
+   
+
+
+  
+
+    
 
 
   

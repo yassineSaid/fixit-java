@@ -17,7 +17,7 @@ public class CategorieService {
         public CategorieService(int id,String nom,String description) {
             this.id=id;
             this.nom=nom;
-            this.description=description;
+             this.description=description;
 	}
 	public int getId() {
 		return id;

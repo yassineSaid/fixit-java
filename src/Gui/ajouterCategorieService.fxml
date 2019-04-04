@@ -27,14 +27,18 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="categorie" layoutX="54.0" layoutY="23.0" prefHeight="384.0" prefWidth="845.0">
+                        <TableView fx:id="categorie" layoutX="52.0" layoutY="67.0" prefHeight="384.0" prefWidth="615.0">
                           <columns>
-                              <TableColumn fx:id="idCatAff" prefWidth="79.0" text="id" />
+                              <TableColumn fx:id="idCatAff" onEditStart="#img" prefWidth="79.0" text="id" />
                             <TableColumn fx:id="nomCatAff" onEditCommit="#modifierNom" prefWidth="201.0" text="nom" />
                               <TableColumn fx:id="descriptionCatAff" onEditCommit="#modifierDescription" prefWidth="382.0" text="description" />
                           </columns>
                         </TableView>
-                        <Button fx:id="supprimer" layoutX="924.0" layoutY="62.0" mnemonicParsing="false" onAction="#supprimer" prefHeight="25.0" prefWidth="79.0" text="supprimer" />
+                        <Button fx:id="supprimer" layoutX="802.0" layoutY="67.0" mnemonicParsing="false" onAction="#supprimer" prefHeight="37.0" prefWidth="87.0" style="-fx-opacity: 1;" text="supprimer" textFill="RED">
+                           <font>
+                              <Font size="14.0" />
+                           </font></Button>
+                        <ImageView fx:id="photo" fitHeight="160.0" fitWidth="300.0" layoutX="699.0" layoutY="130.0" pickOnBounds="true" preserveRatio="true" />
                      </children></AnchorPane>
             </content>
           </Tab>
