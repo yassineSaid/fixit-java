@@ -33,11 +33,12 @@ public class CategorieOutilService {
     public void modifierCategorie(CategorieOutil C)
     {
         try{
+            
         PreparedStatement pt=c.prepareStatement("update categorie_outils set nom=? , logo=? where id=? ");
         pt.setString(1,C.getNom());
         pt.setString(2,C.getLogo());
         pt.setInt(3,C.getId());
-        pt.execute();
+        pt.executeUpdate();
         }
         catch(SQLException ex) {}
     }

@@ -92,7 +92,7 @@ public class ajouterReclamationController implements Initializable
 	public void initialize(URL url, ResourceBundle rb) 
 	{
 		Platform.runLater(() -> {
-
+                        frontIndexController.getEspaceRec().setStyle("-fx-background-color: #f4f4f4");
 			ObservableList<User> list = FXCollections.observableArrayList();
 
                         frontIndexController.setUser(user);
