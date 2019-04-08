@@ -13,16 +13,19 @@
    <children>
       <AnchorPane layoutX="736.0" layoutY="33.0" prefHeight="625.0" prefWidth="478.0" style="-fx-background-color: #FFFFFF;">
          <children>
-            <Button fx:id="connexion" layoutX="169.0" layoutY="563.0" mnemonicParsing="false" onAction="#connexionAction" prefHeight="47.0" prefWidth="140.0" text="Login" />
-            <TextField fx:id="login" layoutX="71.0" layoutY="345.0" prefHeight="47.0" onKeyPressed="#keyPressed" prefWidth="336.0" promptText="Login" />
+            <Button fx:id="connexion" layoutX="157.0" layoutY="562.0" mnemonicParsing="false" onAction="#connexionAction" prefHeight="35.0" prefWidth="194.0" style="-fx-background-color: #00AB47;" text="Login" textFill="WHITE">
+               <font>
+                  <Font name="Arial Narrow Bold" size="13.0" />
+               </font></Button>
+            <TextField fx:id="login" layoutX="71.0" layoutY="345.0" onKeyPressed="#keyPressed" prefHeight="47.0" prefWidth="336.0" promptText="Login" />
             <Label layoutX="134.0" layoutY="270.0" prefHeight="56.0" prefWidth="240.0" text="Se connecter" textFill="#00ab47">
 
                <font>
                   <Font size="33.0" />
                </font>
             </Label>
-            <PasswordField fx:id="password" layoutX="71.0" layoutY="414.0" prefHeight="47.0" onKeyPressed="#keyPressed" prefWidth="336.0" promptText="Password" />
-            <Label fx:id="errot" alignment="CENTER" layoutX="71.0" layoutY="502.0" prefHeight="35.0" prefWidth="336.0" text="Label" textFill="RED">
+            <PasswordField fx:id="password" layoutX="71.0" layoutY="414.0" onKeyPressed="#keyPressed" prefHeight="47.0" prefWidth="336.0" promptText="Password" />
+            <Label fx:id="errot" alignment="CENTER" layoutX="86.0" layoutY="500.0" prefHeight="35.0" prefWidth="336.0" text="Label" textFill="RED">
                <font>
                   <Font size="21.0" />
                </font>

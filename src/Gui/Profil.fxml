@@ -12,12 +12,12 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="690.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.profilController">
    <children>
       <fx:include fx:id="frontIndex" source="frontIndex.fxml" />
-      <AnchorPane layoutX="294.0" layoutY="66.0" prefHeight="690.0" prefWidth="1300.0" />
-      <TabPane fx:id="Tabwidget" layoutX="284.0" prefHeight="760.0" prefWidth="1016.0" tabClosingPolicy="UNAVAILABLE">
+      <AnchorPane layoutX="294.0" layoutY="66.0" prefHeight="690.0" prefWidth="1007.0" />
+      <TabPane fx:id="Tabwidget" layoutX="284.0" prefHeight="690.0" prefWidth="1016.0" tabClosingPolicy="UNAVAILABLE">
          <tabs>
             <Tab fx:id="interfaceAjout" text="Profil">
                <content>
-                  <AnchorPane fx:id="profil" minHeight="0.0" minWidth="0.0" prefHeight="601.0" prefWidth="896.0" stylesheets="@../Resources/style.css">
+                  <AnchorPane fx:id="profil" minHeight="0.0" minWidth="0.0" prefHeight="661.0" prefWidth="976.0" stylesheets="@../Resources/style.css">
                      <children>
                         <Label layoutX="423.0" layoutY="30.0" text="Modifiez votre profil">
                            <font>
