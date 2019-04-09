@@ -10,21 +10,7 @@
 
 <AnchorPane id="AnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" style="-fx-background-color: #CCCCCC;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.EspaceOutilBackController">
    <children>
-      <AnchorPane prefHeight="700.0" prefWidth="263.0" style="-fx-background-color: #9F9F9F;">
-         <children>
-            <ImageView fitHeight="158.0" fitWidth="131.0" layoutX="61.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Resources/marker.png" />
-               </image>
-            </ImageView>
-            <Button layoutX="12.0" layoutY="188.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="234.0" text="Espace Service" />
-            <Button layoutX="13.0" layoutY="274.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="234.0" text="Espace Outils" />
-            <Button layoutX="15.0" layoutY="354.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="234.0" text="Espace Produits" />
-            <Button layoutX="15.0" layoutY="429.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="234.0" text="Espace Réclamations" />
-            <Button layoutX="15.0" layoutY="500.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="234.0" text="Espace Paiement" />
-            <Button layoutX="15.0" layoutY="576.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="234.0" text="Espace Annonces" />
-         </children>
-      </AnchorPane>
+             <fx:include fx:id="backIndex" source="backIndex.fxml" />
       <ImageView fitHeight="541.0" fitWidth="694.0" layoutX="569.0" layoutY="116.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.2;">
          <image>
             <Image url="@../Resources/marker.png" />
@@ -35,12 +21,51 @@
             <Font size="52.0" />
          </font>
       </Label>
-      <TableView fx:id="table" layoutX="348.0" layoutY="208.0" prefHeight="379.0" prefWidth="566.0">
-        <columns>
-          <TableColumn fx:id="id" prefWidth="75.0" text="id" />
-          <TableColumn fx:id="nom" prefWidth="75.0" text="nom" />
-            <TableColumn fx:id="logo" prefWidth="75.0" text="logo" />
-        </columns>
-      </TableView>
+      <TabPane layoutX="262.0" layoutY="104.0" prefHeight="596.0" prefWidth="1038.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Catégorie des outils">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="table" layoutX="35.0" layoutY="104.0" prefHeight="359.0" prefWidth="541.0">
+                          <columns>
+                            <TableColumn fx:id="id" prefWidth="102.0" text="id" />
+                            <TableColumn fx:id="nom" prefWidth="112.0" text="nom" />
+                              <TableColumn fx:id="logo" prefWidth="147.0" text="logo" />
+                          </columns>
+                        </TableView>
+                        <Button contentDisplay="CENTER" layoutX="880.0" layoutY="362.0" mnemonicParsing="false" onAction="#supprimer" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: #FF0000;" text="Supprimer" textFill="#f8f7f7">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Button>
+                        <Label layoutX="649.0" layoutY="145.0" prefHeight="17.0" prefWidth="81.0" text="Catégorie :">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="767.0" layoutY="143.0" />
+                        <Button contentDisplay="CENTER" layoutX="742.0" layoutY="362.0" mnemonicParsing="false" onAction="#supprimer" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: #4682B4;" text="Modifier" textFill="#f8f7f7">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Button>
+                        <Button contentDisplay="CENTER" layoutX="603.0" layoutY="362.0" mnemonicParsing="false" onAction="#supprimer" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: #008000;" text="Ajouter" textFill="#f8f7f7">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Button>
+                        <Label layoutX="649.0" layoutY="205.0" prefHeight="17.0" prefWidth="81.0" text="Logo :">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+          <Tab text="Outils" />
+        </tabs>
+      </TabPane>
    </children>
 </AnchorPane>

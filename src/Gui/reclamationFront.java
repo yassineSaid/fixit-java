@@ -16,12 +16,17 @@ import Entities.Reclamation;
 import Entities.Service;
 import Entities.User;
 import Services.ReclamationService;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Iterator;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 
 
 import javafx.scene.control.ComboBox;
@@ -35,8 +40,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
-public class ajouterReclamationController implements Initializable 
+public class reclamationFront implements Initializable 
 {
 	private FrontIndexController frontIndexController;
 	@FXML
@@ -88,13 +94,10 @@ public class ajouterReclamationController implements Initializable
 	public void initialize(URL url, ResourceBundle rb) 
 	{
 		Platform.runLater(() -> {
-
+                        frontIndexController.getEspaceRec().setStyle("-fx-background-color: #f4f4f4");
 			ObservableList<User> list = FXCollections.observableArrayList();
-
                         frontIndexController.setUser(user);
                         frontIndexController.initialize(null, null);
-			//ObservableList<String> list = FXCollections.observableArrayList();
-
 			ReclamationService r= new ReclamationService();
 			list=r.getusersreclamer(user.getId());	
 			userReclamer.setItems(list);
@@ -153,20 +156,42 @@ public class ajouterReclamationController implements Initializable
         {
             ReclamationService r= new ReclamationService();
             ObservableList<Reclamation> list = FXCollections.observableArrayList();
-            list=r.afficherReclamation();
+            list=r.afficherReclamation(this.getUser().getId());
             listRec.setItems(list);
         }
 
     private void remplirChamps(MouseEvent event) {
-     
+        
         ReclamationService recServ= new ReclamationService();
         
         if(event.getClickCount()==2)
         {
-            Reclamation rec= new Reclamation();
+          try {
+
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/detailReclamationFront.fxml"));
+                Parent Rec = fxmlLoader.load();
+                Scene scene = new Scene(Rec);
+                DetailReclamationFrontController controller = fxmlLoader.<DetailReclamationFrontController>getController();
+                Reclamation rec= new Reclamation();
+                rec= listRec.getSelectionModel().getSelectedItem();
+                controller.setReclamation(rec);
+                controller.setUserc(this.getUser());
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage.show();
+                stage.setScene(scene);
+
+            } catch (IOException ex) {
+                System.out.println(ex);
+            }
+        }
+        
+        if(event.getClickCount()==1)
+        {
+              Reclamation rec= new Reclamation();
             rec= listRec.getSelectionModel().getSelectedItem();
             motif.setText(rec.getObjet());
             description.setText(rec.getDescription());
+            System.out.println(rec.getUserReclame());
             userReclamer.setValue(rec.getUserReclame());
             serviceRendu.setValue(rec.getIdServiceRealise());
             String dateRealisation = rec.getDateRealisation().toString();
@@ -175,6 +200,7 @@ public class ajouterReclamationController implements Initializable
             modifierRec.setVisible(true);
             supprimerRec.setVisible(true);
             this.id=rec.getId();
+            
         }
     }
 

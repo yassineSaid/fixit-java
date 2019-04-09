@@ -1,4 +1,5 @@
-.button {
+#noter
+{
     -fx-background-color: 
         linear-gradient(#32CD32, #32CD32),
         linear-gradient(#32CD32 0%,     #32CD32,    #32CD32 100%),
@@ -8,7 +9,8 @@
     -fx-text-fill: white;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }
-.button:hover {
+#noter:hover
+{
     -fx-background-color: 
         linear-gradient(white, white),
         linear-gradient(white 0%,     white,    white 100%),
@@ -19,18 +21,18 @@
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }
 
-#supprimerRec
+#modifier_note
 {
     -fx-background-color: 
-        linear-gradient(red, red),
-        linear-gradient(red 0%,     red,    red 100%),
-        linear-gradient(red 0%, red 50%);
+        linear-gradient(#32CD32, #32CD32),
+        linear-gradient(#32CD32 0%,     #32CD32,    #32CD32 100%),
+        linear-gradient(#32CD32 0%, #32CD32 50%);
     -fx-background-radius: 8,7,6;
     -fx-background-insets: 0,1,2;
     -fx-text-fill: white;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }
-#supprimerRec:hover
+#modifier_note:hover
 {
     -fx-background-color: 
         linear-gradient(white, white),
@@ -38,44 +40,6 @@
         linear-gradient(white 0%, white 50%);
     -fx-background-radius: 8,7,6;
     -fx-background-insets: 0,1,2;
-    -fx-text-fill: red;
+    -fx-text-fill: #32CD32;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
-}
-.menuButton
-{
-	-fx-background-color:#bfd6ad;
-	-fx-text-fill: #017c00;
-	-fx-background-radius: 0;
-    -fx-background-insets: 0;
-	-fx-border: 0;
-	-fx-effect: none;
-	-fx-border-color: #00AB47;
-	-fx-border-width: 1 0;
-}
-.menuButton:hover
-{
-	-fx-background-color: #f4f4f4;
-	-fx-text-fill: #017c00;
-	-fx-background-radius: 0;
-    -fx-background-insets: 0;
-	-fx-border: 0;
-	-fx-effect: none;
-	-fx-border-color: #00AB47;
-	-fx-border-width: 1 0;
-}
-.table-langues *.scroll-bar:horizontal *.increment-button,
-.table-langues *.scroll-bar:horizontal *.decrement-button {
-  -fx-background-color: null;
-  -fx-background-radius: 0;
-  -fx-background-insets: 0;
-  -fx-padding: 0;
-}
-
-.table-langues *.scroll-bar:horizontal *.increment-arrow,
-.table-langues *.scroll-bar:horizontal *.decrement-arrow {
-  -fx-background-color: null;
-  -fx-background-radius: 0;
-  -fx-background-insets: 0;
-  -fx-padding: 0;
-  -fx-shape: null;
 }

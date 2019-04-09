@@ -7,23 +7,33 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import Entities.CategorieService;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class CategorieServiceService {
 
     Connection c=Connexion.getInstance().getCon();
-    public void afficherCategorie(){
+    public List<CategorieService> afficherCategorie(){
+        List<CategorieService> cc=new ArrayList<>();
         try{
         PreparedStatement pt=c.prepareStatement("select * from categorie_Service");
         ResultSet rs=pt.executeQuery();
         while(rs.next()){
             System.out.println("cat: id:"+rs.getInt(1)+"nom:"+rs.getString(2)+"description:"+rs.getString(3));
+            CategorieService catS=new CategorieService(
+                    rs.getString(2),
+                    rs.getString(3)
+            );
+            cc.add(catS);
+                
         }
         }
         catch(SQLException ex){
             System.out.println("erreur: "+ex.getMessage());
         }
+        return cc;
     }
     public void ajouterCategorie(CategorieService cs){
         try {

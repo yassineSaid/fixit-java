@@ -9,22 +9,22 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.StackPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.profilController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="690.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.profilController">
    <children>
       <fx:include fx:id="frontIndex" source="frontIndex.fxml" />
-      <AnchorPane layoutX="294.0" layoutY="66.0" prefHeight="935.0" prefWidth="1307.0" />
-      <TabPane fx:id="Tabwidget" layoutX="284.0" prefHeight="760.0" prefWidth="1016.0" tabClosingPolicy="UNAVAILABLE">
+      <AnchorPane layoutX="294.0" layoutY="66.0" prefHeight="690.0" prefWidth="1007.0" />
+      <TabPane fx:id="Tabwidget" layoutX="284.0" prefHeight="690.0" prefWidth="1016.0" tabClosingPolicy="UNAVAILABLE">
          <tabs>
             <Tab fx:id="interfaceAjout" text="Profil">
                <content>
-                  <AnchorPane fx:id="profil" minHeight="0.0" minWidth="0.0" prefHeight="601.0" prefWidth="896.0" stylesheets="@../Resources/style.css">
+                  <AnchorPane fx:id="profil" minHeight="0.0" minWidth="0.0" prefHeight="661.0" prefWidth="976.0" stylesheets="@../Resources/style.css">
                      <children>
-                        <Label layoutX="429.0" layoutY="115.0" text="Modifiez votre profil">
+                        <Label layoutX="423.0" layoutY="30.0" text="Modifiez votre profil">
                            <font>
                               <Font size="19.0" />
                            </font>
                         </Label>
-                        <Separator layoutX="231.0" layoutY="151.0" prefHeight="15.0" prefWidth="528.0" />
+                        <Separator layoutX="244.0" layoutY="55.0" prefHeight="15.0" prefWidth="528.0" />
                         <Label layoutX="66.0" layoutY="204.0" text="Nom d'utilisateur:">
                            <font>
                               <Font size="19.0" />
@@ -67,10 +67,32 @@
                               <Font size="19.0" />
                            </font>
                         </Label>
-                        <ImageView fx:id="photo" fitHeight="214.0" fitWidth="200.0" layoutX="696.0" layoutY="216.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="photo" fitHeight="214.0" fitWidth="200.0" layoutX="635.0" layoutY="216.0" pickOnBounds="true" preserveRatio="true" />
                      </children>
                   </AnchorPane>
                </content>
+            </Tab>
+            <Tab text="Langues parlées">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" stylesheets="@../Resources/style.css">
+                     <children>
+                        <TableView fx:id="table" layoutX="36.0" layoutY="165.0" prefHeight="399.0" prefWidth="566.0" styleClass="table-langues">
+                          <columns>
+                            <TableColumn fx:id="langue" prefWidth="344.0" text="Langue" />
+                              <TableColumn fx:id="supprimer" prefWidth="221.0" style="-fx-alignment: CENTER;" text="Action" />
+                          </columns>
+                        </TableView>
+                        <Separator layoutX="245.0" layoutY="55.0" prefHeight="15.0" prefWidth="528.0" />
+                        <Label layoutX="357.0" layoutY="30.0" text="Modifez les langues que vous parlez">
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="listLangues" layoutX="36.0" layoutY="105.0" prefHeight="31.0" prefWidth="227.0" promptText="Sélectionnez une langue" />
+                        <Button fx:id="ajouter" layoutX="300.0" layoutY="105.0" mnemonicParsing="false" onAction="#ajouterAction" prefHeight="31.0" prefWidth="152.0" text="Ajouter" />
+                     </children>
+                  </AnchorPane>
+              </content>
             </Tab>
          </tabs>
       </TabPane>

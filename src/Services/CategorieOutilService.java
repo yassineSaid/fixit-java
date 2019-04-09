@@ -10,6 +10,8 @@ import java.sql.*;
 import Entities.CategorieOutil;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -33,26 +35,31 @@ public class CategorieOutilService {
     public void modifierCategorie(CategorieOutil C)
     {
         try{
+            
         PreparedStatement pt=c.prepareStatement("update categorie_outils set nom=? , logo=? where id=? ");
         pt.setString(1,C.getNom());
         pt.setString(2,C.getLogo());
         pt.setInt(3,C.getId());
-        pt.execute();
+        pt.executeUpdate();
         }
         catch(SQLException ex) {}
     }
-    public void afficherCategorie()
-    {
-        try{
-            PreparedStatement pt=c.prepareStatement("select * from categorie_outils");
-            ResultSet rs=pt.executeQuery();
-            while (rs.next())
-            {
-                System.out.println("Categorie id: "+rs.getInt(1)+"nom: "+rs.getString(2));
-            }
+    public ObservableList<CategorieOutil> afficherCategorie() 
+            throws SQLException {
+        ObservableList list = FXCollections.observableArrayList();
+        Statement st = c.createStatement();
+        String req = "select * from categorie_outils";
+        ResultSet rs = st.executeQuery(req);
+        while (rs.next()) {
+            CategorieOutil categorie = new CategorieOutil();
+            categorie.setId(rs.getInt(1));
+            categorie.setNom(rs.getString(2));
+            categorie.setLogo(rs.getString(3));
+            list.add(categorie);
         }
-        catch(SQLException ex) {}
+        return list;
     }
+    
     
     public void supprimerCategorie(int id)
     {
