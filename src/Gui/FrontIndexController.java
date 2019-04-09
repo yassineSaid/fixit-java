@@ -177,9 +177,9 @@ public class FrontIndexController implements Initializable {
     private void espaceRecAction(ActionEvent event) {
         try {
 
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/ajouterReclamation.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/reclamationFront.fxml"));
             Parent Rec = fxmlLoader.load();
-            ajouterReclamationController controller = fxmlLoader.<ajouterReclamationController>getController();
+            reclamationFront controller = fxmlLoader.<reclamationFront>getController();
             controller.setUser(this.getUser());
             Scene scene = new Scene(Rec);
 

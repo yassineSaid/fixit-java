@@ -30,6 +30,8 @@ public class BackIndexController implements Initializable {
 
     @FXML
     private Button espaceOutil;
+    @FXML
+    private Button espaceReclamation;
 
     
 
@@ -87,5 +89,24 @@ private User user;
     public void setUser(User user) {
 		this.user = user;
 	}
+
+    @FXML
+    private void espaceReclamation(ActionEvent event) {
+          try {
+			
+		 			 
+		 	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/reclamationBack.fxml"));   
+		 	Parent Rec = fxmlLoader.load();         
+                        Scene scene = new Scene(Rec);
+           
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.show();
+            stage.setScene(scene);
+            
+        } catch (IOException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex);
+        }
+    }
     
 }
