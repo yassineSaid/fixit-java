@@ -5,6 +5,7 @@
  */
 package Services;
 
+import Entities.User;
 import Entities.categorie_produit;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

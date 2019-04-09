@@ -33,17 +33,6 @@ import javafx.scene.input.MouseEvent;
  */
 public class CategorieProduitController implements Initializable {
      private CategorieProduit crud;
-     private static  int idp;
-
-    public static int getIdp() {
-        return idp;
-    }
-
-    public static void setIdp(int idp) {
-        CategorieProduitController.idp = idp;
-    }
-  
-
     @FXML
     private TextField nomfield;
     @FXML
@@ -72,6 +61,7 @@ public class CategorieProduitController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         modbtn.setVisible(false);
         supbtn.setVisible(false);
+        ajoutbtn.setVisible(true);
      
              
         Nomfield.setCellValueFactory(new PropertyValueFactory<categorie_produit,String>("Nom"));
@@ -102,6 +92,7 @@ public class CategorieProduitController implements Initializable {
         ct.setImage(imagefield.getText());
         crud.ajouterCategorie(ct);
         System.out.println("categorie ajoutée");
+       initialize(null,null);
     }
  private categorie_produit c = new categorie_produit();
     @FXML
@@ -128,6 +119,7 @@ public class CategorieProduitController implements Initializable {
         c=tabeCategorie.getSelectionModel().getSelectedItem();
         crud.supprimerCategorie(c);
         System.out.println("categorie supprimer");
+         initialize(null,null);
         
     }
 
@@ -144,6 +136,7 @@ public class CategorieProduitController implements Initializable {
         c.setImage(imagefield.getText());
         crud.modifierCategorie(c);
         System.out.println("categorie modifier");
+         initialize(null,null);
     }
 
 

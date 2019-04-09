@@ -28,6 +28,8 @@ public class BackIndexController implements Initializable {
 
     @FXML
     private Button espaceOutil;
+    @FXML
+    private Button EspaceProd;
 
     
 
@@ -44,6 +46,25 @@ public class BackIndexController implements Initializable {
 			
 		 			 
 		 	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/EspaceOutilBack.fxml"));   
+		 	Parent Rec = fxmlLoader.load();          
+		 	
+                        Scene scene = new Scene(Rec);
+           
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.show();
+            stage.setScene(scene);
+            
+        } catch (IOException ex) {
+            System.out.println(ex);
+        }
+    }
+
+    @FXML
+    private void espaceProduit(ActionEvent event) {
+                 try {
+			
+		 			 
+		 	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/CategorieProduit.fxml"));   
 		 	Parent Rec = fxmlLoader.load();          
 		 	
                         Scene scene = new Scene(Rec);

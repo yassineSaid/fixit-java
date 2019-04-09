@@ -38,7 +38,6 @@ import javafx.scene.layout.AnchorPane;
 
 public class ajouterReclamationController implements Initializable 
 {
-	@FXML
 	private FrontIndexController frontIndexController;
 	@FXML
 	private Tab interfaceAjout;
@@ -70,12 +69,9 @@ public class ajouterReclamationController implements Initializable
         private Button espaceRec;
         @FXML
         private Label userName;
-        @FXML
         private ListView<Reclamation> listRec;
-        @FXML
         private Button modifierRec;
         private int id;
-        @FXML
         private Button supprimerRec;
         
         
@@ -161,7 +157,6 @@ public class ajouterReclamationController implements Initializable
             listRec.setItems(list);
         }
 
-    @FXML
     private void remplirChamps(MouseEvent event) {
      
         ReclamationService recServ= new ReclamationService();
@@ -183,7 +178,6 @@ public class ajouterReclamationController implements Initializable
         }
     }
 
-    @FXML
     private void modifierRecAction(ActionEvent event) throws ParseException {
         ReclamationService recServ= new ReclamationService();
         User userReclame = new  User();
@@ -202,7 +196,6 @@ public class ajouterReclamationController implements Initializable
         initialize(null, null);
     }
 
-    @FXML
     private void supprimerRecAction(ActionEvent event) {
         ReclamationService recServ= new ReclamationService();
         recServ.supprimerReclamation(this.id);

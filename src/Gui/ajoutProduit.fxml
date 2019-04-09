@@ -9,8 +9,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.StackPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.ajouterReclamationController">
-   <children>
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.AjoutProduitController">
+       <children>
       <AnchorPane prefHeight="1000.0" prefWidth="284.0" style="-fx-background-color: #00AB47;">
          <children>
             <Button fx:id="espaceServ" layoutX="59.0" layoutY="292.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="127.0" text="Espace Service" />
@@ -44,11 +44,6 @@
                                  </font>
                               </Label>
                               <Separator layoutX="231.0" layoutY="151.0" prefHeight="15.0" prefWidth="528.0" />
-                              <Label layoutX="66.0" layoutY="204.0" text="User  :">
-                                 <font>
-                                    <Font size="19.0" />
-                                 </font>
-                              </Label>
                               <Label layoutX="72.0" layoutY="261.0" text="Categorie :">
                                  <font>
                                     <Font size="19.0" />
@@ -59,22 +54,14 @@
                                     <Font size="19.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="46.0" layoutY="390.0" text="nom de produit :">
+                              <Label layoutX="61.0" layoutY="390.0" text="nom de produit :">
                                  <font>
                                     <Font size="19.0" />
                                  </font>
                               </Label>
-                              <ComboBox fx:id="userReclamer" layoutX="265.0" layoutY="202.0" onAction="#selectservice" prefHeight="31.0" prefWidth="246.0" promptText="Selection l'utlisateur" />
-                              <ComboBox fx:id="serviceRendu" layoutX="265.0" layoutY="259.0" onAction="#selectdate" prefHeight="31.0" prefWidth="247.0" promptText="Selectionner le Service" />
-                              <ComboBox fx:id="dateService" layoutX="265.0" layoutY="320.0" prefHeight="31.0" prefWidth="248.0" promptText="Selectionner la date" />
+                              <ComboBox fx:id="categorieProduit" layoutX="265.0" layoutY="259.0" prefHeight="31.0" prefWidth="247.0" promptText="Selectionner categorie" />
                               <TextField fx:id="motif" layoutX="266.0" layoutY="388.0" prefHeight="31.0" prefWidth="247.0" />
-                              <TextArea fx:id="description" layoutX="266.0" layoutY="451.0" prefHeight="141.0" prefWidth="249.0" />
-                              <Label layoutX="79.0" layoutY="508.0" text="Description :">
-                                 <font>
-                                    <Font size="19.0" />
-                                 </font>
-                              </Label>
-                              <Button fx:id="ajouter_Rec" layoutX="292.0" layoutY="622.0" mnemonicParsing="false" onAction="#ajouterReclamation" prefHeight="38.0" prefWidth="223.0" text="Ajouter Reclamation">
+                              <Button fx:id="ajouter_Rec" layoutX="292.0" layoutY="622.0" mnemonicParsing="false" onAction="#ajouterProduitClicked" prefHeight="38.0" prefWidth="223.0" text="Ajouter Produit">
                                  <textFill>
                                     <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
                                        <stops>
@@ -89,13 +76,37 @@
                                     <Font size="96.0" />
                                  </font>
                               </Label>
-                              <ListView layoutX="594.0" layoutY="219.0" prefHeight="540.0" prefWidth="330.0" />
                               <Label layoutX="685.0" layoutY="170.0" text="Mes Produit">
                                  <font>
                                     <Font size="19.0" />
                                  </font>
                               </Label>
                               <Separator layoutX="595.0" layoutY="201.0" prefHeight="0.0" prefWidth="328.0" />
+                              <TableView layoutX="586.0" layoutY="209.0" prefHeight="514.0" prefWidth="402.0">
+                                <columns>
+                                  <TableColumn prefWidth="75.0" text="C1" />
+                                  <TableColumn prefWidth="75.0" text="C2" />
+                                </columns>
+                              </TableView>
+                              <TextField fx:id="Quantitefield" layoutX="266.0" layoutY="436.0" prefHeight="31.0" prefWidth="247.0" />
+                              <Label layoutX="61.0" layoutY="438.0" text="Quantite">
+                                 <font>
+                                    <Font size="19.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="60.0" layoutY="521.0" text="image">
+                                 <font>
+                                    <Font size="19.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="imagefield" layoutX="265.0" layoutY="519.0" prefHeight="31.0" prefWidth="247.0" />
+                              <Label layoutX="61.0" layoutY="477.0" text="prix">
+                                 <font>
+                                    <Font size="19.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="prix" layoutX="266.0" layoutY="475.0" prefHeight="31.0" prefWidth="247.0" />
+                              <DatePicker fx:id="dateExp" layoutX="261.0" layoutY="320.0" prefHeight="31.0" prefWidth="253.0" style="-fx-background-color: red;" />
                            </children>
                         </AnchorPane>
                      </content>
@@ -106,7 +117,7 @@
       </AnchorPane>
       <AnchorPane layoutX="284.0" prefHeight="10.0" prefWidth="1018.0" style="-fx-background-color: #4B4B4B;">
          <children>
-            <Label fx:id="userName" layoutX="638.0" layoutY="2.0" prefHeight="54.0" prefWidth="372.0" text="Mustapha Belhaj" textFill="WHITE">
+            <Label fx:id="userName" layoutX="638.0" layoutY="2.0" prefHeight="54.0" prefWidth="372.0" text="Saidani Ali" textFill="WHITE">
                <font>
                   <Font size="22.0" />
                </font>
@@ -114,4 +125,5 @@
          </children>
       </AnchorPane>
    </children>
+    
 </AnchorPane>

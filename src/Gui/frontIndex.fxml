@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
@@ -48,6 +49,9 @@
             </Label>
 
          </children>
+         <effect>
+            <DropShadow />
+         </effect>
       </AnchorPane>
       <Label layoutX="268.0" layoutY="26.0" prefHeight="77.0" prefWidth="142.0" text=" IT" textAlignment="RIGHT" textFill="#00ab47">
          <font>

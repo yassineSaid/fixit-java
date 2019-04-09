@@ -1,10 +1,12 @@
 package Services;
 
 import Entities.categorie_produit;
+import Entities.produit;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -37,8 +39,19 @@ public class Programme extends Application {
 		}
 	}
 	public static void main(String[] args) throws ParseException {
+            
 		launch(args);
-                
+                /*
+Produit p;
+int myYear = 2014;
+int myMonth = 3;
+int myDay = 24;
+Timestamp ts = Timestamp.valueOf(String.format("%04d-%02d-%02d 00:00:00", 
+                                                myYear, myMonth, myDay));
+categorie_produit c= new categorie_produit("cosmitique","fdgf","zdzd",41);
+produit p1=new produit("ffm",2,c,52,ts ,4,"fjeifj");
+p.ajouterProduit(p1);
+*/ 
 	}
 
 }

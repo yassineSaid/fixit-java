@@ -19,7 +19,7 @@
             </ImageView>
             <Button layoutX="12.0" layoutY="188.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="234.0" text="Espace Service" />
             <Button fx:id="espaceOutil" layoutX="13.0" layoutY="274.0" mnemonicParsing="false" onAction="#espaceOutil" prefHeight="51.0" prefWidth="234.0" text="Espace Outils" />
-            <Button layoutX="15.0" layoutY="354.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="234.0" text="Espace Produits" />
+            <Button fx:id="EspaceProd" layoutX="15.0" layoutY="354.0" mnemonicParsing="false" onAction="#espaceProduit" prefHeight="51.0" prefWidth="234.0" text="Espace Produits" />
             <Button layoutX="15.0" layoutY="429.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="234.0" text="Espace Réclamations" />
             <Button layoutX="15.0" layoutY="500.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="234.0" text="Espace Paiement" />
             <Button layoutX="15.0" layoutY="576.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="234.0" text="Espace Annonces" />
