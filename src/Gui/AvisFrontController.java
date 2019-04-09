@@ -69,6 +69,8 @@ public class AvisFrontController implements Initializable {
                 frontIndexController.setUser(user);
                 frontIndexController.initialize(null, null);
             } else {
+                frontIndexController.setUser(user);
+                frontIndexController.initialize(null, null);
                 noter.setVisible(false);
                 modifier_note.setVisible(true);
                 rating.setRating((double) avis.getNote());
@@ -89,6 +91,7 @@ public class AvisFrontController implements Initializable {
         AvisService avisServ= new AvisService();
         Avis avis= new Avis(description.getText(),(int)rating.getRating(),satisfaction.getValue().toString(),this.getUser());
         avisServ.ajouterAvis(avis);
+        initialize(null, null);
         
          
     }

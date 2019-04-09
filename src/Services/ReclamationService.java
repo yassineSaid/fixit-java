@@ -121,13 +121,14 @@ public class ReclamationService
 	            System.out.println(ex);
 	        }
 	 }
-        public ObservableList<Reclamation> afficherReclamation()
+        public ObservableList<Reclamation> afficherReclamation(int idUser)
         {
             try
             {
                 ObservableList<Reclamation> list = FXCollections.observableArrayList();
 		// to correct idUserDemandeur -> idUserOffreur
-		PreparedStatement pt=c.prepareStatement("Select * From Reclamation");
+		PreparedStatement pt=c.prepareStatement("Select * From Reclamation where user = ?");
+                pt.setInt(1, idUser );
                 ResultSet rs= pt.executeQuery();
                 while(rs.next())
                 {
@@ -135,13 +136,22 @@ public class ReclamationService
                     rec.setId(rs.getInt("id"));
                     rec.setObjet(rs.getString("Object"));
                     rec.setDescription(rs.getString("Description"));
+                    
+                    
                     User u = new User();
                     u.setId(rs.getInt("userreclame"));
-                    u.setUsername(this.getUserName(u.getId()));
+                    System.out.println(rs.getInt("userreclame"));
+                    u.setUsername(this.getUserName(rs.getInt("userreclame")));
+                    System.out.println(u);
                     rec.setUserReclame(u);
-                    u.setId(rs.getInt("user"));
-                    u.setUsername(this.getUserName(u.getId()));
-                    rec.setUserReclamant(u);
+                    
+                    
+                    User u1 = new User();
+                    u1.setId(rs.getInt("user"));
+                    u1.setUsername(this.getUserName(u1.getId()));
+                    rec.setUserReclamant(u1);
+                    
+                    
                     rec.setDateReclamation(rs.getDate("DateReclamation"));
                     rec.setSeen(rs.getInt("seen"));
                     rec.setTraite(rs.getInt("Traite"));
@@ -167,7 +177,7 @@ public class ReclamationService
         {
             try
             {
-                PreparedStatement pt=c.prepareStatement("SELECT userName from User where id=?");
+                PreparedStatement pt=c.prepareStatement("SELECT * from User where id=?");
                 pt.setInt(1, userId);
                 ResultSet rs= pt.executeQuery();
                 while(rs.next())
@@ -241,6 +251,53 @@ public class ReclamationService
 	        {
 	            System.out.println(ex);
 	        }
+        }
+        
+        public ObservableList<Reclamation> getAllReclamation()
+        {
+            try
+            {
+                ObservableList<Reclamation> list = FXCollections.observableArrayList();
+		// to correct idUserDemandeur -> idUserOffreur
+		PreparedStatement pt=c.prepareStatement("Select * From Reclamation");
+                ResultSet rs= pt.executeQuery();
+                while(rs.next())
+                {
+                    Reclamation rec = new Reclamation();
+                    rec.setId(rs.getInt("id"));
+                    rec.setObjet(rs.getString("Object"));
+                    rec.setDescription(rs.getString("Description"));
+                    
+                    User u = new User();
+                    u.setId(rs.getInt("userreclame"));
+                    System.out.println(rs.getInt("userreclame"));
+                    u.setUsername(this.getUserName(rs.getInt("userreclame")));
+                    rec.setUserReclame(u);
+                    
+                    User u1 = new User();
+                    u1.setId(rs.getInt("user"));
+                    u1.setUsername(this.getUserName(u1.getId()));
+                    rec.setUserReclamant(u1);
+                    
+                    rec.setDateReclamation(rs.getDate("DateReclamation"));
+                    rec.setSeen(rs.getInt("seen"));
+                    rec.setTraite(rs.getInt("Traite"));
+                    rec.setArchive(rs.getInt("archive"));
+                    rec.setDateRealisation(rs.getDate("dateRealisation"));
+                    Service serv = new Service();
+                    serv.setId(rs.getInt("idServiceRealise"));
+                    serv.setNom(this.getServiceName(serv.getId()));
+                    rec.setIdServiceRealise(serv);
+                    list.add(rec);
+                }
+                 return list;
+            }
+		
+            catch(SQLException ex)
+            {
+			
+            }
+            return null;
         }
         
          
