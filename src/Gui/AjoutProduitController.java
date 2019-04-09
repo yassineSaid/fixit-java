@@ -16,6 +16,7 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import static java.time.temporal.TemporalQueries.localDate;
 import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
@@ -111,6 +112,10 @@ public class AjoutProduitController implements Initializable {
         System.out.println(ct);
         ct.setNom(motif.getText());
         ct.setQuantite(Integer.parseInt(Quantitefield.getText()));
+          LocalDate stringDate = dateExp.getValue();
+       // Timestamp timestamp = new Timestamp(localDate.toDateTimeAtStartOfDay().getMillis());
+      //  ct.setDate_exp(dateExp.getValue());
+        
         /*
         LocalDate stringDate = dateExp.getValue();
         SimpleDateFormat formatter1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

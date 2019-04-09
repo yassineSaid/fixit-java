@@ -31,11 +31,11 @@ public class BackIndexController implements Initializable {
     @FXML
     private Button espaceOutil;
     @FXML
-
-    private Button EspaceProd;
-
-
+    private Button EspaceProduit;
+    @FXML
     private Button espaceReclamation;
+    @FXML
+    private Button service;
 
     /**
      * Initializes the controller class.
@@ -43,8 +43,16 @@ public class BackIndexController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }
-    @FXML
-    private Button service;
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+    
 
     @FXML
     void espaceService(ActionEvent event) {
@@ -82,29 +90,20 @@ public class BackIndexController implements Initializable {
             System.out.println(ex);
         }
     }
-    private User user;
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-		this.user = user;
-	}
+    
 
     @FXML
     private void espaceReclamation(ActionEvent event) {
-          try {
-			
-		 			 
-		 	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/reclamationBack.fxml"));   
-		 	Parent Rec = fxmlLoader.load();         
-                        Scene scene = new Scene(Rec);
-           
+        try {
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/reclamationBack.fxml"));
+            Parent Rec = fxmlLoader.load();
+            Scene scene = new Scene(Rec);
+
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.show();
             stage.setScene(scene);
-            
+
         } catch (IOException ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex);
@@ -113,21 +112,20 @@ public class BackIndexController implements Initializable {
 
     @FXML
     private void espaceProduit(ActionEvent event) {
-                 try {
-			
-		 			 
-		 	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/CategorieProduit.fxml"));   
-		 	Parent Rec = fxmlLoader.load();          
-		 	
-                        Scene scene = new Scene(Rec);
-           
+        try {
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/CategorieProduit.fxml"));
+            Parent Rec = fxmlLoader.load();
+
+            Scene scene = new Scene(Rec);
+
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.show();
             stage.setScene(scene);
-            
+
         } catch (IOException ex) {
             System.out.println(ex);
         }
     }
-    
+
 }

@@ -10,45 +10,49 @@
 
 <AnchorPane id="AnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" style="-fx-background-color: #CCCCCC;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.CategorieProduitController">
    <children>
-      <AnchorPane prefHeight="700.0" prefWidth="263.0" style="-fx-background-color: #9F9F9F;">
-         <children>
-            <ImageView fitHeight="158.0" fitWidth="131.0" layoutX="61.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@logo.png" />
-               </image>
-            </ImageView>
-            <Button layoutX="12.0" layoutY="188.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="234.0" text="Espace Service" />
-            <Button layoutX="13.0" layoutY="274.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="234.0" text="Espace Outils" />
-            <Button layoutX="15.0" layoutY="354.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="234.0" text="Espace Produits" />
-            <Button layoutX="15.0" layoutY="429.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="234.0" text="Espace Réclamations" />
-            <Button layoutX="15.0" layoutY="500.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="234.0" text="Espace Paiement" />
-            <Button layoutX="15.0" layoutY="576.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="234.0" text="Espace Annonces" />
-         </children>
-      </AnchorPane>
+       <fx:include fx:id="backIndex" source="backIndex.fxml" />
       <Label layoutX="629.0" layoutY="41.0" prefHeight="51.0" prefWidth="469.0" text="Bienvenue sur FIXIT" textFill="#00ab47">
          <font>
             <Font size="52.0" />
          </font>
       </Label>
-      <Label layoutX="335.0" layoutY="193.0" prefHeight="21.0" prefWidth="90.0" text="Nom" />
-      <Label layoutX="335.0" layoutY="233.0" prefHeight="21.0" prefWidth="90.0" text="description" />
-      <TextField fx:id="nomfield" layoutX="478.0" layoutY="178.0" />
-      <TextField fx:id="descriptionfield" layoutX="478.0" layoutY="228.0" />
-      <Button fx:id="ajoutbtn" layoutX="465.0" layoutY="314.0" mnemonicParsing="false" onAction="#AjouteClicked" prefHeight="31.0" prefWidth="106.0" text="ajouter" />
-      <TextField fx:id="imagefield" layoutX="478.0" layoutY="283.0" />
-      <Label layoutX="335.0" layoutY="288.0" prefHeight="21.0" prefWidth="90.0" text="image" />
-      <AnchorPane layoutX="851.0" layoutY="108.0" prefHeight="514.0" prefWidth="437.0">
-         <children>
-            <TableView fx:id="tabeCategorie" layoutX="-1.0" layoutY="-4.0" onMousePressed="#itemSelected" prefHeight="514.0" prefWidth="437.0" style="-fx-background-color: transparent;">
-              <columns>
-                <TableColumn fx:id="Nomfield" prefWidth="75.0" text="Nom" />
-                <TableColumn fx:id="descrfield" prefWidth="147.0" text="deescription" />
-                  <TableColumn fx:id="imagfield" prefWidth="146.0" text="image" />
-              </columns>
-            </TableView>
-         </children>
-      </AnchorPane>
-      <Button fx:id="modbtn" layoutX="466.0" layoutY="345.0" mnemonicParsing="false" onAction="#ModifierClicked" prefHeight="31.0" prefWidth="106.0" style="-fx-background-color: #FF7F50;" text="modifier" />
-      <Button fx:id="supbtn" layoutX="466.0" layoutY="377.0" mnemonicParsing="false" onAction="#supprimeClicked" prefHeight="31.0" prefWidth="106.0" style="-fx-background-color: #DC143C;" text="supprimer" />
+      <TabPane layoutX="263.0" layoutY="120.0" prefHeight="581.0" prefWidth="1038.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Catégorie des produits">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="217.0" prefWidth="411.0">
+                     <children>
+                        <Button fx:id="ajoutbtn" layoutX="226.0" layoutY="257.0" mnemonicParsing="false" onAction="#AjouteClicked" prefHeight="31.0" prefWidth="106.0" text="ajouter" />
+                        <Label layoutX="68.0" layoutY="125.0" prefHeight="21.0" prefWidth="90.0" text="Nom" />
+                        <Label layoutX="68.0" layoutY="165.0" prefHeight="21.0" prefWidth="90.0" text="description" />
+                        <TextField fx:id="nomfield" layoutX="211.0" layoutY="110.0" />
+                        <TextField fx:id="descriptionfield" layoutX="211.0" layoutY="160.0" />
+                        <TextField fx:id="imagefield" layoutX="211.0" layoutY="215.0" />
+                        <Label layoutX="68.0" layoutY="220.0" prefHeight="21.0" prefWidth="90.0" text="image" />
+                        <TableView fx:id="tabeCategorie" layoutX="497.0" layoutY="7.0" onMousePressed="#itemSelected" prefHeight="514.0" prefWidth="530.0" style="-fx-background-color: transparent;">
+                           <columns>
+                              <TableColumn fx:id="Nomfield" prefWidth="75.0" text="Nom" />
+                              <TableColumn fx:id="descrfield" prefWidth="147.0" text="deescription" />
+                              <TableColumn fx:id="imagfield" prefWidth="146.0" text="image" />
+                           </columns>
+                        </TableView>
+                        <Button fx:id="modbtn" layoutX="243.0" layoutY="335.0" mnemonicParsing="false" onAction="#ModifierClicked" prefHeight="31.0" prefWidth="106.0" style="-fx-background-color: #FF7F50;" text="modifier" />
+                        <Button fx:id="supbtn" layoutX="243.0" layoutY="367.0" mnemonicParsing="false" onAction="#supprimeClicked" prefHeight="31.0" prefWidth="106.0" style="-fx-background-color: #DC143C;" text="supprimer" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Liste des produits">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </Tab>
+            <Tab text="Liste d'achat">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="184.0" prefWidth="411.0" />
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
    </children>
 </AnchorPane>
