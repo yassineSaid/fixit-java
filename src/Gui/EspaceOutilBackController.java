@@ -11,7 +11,10 @@ import Services.Connexion;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -41,9 +44,7 @@ public class EspaceOutilBackController implements Initializable {
     private TableColumn<CategorieOutil, String> nom;
     @FXML
     private TableColumn<CategorieOutil, String> logo;
-    @FXML
-    private Button supprimer;
-    
+
     private ObservableList<CategorieOutil> data;
 
     /**
@@ -51,51 +52,30 @@ public class EspaceOutilBackController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
         Platform.runLater(() -> {
-            try{
-    Connection c=Connexion.getInstance().getCon();
-    data=FXCollections.observableArrayList();
-    ResultSet rs=c.createStatement().executeQuery("select * from categorie_outils");
-    while(rs.next()){
-        data.add(new CategorieOutil(rs.getInt(1),rs.getString(2),rs.getString(3)));
+            Connection c = Connexion.getInstance().getCon();
+            id.setCellValueFactory(new PropertyValueFactory<CategorieOutil, String>("id"));
+            nom.setCellValueFactory(new PropertyValueFactory<CategorieOutil, String>("nom"));
+            logo.setCellValueFactory(new PropertyValueFactory<CategorieOutil, String>("logo"));
+
+            CategorieOutilService categorie = new CategorieOutilService();
+            try {
+                table.setItems(categorie.afficherCategorie());
+                // TODO
+            } catch (SQLException ex) {
+                Logger.getLogger(CategorieProduitController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        });
     }
-    id.setCellValueFactory(new PropertyValueFactory<>("id"));
-    nom.setCellValueFactory(new PropertyValueFactory<>("nom"));
-    logo.setCellValueFactory(new PropertyValueFactory<>("logo"));
     
-    table.setItems(null);
-    table.setItems(data);
-           }
-        catch(Exception e){
-            System.out.println(e);
-        }
-
-	    });
-        table.setEditable(true);
-        nom.setCellFactory(TextFieldTableCell.forTableColumn());
-    }  
-
     @FXML
     private void supprimer(ActionEvent event) {
-        
-        CategorieOutilService cc =new CategorieOutilService();
-        cc.supprimerCategorie(table.getSelectionModel().getSelectedItem().getId());
-        this.initialize(null, null);
-    }
-    @FXML
-    private void modifierNom(TableColumn.CellEditEvent<CategorieOutil, String> event) {
-        table.setEditable(true);
-        CategorieOutilService cs = new CategorieOutilService();
-        CategorieOutil cat=table.getSelectionModel().getSelectedItem();
-        cat.setNom(event.getNewValue());
-        cs.modifierCategorie(cat);
-        
-      this.initialize(null, null);
-        
-    }
+        CategorieOutilService categorie = new CategorieOutilService();
+        CategorieOutil c = table.getSelectionModel().getSelectedItem();
+        categorie.supprimerCategorie(c.getId());
+        System.out.println("categorie supprimer");
 
-    
-    
-    
+    }
 }

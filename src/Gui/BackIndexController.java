@@ -31,32 +31,29 @@ public class BackIndexController implements Initializable {
     @FXML
     private Button espaceOutil;
 
-    
-
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-    }    
-      @FXML
+    }
+    @FXML
     private Button service;
 
     @FXML
     void espaceService(ActionEvent event) {
-              try {
-			
-		 			 
-		 	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/ajouterCategorieService.fxml"));   
-		 	Parent Rec = fxmlLoader.load();          
-		 	AjouterCategorieServiceController controller = fxmlLoader.<AjouterCategorieServiceController>getController();
-		 	controller.setUser(this.getUser());
-                        Scene scene = new Scene(Rec);
-           
+        try {
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/ajouterCategorieService.fxml"));
+            Parent Rec = fxmlLoader.load();
+            AjouterCategorieServiceController controller = fxmlLoader.<AjouterCategorieServiceController>getController();
+            controller.setUser(this.getUser());
+            Scene scene = new Scene(Rec);
+
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.show();
             stage.setScene(scene);
-            
+
         } catch (IOException ex) {
             System.out.println(ex);
         }
@@ -64,28 +61,29 @@ public class BackIndexController implements Initializable {
 
     @FXML
     private void espaceOutil(ActionEvent event) {
-         try {
-			
-		 			 
-		 	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/EspaceOutilBack.fxml"));   
-		 	Parent Rec = fxmlLoader.load();         
-                        Scene scene = new Scene(Rec);
-           
+        try {
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/EspaceOutilBack.fxml"));
+            Parent Rec = fxmlLoader.load();
+            Scene scene = new Scene(Rec);
+
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.show();
             stage.setScene(scene);
-            
+
         } catch (IOException ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex);
         }
     }
-private User user;
+    private User user;
+
     public User getUser() {
-		return user;
-	}
+        return user;
+    }
+
     public void setUser(User user) {
-		this.user = user;
-	}
-    
+        this.user = user;
+    }
+
 }

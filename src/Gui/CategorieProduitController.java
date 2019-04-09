@@ -32,8 +32,9 @@ import javafx.scene.input.MouseEvent;
  * @author Ali Saidani
  */
 public class CategorieProduitController implements Initializable {
-     private CategorieProduit crud;
-     private static  int idp;
+
+    private CategorieProduit crud;
+    private static int idp;
 
     public static int getIdp() {
         return idp;
@@ -42,7 +43,6 @@ public class CategorieProduitController implements Initializable {
     public static void setIdp(int idp) {
         CategorieProduitController.idp = idp;
     }
-  
 
     @FXML
     private TextField nomfield;
@@ -72,13 +72,12 @@ public class CategorieProduitController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         modbtn.setVisible(false);
         supbtn.setVisible(false);
-     
-             
-        Nomfield.setCellValueFactory(new PropertyValueFactory<categorie_produit,String>("Nom"));
-     descrfield.setCellValueFactory(new PropertyValueFactory<categorie_produit,String>("description"));
-     imagfield.setCellValueFactory(new PropertyValueFactory<categorie_produit,String>("image"));
-     
-       CategorieProduit crud = new CategorieProduit();
+
+        Nomfield.setCellValueFactory(new PropertyValueFactory<categorie_produit, String>("Nom"));
+        descrfield.setCellValueFactory(new PropertyValueFactory<categorie_produit, String>("description"));
+        imagfield.setCellValueFactory(new PropertyValueFactory<categorie_produit, String>("image"));
+
+        CategorieProduit crud = new CategorieProduit();
         try {
             tabeCategorie.setItems(crud.getAllCategorie());
             // TODO
@@ -86,59 +85,53 @@ public class CategorieProduitController implements Initializable {
             Logger.getLogger(CategorieProduitController.class.getName()).log(Level.SEVERE, null, ex);
         }
         // TODO
-    }    
-   
-    
+    }
+
     @FXML
     private void AjouteClicked(ActionEvent event) {
-        crud=new CategorieProduit();
-       
-     
-          categorie_produit ct=new categorie_produit();
-          System.out.println(ct);
-        
+        crud = new CategorieProduit();
+
+        categorie_produit ct = new categorie_produit();
+        System.out.println(ct);
+
         ct.setNom(nomfield.getText());
         ct.setDescription(descriptionfield.getText());
         ct.setImage(imagefield.getText());
         crud.ajouterCategorie(ct);
         System.out.println("categorie ajoutée");
     }
- private categorie_produit c = new categorie_produit();
+    private categorie_produit c = new categorie_produit();
+
     @FXML
     private void itemSelected(MouseEvent event) {
-         modbtn.setVisible(true);
+        modbtn.setVisible(true);
         supbtn.setVisible(true);
         ajoutbtn.setVisible(false);
-        
-            c=tabeCategorie.getSelectionModel().getSelectedItem();
-           
-       nomfield.setText(c.getNom());
+
+        c = tabeCategorie.getSelectionModel().getSelectedItem();
+
+        nomfield.setText(c.getNom());
         descriptionfield.setText(c.getDescription());
         imagefield.setText(c.getImage());
-        
-        
-     
-                
-        
-        
+
     }
+
     @FXML
     private void supprimeClicked(ActionEvent event) {
-        crud=new CategorieProduit();
-        c=tabeCategorie.getSelectionModel().getSelectedItem();
+        crud = new CategorieProduit();
+        c = tabeCategorie.getSelectionModel().getSelectedItem();
         crud.supprimerCategorie(c);
         System.out.println("categorie supprimer");
-        
+
     }
 
     @FXML
     private void ModifierClicked(ActionEvent event) {
-            crud=new CategorieProduit();
-       
-     
-          c=tabeCategorie.getSelectionModel().getSelectedItem();
-          System.out.println(c);
-        
+        crud = new CategorieProduit();
+
+        c = tabeCategorie.getSelectionModel().getSelectedItem();
+        System.out.println(c);
+
         c.setNom(nomfield.getText());
         c.setDescription(descriptionfield.getText());
         c.setImage(imagefield.getText());
@@ -146,6 +139,4 @@ public class CategorieProduitController implements Initializable {
         System.out.println("categorie modifier");
     }
 
-
-    
 }
