@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import static javafx.collections.FXCollections.observableArrayList;
+import javafx.collections.ObservableList;
 
 public class CategorieServiceService {
 
@@ -69,6 +72,45 @@ public class CategorieServiceService {
             pt.execute();
         } catch (SQLException ex) {
             Logger.getLogger(CategorieServiceService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public ObservableList<String> listeCate(){
+         ObservableList<String> cc=FXCollections.observableArrayList();
+        try{
+        PreparedStatement pt=c.prepareStatement("select DISTINCT nom from categorie_Service");
+        ResultSet rs=pt.executeQuery();
+        while(rs.next()){
+           
+            cc.add(rs.getString("nom"));
+               return cc; 
+        }
+        }
+        catch(SQLException ex){
+            System.out.println("erreur: "+ex.getMessage());
+        }
+        return null;
+        
+    }
+    public void rechercherCategorie(String nom)
+    {
+        try{
+            
+        List<CategorieService> cc=new ArrayList<>();
+            PreparedStatement pt=c.prepareStatement("select * from categorie_Service where nom like %?%");
+            pt.setString(1, nom);
+            ResultSet rs=pt.executeQuery();
+            while(rs.next()){
+            System.out.println("cat: id:"+rs.getInt(1)+"nom:"+rs.getString(2)+"description:"+rs.getString(3));
+            CategorieService catS=new CategorieService(
+                    rs.getString(2),
+                    rs.getString(3)
+            );
+            cc.add(catS);
+                
+        }
+        }
+        catch(Exception e){
+            System.out.println(e);
         }
     }
 

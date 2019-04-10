@@ -27,18 +27,18 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="categorie" layoutX="52.0" layoutY="67.0" prefHeight="384.0" prefWidth="615.0">
+                        <TableView fx:id="categorie" layoutX="52.0" layoutY="67.0" prefHeight="384.0" prefWidth="675.0">
                           <columns>
-                              <TableColumn fx:id="idCatAff" onEditStart="#img" prefWidth="79.0" text="id" />
-                            <TableColumn fx:id="nomCatAff" onEditCommit="#modifierNom" prefWidth="201.0" text="nom" />
-                              <TableColumn fx:id="descriptionCatAff" onEditCommit="#modifierDescription" prefWidth="382.0" text="description" />
+                              <TableColumn fx:id="idCatAff" prefWidth="79.0" text="id" />
+                            <TableColumn fx:id="nomCatAff" onEditCommit="#modifierNom" prefWidth="101.0" text="nom" />
+                              <TableColumn fx:id="descriptionCatAff" onEditCommit="#modifierDescription" prefWidth="209.0" text="description" />
+                              <TableColumn fx:id="imageCatAff" prefWidth="209.0" text="image" />
                           </columns>
                         </TableView>
-                        <Button fx:id="supprimer" layoutX="802.0" layoutY="67.0" mnemonicParsing="false" onAction="#supprimer" prefHeight="37.0" prefWidth="87.0" style="-fx-opacity: 1;" text="supprimer" textFill="RED">
+                        <Button fx:id="supprimer" layoutX="52.0" layoutY="480.0" mnemonicParsing="false" onAction="#supprimer" prefHeight="37.0" prefWidth="87.0" style="-fx-opacity: 1;" text="supprimer" textFill="RED">
                            <font>
                               <Font size="14.0" />
                            </font></Button>
-                        <ImageView fx:id="photo" fitHeight="160.0" fitWidth="300.0" layoutX="699.0" layoutY="130.0" pickOnBounds="true" preserveRatio="true" />
                      </children></AnchorPane>
             </content>
           </Tab>
@@ -63,6 +63,33 @@
                   </AnchorPane>
             </content>
           </Tab>
+            <Tab text="Liste des Services">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="25.0" layoutY="85.0" prefHeight="36.0" prefWidth="94.0" text="Nom ">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="nomCat1" layoutX="141.0" layoutY="83.0" prefHeight="39.0" prefWidth="286.0" />
+                        <Label layoutX="7.0" layoutY="304.0" prefHeight="36.0" prefWidth="131.0" text="Description">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="ajoutCat1" layoutX="242.0" layoutY="454.0" mnemonicParsing="false" onAction="#ajouterCat" prefHeight="30.0" prefWidth="84.0" text="Ajouter" />
+                        <TextArea fx:id="descriptionCat1" layoutX="141.0" layoutY="240.0" prefHeight="200.0" prefWidth="286.0" />
+                        <Label layoutX="25.0" layoutY="168.0" prefHeight="36.0" prefWidth="94.0" text="Catégorie">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="categoS" layoutX="141.0" layoutY="173.0" onAction="#categorieService" prefHeight="38.0" prefWidth="285.0" promptText="selectionner une catégorie" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
         </tabs>
       </TabPane>
    </children>
