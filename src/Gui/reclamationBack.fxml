@@ -4,11 +4,12 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="Gui.ReclamationBackController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.ReclamationBackController">
     <fx:include fx:id="backIndex" source="backIndex.fxml" />
-   <TableView fx:id="tableReclamation" layoutX="276.0" layoutY="161.0" prefHeight="492.0" prefWidth="1017.0">
+   <TableView fx:id="tableReclamation" layoutX="276.0" layoutY="161.0" onMousePressed="#detailsReclamation" prefHeight="492.0" prefWidth="1017.0" styleClass="table">
      <columns>
        <TableColumn fx:id="UserReclamant" prefWidth="118.0" text="User reclamant" />
        <TableColumn fx:id="UserReclame" prefWidth="149.0" text="User Reclamé" />
@@ -21,4 +22,5 @@
    </TableView>
    <Label layoutX="333.0" layoutY="120.0" text="Type de reclamation : " />
    <ComboBox fx:id="typeReclamation" layoutX="500.0" layoutY="115.0" onAction="#typeReclamationSelected" prefHeight="31.0" prefWidth="175.0" />
+   <TextField fx:id="textfield" layoutX="1064.0" layoutY="115.0" />
 </AnchorPane>

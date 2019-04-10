@@ -127,5 +127,19 @@ public class BackIndexController implements Initializable {
             System.out.println(ex);
         }
     }
+    @FXML
+    private void logoutAction(ActionEvent event) { 
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/login.fxml"));
+                Parent back = fxmlLoader.load();
+                Scene scene = new Scene(back);
+
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage.show();
+                stage.setScene(scene);
+        } catch (IOException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
 }

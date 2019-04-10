@@ -6,6 +6,7 @@
 package Gui;
 
 import Entities.User;
+import Services.UserService;
 import Services.Utils;
 import java.io.File;
 import java.io.FileInputStream;
@@ -244,6 +245,21 @@ public class FrontIndexController implements Initializable {
             
         } catch (IOException ex) {
             System.out.println(ex);
+        }
+    }
+    
+    @FXML
+    private void logoutAction(ActionEvent event) { 
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/login.fxml"));
+                Parent back = fxmlLoader.load();
+                Scene scene = new Scene(back);
+
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage.show();
+                stage.setScene(scene);
+        } catch (IOException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

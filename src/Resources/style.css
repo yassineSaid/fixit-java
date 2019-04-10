@@ -63,6 +63,14 @@
 	-fx-border-color: #00AB47;
 	-fx-border-width: 1 0;
 }
+.table *.scroll-bar:horizontal *.increment-button,
+.table *.scroll-bar:horizontal *.decrement-button
+{
+     -fx-background-color: null;
+    -fx-background-radius: 0.0;
+    -fx-background-insets: 0.0;
+    -fx-padding: 0.0;
+}
 .table-langues *.scroll-bar:horizontal *.increment-button,
 .table-langues *.scroll-bar:horizontal *.decrement-button {
   -fx-background-color: null;

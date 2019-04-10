@@ -6,6 +6,7 @@
 package Gui;
 
 import Entities.CategorieService;
+import Entities.Service;
 import Entities.User;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -17,14 +18,18 @@ import Services.Connexion;
 import Services.ReclamationService;
 import java.io.File;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -33,6 +38,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.InputMethodEvent;
+import javafx.scene.input.KeyEvent;
 
 /**
  * FXML Controller class
@@ -61,7 +68,15 @@ public class AjouterCategorieServiceController implements Initializable {
     private Button supprimer;
     private CategorieService categ;
     @FXML
-    private ImageView photo;
+    private TableColumn<CategorieService,String> imageCatAff;
+    @FXML
+    private TextField nomCat1;
+    @FXML
+    private Button ajoutCat1;
+    @FXML
+    private TextArea descriptionCat1;
+    @FXML
+    private ComboBox<String> categoS;
 
     /**
      * Initializes the controller class.
@@ -69,14 +84,20 @@ public class AjouterCategorieServiceController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        
         Platform.runLater(() -> {
             try{
     Connection c=Connexion.getInstance().getCon();
     data=FXCollections.observableArrayList();
     ResultSet rs=c.createStatement().executeQuery("select * from categorie_Service");
     while(rs.next()){
-        data.add(new CategorieService(rs.getInt(1),rs.getString(2),rs.getString(3)));
+  
+        Image image1 = new Image("file:/wamp64/www/fixit/web/uploads/images/categorieService/"+rs.getString(4), 200, 100, false, false);
+        
+       // data.add(new CategorieService(rs.getInt(1),rs.getString(2),rs.getString(3),new ImageView("file:/wamp64/www/fixit/web/uploads/images/categorieService/"+rs.getString(4))));
+        data.add(new CategorieService(rs.getInt(1),rs.getString(2),rs.getString(3),new ImageView(image1)));
     }
+    imageCatAff.setCellValueFactory(new PropertyValueFactory<>("im"));
     idCatAff.setCellValueFactory(new PropertyValueFactory<>("id"));
     nomCatAff.setCellValueFactory(new PropertyValueFactory<>("nom"));
     descriptionCatAff.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -85,6 +106,10 @@ public class AjouterCategorieServiceController implements Initializable {
     descriptionCatAff.setCellFactory(TextFieldTableCell.forTableColumn());
     categorie.setItems(null);
     categorie.setItems(data);
+    ObservableList<String> list = FXCollections.observableArrayList();
+    CategorieServiceService r= new CategorieServiceService();
+    list=r.listeCate();
+    categoS.setItems(list);
     
         //Image image=new Image("file:\\Users\\SELON\\Desktop\\unnamed.png");
          
@@ -146,28 +171,20 @@ public class AjouterCategorieServiceController implements Initializable {
         cs.modifierCategorie(cat);
         
       this.initialize(null, null);
-      
-        Image image=new Image("file:\\wamp64\\www\\fixit\\web\\uploads\\images\\categorieService\\"+categorie.getSelectionModel().getSelectedItem().getImage());
-         
-        photo.setImage(image);
     }
+
 
     @FXML
-    private void img(TableColumn.CellEditEvent<CategorieService, String> event) {
-        Image image=new Image("file:\\wamp64\\www\\fixit\\web\\uploads\\images\\categorieService\\"+categorie.getSelectionModel().getSelectedItem().getImage());
-         
-        photo.setImage(image);
+    private void categorieService(ActionEvent event) {
+                ObservableList<String> list = FXCollections.observableArrayList();
+		CategorieServiceService r= new CategorieServiceService();
+		list=r.listeCate();
+		categoS.setItems(list);
     }
 
+
+  
+
    
-
-
-  
-
-    
-
-
-  
-
-    
+      
 }
