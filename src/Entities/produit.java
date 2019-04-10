@@ -7,6 +7,7 @@ package Entities;
 
 import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 
 /**
@@ -19,12 +20,12 @@ public class produit {
   private int Quantite;
   private  categorie_produit idCategorieProduit;
   private int prix;
-  private DateFormat date_exp;
+  public Timestamp date_exp;
   private User user;
   private String image;
   public produit(){}
 
-    public produit(String Nom, int Quantite, categorie_produit idCategorieProduit, int prix, DateFormat date_exp, User user, String image) {
+    public produit(String Nom, int Quantite, categorie_produit idCategorieProduit, int prix, Timestamp date_exp, User user, String image) {
         this.Nom = Nom;
         this.Quantite = Quantite;
         this.idCategorieProduit = idCategorieProduit;
@@ -74,11 +75,11 @@ public class produit {
         this.prix = prix;
     }
 
-    public DateFormat getDate_exp() {
+    public Timestamp getDate_exp() {
         return date_exp;
     }
 
-    public void setDate_exp(DateFormat date_exp) {
+    public void setDate_exp(Timestamp date_exp) {
         this.date_exp = date_exp;
     }
 

@@ -59,4 +59,9 @@ public class categorie_produit {
         this.image = image;
     }
 
+    @Override
+    public String toString() {
+        return  Nom ;
+    }
+    
 }

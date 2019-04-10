@@ -6,6 +6,7 @@
 package Gui;
 
 import Entities.User;
+import Services.UserService;
 import Services.Utils;
 import java.io.File;
 import java.io.FileInputStream;
@@ -171,15 +172,31 @@ public class FrontIndexController implements Initializable {
 
     @FXML
     private void espaceProdAction(ActionEvent event) {
+          try {
+			
+		 			 
+		 	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/ajoutProduit.fxml"));   
+		 	Parent Rec = fxmlLoader.load();          
+		 	AjoutProduitController controller = fxmlLoader.<AjoutProduitController >getController();
+		 	controller.setUser(this.getUser());
+                        Scene scene = new Scene(Rec);
+           
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.show();
+            stage.setScene(scene);
+            
+        } catch (IOException ex) {
+            System.out.println(ex);
+        }
     }
 
     @FXML
     private void espaceRecAction(ActionEvent event) {
         try {
 
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/ajouterReclamation.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/reclamationFront.fxml"));
             Parent Rec = fxmlLoader.load();
-            ajouterReclamationController controller = fxmlLoader.<ajouterReclamationController>getController();
+            reclamationFront controller = fxmlLoader.<reclamationFront>getController();
             controller.setUser(this.getUser());
             Scene scene = new Scene(Rec);
 
@@ -228,6 +245,21 @@ public class FrontIndexController implements Initializable {
             
         } catch (IOException ex) {
             System.out.println(ex);
+        }
+    }
+    
+    @FXML
+    private void logoutAction(ActionEvent event) { 
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/login.fxml"));
+                Parent back = fxmlLoader.load();
+                Scene scene = new Scene(back);
+
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage.show();
+                stage.setScene(scene);
+        } catch (IOException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

@@ -5,6 +5,7 @@ import Entities.User;
 import Entities.UserLangue;
 import Services.UserLangueService;
 import Services.UserService;
+import com.jfoenix.controls.JFXTimePicker;
 import java.io.File;
 import static java.lang.Integer.parseInt;
 import java.net.URL;
@@ -66,6 +67,8 @@ public class profilController implements Initializable {
     private ComboBox<Langue> listLangues;
     @FXML
     private Button ajouter;
+    @FXML
+    private JFXTimePicker time;
 
     public User getUser() {
 		return user;
@@ -86,6 +89,7 @@ public class profilController implements Initializable {
                         email.setText(user.getEmail());
                         loadImage();
                         afficherLanguesAction();
+                        time.set24HourView(true);
 	    });
     }    
     @FXML
