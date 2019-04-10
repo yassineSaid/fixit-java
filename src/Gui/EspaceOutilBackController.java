@@ -18,6 +18,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -44,13 +45,10 @@ public class EspaceOutilBackController implements Initializable {
     @FXML
     private TableView<CategorieOutil> table;
     @FXML
-    private TableColumn<CategorieOutil, String> id;
-    @FXML
     private TableColumn<CategorieOutil, String> nom;
     @FXML
     private TableColumn<CategorieOutil, String> logo;
 
-    private ObservableList<CategorieOutil> data;
     @FXML
     private Button supprimer;
     @FXML
@@ -59,8 +57,6 @@ public class EspaceOutilBackController implements Initializable {
     private Button ajouter;
     @FXML
     private TextField inputCategorie;
-    @FXML
-    private TableColumn<Outil, String> idOutil;
     @FXML
     private TableColumn<Outil, String> nomOutil;
     @FXML
@@ -76,7 +72,7 @@ public class EspaceOutilBackController implements Initializable {
     @FXML
     private TableColumn<Outil, String> villeOutil;
     @FXML
-    private TableColumn<Outil, String> imageOutil;
+    private TableColumn<Outil, String> image;
     @FXML
     private TableColumn<Outil, String> categorieOutil;
     @FXML
@@ -126,8 +122,11 @@ public class EspaceOutilBackController implements Initializable {
     @FXML
     private TableView<Outil> tableOutil;
     @FXML
-    private ComboBox<?> inputCategorieOutil;
-
+    private ComboBox<CategorieOutil> inputCategorieOutil;
+    @FXML
+    private TextField rechercheCategorie;
+    @FXML
+    private TextField rechercheOutil;
     /**
      * Initializes the controller class.
      */
@@ -135,6 +134,10 @@ public class EspaceOutilBackController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         Platform.runLater(() -> {
+            ObservableList<CategorieOutil> list = FXCollections.observableArrayList();
+            CategorieOutilService categorie2 = new CategorieOutilService();
+            list = categorie2.getALLCategorie();
+            inputCategorieOutil.setItems(list);
             modifier.setDisable(true);
             supprimer.setDisable(true);
             inputCategorie.setText("");
@@ -166,11 +169,11 @@ public class EspaceOutilBackController implements Initializable {
             ajouterOutil.setVisible(true);
             modifierOutil.setVisible(true);
             supprimerOutil.setVisible(true);
+            rechercheOutil.setVisible(true);
 
             Connection c = Connexion.getInstance().getCon();
-            id.setCellValueFactory(new PropertyValueFactory<CategorieOutil, String>("id"));
             nom.setCellValueFactory(new PropertyValueFactory<CategorieOutil, String>("nom"));
-            logo.setCellValueFactory(new PropertyValueFactory<CategorieOutil, String>("logo"));
+            logo.setCellValueFactory(new PropertyValueFactory<>("Im"));
 
             CategorieOutilService categorie = new CategorieOutilService();
             try {
@@ -180,12 +183,11 @@ public class EspaceOutilBackController implements Initializable {
                 Logger.getLogger(CategorieProduitController.class.getName()).log(Level.SEVERE, null, ex);
             }
             
-            idOutil.setCellValueFactory(new PropertyValueFactory<Outil, String>("id"));
             nomOutil.setCellValueFactory(new PropertyValueFactory<Outil, String>("nom"));
             dureeOutil.setCellValueFactory(new PropertyValueFactory<Outil, String>("dureeMaximale"));
-            imageOutil.setCellValueFactory(new PropertyValueFactory<Outil, String>("image"));
+            image.setCellValueFactory(new PropertyValueFactory<Outil, String>("Im"));
             prixOutil.setCellValueFactory(new PropertyValueFactory<Outil, String>("prix"));
-            addresseOutil.setCellValueFactory(new PropertyValueFactory<Outil, String>("addresse"));
+            addresseOutil.setCellValueFactory(new PropertyValueFactory<Outil, String>("adresse"));
             codePostalOutil.setCellValueFactory(new PropertyValueFactory<Outil, String>("codePostal"));
             categorieOutil.setCellValueFactory(new PropertyValueFactory<Outil, String>("nomCategorie"));
             quantiteOutil.setCellValueFactory(new PropertyValueFactory<Outil, String>("quantite"));
@@ -198,6 +200,50 @@ public class EspaceOutilBackController implements Initializable {
             } catch (SQLException ex) {
                 Logger.getLogger(CategorieProduitController.class.getName()).log(Level.SEVERE, null, ex);
             }
+            
+             ObservableList data =  table.getItems();
+            rechercheCategorie.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            if (oldValue != null && (newValue.length() < oldValue.length())) {
+                table.setItems(data);
+            }
+            String value = newValue.toLowerCase();
+            ObservableList<CategorieOutil> subentries = FXCollections.observableArrayList();
+
+            long count = table.getColumns().stream().count();
+            for (int i = 0; i < table.getItems().size(); i++) {
+                for (int j = 0; j < count; j++) {
+                    String entry = "" + table.getColumns().get(j).getCellData(i);
+                    System.out.println(entry);
+                    if (entry.toLowerCase().contains(value)) {
+                        subentries.add(table.getItems().get(i));
+                        break;
+                    }
+                }
+            }
+            table.setItems(subentries);
+        });
+            
+             ObservableList data1 =  tableOutil.getItems();
+            rechercheOutil.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            if (oldValue != null && (newValue.length() < oldValue.length())) {
+                tableOutil.setItems(data1);
+            }
+            String value = newValue.toLowerCase();
+            ObservableList<Outil> subentries = FXCollections.observableArrayList();
+
+            long count = tableOutil.getColumns().stream().count();
+            for (int i = 0; i < tableOutil.getItems().size(); i++) {
+                for (int j = 0; j < count; j++) {
+                    String entry = "" + tableOutil.getColumns().get(j).getCellData(i);
+                    System.out.println(entry);
+                    if (entry.toLowerCase().contains(value)) {
+                        subentries.add(tableOutil.getItems().get(i));
+                        break;
+                    }
+                }
+            }
+            tableOutil.setItems(subentries);
+        });
 
         });
     }
@@ -290,6 +336,7 @@ public class EspaceOutilBackController implements Initializable {
         ajouterOutil.setVisible(false);
         modifierOutil.setVisible(false);
         supprimerOutil.setVisible(false);
+        rechercheOutil.setVisible(false);
         
     }
 
@@ -319,14 +366,35 @@ public class EspaceOutilBackController implements Initializable {
         ajouterOutil.setVisible(false);
         modifierOutil.setVisible(false);
         supprimerOutil.setVisible(false);
+        rechercheOutil.setVisible(false);
     }
 
     @FXML
     private void supprimerOutilAction(ActionEvent event) {
+        
+        OutilService outil = new OutilService();
+        Outil o =  tableOutil.getSelectionModel().getSelectedItem();
+        outil.supprimerOutil(o.getId());
+        System.out.println("outil supprimer");
+        initialize(null, null);
     }
 
     @FXML
     private void confirmerAction(ActionEvent event) {
+        OutilService outil = new OutilService();
+        Outil o = new Outil();
+        o.setNom(inputNom.getText());
+        o.setImage("test");
+        o.setQuantite(Integer.parseInt(inputQuantite.getText()));
+        o.setDureeMaximale(Integer.parseInt(inputDuree.getText()));
+        o.setPrix(Integer.parseInt(inputPrix.getText()));
+        o.setCodePostal(Integer.parseInt(inputCodePostal.getText()));
+        o.setVille(inputVille.getText());
+        o.setAdresse(inputAddresse.getText());
+        o.setC(inputCategorieOutil.getValue());
+        outil.ajouterOutil(o);
+        System.out.println("outil ajoutée");
+        initialize(null, null);
     }
 
     @FXML
@@ -355,9 +423,25 @@ public class EspaceOutilBackController implements Initializable {
         ajouterOutil.setVisible(true);
         modifierOutil.setVisible(true);
         supprimerOutil.setVisible(true);
+        rechercheOutil.setVisible(true);
     }
 
     @FXML
     private void confirmerModificationAction(ActionEvent event) {
+        OutilService outil = new OutilService();
+        Outil o = new Outil();
+        o = tableOutil.getSelectionModel().getSelectedItem();
+        o.setNom(inputNom.getText());
+        o.setImage("test2");
+        o.setQuantite(Integer.parseInt(inputQuantite.getText()));
+        o.setDureeMaximale(Integer.parseInt(inputDuree.getText()));
+        o.setPrix(Integer.parseInt(inputPrix.getText()));
+        o.setCodePostal(Integer.parseInt(inputCodePostal.getText()));
+        o.setVille(inputVille.getText());
+        o.setAdresse(inputAddresse.getText());
+        o.setC(inputCategorieOutil.getValue());
+        outil.modifierOutil(o);
+        System.out.println("outil ajoutée");
+        initialize(null, null);
     }
 }

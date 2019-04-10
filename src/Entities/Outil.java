@@ -5,6 +5,8 @@
  */
 package Entities;
 
+import javafx.scene.image.ImageView;
+
 /**
  *
  * @author SL-WASSIM
@@ -21,23 +23,13 @@ public class Outil {
     private String image;
     private CategorieOutil c;
     private String nomCategorie;
+    private ImageView im;
 
-    public Outil(String nom, int quantite, int dureeMaximale, int prix, String adresse, int codePostal, String ville, String image, CategorieOutil c) {
-        this.nom = nom;
-        this.quantite = quantite;
-        this.dureeMaximale = dureeMaximale;
-        this.prix = prix;
-        this.adresse = adresse;
-        this.codePostal = codePostal;
-        this.ville = ville;
-        this.image = image;
-        this.c = c;
-        this.nomCategorie=c.getNom();
-    }
     public Outil() {
     }
+    
 
-    public Outil(int id, String nom, int quantite, int dureeMaximale, int prix, String adresse, int codePostal, String ville, String image, CategorieOutil c) {
+    public Outil(int id, String nom, int quantite, int dureeMaximale, int prix, String adresse, int codePostal, String ville, String image, CategorieOutil c, String nomCategorie, ImageView im) {
         this.id = id;
         this.nom = nom;
         this.quantite = quantite;
@@ -48,8 +40,25 @@ public class Outil {
         this.ville = ville;
         this.image = image;
         this.c = c;
-        this.nomCategorie=c.getNom();
+        this.nomCategorie = nomCategorie;
+        this.im = im;
     }
+
+    public Outil(String nom, int quantite, int dureeMaximale, int prix, String adresse, int codePostal, String ville, String image, CategorieOutil c, String nomCategorie, ImageView im) {
+        this.nom = nom;
+        this.quantite = quantite;
+        this.dureeMaximale = dureeMaximale;
+        this.prix = prix;
+        this.adresse = adresse;
+        this.codePostal = codePostal;
+        this.ville = ville;
+        this.image = image;
+        this.c = c;
+        this.nomCategorie = nomCategorie;
+        this.im = im;
+    }
+
+   
     
     
     
@@ -140,6 +149,14 @@ public class Outil {
 
     public void setNomCategorie(String nomCategorie) {
         this.nomCategorie = nomCategorie;
+    }
+
+    public ImageView getIm() {
+        return im;
+    }
+
+    public void setIm(ImageView im) {
+        this.im = im;
     }
 
    

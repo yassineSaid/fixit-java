@@ -27,11 +27,10 @@
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="table" layoutX="35.0" layoutY="104.0" onMousePressed="#itemSelected" prefHeight="359.0" prefWidth="541.0">
+                        <TableView fx:id="table" layoutX="182.0" layoutY="104.0" onMousePressed="#itemSelected" prefHeight="359.0" prefWidth="216.0" styleClass="table" stylesheets="@../Resources/style.css">
                           <columns>
-                            <TableColumn fx:id="id" prefWidth="102.0" text="id" />
-                            <TableColumn fx:id="nom" prefWidth="112.0" text="nom" />
-                              <TableColumn fx:id="logo" prefWidth="147.0" text="logo" />
+                            <TableColumn fx:id="logo" prefWidth="102.0" text="Logo" />
+                            <TableColumn fx:id="nom" prefWidth="112.0" text="Catégorie" />
                           </columns>
                         </TableView>
                         <Button fx:id="supprimer" contentDisplay="CENTER" layoutX="880.0" layoutY="362.0" mnemonicParsing="false" onAction="#supprimer" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: #FF0000;" styleClass="supprimerBack" stylesheets="@../Resources/style.css" text="Supprimer" textFill="#f8f7f7">
@@ -60,6 +59,7 @@
                               <Font name="System Bold" size="15.0" />
                            </font>
                         </Label>
+                        <TextField fx:id="rechercheCategorie" layoutX="529.0" layoutY="48.0" prefHeight="25.0" prefWidth="220.0" />
                      </children>
                   </AnchorPane>
                </content>
@@ -70,16 +70,15 @@
                      <children>
                         <TableView fx:id="tableOutil" layoutX="96.0" layoutY="73.0" onMousePressed="#itemSelectedOutil" prefHeight="377.0" prefWidth="846.0" visible="false">
                           <columns>
-                            <TableColumn fx:id="idOutil" prefWidth="75.0" text="id" />
-                            <TableColumn fx:id="nomOutil" prefWidth="75.0" text="Nom" />
-                              <TableColumn fx:id="quantiteOutil" prefWidth="75.0" text="Quantité" />
-                              <TableColumn fx:id="dureeOutil" prefWidth="75.0" text="Durée maximale" />
-                              <TableColumn fx:id="prixOutil" prefWidth="75.0" text="Prix" />
-                              <TableColumn fx:id="addresseOutil" prefWidth="75.0" text="Adresse" />
-                              <TableColumn fx:id="codePostalOutil" prefWidth="75.0" text="Code postal" />
-                              <TableColumn fx:id="villeOutil" prefWidth="75.0" text="Ville" />
-                              <TableColumn fx:id="imageOutil" prefWidth="75.0" text="Image" />
-                              <TableColumn fx:id="categorieOutil" prefWidth="75.0" text="Catégorie" />
+                            <TableColumn fx:id="image" prefWidth="150.0" text="Image" />
+                            <TableColumn fx:id="nomOutil" prefWidth="103.0" text="Nom" />
+                              <TableColumn fx:id="quantiteOutil" prefWidth="57.0" text="Quantité" />
+                              <TableColumn fx:id="dureeOutil" prefWidth="102.0" text="Durée maximale" />
+                              <TableColumn fx:id="prixOutil" prefWidth="57.0" text="Prix" />
+                              <TableColumn fx:id="addresseOutil" prefWidth="106.0" text="Adresse" />
+                              <TableColumn fx:id="codePostalOutil" prefWidth="84.0" text="Code postal" />
+                              <TableColumn fx:id="villeOutil" text="Ville" />
+                              <TableColumn fx:id="categorieOutil" prefWidth="106.0" text="Catégorie" />
                           </columns>
                         </TableView>
                         <Button fx:id="ajouterOutil" layoutX="237.0" layoutY="487.0" mnemonicParsing="false" onAction="#ajouterOutilAction" prefHeight="25.0" prefWidth="128.0" styleClass="ajouterBack" stylesheets="@../Resources/style.css" text="Ajouter" />
@@ -141,6 +140,7 @@
                         <Button fx:id="confirmerOutil" layoutX="602.0" layoutY="388.0" mnemonicParsing="false" onAction="#confirmerAction" styleClass="ajouterBack" stylesheets="@../Resources/style.css" text="Confirmer" />
                         <Button fx:id="retourOutil" layoutX="797.0" layoutY="388.0" mnemonicParsing="false" onAction="#retourAction" styleClass="supprimerBack" stylesheets="@../Resources/style.css" text="Rrtour" />
                         <Button fx:id="confirmerModificationOutil" layoutX="619.0" layoutY="388.0" mnemonicParsing="false" onAction="#confirmerModificationAction" styleClass="ajouterBack" stylesheets="@../Resources/style.css" text="Confirmer" />
+                        <TextField fx:id="rechercheOutil" layoutX="484.0" layoutY="38.0" prefHeight="25.0" prefWidth="224.0" />
                      </children>
                   </AnchorPane>
                </content></Tab>

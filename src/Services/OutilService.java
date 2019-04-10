@@ -17,6 +17,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class OutilService {
 
@@ -90,6 +92,7 @@ public class OutilService {
         String req = "select * from outils";
         ResultSet rs = st.executeQuery(req);
         while (rs.next()) {
+            Image image1 = new Image("file:/wamp64/www/fixit/web/uploads/images/Outil/"+rs.getString(9), 150, 150, false, false);
             Outil outil = new Outil();
             outil.setId(rs.getInt(1));
             outil.setNom(rs.getString(2));
@@ -100,6 +103,7 @@ public class OutilService {
             outil.setCodePostal(rs.getInt(7));
             outil.setVille(rs.getString(8));
             outil.setImage(rs.getString(9));
+            outil.setIm(new ImageView(image1));
             CategorieOutil categorie = this.getCategorieOutil(rs.getInt(10));
             outil.setC(categorie);
             outil.setNomCategorie(categorie.getNom());
