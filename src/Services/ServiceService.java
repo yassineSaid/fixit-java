@@ -13,6 +13,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import static javafx.collections.FXCollections.observableArrayList;
+import javafx.collections.ObservableList;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  *
@@ -20,17 +25,30 @@ import java.util.logging.Logger;
  */
 public class ServiceService {
     Connection c=Connexion.getInstance().getCon();
-    public void afficherService(){
+    public ObservableList<Service> afficherService(){
         try{
-        PreparedStatement pt=c.prepareStatement("select * from service");
+         ObservableList<Service> list=FXCollections.observableArrayList();
+        PreparedStatement pt=c.prepareStatement("select * from service where visible = 1");
         ResultSet rs=pt.executeQuery();
         while(rs.next()){
             System.out.println("Service: id:"+rs.getInt(1)+"nom:"+rs.getString(2)+"description:"+rs.getString(4)+"idCat"+rs.getString(7));
+            Service s=new Service();
+            s.setId(rs.getInt("id"));
+            s.setNom(rs.getString("nom"));
+            s.setDescription(rs.getString("description"));
+            s.setIdCategorieService(rs.getInt("idCategorieService"));
+            s.setNbrProviders(rs.getInt("NbrProviders"));
+            Image image1 = new Image("file:/wamp64/www/fixit/web/uploads/images/service/"+rs.getString("image_service"), 200, 100, false, false);
+            s.setIm(new ImageView(image1));
+            
+            list.add(s);
         }
+        return list;
         }
         catch(SQLException ex){
             System.out.println("erreur: "+ex.getMessage());
         }
+        return null;
     }
     public void ajouterService(Service cs){
         try {
