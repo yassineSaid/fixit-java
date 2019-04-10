@@ -79,3 +79,30 @@
   -fx-padding: 0;
   -fx-shape: null;
 }
+.ajouterBack
+{
+	-fx-background-color:  #008000;
+	-fx-text-fill: #f8f7f7;
+	-fx-font-size: 14px;
+	-fx-pref-height: 25px;
+    -fx-pref-width: 128px;
+    -fx-font-weight: bold;
+}
+.modifierBack
+{
+	-fx-background-color:   #4682B4;
+	-fx-text-fill: #f8f7f7;
+	-fx-font-size: 14px;
+	-fx-pref-height: 25px;
+    -fx-pref-width: 128px;
+    -fx-font-weight: bold;
+}
+.supprimerBack
+{
+	-fx-background-color:   #FF0000;
+	-fx-text-fill: #f8f7f7;
+	-fx-font-size: 14px;
+	-fx-pref-height: 25px;
+    -fx-pref-width: 128px;
+    -fx-font-weight: bold;
+}

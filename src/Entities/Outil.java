@@ -19,9 +19,10 @@ public class Outil {
     private int codePostal;
     private String ville;
     private String image;
-    private int idCategorieOutils;
+    private CategorieOutil c;
+    private String nomCategorie;
 
-    public Outil(String nom, int quantite, int dureeMaximale, int prix, String adresse, int codePostal, String ville, String image, int idCategorieOutils) {
+    public Outil(String nom, int quantite, int dureeMaximale, int prix, String adresse, int codePostal, String ville, String image, CategorieOutil c) {
         this.nom = nom;
         this.quantite = quantite;
         this.dureeMaximale = dureeMaximale;
@@ -30,12 +31,13 @@ public class Outil {
         this.codePostal = codePostal;
         this.ville = ville;
         this.image = image;
-        this.idCategorieOutils = idCategorieOutils;
+        this.c = c;
+        this.nomCategorie=c.getNom();
     }
     public Outil() {
     }
 
-    public Outil(int id, String nom, int quantite, int dureeMaximale, int prix, String adresse, int codePostal, String ville, String image, int idCategorieOutils) {
+    public Outil(int id, String nom, int quantite, int dureeMaximale, int prix, String adresse, int codePostal, String ville, String image, CategorieOutil c) {
         this.id = id;
         this.nom = nom;
         this.quantite = quantite;
@@ -45,7 +47,8 @@ public class Outil {
         this.codePostal = codePostal;
         this.ville = ville;
         this.image = image;
-        this.idCategorieOutils = idCategorieOutils;
+        this.c = c;
+        this.nomCategorie=c.getNom();
     }
     
     
@@ -123,13 +126,23 @@ public class Outil {
         this.image = image;
     }
 
-    public int getIdCategorieOutils() {
-        return idCategorieOutils;
+    public CategorieOutil getC() {
+        return c;
     }
 
-    public void setIdCategorieOutils(int idCategorieOutils) {
-        this.idCategorieOutils = idCategorieOutils;
+    public void setC(CategorieOutil c) {
+        this.c = c;
     }
+
+    public String getNomCategorie() {
+        return nomCategorie;
+    }
+
+    public void setNomCategorie(String nomCategorie) {
+        this.nomCategorie = nomCategorie;
+    }
+
+   
     
     
     
