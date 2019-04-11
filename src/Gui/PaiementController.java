@@ -7,14 +7,18 @@ package Gui;
 
 import Entities.User;
 import Services.UserService;
+import com.jfoenix.controls.JFXTextField;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Charge;
 import java.io.IOException;
 import java.net.URL;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -31,6 +35,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Background;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javax.swing.text.MaskFormatter;
 
 /**
  * FXML Controller class
@@ -50,8 +55,19 @@ public class PaiementController implements Initializable {
     @FXML
     private TextField montant;
     private User user;
+    private String cc="";
     @FXML
     private Label erreurDonnees;
+    @FXML
+    private Label erreurCC;
+    @FXML
+    private Label erreurMois;
+    @FXML
+    private Label erreurAnnee;
+    @FXML
+    private Label erreurCCLength;
+    @FXML
+    private Label erreurScoin;
 
     /**
      * Initializes the controller class.
@@ -59,7 +75,7 @@ public class PaiementController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Platform.runLater(() -> {
-
+            refresh();
         });
     }
 
@@ -95,9 +111,7 @@ public class PaiementController implements Initializable {
                 UserService us=new UserService();
                 us.modifierSolde(user, nbS);
                 payer.setDisable(false);
-            }
-            else
-            {
+                quitterAction(event);
             }
         } catch (StripeException e) {
             erreurDonnees.setText("Vérifiez vos données");
@@ -109,6 +123,7 @@ public class PaiementController implements Initializable {
     @FXML
     private void quitterAction(ActionEvent event) {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        
         stage.close();
     }
 
@@ -131,6 +146,24 @@ public class PaiementController implements Initializable {
         if (!Character.isDigit(ch)) {
             event.consume();
         }
+        else
+        {
+            if (tf.getId().equals("ccNumber") && tf.getText().length()==16) 
+            {
+                event.consume();
+                erreurCCLength.setVisible(true);
+            }
+            else if (tf.getId().equals("mois") && tf.getText().length()==2) 
+            {
+                event.consume();
+                erreurMois.setVisible(true);
+            }
+            else if (tf.getId().equals("annee") && tf.getText().length()==4) 
+            {
+                event.consume();
+                erreurAnnee.setVisible(true);
+            }
+        }
         //verifier((TextField) event.getSource());
     }
 
@@ -141,6 +174,54 @@ public class PaiementController implements Initializable {
         nbS = Integer.parseInt(nbScoin.getText());
         mn = nbS / 2;
         montant.setText(String.valueOf(mn) + " DT");
+    }
+
+    @FXML
+    private void formatCCAction(KeyEvent event) {
+        TextField tf=(TextField) event.getSource();
+        System.out.println(tf.getText().length());
+        if (tf.getText().length()>16) 
+        {
+            event.consume();
+        }
+    }
+    
+    private void refresh()
+    {
+        erreurCC.setVisible(false);
+        erreurCCLength.setVisible(false);
+        erreurMois.setVisible(false);
+        erreurScoin.setVisible(false);
+        erreurAnnee.setVisible(false);
+    }
+    
+    @FXML
+    private void verifierAction(ActionEvent event)
+    {
+        boolean erreur=false;
+        refresh();
+        if (ccNumber.getText().length()<16) 
+        {
+            erreurCC.setVisible(true);
+            erreur=true;
+        }
+        if (nbScoin.getText().length()<1) 
+        {
+            erreurScoin.setVisible(true);
+            erreur=true;
+        }
+        if (mois.getText().length()<1) 
+        {
+            erreurMois.setVisible(true);
+            erreur=true;
+        }
+        if (annee.getText().length()<1) 
+        {
+            erreurAnnee.setVisible(true);
+            erreur=true;
+        }
+        if (!erreur) payerAction(event);
+        
     }
 
 }

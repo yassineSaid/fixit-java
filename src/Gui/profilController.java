@@ -206,7 +206,6 @@ public class profilController implements Initializable {
 
     @FXML
     private void modifierAction(ActionEvent event) {
-        System.out.println("clicked");
         UserService us = new UserService();
         us.modifierNomPrenom(user, nom.getText(), prenom.getText());
         user = us.connect(user.getUsername());
@@ -431,25 +430,6 @@ public class profilController implements Initializable {
         }
     }
 
-    private void payer() {
-
-        Stripe.apiKey = "sk_test_rkfr2kuDbj8a7LRmarLt40W7";
-        Map<String, Object> chargeMap = new HashMap<String, Object>();
-        chargeMap.put("amount", 10000);
-        chargeMap.put("currency", "usd");
-        Map<String, Object> cardMap = new HashMap<String, Object>();
-        cardMap.put("number", "4000000000000002");
-        cardMap.put("exp_month", 12);
-        cardMap.put("exp_year", 2020);
-        chargeMap.put("card", cardMap);
-        try {
-            Charge charge = Charge.create(chargeMap);
-            System.out.println(charge);
-        } catch (StripeException e) {
-            e.printStackTrace();
-        }
-    }
-
     @FXML
     private void acheterAction(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/paiement.fxml")); 
@@ -463,5 +443,7 @@ public class profilController implements Initializable {
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
         stage.showAndWait();
+        modifierAction(event);
+        solde.setText("Vous avez "+String.valueOf(user.getSolde())+" SCoins sur votre compte");
     }
 }
