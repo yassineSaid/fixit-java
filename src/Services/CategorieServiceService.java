@@ -74,16 +74,19 @@ public class CategorieServiceService {
             Logger.getLogger(CategorieServiceService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public ObservableList<String> listeCate(){
-         ObservableList<String> cc=FXCollections.observableArrayList();
+    public ObservableList<CategorieService> listeCate(){
+         ObservableList<CategorieService> cc=FXCollections.observableArrayList();
         try{
-        PreparedStatement pt=c.prepareStatement("select DISTINCT nom from categorie_Service");
+        PreparedStatement pt=c.prepareStatement("select * from categorie_Service");
         ResultSet rs=pt.executeQuery();
         while(rs.next()){
-           
-            cc.add(rs.getString("nom"));
-               return cc; 
+            CategorieService cs=new CategorieService();
+            cs.setId(rs.getInt("id"));
+            cs.setNom(rs.getString("nom"));
+            cc.add(cs);
+               
         }
+        return cc; 
         }
         catch(SQLException ex){
             System.out.println("erreur: "+ex.getMessage());
