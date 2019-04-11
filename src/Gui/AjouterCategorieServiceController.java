@@ -6,6 +6,8 @@
 package Gui;
 
 import Entities.CategorieService;
+import Entities.Reclamation;
+import Entities.Service;
 import Entities.User;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -15,16 +17,22 @@ import Entities.User;
 import Services.CategorieServiceService;
 import Services.Connexion;
 import Services.ReclamationService;
+import Services.ServiceService;
 import java.io.File;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -33,6 +41,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.InputMethodEvent;
+import static javafx.scene.input.KeyCode.S;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 
 /**
  * FXML Controller class
@@ -50,18 +63,55 @@ public class AjouterCategorieServiceController implements Initializable {
     @FXML
     private TableColumn idCatAff;
     @FXML
-    private TableColumn<CategorieService,String> nomCatAff;
+    private TableColumn<CategorieService, String> nomCatAff;
     @FXML
     private TableColumn descriptionCatAff;
-    private CategorieServiceService cs= new CategorieServiceService();
+    private CategorieServiceService cs = new CategorieServiceService();
     @FXML
     private TableView<CategorieService> categorie;
     private ObservableList<CategorieService> data;
+    private ObservableList<Service> dataS;
     @FXML
     private Button supprimer;
     private CategorieService categ;
     @FXML
-    private ImageView photo;
+    private TableColumn<CategorieService, String> imageCatAff;
+    @FXML
+    private ComboBox<CategorieService> categoS;
+    @FXML
+    private TextField nomService;
+    @FXML
+    private Button ajoutService;
+    @FXML
+    private TextArea descriptionService;
+    @FXML
+    private TableView<Service> service;
+    @FXML
+    private TableColumn<Service, String> imageServiceAff;
+    @FXML
+    private TableColumn<Service, String> nomServiceAff;
+    @FXML
+    private TableColumn<Service, String> descriptionServiceAff;
+    @FXML
+    private TableColumn<Service, String> categorieServiceAff;
+    @FXML
+    private Button supprimerService;
+    @FXML
+    private AnchorPane ajouterCat;
+    @FXML
+    private Button ajouterC;
+    @FXML
+    private AnchorPane listCat;
+    @FXML
+    private Button retour;
+    @FXML
+    private Button retour2;
+    @FXML
+    private AnchorPane ajouterServ;
+    @FXML
+    private Button ajouterS;
+    @FXML
+    private TextField rechercherCat;
 
     /**
      * Initializes the controller class.
@@ -69,105 +119,214 @@ public class AjouterCategorieServiceController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        Platform.runLater(() -> {
-            try{
-    Connection c=Connexion.getInstance().getCon();
-    data=FXCollections.observableArrayList();
-    ResultSet rs=c.createStatement().executeQuery("select * from categorie_Service");
-    while(rs.next()){
-        data.add(new CategorieService(rs.getInt(1),rs.getString(2),rs.getString(3)));
-    }
-    idCatAff.setCellValueFactory(new PropertyValueFactory<>("id"));
-    nomCatAff.setCellValueFactory(new PropertyValueFactory<>("nom"));
-    descriptionCatAff.setCellValueFactory(new PropertyValueFactory<>("description"));
-    categorie.setEditable(true);
-    nomCatAff.setCellFactory(TextFieldTableCell.forTableColumn());
-    descriptionCatAff.setCellFactory(TextFieldTableCell.forTableColumn());
-    categorie.setItems(null);
-    categorie.setItems(data);
-    
-        //Image image=new Image("file:\\Users\\SELON\\Desktop\\unnamed.png");
-         
-        //photo.setImage(image);
-           }
-        catch(Exception e){
-            System.out.println(e);
-        }
 
-	    });
-        
-         
-    }    
-    
+        Platform.runLater(() -> {
+            ObservableList<CategorieService> list = FXCollections.observableArrayList();
+            CategorieServiceService r = new CategorieServiceService();
+            list = r.listeCate();
+            categoS.setItems(list);
+            try {
+                Connection c = Connexion.getInstance().getCon();
+                data = FXCollections.observableArrayList();
+                ResultSet rs = c.createStatement().executeQuery("select * from categorie_Service");
+                while (rs.next()) {
+
+                    Image image1 = new Image("file:/wamp64/www/fixit/web/uploads/images/categorieService/" + rs.getString(4), 200, 100, false, false);
+
+                    // data.add(new CategorieService(rs.getInt(1),rs.getString(2),rs.getString(3),new ImageView("file:/wamp64/www/fixit/web/uploads/images/categorieService/"+rs.getString(4))));
+                    data.add(new CategorieService(rs.getInt(1), rs.getString(2), rs.getString(3), new ImageView(image1)));
+                }
+                imageCatAff.setCellValueFactory(new PropertyValueFactory<>("im"));
+                idCatAff.setCellValueFactory(new PropertyValueFactory<>("id"));
+                nomCatAff.setCellValueFactory(new PropertyValueFactory<>("nom"));
+                descriptionCatAff.setCellValueFactory(new PropertyValueFactory<>("description"));
+                imageServiceAff.setCellValueFactory(new PropertyValueFactory<>("im"));
+                nomServiceAff.setCellValueFactory(new PropertyValueFactory<>("nom"));
+                descriptionServiceAff.setCellValueFactory(new PropertyValueFactory<>("description"));
+                categorieServiceAff.setCellValueFactory(new PropertyValueFactory<>("idCategorieService"));
+
+                categorie.setEditable(true);
+                nomCatAff.setCellFactory(TextFieldTableCell.forTableColumn());
+                descriptionCatAff.setCellFactory(TextFieldTableCell.forTableColumn());
+                nomServiceAff.setCellFactory(TextFieldTableCell.forTableColumn());
+                descriptionServiceAff.setCellFactory(TextFieldTableCell.forTableColumn());
+                categorie.setItems(null);
+                categorie.setItems(data);
+
+                dataS = FXCollections.observableArrayList();
+
+                ServiceService s = new ServiceService();
+                dataS = s.afficherService();
+                service.setItems(dataS);
+                service.setEditable(true);
+                supprimer.setDisable(true);
+                supprimerService.setDisable(true);
+                ObservableList dataR =  categorie.getItems();
+            rechercherCat.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            if (oldValue != null && (newValue.length() < oldValue.length())) {
+                categorie.setItems(dataR);
+            }
+            String value = newValue.toLowerCase();
+            ObservableList<CategorieService> subentries = FXCollections.observableArrayList();
+
+            long count = categorie.getColumns().stream().count();
+            for (int i = 0; i < categorie.getItems().size(); i++) {
+                for (int j = 0; j < count; j++) {
+                    String entry = "" + categorie.getColumns().get(j).getCellData(i);
+                    System.out.println(entry);
+                    if (entry.toLowerCase().contains(value)) {
+                        subentries.add(categorie.getItems().get(i));
+                        break;
+                    }
+                }
+            }
+            categorie.setItems(subentries);
+        });
+
+                //Image image=new Image("file:\\Users\\SELON\\Desktop\\unnamed.png");
+                //photo.setImage(image);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
+        });
+
+    }
+
     private User user;
+
     public User getUser() {
-		return user;
-	}
+        return user;
+    }
+
     public void setUser(User user) {
-		this.user = user;
-	}
-    
+        this.user = user;
+    }
+
     @FXML
     void ajouterCat(ActionEvent event) {
-            CategorieServiceService Cat= new CategorieServiceService();
-                CategorieService catServ = new CategorieService(nomCat.getText(),descriptionCat.getText());
-		Cat.ajouterCategorie(catServ);
+        CategorieServiceService Cat = new CategorieServiceService();
+        CategorieService catServ = new CategorieService(nomCat.getText(), descriptionCat.getText());
+        Cat.ajouterCategorie(catServ);
     }
 
     @FXML
     private void supprimer(ActionEvent event) {
-        CategorieServiceService cc =new CategorieServiceService();
+        CategorieServiceService cc = new CategorieServiceService();
         cc.supprimerCategorie(categorie.getSelectionModel().getSelectedItem().getId());
         this.initialize(null, null);
-        
+
         //categorie.getItems().remove(categorie.getSelectionModel().getSelectedItem());
-        
     }
 
     @FXML
     private void modifierNom(TableColumn.CellEditEvent<CategorieService, String> event) {
         categorie.setEditable(true);
         CategorieServiceService cs = new CategorieServiceService();
-        CategorieService cat=categorie.getSelectionModel().getSelectedItem();
+        CategorieService cat = categorie.getSelectionModel().getSelectedItem();
         cat.setNom(event.getNewValue());
         cs.modifierCategorie(cat);
-        
-      this.initialize(null, null);
-        
-    }
 
+        this.initialize(null, null);
+
+    }
 
     @FXML
     private void modifierDescription(TableColumn.CellEditEvent<CategorieService, String> event) {
         categorie.setEditable(true);
         CategorieServiceService cs = new CategorieServiceService();
-        CategorieService cat=categorie.getSelectionModel().getSelectedItem();
+        CategorieService cat = categorie.getSelectionModel().getSelectedItem();
         cat.setDescription(event.getNewValue());
         cs.modifierCategorie(cat);
-        
-      this.initialize(null, null);
-      
-        Image image=new Image("file:\\wamp64\\www\\fixit\\web\\uploads\\images\\categorieService\\"+categorie.getSelectionModel().getSelectedItem().getImage());
-         
-        photo.setImage(image);
+
+        this.initialize(null, null);
+    }
+
+
+    /*@FXML
+    private void categorieService(ActionEvent event) {
+    ObservableList<CategorieService> list = FXCollections.observableArrayList();
+    CategorieServiceService r= new CategorieServiceService();
+    list=r.listeCate();
+    categoS.setItems(list);
+    }*/
+    @FXML
+    private void ajouterService(ActionEvent event) {
+        ServiceService serv = new ServiceService();
+        CategorieService c = new CategorieService();
+        c = categoS.getValue();
+        Service s = new Service(nomService.getText(), 1, descriptionService.getText(), 0, c.getId());
+        serv.ajouterService(s);
     }
 
     @FXML
-    private void img(TableColumn.CellEditEvent<CategorieService, String> event) {
-        Image image=new Image("file:\\wamp64\\www\\fixit\\web\\uploads\\images\\categorieService\\"+categorie.getSelectionModel().getSelectedItem().getImage());
-         
-        photo.setImage(image);
+    private void supprimerService(ActionEvent event) {
+
+        ServiceService cc = new ServiceService();
+        cc.supprimerService(service.getSelectionModel().getSelectedItem().getId());
+        this.initialize(null, null);
+    }
+    @FXML
+    private void modifierNomService(TableColumn.CellEditEvent<Service, String> event) {
+        service.setEditable(true);
+        ServiceService s = new ServiceService();
+        Service serv = service.getSelectionModel().getSelectedItem();
+        serv.setNom(event.getNewValue());
+        s.modifierService(serv);
+
+        this.initialize(null, null);
     }
 
-   
+    @FXML
+    private void modifierDescriptionService(TableColumn.CellEditEvent<Service, String> event) {
+        service.setEditable(true);
+        ServiceService cs = new ServiceService();
+        Service cat = service.getSelectionModel().getSelectedItem();
+        cat.setDescription(event.getNewValue());
+        cs.modifierService(cat);
 
+        this.initialize(null, null);
+    }
 
-  
+    @FXML
+    private void ajouterC(ActionEvent event) {
+        categorie.setVisible(false);
+        supprimer.setVisible(false);
+        ajouterC.setVisible(false);
+        ajouterCat.setVisible(true);
+    }
 
-    
+    @FXML
+    private void enableButton(MouseEvent event) {
+        supprimer.setDisable(false);
+    }
 
+    @FXML
+    private void retour(ActionEvent event) {
 
-  
+        categorie.setVisible(true);
+        supprimer.setVisible(true);
+        ajouterC.setVisible(true);
+        ajouterCat.setVisible(false);
 
-    
+    }
+
+    @FXML
+    private void retour2(ActionEvent event) {
+
+        service.setVisible(true);
+        supprimerService.setVisible(true);
+        ajouterS.setVisible(true);
+        ajouterServ.setVisible(false);
+    }
+
+    @FXML
+    private void ajouterS(ActionEvent event) {
+
+        service.setVisible(false);
+        supprimerService.setVisible(false);
+        ajouterS.setVisible(false);
+        ajouterServ.setVisible(true);
+    }
+
 }

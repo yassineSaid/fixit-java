@@ -1,5 +1,7 @@
 package Entities;
 
+import javafx.scene.image.ImageView;
+
 public class Service {
     
 private int id;
@@ -9,16 +11,40 @@ private String description;
 private String image;
 private int nbrProviders;
 private int idCategorieService;
+private ImageView im;
 
     public Service() {
         
     }
-    public Service(String nom, int visible, String description, int nbrProviders, int idCategorieService) {
+    public Service(String nom, int visible, String description, int nbrProviders, int idCategorieService,ImageView im) {
         this.nom=nom;
         this.visible = visible;
         this.description = description;
         this.nbrProviders = nbrProviders;
         this.idCategorieService = idCategorieService;
+        this.im=im;
+    } 
+     public Service(String nom, int visible, String description, int nbrProviders, int idCategorieService) {
+        this.nom=nom;
+        this.visible = visible;
+        this.description = description;
+        this.nbrProviders = nbrProviders;
+        this.idCategorieService = idCategorieService;
+    } 
+    /*public Service(String nom, String description, int idCategorieService) {
+        this.nom=nom;
+        this.visible = ;
+        this.description = description;
+        this.nbrProviders = nbrProviders;
+        this.idCategorieService = idCategorieService;
+    }*/
+
+    public ImageView getIm() {
+        return im;
+    }
+
+    public void setIm(ImageView im) {
+        this.im = im;
     }
 
     /**
