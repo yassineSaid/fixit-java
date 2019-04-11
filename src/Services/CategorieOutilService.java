@@ -53,7 +53,7 @@ public class CategorieOutilService {
         String req = "select * from categorie_outils";
         ResultSet rs = st.executeQuery(req);
         while (rs.next()) {
-            Image image1 = new Image("file:/wamp64/www/fixit/web/uploads/images/categorieOutil/"+rs.getString(3), 80, 80, false, false);
+            Image image1 = new Image("file:/wamp64/www/fixit/web/uploads/images/categorieOutil/"+rs.getString(3), 120, 120, false, false);
             CategorieOutil categorie = new CategorieOutil();
             categorie.setId(rs.getInt(1));
             categorie.setNom(rs.getString(2));
