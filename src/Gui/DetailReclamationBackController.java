@@ -81,6 +81,14 @@ public class DetailReclamationBackController implements Initializable {
                 userReclamant.setText(this.reclamation.getUserReclamant().getUsername());
                 ReclamationService recServ = new ReclamationService();
                 recServ.vuReclamation(this.reclamation);
+                if(this.reclamation.getArchive()==0 && this.reclamation.getTraite()==0)
+                {
+                      traite.setVisible(true);
+                    archive.setVisible(true);
+                    traiteLb.setVisible(false);
+                    archiveLb.setVisible(false);
+                    recTraitArch.setVisible(false);
+                }
                 if(this.reclamation.getTraite()==1)
                 {
                     traite.setVisible(false);
@@ -362,7 +370,14 @@ public class DetailReclamationBackController implements Initializable {
 "</body>\n" +
 "</html>";
         MailService mailService= new MailService(this.reclamation.getUserReclamant().getEmail(),"Reclamation contre vous",mailContentReclamant);
-        mailService.sendEmail();
+        try
+        {
+          mailService.sendEmail();
+        }
+        catch(Exception ex)
+        {
+            System.out.println(ex);
+        }
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Information Dialog");
         alert.setHeaderText(null);
