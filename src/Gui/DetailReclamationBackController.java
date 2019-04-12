@@ -50,6 +50,14 @@ public class DetailReclamationBackController implements Initializable {
     private Button retour;
     
     private Reclamation reclamation;
+    @FXML
+    private Label traiteLb;
+    @FXML
+    private Label userReclamant;
+    @FXML
+    private Label recTraitArch;
+    @FXML
+    private Label archiveLb;
 
     public Reclamation getReclamation() {
         return reclamation;
@@ -65,23 +73,38 @@ public class DetailReclamationBackController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
          Platform.runLater(() -> {
-                System.out.println(this.reclamation.getUserReclamant().getEmail());
-                 System.out.println(this.reclamation.getUserReclame().getEmail());
                 dateReclamation.setText(this.reclamation.getDateReclamation().toString());
                 userReclame.setText(this.reclamation.getUserReclame().getUsername());
                 service.setText(this.reclamation.getIdServiceRealise().getNom());
                 description.setText(this.reclamation.getDescription());
                 objet.setText(this.reclamation.getObjet());
+                userReclamant.setText(this.reclamation.getUserReclamant().getUsername());
                 ReclamationService recServ = new ReclamationService();
                 recServ.vuReclamation(this.reclamation);
                 if(this.reclamation.getTraite()==1)
                 {
                     traite.setVisible(false);
+                    traiteLb.setVisible(true);
+                    archiveLb.setVisible(false);
+                    recTraitArch.setVisible(false);
                 }
                 if(this.reclamation.getArchive()==1)
                 {
+                    System.out.println("aaaa");
                     archive.setVisible(false);
+                    traiteLb.setVisible(false);
+                    archiveLb.setVisible(true);
+                    recTraitArch.setVisible(false);
                 }
+                if(this.reclamation.getArchive()==1 && this.reclamation.getTraite()==1)
+                {
+                    traite.setVisible(false);
+                    archive.setVisible(false);
+                    traiteLb.setVisible(false);
+                    archiveLb.setVisible(false);
+                    recTraitArch.setVisible(true);
+                }
+                
                 
 	    });
     }    
