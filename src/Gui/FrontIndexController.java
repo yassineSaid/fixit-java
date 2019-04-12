@@ -118,19 +118,16 @@ public class FrontIndexController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Platform.runLater(() -> {
-                if(user!=null)
-                {
-                    userName.setText(Utils.upperCaseFirst(user.getFirstname())+" "+Utils.upperCaseFirst(user.getLastname()));
-                    loadImage();
-                    
-                }
-                    
-                
-	    });
-    }    
-    @FXML
-    private void loadImage()
-    {
+            if (user != null) {
+                userName.setText(Utils.upperCaseFirst(user.getFirstname()) + " " + Utils.upperCaseFirst(user.getLastname()));
+                loadImage();
+
+            }
+
+        });
+    }
+
+    private void loadImage() {
         File currDir = new File(System.getProperty("user.dir", "."));
         System.out.println(currDir.toPath().getRoot().toString());
         if (user.getImage() != null) {
@@ -166,25 +163,21 @@ public class FrontIndexController implements Initializable {
     private void espaceServAction(ActionEvent event) {
     }
 
-    @FXML
-    private void espaceOutAction(ActionEvent event) {
-    }
-
+   
     @FXML
     private void espaceProdAction(ActionEvent event) {
-          try {
-			
-		 			 
-		 	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/ajoutProduit.fxml"));   
-		 	Parent Rec = fxmlLoader.load();          
-		 	AjoutProduitController controller = fxmlLoader.<AjoutProduitController >getController();
-		 	controller.setUser(this.getUser());
-                        Scene scene = new Scene(Rec);
-           
+        try {
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/ajoutProduit.fxml"));
+            Parent Rec = fxmlLoader.load();
+            AjoutProduitController controller = fxmlLoader.<AjoutProduitController>getController();
+            controller.setUser(this.getUser());
+            Scene scene = new Scene(Rec);
+
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.show();
             stage.setScene(scene);
-            
+
         } catch (IOException ex) {
             System.out.println(ex);
         }
@@ -228,38 +221,57 @@ public class FrontIndexController implements Initializable {
         }
 
     }
+
     @FXML
     private void espaceAvisAction(ActionEvent event) {
-         try {
-			
-		 			 
-		 	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/avisFront.fxml"));   
-		 	Parent Rec = fxmlLoader.load();          
-		 	AvisFrontController controller = fxmlLoader.<AvisFrontController>getController();
-		 	controller.setUser(this.getUser());
-                        Scene scene = new Scene(Rec);
-           
+        try {
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/avisFront.fxml"));
+            Parent Rec = fxmlLoader.load();
+            AvisFrontController controller = fxmlLoader.<AvisFrontController>getController();
+            controller.setUser(this.getUser());
+            Scene scene = new Scene(Rec);
+
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.show();
             stage.setScene(scene);
-            
+
         } catch (IOException ex) {
             System.out.println(ex);
         }
     }
-    
+
     @FXML
-    private void logoutAction(ActionEvent event) { 
+    private void logoutAction(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/login.fxml"));
-                Parent back = fxmlLoader.load();
-                Scene scene = new Scene(back);
+            Parent back = fxmlLoader.load();
+            Scene scene = new Scene(back);
 
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                stage.show();
-                stage.setScene(scene);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.show();
+            stage.setScene(scene);
         } catch (IOException ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML
+    private void espaceOutAction(ActionEvent event) {
+        try {
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/EspaceOutilFront.fxml"));
+            Parent Rec = fxmlLoader.load();
+            profilController controller = fxmlLoader.<profilController>getController();
+            controller.setUser(this.getUser());
+            Scene scene = new Scene(Rec);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.show();
+            stage.setScene(scene);
+
+        } catch (IOException ex) {
+            System.out.println(ex);
         }
     }
 }
