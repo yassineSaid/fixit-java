@@ -135,3 +135,12 @@
     -fx-text-fill: #898989;
     -fx-effect: none;
 }
+.openFile
+{
+	-fx-background-color:   #9dff70;
+	-fx-text-fill: #f8f7f7;
+	-fx-font-size: 14px;
+	-fx-pref-height: 25px;
+    -fx-pref-width: 158px;
+    -fx-font-weight: bold;
+}
