@@ -11,7 +11,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.EspaceProduitFrontController">
        <children>
-    <fx:include fx:id="frontIndex" source="frontIndex.fxml" />
+    <fx:include fx:id="frontIndex" source="FrontIndex.fxml" />
        <AnchorPane layoutX="275.0" layoutY="14.0" prefHeight="690.0" prefWidth="1300.0">
          <children>
              <TabPane fx:id="Tabwidget" layoutX="10.0" layoutY="-22.0" prefHeight="690.0" prefWidth="1016.0" tabClosingPolicy="UNAVAILABLE">
