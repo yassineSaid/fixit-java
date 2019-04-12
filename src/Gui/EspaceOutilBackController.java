@@ -10,6 +10,9 @@ import Entities.Outil;
 import Services.CategorieOutilService;
 import Services.Connexion;
 import Services.OutilService;
+import Services.UploadImage;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -34,6 +37,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
 
 /**
  * FXML Controller class
@@ -127,6 +131,13 @@ public class EspaceOutilBackController implements Initializable {
     private TextField rechercheCategorie;
     @FXML
     private TextField rechercheOutil;
+    String logooo;
+    String imageee;
+    @FXML
+    private Button openFileImage;
+    @FXML
+    private Button openFileLogo;
+
     /**
      * Initializes the controller class.
      */
@@ -141,9 +152,9 @@ public class EspaceOutilBackController implements Initializable {
             modifier.setDisable(true);
             supprimer.setDisable(true);
             inputCategorie.setText("");
-            
+
             modifierOutil.setDisable(true);
-             supprimerOutil.setDisable(true);
+            supprimerOutil.setDisable(true);
 
             nomL.setVisible(false);
             quantiteL.setVisible(false);
@@ -165,6 +176,7 @@ public class EspaceOutilBackController implements Initializable {
             confirmerOutil.setVisible(false);
             retourOutil.setVisible(false);
             confirmerModificationOutil.setVisible(false);
+            openFileImage.setVisible(false);
             tableOutil.setVisible(true);
             ajouterOutil.setVisible(true);
             modifierOutil.setVisible(true);
@@ -182,7 +194,7 @@ public class EspaceOutilBackController implements Initializable {
             } catch (SQLException ex) {
                 Logger.getLogger(CategorieProduitController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             nomOutil.setCellValueFactory(new PropertyValueFactory<Outil, String>("nom"));
             dureeOutil.setCellValueFactory(new PropertyValueFactory<Outil, String>("dureeMaximale"));
             image.setCellValueFactory(new PropertyValueFactory<Outil, String>("Im"));
@@ -200,50 +212,50 @@ public class EspaceOutilBackController implements Initializable {
             } catch (SQLException ex) {
                 Logger.getLogger(CategorieProduitController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-             ObservableList data =  table.getItems();
+
+            ObservableList data = table.getItems();
             rechercheCategorie.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            if (oldValue != null && (newValue.length() < oldValue.length())) {
-                table.setItems(data);
-            }
-            String value = newValue.toLowerCase();
-            ObservableList<CategorieOutil> subentries = FXCollections.observableArrayList();
+                if (oldValue != null && (newValue.length() < oldValue.length())) {
+                    table.setItems(data);
+                }
+                String value = newValue.toLowerCase();
+                ObservableList<CategorieOutil> subentries = FXCollections.observableArrayList();
 
-            long count = table.getColumns().stream().count();
-            for (int i = 0; i < table.getItems().size(); i++) {
-                for (int j = 0; j < count; j++) {
-                    String entry = "" + table.getColumns().get(j).getCellData(i);
-                    System.out.println(entry);
-                    if (entry.toLowerCase().contains(value)) {
-                        subentries.add(table.getItems().get(i));
-                        break;
+                long count = table.getColumns().stream().count();
+                for (int i = 0; i < table.getItems().size(); i++) {
+                    for (int j = 0; j < count; j++) {
+                        String entry = "" + table.getColumns().get(j).getCellData(i);
+                        System.out.println(entry);
+                        if (entry.toLowerCase().contains(value)) {
+                            subentries.add(table.getItems().get(i));
+                            break;
+                        }
                     }
                 }
-            }
-            table.setItems(subentries);
-        });
-            
-             ObservableList data1 =  tableOutil.getItems();
+                table.setItems(subentries);
+            });
+
+            ObservableList data1 = tableOutil.getItems();
             rechercheOutil.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            if (oldValue != null && (newValue.length() < oldValue.length())) {
-                tableOutil.setItems(data1);
-            }
-            String value = newValue.toLowerCase();
-            ObservableList<Outil> subentries = FXCollections.observableArrayList();
+                if (oldValue != null && (newValue.length() < oldValue.length())) {
+                    tableOutil.setItems(data1);
+                }
+                String value = newValue.toLowerCase();
+                ObservableList<Outil> subentries = FXCollections.observableArrayList();
 
-            long count = tableOutil.getColumns().stream().count();
-            for (int i = 0; i < tableOutil.getItems().size(); i++) {
-                for (int j = 0; j < count; j++) {
-                    String entry = "" + tableOutil.getColumns().get(j).getCellData(i);
-                    System.out.println(entry);
-                    if (entry.toLowerCase().contains(value)) {
-                        subentries.add(tableOutil.getItems().get(i));
-                        break;
+                long count = tableOutil.getColumns().stream().count();
+                for (int i = 0; i < tableOutil.getItems().size(); i++) {
+                    for (int j = 0; j < count; j++) {
+                        String entry = "" + tableOutil.getColumns().get(j).getCellData(i);
+                        System.out.println(entry);
+                        if (entry.toLowerCase().contains(value)) {
+                            subentries.add(tableOutil.getItems().get(i));
+                            break;
+                        }
                     }
                 }
-            }
-            tableOutil.setItems(subentries);
-        });
+                tableOutil.setItems(subentries);
+            });
 
         });
     }
@@ -276,8 +288,9 @@ public class EspaceOutilBackController implements Initializable {
 
         c = table.getSelectionModel().getSelectedItem();
         c.setNom(inputCategorie.getText());
-        c.setLogo("test2");
+        c.setLogo(logooo);
         categorie.modifierCategorie(c);
+        logooo = "";
         initialize(null, null);
     }
 
@@ -287,9 +300,11 @@ public class EspaceOutilBackController implements Initializable {
 
         CategorieOutil c = new CategorieOutil();
         c.setNom(inputCategorie.getText());
-        c.setLogo("test");
+        c.setLogo(logooo);
         categorie.ajouterCategorie(c);
         System.out.println("categorie ajoutée");
+        logooo = "";
+
         initialize(null, null);
     }
 
@@ -307,7 +322,8 @@ public class EspaceOutilBackController implements Initializable {
         inputVille.setText(o.getVille());
         inputDuree.setText(Integer.toString(o.getDureeMaximale()));
         inputAddresse.setText(o.getAdresse());
-        
+        inputCategorieOutil.setValue(o.getC());
+
     }
 
     @FXML
@@ -332,12 +348,13 @@ public class EspaceOutilBackController implements Initializable {
         confirmerOutil.setVisible(true);
         retourOutil.setVisible(true);
         confirmerModificationOutil.setVisible(false);
+        openFileImage.setVisible(true);
         tableOutil.setVisible(false);
         ajouterOutil.setVisible(false);
         modifierOutil.setVisible(false);
         supprimerOutil.setVisible(false);
         rechercheOutil.setVisible(false);
-        
+
     }
 
     @FXML
@@ -362,6 +379,7 @@ public class EspaceOutilBackController implements Initializable {
         confirmerOutil.setVisible(false);
         retourOutil.setVisible(true);
         confirmerModificationOutil.setVisible(true);
+        openFileImage.setVisible(true);
         tableOutil.setVisible(false);
         ajouterOutil.setVisible(false);
         modifierOutil.setVisible(false);
@@ -371,9 +389,9 @@ public class EspaceOutilBackController implements Initializable {
 
     @FXML
     private void supprimerOutilAction(ActionEvent event) {
-        
+
         OutilService outil = new OutilService();
-        Outil o =  tableOutil.getSelectionModel().getSelectedItem();
+        Outil o = tableOutil.getSelectionModel().getSelectedItem();
         outil.supprimerOutil(o.getId());
         System.out.println("outil supprimer");
         initialize(null, null);
@@ -384,7 +402,7 @@ public class EspaceOutilBackController implements Initializable {
         OutilService outil = new OutilService();
         Outil o = new Outil();
         o.setNom(inputNom.getText());
-        o.setImage("test");
+        o.setImage(imageee);
         o.setQuantite(Integer.parseInt(inputQuantite.getText()));
         o.setDureeMaximale(Integer.parseInt(inputDuree.getText()));
         o.setPrix(Integer.parseInt(inputPrix.getText()));
@@ -394,6 +412,7 @@ public class EspaceOutilBackController implements Initializable {
         o.setC(inputCategorieOutil.getValue());
         outil.ajouterOutil(o);
         System.out.println("outil ajoutée");
+        imageee="";
         initialize(null, null);
     }
 
@@ -419,6 +438,7 @@ public class EspaceOutilBackController implements Initializable {
         confirmerOutil.setVisible(false);
         retourOutil.setVisible(false);
         confirmerModificationOutil.setVisible(false);
+        openFileImage.setVisible(false);
         tableOutil.setVisible(true);
         ajouterOutil.setVisible(true);
         modifierOutil.setVisible(true);
@@ -432,7 +452,7 @@ public class EspaceOutilBackController implements Initializable {
         Outil o = new Outil();
         o = tableOutil.getSelectionModel().getSelectedItem();
         o.setNom(inputNom.getText());
-        o.setImage("test2");
+        o.setImage(imageee);
         o.setQuantite(Integer.parseInt(inputQuantite.getText()));
         o.setDureeMaximale(Integer.parseInt(inputDuree.getText()));
         o.setPrix(Integer.parseInt(inputPrix.getText()));
@@ -442,6 +462,51 @@ public class EspaceOutilBackController implements Initializable {
         o.setC(inputCategorieOutil.getValue());
         outil.modifierOutil(o);
         System.out.println("outil ajoutée");
+        imageee="";
         initialize(null, null);
+    }
+
+    @FXML
+    private void importerImage(ActionEvent event) {
+        final FileChooser fileChooser = new FileChooser();
+        File file = fileChooser.showOpenDialog(null);
+        if (file != null) {
+            
+            File currDir = new File(System.getProperty("user.dir", "."));
+        System.out.println(currDir.toPath().getRoot().toString());
+            
+            String path = currDir.toPath().getRoot().toString() + "wamp64/www/fixit/web/uploads/images/Outil/";
+            UploadImage u = new UploadImage();
+            try {
+                u.upload(file, path);
+            } catch (IOException ex) {
+                Logger.getLogger(EspaceOutilBackController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            imageee = file.getName();
+        } else {
+            System.out.println("FICHIER erroné");
+        }
+    }
+
+    @FXML
+    private void importerLogo(ActionEvent event) {
+        final FileChooser fileChooser = new FileChooser();
+        File file = fileChooser.showOpenDialog(null);
+        if (file != null) {
+            
+            File currDir = new File(System.getProperty("user.dir", "."));
+        System.out.println(currDir.toPath().getRoot().toString());
+            
+            String path = currDir.toPath().getRoot().toString() + "wamp64/www/fixit/web/uploads/images/categorieOutil/";
+            UploadImage u = new UploadImage();
+            try {
+                u.upload(file, path);
+            } catch (IOException ex) {
+                Logger.getLogger(EspaceOutilBackController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            logooo = file.getName();
+        } else {
+            System.out.println("FICHIER erroné");
+        }
     }
 }

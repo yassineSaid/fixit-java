@@ -41,6 +41,18 @@
     -fx-text-fill: red;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }
+.supprimer
+{
+    -fx-background-color: red;
+    -fx-background-radius: 8,7,6;
+    -fx-text-fill: white;
+}
+.supprimer:hover
+{
+    -fx-background-color: #ff7272;
+    -fx-background-radius: 8,7,6;
+    -fx-text-fill: white;
+}
 .menuButton
 {
 	-fx-background-color:#bfd6ad;
@@ -112,5 +124,23 @@
 	-fx-font-size: 14px;
 	-fx-pref-height: 25px;
     -fx-pref-width: 128px;
+    -fx-font-weight: bold;
+}
+.mdpOublie {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+    -fx-effect: none;
+}
+.mdpOublie:hover {
+    -fx-text-fill: #898989;
+    -fx-effect: none;
+}
+.openFile
+{
+	-fx-background-color:   #9dff70;
+	-fx-text-fill: #f8f7f7;
+	-fx-font-size: 14px;
+	-fx-pref-height: 25px;
+    -fx-pref-width: 158px;
     -fx-font-weight: bold;
 }
