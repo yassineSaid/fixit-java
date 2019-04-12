@@ -27,6 +27,12 @@ public class CategorieService {
              this.description=description;
              this.im=im;
 	}
+        public CategorieService(String nom,String description,ImageView im) {
+            
+            this.nom=nom;
+             this.description=description;
+             this.im=im;
+	}
 
     public ImageView getIm() {
         return im;

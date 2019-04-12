@@ -11,6 +11,15 @@ private String description;
 private String image;
 private int nbrProviders;
 private int idCategorieService;
+private String etat;
+
+    public String getEtat() {
+        return etat;
+    }
+
+    public void setEtat(String etat) {
+        this.etat = etat;
+    }
 private ImageView im;
 
     public Service() {
