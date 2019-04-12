@@ -174,9 +174,9 @@ public class FrontIndexController implements Initializable {
           try {
 			
 		 			 
-		 	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/ajoutProduit.fxml"));   
+		 	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/EspaceProduitFront.fxml"));   
 		 	Parent Rec = fxmlLoader.load();          
-		 	AjoutProduitController controller = fxmlLoader.<AjoutProduitController >getController();
+		 	EspaceProduitFrontController controller = fxmlLoader.<EspaceProduitFrontController >getController();
 		 	controller.setUser(this.getUser());
                         Scene scene = new Scene(Rec);
            

@@ -64,7 +64,7 @@ public class EspaceOutilBackController implements Initializable {
                 table.setItems(categorie.afficherCategorie());
                 // TODO
             } catch (SQLException ex) {
-                Logger.getLogger(CategorieProduitController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(EspaceProduitBackController.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         });

@@ -1,7 +1,15 @@
 package Entities;
 
 public class User {
-	private int id;
+
+    public int getSolde() {
+        return solde;
+    }
+
+    public void setSolde(int solde) {
+        this.solde = solde;
+    }
+	private int id,solde;
 	private String email,username,firstname,lastname,roles,image;
 	public int getId() {
 		return id;

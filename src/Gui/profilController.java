@@ -34,7 +34,6 @@ import javafx.scene.layout.AnchorPane;
  */
 public class profilController implements Initializable {
 
-    @FXML
     private FrontIndexController frontIndexController;
     @FXML
     private TabPane Tabwidget;
@@ -104,6 +103,7 @@ public class profilController implements Initializable {
         table.setItems(uls.getUserLangue(user));
         for (Langue l : table.getItems()) {
             l.getSupprimer().setOnAction(this::supprimerAction);
+            
         }
         listLangues.setItems(uls.getLangues(user));
     }
