@@ -57,9 +57,8 @@ public class MailService {
         this.messageText = messageText;
     }
     
-    public void sendEmail()
+    public void sendEmail() throws Exception
     {
-        try{
             Properties props = System.getProperties();
 
             props.put("mail.smtp.starttls.enable", "true");
@@ -83,10 +82,6 @@ public class MailService {
            transport.sendMessage(msg, msg.getAllRecipients());
            transport.close();
            System.out.println("message send successfully");
-        }catch(Exception ex)
-        {
-            System.out.println(ex);
-        }
     }
     
     
