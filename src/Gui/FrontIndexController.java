@@ -205,7 +205,7 @@ public class FrontIndexController implements Initializable {
     private void profilAction(ActionEvent event) {
         try {
 
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/profil.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/Profil.fxml"));
             Parent Rec = fxmlLoader.load();
             ProfilController controller = fxmlLoader.<ProfilController>getController();
             controller.setUser(this.getUser());
