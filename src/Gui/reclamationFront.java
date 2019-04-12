@@ -44,6 +44,7 @@ import javafx.stage.Stage;
 
 public class reclamationFront implements Initializable 
 {
+        @FXML
 	private FrontIndexController frontIndexController;
 	@FXML
 	private Tab interfaceAjout;
@@ -63,7 +64,7 @@ public class reclamationFront implements Initializable
 	private TextArea description;
 	@FXML
 	private Button ajouter_Rec;
-	
+	@FXML
 	private User user;	
         @FXML
         private Button espaceServ;
@@ -75,14 +76,13 @@ public class reclamationFront implements Initializable
         private Button espaceRec;
         @FXML
         private Label userName;
+        @FXML
         private ListView<Reclamation> listRec;
+        @FXML
         private Button modifierRec;
         private int id;
+        @FXML
         private Button supprimerRec;
-        
-        
-        
-	
 	public User getUser() {
 		return user;
 	}
@@ -93,22 +93,22 @@ public class reclamationFront implements Initializable
 	@Override
 	public void initialize(URL url, ResourceBundle rb) 
 	{
-		Platform.runLater(() -> {
-                        frontIndexController.getEspaceRec().setStyle("-fx-background-color: #f4f4f4");
-			ObservableList<User> list = FXCollections.observableArrayList();
-                        frontIndexController.setUser(user);
-                        frontIndexController.initialize(null, null);
-			ReclamationService r= new ReclamationService();
-			list=r.getusersreclamer(user.getId());	
-			userReclamer.setItems(list);
-                        serviceRendu.setItems(null);
-                        dateService.setItems(null);
-                        afficherReclamations();
-                        modifierRec.setVisible(false);
-                        supprimerRec.setVisible(false);
-                        motif.setText("");
-                        description.setText("");
-	    });
+		          Platform.runLater(() -> {
+                frontIndexController.getEspaceRec().setStyle("-fx-background-color: #f4f4f4");
+                ObservableList<User> list = FXCollections.observableArrayList();
+                frontIndexController.setUser(user);
+                frontIndexController.initialize(null, null);
+                ReclamationService r = new ReclamationService();
+                list = r.getusersreclamer(user.getId());
+                userReclamer.setItems(list);
+                serviceRendu.setItems(null);
+                dateService.setItems(null);
+                afficherReclamations();
+                modifierRec.setVisible(false);
+                supprimerRec.setVisible(false);
+                motif.setText("");
+                description.setText("");
+            });
 		
 	}
 	
@@ -159,7 +159,7 @@ public class reclamationFront implements Initializable
             list=r.afficherReclamation(this.getUser().getId());
             listRec.setItems(list);
         }
-
+    @FXML
     private void remplirChamps(MouseEvent event) {
         
         ReclamationService recServ= new ReclamationService();
@@ -203,7 +203,7 @@ public class reclamationFront implements Initializable
             
         }
     }
-
+    @FXML
     private void modifierRecAction(ActionEvent event) throws ParseException {
         ReclamationService recServ= new ReclamationService();
         User userReclame = new  User();
@@ -221,7 +221,7 @@ public class reclamationFront implements Initializable
         afficherReclamations();
         initialize(null, null);
     }
-
+    @FXML
     private void supprimerRecAction(ActionEvent event) {
         ReclamationService recServ= new ReclamationService();
         recServ.supprimerReclamation(this.id);

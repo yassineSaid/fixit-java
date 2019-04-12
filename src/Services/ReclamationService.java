@@ -157,6 +157,20 @@ public class ReclamationService {
         }
         return "aaa";
     }
+    
+     public String getUserEmail(int userId) {
+        try {
+            PreparedStatement pt = c.prepareStatement("SELECT * from User where id=?");
+            pt.setInt(1, userId);
+            ResultSet rs = pt.executeQuery();
+            while (rs.next()) {
+                return rs.getString("email");
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return "aaa";
+    }
 
     public String getServiceName(int serviceId) {
         try {
@@ -219,13 +233,14 @@ public class ReclamationService {
 
                 User u = new User();
                 u.setId(rs.getInt("userreclame"));
-                System.out.println(rs.getInt("userreclame"));
                 u.setUsername(this.getUserName(rs.getInt("userreclame")));
+                u.setEmail(this.getUserEmail(rs.getInt("userreclame")));
                 rec.setUserReclame(u);
 
                 User u1 = new User();
                 u1.setId(rs.getInt("user"));
                 u1.setUsername(this.getUserName(u1.getId()));
+                u1.setEmail(this.getUserEmail(rs.getInt("user")));
                 rec.setUserReclamant(u1);
 
                 rec.setDateReclamation(rs.getDate("DateReclamation"));
