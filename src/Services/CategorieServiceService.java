@@ -24,8 +24,8 @@ public class CategorieServiceService {
         PreparedStatement pt=c.prepareStatement("select * from categorie_Service");
         ResultSet rs=pt.executeQuery();
         while(rs.next()){
-            System.out.println("cat: id:"+rs.getInt(1)+"nom:"+rs.getString(2)+"description:"+rs.getString(3));
             CategorieService catS=new CategorieService(
+                    rs.getInt(1),
                     rs.getString(2),
                     rs.getString(3)
             );
@@ -54,10 +54,10 @@ public class CategorieServiceService {
     }
     public void modifierCategorie(CategorieService cs){
         try{
-        PreparedStatement pt=c.prepareStatement("update categorie_Service set nom=?,description=? where id = ?");
+        PreparedStatement pt=c.prepareStatement("update categorie_Service set nom=? , description=? where id=? ");
         pt.setString(1,cs.getNom());
         pt.setString(2,cs.getDescription());
-        pt.setInt(3, cs.getId());
+        pt.setInt(3,cs.getId());
         pt.executeUpdate();
         }
         catch(SQLException ex){
@@ -103,7 +103,6 @@ public class CategorieServiceService {
             pt.setString(1, nom);
             ResultSet rs=pt.executeQuery();
             while(rs.next()){
-            System.out.println("cat: id:"+rs.getInt(1)+"nom:"+rs.getString(2)+"description:"+rs.getString(3));
             CategorieService catS=new CategorieService(
                     rs.getString(2),
                     rs.getString(3)
