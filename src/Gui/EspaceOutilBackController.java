@@ -10,7 +10,7 @@ import Entities.Outil;
 import Services.CategorieOutilService;
 import Services.Connexion;
 import Services.OutilService;
-import Services.UploadImage;
+import Services.ImageService;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -476,7 +476,7 @@ public class EspaceOutilBackController implements Initializable {
         System.out.println(currDir.toPath().getRoot().toString());
             
             String path = currDir.toPath().getRoot().toString() + "wamp64/www/fixit/web/uploads/images/Outil/";
-            UploadImage u = new UploadImage();
+            ImageService u = new ImageService();
             try {
                 u.upload(file, path);
             } catch (IOException ex) {
@@ -491,6 +491,9 @@ public class EspaceOutilBackController implements Initializable {
     @FXML
     private void importerLogo(ActionEvent event) {
         final FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image", "*.jpg", "*.png")
+        );
         File file = fileChooser.showOpenDialog(null);
         if (file != null) {
             
@@ -498,7 +501,7 @@ public class EspaceOutilBackController implements Initializable {
         System.out.println(currDir.toPath().getRoot().toString());
             
             String path = currDir.toPath().getRoot().toString() + "wamp64/www/fixit/web/uploads/images/categorieOutil/";
-            UploadImage u = new UploadImage();
+            ImageService u = new ImageService();
             try {
                 u.upload(file, path);
             } catch (IOException ex) {

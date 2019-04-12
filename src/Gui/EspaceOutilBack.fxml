@@ -74,17 +74,17 @@
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="tableOutil" layoutX="96.0" layoutY="73.0" onMousePressed="#itemSelectedOutil" prefHeight="377.0" prefWidth="846.0" visible="false">
+                        <TableView fx:id="tableOutil" layoutX="62.0" layoutY="73.0" onMousePressed="#itemSelectedOutil" prefHeight="377.0" prefWidth="910.0" styleClass="table" stylesheets="@../Resources/style.css">
                           <columns>
-                            <TableColumn fx:id="image" prefWidth="150.0" text="Image" />
-                            <TableColumn fx:id="nomOutil" prefWidth="103.0" text="Nom" />
-                              <TableColumn fx:id="quantiteOutil" prefWidth="57.0" text="Quantité" />
-                              <TableColumn fx:id="dureeOutil" prefWidth="102.0" text="Durée maximale" />
-                              <TableColumn fx:id="prixOutil" prefWidth="57.0" text="Prix" />
-                              <TableColumn fx:id="addresseOutil" prefWidth="106.0" text="Adresse" />
-                              <TableColumn fx:id="codePostalOutil" prefWidth="84.0" text="Code postal" />
-                              <TableColumn fx:id="villeOutil" text="Ville" />
-                              <TableColumn fx:id="categorieOutil" prefWidth="106.0" text="Catégorie" />
+                            <TableColumn fx:id="image" prefWidth="167.0" text="Image" />
+                            <TableColumn fx:id="nomOutil" prefWidth="108.0" text="Nom" />
+                              <TableColumn fx:id="quantiteOutil" prefWidth="89.0" text="Quantité" />
+                              <TableColumn fx:id="dureeOutil" prefWidth="111.0" text="Durée maximale" />
+                              <TableColumn fx:id="prixOutil" prefWidth="66.0" text="Prix" />
+                              <TableColumn fx:id="addresseOutil" prefWidth="109.0" text="Adresse" />
+                              <TableColumn fx:id="codePostalOutil" prefWidth="82.0" text="Code postal" />
+                              <TableColumn fx:id="villeOutil" prefWidth="68.0" text="Ville" />
+                              <TableColumn fx:id="categorieOutil" prefWidth="110.0" text="Catégorie" />
                           </columns>
                         </TableView>
                         <Button fx:id="ajouterOutil" layoutX="237.0" layoutY="487.0" mnemonicParsing="false" onAction="#ajouterOutilAction" prefHeight="25.0" prefWidth="128.0" styleClass="ajouterBack" stylesheets="@../Resources/style.css" text="Ajouter" />

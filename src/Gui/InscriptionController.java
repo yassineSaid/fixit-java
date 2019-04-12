@@ -53,7 +53,9 @@ public class InscriptionController implements Initializable {
     private TextField zip_code;
     @FXML
     private TextField phone;
-    String message="";
+    String message = "";
+    @FXML
+    private Button confirmerEmail1;
 
     /**
      * Initializes the controller class.
@@ -62,66 +64,55 @@ public class InscriptionController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         Platform.runLater(() -> {
         });
-    }    
+    }
 
     @FXML
     private void inscriptionAction(ActionEvent event) {
-        UserService us=new UserService();
-        Vector<String> erreurs=new Vector<String>();
-        boolean erreur=false;
-        if (us.checkEmail(email.getText()))
-        {
-            erreur=true;
+        UserService us = new UserService();
+        Vector<String> erreurs = new Vector<String>();
+        boolean erreur = false;
+        if (us.checkEmail(email.getText())) {
+            erreur = true;
             erreurs.add("Cet email existe déjà");
         }
-        if (us.checkUsername(username.getText()))
-        {
-            erreur=true;
+        if (us.checkUsername(username.getText())) {
+            erreur = true;
             erreurs.add("Ce pseudo existe déjà");
         }
-        if (!password.getText().equals(passwordConf.getText()))
-        {
-            erreur=true;
+        if (!password.getText().equals(passwordConf.getText())) {
+            erreur = true;
             erreurs.add("Les mots de passes ne correspondent pas");
         }
-        if (password.getText().length()<4)
-        {
-            erreur=true;
+        if (password.getText().length() < 4) {
+            erreur = true;
             erreurs.add("Le mot de passe doit dépasser 4 caractères");
         }
-        if (username.getText().length()<4)
-        {
-            erreur=true;
+        if (username.getText().length() < 4) {
+            erreur = true;
             erreurs.add("Le pseudo doit dépasser 4 caractères");
         }
-        if (firstname.getText().length()==0)
-        {
-            erreur=true;
+        if (firstname.getText().length() == 0) {
+            erreur = true;
             erreurs.add("Entrez votre prenom");
         }
-        if (lastname.getText().length()==0)
-        {
-            erreur=true;
+        if (lastname.getText().length() == 0) {
+            erreur = true;
             erreurs.add("Entrez votre nom");
         }
-        if (!us.validEmail(email.getText()))
-        {
-            erreur=true;
+        if (!us.validEmail(email.getText())) {
+            erreur = true;
             erreurs.add("L'email est invalide");
         }
-        if (erreur)
-        {
-            message="";
+        if (erreur) {
+            message = "";
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Inscription");
             alert.setHeaderText(null);
-            erreurs.forEach(m -> message+=m+"\n");
+            erreurs.forEach(m -> message += m + "\n");
             alert.setContentText(message);
             alert.showAndWait();
             erreurs.clear();
-        }
-        else
-        {
+        } else {
             us.inscription(username.getText(), email.getText(), password.getText(), firstname.getText(), lastname.getText(), address.getText(), zip_code.getText(), city.getText(), phone.getText());
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Inscription");
@@ -129,16 +120,16 @@ public class InscriptionController implements Initializable {
             alert.setContentText("Votre inscription a été effectuée avec succès");
             alert.showAndWait();
             try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/login.fxml"));
-            Parent front = fxmlLoader.load();
-            LoginController controller = fxmlLoader.<LoginController>getController();
-            Scene scene = new Scene(front);
-            
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.show();
-            stage.setScene(scene);
-        } catch (IOException iOException) {
-        }
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/login.fxml"));
+                Parent front = fxmlLoader.load();
+                LoginController controller = fxmlLoader.<LoginController>getController();
+                Scene scene = new Scene(front);
+
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage.show();
+                stage.setScene(scene);
+            } catch (IOException iOException) {
+            }
         }
         //inscription(String username, String email, String password, String firstname, String lastname, String address, String zip_code, String city, int phone)
     }
@@ -153,5 +144,19 @@ public class InscriptionController implements Initializable {
         //verifier((TextField) event.getSource());
     }
 
-    
+    @FXML
+    private void annulerAction(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/login.fxml"));
+            Parent front = fxmlLoader.load();
+            LoginController controller = fxmlLoader.<LoginController>getController();
+            Scene scene = new Scene(front);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.show();
+            stage.setScene(scene);
+        } catch (IOException iOException) {
+        }
+    }
+
 }

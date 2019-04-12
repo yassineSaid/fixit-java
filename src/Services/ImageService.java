@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  *
  * @author SL-WASSIM
  */
-public class UploadImage {
+public class ImageService {
     public String upload(File file,String path) throws FileNotFoundException, IOException {
         BufferedOutputStream stream = null;
         String localPath="localhost:80/";
@@ -41,10 +41,10 @@ public class UploadImage {
             stream.close();
             return localPath+"/"+fileName;
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(UploadImage.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ImageService.class.getName()).log(Level.SEVERE, null, ex);
             return "error1";
         } catch (IOException ex) {
-            Logger.getLogger(UploadImage.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ImageService.class.getName()).log(Level.SEVERE, null, ex);
             return "error2";
         }
     }
