@@ -3,7 +3,7 @@ package Entities;
 public class User {
 
     private int id, enabled, phone, solde;
-    private String email, email_canonical, username, username_canonical, firstname, lastname, roles, image, address, zip_code, city, country;
+    private String email, email_canonical, username, username_canonical, firstname, lastname, roles, image, address, zip_code, city, country, password;
 
     public int getId() {
         return id;
@@ -132,6 +132,16 @@ public class User {
     public void setCountry(String country) {
         this.country = country;
     }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    
+    
 
     @Override
     public String toString() {

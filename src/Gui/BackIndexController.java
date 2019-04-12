@@ -58,9 +58,9 @@ public class BackIndexController implements Initializable {
     void espaceService(ActionEvent event) {
         try {
 
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/ajouterCategorieService.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/EspaceServiceBack.fxml"));
             Parent Rec = fxmlLoader.load();
-            AjouterCategorieServiceController controller = fxmlLoader.<AjouterCategorieServiceController>getController();
+            EspaceServiceController controller = fxmlLoader.<EspaceServiceController>getController();
             controller.setUser(this.getUser());
             Scene scene = new Scene(Rec);
 
