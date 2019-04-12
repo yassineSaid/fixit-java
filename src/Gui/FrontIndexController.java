@@ -262,7 +262,7 @@ public class FrontIndexController implements Initializable {
 
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/EspaceOutilFront.fxml"));
             Parent Rec = fxmlLoader.load();
-            profilController controller = fxmlLoader.<profilController>getController();
+            EspaceOutilFrontController controller = fxmlLoader.<EspaceOutilFrontController>getController();
             controller.setUser(this.getUser());
             Scene scene = new Scene(Rec);
 

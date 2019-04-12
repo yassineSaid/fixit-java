@@ -288,7 +288,9 @@ public class EspaceOutilBackController implements Initializable {
 
         c = table.getSelectionModel().getSelectedItem();
         c.setNom(inputCategorie.getText());
-        c.setLogo(logooo);
+        if (logooo != "") {
+            c.setLogo(logooo);
+        }
         categorie.modifierCategorie(c);
         logooo = "";
         initialize(null, null);
@@ -412,7 +414,7 @@ public class EspaceOutilBackController implements Initializable {
         o.setC(inputCategorieOutil.getValue());
         outil.ajouterOutil(o);
         System.out.println("outil ajoutée");
-        imageee="";
+        imageee = "";
         initialize(null, null);
     }
 
@@ -452,7 +454,9 @@ public class EspaceOutilBackController implements Initializable {
         Outil o = new Outil();
         o = tableOutil.getSelectionModel().getSelectedItem();
         o.setNom(inputNom.getText());
-        o.setImage(imageee);
+        if (imageee != "") {
+            o.setImage(imageee);
+        }
         o.setQuantite(Integer.parseInt(inputQuantite.getText()));
         o.setDureeMaximale(Integer.parseInt(inputDuree.getText()));
         o.setPrix(Integer.parseInt(inputPrix.getText()));
@@ -462,19 +466,22 @@ public class EspaceOutilBackController implements Initializable {
         o.setC(inputCategorieOutil.getValue());
         outil.modifierOutil(o);
         System.out.println("outil ajoutée");
-        imageee="";
+        imageee = "";
         initialize(null, null);
     }
 
     @FXML
     private void importerImage(ActionEvent event) {
         final FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image", "*.jpg", "*.png")
+        );
         File file = fileChooser.showOpenDialog(null);
         if (file != null) {
-            
+
             File currDir = new File(System.getProperty("user.dir", "."));
-        System.out.println(currDir.toPath().getRoot().toString());
-            
+            System.out.println(currDir.toPath().getRoot().toString());
+
             String path = currDir.toPath().getRoot().toString() + "wamp64/www/fixit/web/uploads/images/Outil/";
             ImageService u = new ImageService();
             try {
@@ -496,10 +503,10 @@ public class EspaceOutilBackController implements Initializable {
         );
         File file = fileChooser.showOpenDialog(null);
         if (file != null) {
-            
+
             File currDir = new File(System.getProperty("user.dir", "."));
-        System.out.println(currDir.toPath().getRoot().toString());
-            
+            System.out.println(currDir.toPath().getRoot().toString());
+
             String path = currDir.toPath().getRoot().toString() + "wamp64/www/fixit/web/uploads/images/categorieOutil/";
             ImageService u = new ImageService();
             try {
