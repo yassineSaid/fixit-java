@@ -121,7 +121,7 @@ public class LoginController implements Initializable {
     @FXML
     private void inscriptionAction(ActionEvent event) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/inscription.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/Inscription.fxml"));
             Parent front = fxmlLoader.load();
             InscriptionController controller = fxmlLoader.<InscriptionController>getController();
             Scene scene = new Scene(front);

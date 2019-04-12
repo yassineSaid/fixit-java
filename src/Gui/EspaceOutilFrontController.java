@@ -21,6 +21,8 @@ import javafx.scene.layout.VBox;
  * @author SL-WASSIM
  */
 public class EspaceOutilFrontController implements Initializable {
+    @FXML
+    private FrontIndexController frontIndexController;
 
     @FXML
     private VBox root;
@@ -39,6 +41,8 @@ public class EspaceOutilFrontController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Platform.runLater(() -> {
+            frontIndexController.setUser(user);
+            frontIndexController.initialize(null, null);
         Image image =new Image("file:/wamp64/www/fixit/web/uploads/images/categorieOutil/electricité", 120, 120, false, false);
          ip = new ImageView(image);
          root = new VBox(10, ip);

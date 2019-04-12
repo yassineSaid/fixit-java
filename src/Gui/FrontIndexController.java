@@ -207,7 +207,7 @@ public class FrontIndexController implements Initializable {
 
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/profil.fxml"));
             Parent Rec = fxmlLoader.load();
-            profilController controller = fxmlLoader.<profilController>getController();
+            ProfilController controller = fxmlLoader.<ProfilController>getController();
             controller.setUser(this.getUser());
             Scene scene = new Scene(Rec);
 

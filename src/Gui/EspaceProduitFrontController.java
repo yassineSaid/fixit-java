@@ -58,6 +58,8 @@ import javafx.scene.layout.HBox;
 public class EspaceProduitFrontController implements Initializable {
 
     private Produit crud;
+    @FXML
+    private FrontIndexController frontIndexController;
 
     @FXML
     private TabPane Tabwidget;
@@ -168,6 +170,10 @@ public class EspaceProduitFrontController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        Platform.runLater(() -> {
+        frontIndexController.setUser(user);
+        frontIndexController.initialize(null, null);
+        });
         afficher();
 
     }
@@ -238,16 +244,16 @@ public class EspaceProduitFrontController implements Initializable {
         ct.setUser(user);
         ct.setImage(imagefield.getText());
         ct.setPrix(Integer.parseInt(prix.getText()));
-        String s= Integer.toString(ct.getQuantite());
+        String s = Integer.toString(ct.getQuantite());
         System.out.println(s);
-        if ((ct.getNom().length()==0) || (categorieProduit.getValue() == null)||(ct.getImage().length()==0)||(s.length()==0) ){
+        if ((ct.getNom().length() == 0) || (categorieProduit.getValue() == null) || (ct.getImage().length() == 0) || (s.length() == 0)) {
             System.out.println("vérifier vos données");
         } else {
             crud.ajouterProduit(ct);
             System.out.println("categorie ajoutée");
         }
-            //crud.ajouterProduit(ct);
-            //System.out.println("categorie ajoutée");
+        //crud.ajouterProduit(ct);
+        //System.out.println("categorie ajoutée");
         //initialize();
         initialize(null, null);
 

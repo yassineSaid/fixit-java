@@ -59,7 +59,7 @@ import javafx.stage.StageStyle;
  *
  * @author Yassine
  */
-public class profilController implements Initializable {
+public class ProfilController implements Initializable {
 
     @FXML
     private FrontIndexController frontIndexController;
