@@ -5,12 +5,13 @@
  */
 package Services;
 
-import Entities.Langue;
+import Entities.Horraire;
 import Entities.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
@@ -24,27 +25,29 @@ import org.controlsfx.glyphfont.FontAwesome;
  *
  * @author Yassine
  */
-public class UserLangueService {
+public class HorraireService {
     Connection C=Connexion.getInstance().getCon();
-    public ObservableList<Langue> getUserLangue(User user)
+    public ObservableList<Horraire> getUserHorraire(User user,int jour)
     {
-        ObservableList<Langue> data;
+        ObservableList<Horraire> data;
         data=FXCollections.observableArrayList();
         PreparedStatement pt;
         try {
-            pt = C.prepareStatement("select id,libelle from user_langue,langue where idUser=? and id=idLangue");
+            pt = C.prepareStatement("select * from horraire where User=? and jour=?");
             pt.setInt(1,user.getId());
+            pt.setInt(2,jour);
             ResultSet rs=pt.executeQuery();
             while(rs.next()){
                 Button supprimer=new Button();
                 FontAwesome fs=new FontAwesome();
-                Node icon=fs.create(FontAwesome.Glyph.TRASH).color(Color.WHITE);
+                Node icon=fs.create(FontAwesome.Glyph.TRASH).color(Color.WHITE).size(10);
                 icon.setId("icon");
                 supprimer.setGraphic(icon);
-                supprimer.setText("Supprimer");
                 supprimer.getStyleClass().add("supprimer");
+                supprimer.setMinHeight(0);
+                supprimer.setMaxHeight(20);
                 supprimer.setId(rs.getString(1));
-                data.add(new Langue(rs.getInt(1),rs.getString(2),supprimer));
+                data.add(new Horraire(rs.getTime("heureDebut"),rs.getTime("heureFin"),rs.getInt("id"),rs.getInt("jour"),user.getId(),supprimer));
             }
         return data;
         } catch (SQLException ex) {
@@ -52,41 +55,37 @@ public class UserLangueService {
         }
         return null;
     }
-    public void supprimerUserLangue(int id,User user)
+    public void supprimerHorraire(int id)
     {
         try
         {
-            PreparedStatement pt=C.prepareStatement("DELETE FROM user_langue WHERE idUser=? AND idLangue=?");
-            pt.setInt(1, user.getId());
-            pt.setInt(2, id);
+            PreparedStatement pt=C.prepareStatement("DELETE FROM horraire WHERE id=?");
+            pt.setInt(1, id);
             pt.execute();
 	} catch (SQLException e) {
             e.printStackTrace();
 	}
     }
-    public ObservableList<Langue> getLangues(User user)
+    public void supprimerJour(int jour,User user)
     {
         try
         {
-            PreparedStatement pt = C.prepareStatement("select distinct id,libelle from user_langue,langue where id not in (select idLangue from user_langue where idUser=?)");
-            pt.setInt(1, user.getId());
-            ResultSet rs=pt.executeQuery();
-            ObservableList<Langue> data=FXCollections.observableArrayList();
-            while(rs.next()){
-                data.add(new Langue(rs.getInt(1),rs.getString(2),null));
-            }
-            return data;
+            PreparedStatement pt=C.prepareStatement("DELETE FROM horraire WHERE jour=? AND User=?");
+            pt.setInt(1, jour);
+            pt.setInt(2, user.getId());
+            pt.execute();
 	} catch (SQLException e) {
             e.printStackTrace();
 	}
-        return null;
     }
-    public void ajouterUserLangue(int id,User user)
+    public void ajouterHorraire(User user,Time heureDebut,Time heureFin,int jour)
     {
         try {
-            PreparedStatement pt = C.prepareStatement("INSERT INTO user_langue(idUser,idLangue) VALUES(?,?)");
-            pt.setInt(1, user.getId());
-            pt.setInt(2, id);
+            PreparedStatement pt = C.prepareStatement("INSERT INTO horraire(jour,heureDebut,heureFin,User) VALUES(?,?,?,?)");
+            pt.setInt(1, jour);
+            pt.setTime(2, heureDebut);
+            pt.setTime(3, heureFin);
+            pt.setInt(4, user.getId());
             pt.execute();
         } catch (SQLException e) {
             e.printStackTrace();

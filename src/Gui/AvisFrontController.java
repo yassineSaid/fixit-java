@@ -98,6 +98,10 @@ public class AvisFrontController implements Initializable {
 
     @FXML
     private void modifierNoteAction(ActionEvent event) {
+        AvisService avisServ= new AvisService();
+        Avis avis= new Avis(description.getText(),(int)rating.getRating(),satisfaction.getValue().toString(),this.getUser());
+        avisServ.ajouterAvis(avis);
+        initialize(null, null);
     }
     
     

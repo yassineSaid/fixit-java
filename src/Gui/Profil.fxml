@@ -1,18 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.control.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.layout.StackPane?>
+<?import com.jfoenix.controls.JFXTimePicker?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="690.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.profilController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="690.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.profilController">
    <children>
       <fx:include fx:id="frontIndex" source="frontIndex.fxml" />
-      <AnchorPane layoutX="294.0" layoutY="66.0" prefHeight="690.0" prefWidth="1007.0" />
+      <AnchorPane layoutX="294.0" layoutY="66.0" prefHeight="624.0" prefWidth="1007.0" />
       <TabPane fx:id="Tabwidget" layoutX="284.0" prefHeight="690.0" prefWidth="1016.0" tabClosingPolicy="UNAVAILABLE">
          <tabs>
             <Tab fx:id="interfaceAjout" text="Profil">
@@ -68,6 +76,21 @@
                            </font>
                         </Label>
                         <ImageView fx:id="photo" fitHeight="214.0" fitWidth="200.0" layoutX="635.0" layoutY="216.0" pickOnBounds="true" preserveRatio="true" />
+                        <Label fx:id="solde" layoutX="51.0" layoutY="546.0" text="Vous avez 0 SCoins sur votre compte">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                        <Button layoutX="497.0" layoutY="545.0" mnemonicParsing="false" onAction="#acheterAction" prefHeight="38.0" prefWidth="112.0" text="Achetez">
+                           <textFill>
+                              <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                                 <stops>
+                                    <Stop color="BLACK" />
+                                    <Stop color="WHITE" offset="1.0" />
+                                 </stops>
+                              </RadialGradient>
+                           </textFill>
+                        </Button>
                      </children>
                   </AnchorPane>
                </content>
@@ -93,6 +116,167 @@
                      </children>
                   </AnchorPane>
               </content>
+            </Tab>
+            <Tab text="Mes horraires de travail">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" stylesheets="@../Resources/style.css">
+                     <children>
+                        <Label layoutX="14.0" layoutY="81.0" text="Lundi">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="13.0" layoutY="324.0" text="Mardi">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="261.0" layoutY="81.0" text="Mercredi">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="261.0" layoutY="324.0" text="Jeudi">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="744.0" layoutY="81.0" text="Dimanche">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="508.0" layoutY="324.0" text="Samedi">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="508.0" layoutY="81.0" text="Vendredi">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <TableView fx:id="lundiTab" layoutX="14.0" layoutY="111.0" prefHeight="200.0" prefWidth="200.0">
+                          <columns>
+                              <TableColumn fx:id="deb1" prefWidth="75.0" text="Début" />
+                            <TableColumn fx:id="fin1" prefWidth="75.0" text="Fin" />
+                            <TableColumn fx:id="supp1" prefWidth="49.0" />
+                          </columns>
+                        </TableView>
+                        <TableView fx:id="mardiTab" layoutX="14.0" layoutY="354.0" prefHeight="200.0" prefWidth="200.0">
+                           <columns>
+                              <TableColumn fx:id="deb2" prefWidth="75.0" text="Début" />
+                              <TableColumn fx:id="fin2" prefWidth="75.0" text="Fin" />
+                              <TableColumn fx:id="supp2" prefWidth="49.0" />
+                           </columns>
+                        </TableView>
+                        <TableView fx:id="mercrediTab" layoutX="261.0" layoutY="111.0" prefHeight="200.0" prefWidth="200.0">
+                           <columns>
+                              <TableColumn fx:id="deb3" prefWidth="75.0" style="-fx-alignment: CENTER_LEFT;" text="Début" />
+                              <TableColumn fx:id="fin3" prefWidth="75.0" text="Fin" />
+                              <TableColumn fx:id="supp3" prefWidth="49.0" />
+                           </columns>
+                        </TableView>
+                        <TableView fx:id="jeudiTab" layoutX="261.0" layoutY="354.0" prefHeight="200.0" prefWidth="200.0">
+                           <columns>
+                              <TableColumn fx:id="deb4" prefWidth="75.0" text="Début" />
+                              <TableColumn fx:id="fin4" prefWidth="75.0" text="Fin" />
+                              <TableColumn fx:id="supp4" prefWidth="49.0" />
+                           </columns>
+                        </TableView>
+                        <TableView fx:id="vendrediTab" layoutX="508.0" layoutY="111.0" prefHeight="200.0" prefWidth="200.0">
+                           <columns>
+                              <TableColumn fx:id="deb5" prefWidth="75.0" text="Début" />
+                              <TableColumn fx:id="fin5" prefWidth="75.0" text="Fin" />
+                              <TableColumn fx:id="supp5" prefWidth="49.0" />
+                           </columns>
+                        </TableView>
+                        <TableView fx:id="dimancheTab" layoutX="744.0" layoutY="111.0" prefHeight="200.0" prefWidth="200.0">
+                           <columns>
+                              <TableColumn fx:id="deb0" prefWidth="75.0" text="Début" />
+                              <TableColumn fx:id="fin0" prefWidth="75.0" text="Fin" />
+                              <TableColumn fx:id="supp0" prefWidth="49.0" />
+                           </columns>
+                        </TableView>
+                        <TableView fx:id="samediTab" layoutX="508.0" layoutY="354.0" prefHeight="200.0" prefWidth="200.0">
+                           <columns>
+                              <TableColumn fx:id="deb6" prefWidth="75.0" text="Début" />
+                              <TableColumn fx:id="fin6" prefWidth="75.0" text="Fin" />
+                              <TableColumn fx:id="supp6" prefWidth="49.0" />
+                           </columns>
+                        </TableView>
+                        <JFXTimePicker fx:id="heureDebut" layoutX="259.0" layoutY="575.0" />
+                        <JFXTimePicker fx:id="heureFin" layoutX="514.0" layoutY="575.0" />
+                        <ComboBox fx:id="listJours" layoutX="14.0" layoutY="575.0" prefHeight="31.0" prefWidth="199.0" />
+                        <Label layoutX="222.0" layoutY="576.0" text="De">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="480.0" layoutY="576.0" text="À">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <Button layoutX="744.0" layoutY="576.0" mnemonicParsing="false" onAction="#ajouterHorraireAction" text="Ajouter" />
+                        <CheckBox fx:id="rep1" layoutX="121.0" layoutY="88.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#reposAction" text="Jour de repos">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </CheckBox>
+                        <CheckBox fx:id="rep3" layoutX="368.0" layoutY="88.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#reposAction" text="Jour de repos">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </CheckBox>
+                        <CheckBox fx:id="rep5" layoutX="615.0" layoutY="88.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#reposAction" text="Jour de repos">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </CheckBox>
+                        <CheckBox fx:id="rep0" layoutX="851.0" layoutY="88.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#reposAction" text="Jour de repos">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </CheckBox>
+                        <CheckBox fx:id="rep2" layoutX="121.0" layoutY="331.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#reposAction" text="Jour de repos">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </CheckBox>
+                        <CheckBox fx:id="rep4" layoutX="368.0" layoutY="331.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#reposAction" text="Jour de repos">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </CheckBox>
+                        <CheckBox fx:id="rep6" layoutX="615.0" layoutY="331.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#reposAction" text="Jour de repos">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </CheckBox>
+                        <Label fx:id="erreurJour" layoutX="15.0" layoutY="607.0" textFill="RED">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="erreurHeure1" layoutX="233.0" layoutY="607.0" textFill="RED">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="erreurHeureFin" layoutX="514.0" layoutY="607.0" textFill="RED">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="erreurHorraire" layoutX="833.0" layoutY="578.0" textFill="RED">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+               </content>
             </Tab>
          </tabs>
       </TabPane>

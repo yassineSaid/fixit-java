@@ -41,6 +41,18 @@
     -fx-text-fill: red;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }
+.supprimer
+{
+    -fx-background-color: red;
+    -fx-background-radius: 8,7,6;
+    -fx-text-fill: white;
+}
+.supprimer:hover
+{
+    -fx-background-color: #ff7272;
+    -fx-background-radius: 8,7,6;
+    -fx-text-fill: white;
+}
 .menuButton
 {
 	-fx-background-color:#bfd6ad;
@@ -63,6 +75,14 @@
 	-fx-border-color: #00AB47;
 	-fx-border-width: 1 0;
 }
+.table 
+{
+        -fx-base: transparent;
+     -fx-background-color: transparent;
+    -fx-background-radius: 0.0;
+    -fx-background-insets: 0.0;
+    -fx-padding: 0.0;
+}
 .table-langues *.scroll-bar:horizontal *.increment-button,
 .table-langues *.scroll-bar:horizontal *.decrement-button {
   -fx-background-color: null;
@@ -78,4 +98,49 @@
   -fx-background-insets: 0;
   -fx-padding: 0;
   -fx-shape: null;
+}
+.ajouterBack
+{
+	-fx-background-color:  #008000;
+	-fx-text-fill: #f8f7f7;
+	-fx-font-size: 14px;
+	-fx-pref-height: 25px;
+    -fx-pref-width: 128px;
+    -fx-font-weight: bold;
+}
+.modifierBack
+{
+	-fx-background-color:   #4682B4;
+	-fx-text-fill: #f8f7f7;
+	-fx-font-size: 14px;
+	-fx-pref-height: 25px;
+    -fx-pref-width: 128px;
+    -fx-font-weight: bold;
+}
+.supprimerBack
+{
+	-fx-background-color:   #FF0000;
+	-fx-text-fill: #f8f7f7;
+	-fx-font-size: 14px;
+	-fx-pref-height: 25px;
+    -fx-pref-width: 128px;
+    -fx-font-weight: bold;
+}
+.mdpOublie {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+    -fx-effect: none;
+}
+.mdpOublie:hover {
+    -fx-text-fill: #898989;
+    -fx-effect: none;
+}
+.openFile
+{
+	-fx-background-color:   #9dff70;
+	-fx-text-fill: #f8f7f7;
+	-fx-font-size: 14px;
+	-fx-pref-height: 25px;
+    -fx-pref-width: 158px;
+    -fx-font-weight: bold;
 }

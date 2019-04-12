@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import javafx.scene.text.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" style="-fx-background-color: #CCCCCC;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.EspaceOutilBackController">
+<AnchorPane id="AnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" style="-fx-background-color: #CCCCCC;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.EspaceOutilBackController">
    <children>
              <fx:include fx:id="backIndex" source="backIndex.fxml" />
       <ImageView fitHeight="541.0" fitWidth="694.0" layoutX="569.0" layoutY="116.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.2;">
@@ -27,14 +32,13 @@
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="table" layoutX="35.0" layoutY="104.0" prefHeight="359.0" prefWidth="541.0">
+                        <TableView fx:id="table" layoutX="14.0" layoutY="80.0" onMousePressed="#itemSelected" prefHeight="407.0" prefWidth="534.0" styleClass="table" stylesheets="@../Resources/style.css">
                           <columns>
-                            <TableColumn fx:id="id" prefWidth="102.0" text="id" />
-                            <TableColumn fx:id="nom" prefWidth="112.0" text="nom" />
-                              <TableColumn fx:id="logo" prefWidth="147.0" text="logo" />
+                            <TableColumn fx:id="logo" prefWidth="254.0" text="Logo" />
+                            <TableColumn fx:id="nom" prefWidth="279.0" text="Catégorie" />
                           </columns>
                         </TableView>
-                        <Button contentDisplay="CENTER" layoutX="880.0" layoutY="362.0" mnemonicParsing="false" onAction="#supprimer" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: #FF0000;" text="Supprimer" textFill="#f8f7f7">
+                        <Button fx:id="supprimer" contentDisplay="CENTER" layoutX="880.0" layoutY="362.0" mnemonicParsing="false" onAction="#supprimer" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: #FF0000;" styleClass="supprimerBack" stylesheets="@../Resources/style.css" text="Supprimer" textFill="#f8f7f7">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
@@ -44,13 +48,13 @@
                               <Font name="System Bold" size="15.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="767.0" layoutY="143.0" />
-                        <Button contentDisplay="CENTER" layoutX="742.0" layoutY="362.0" mnemonicParsing="false" onAction="#supprimer" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: #4682B4;" text="Modifier" textFill="#f8f7f7">
+                        <TextField fx:id="inputCategorie" layoutX="767.0" layoutY="143.0" prefHeight="25.0" prefWidth="160.0" />
+                        <Button fx:id="modifier" contentDisplay="CENTER" layoutX="742.0" layoutY="362.0" mnemonicParsing="false" onAction="#modifier" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: #4682B4;" styleClass="modifierBack" stylesheets="@../Resources/style.css" text="Modifier" textFill="#f8f7f7">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Button>
-                        <Button contentDisplay="CENTER" layoutX="603.0" layoutY="362.0" mnemonicParsing="false" onAction="#supprimer" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: #008000;" text="Ajouter" textFill="#f8f7f7">
+                        <Button fx:id="ajouter" contentDisplay="CENTER" layoutX="603.0" layoutY="362.0" mnemonicParsing="false" onAction="#ajouter" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: #008000;" styleClass="ajouterBack" stylesheets="@../Resources/style.css" text="Ajouter" textFill="#f8f7f7">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
@@ -60,11 +64,93 @@
                               <Font name="System Bold" size="15.0" />
                            </font>
                         </Label>
+                        <TextField fx:id="rechercheCategorie" layoutX="529.0" layoutY="48.0" prefHeight="25.0" prefWidth="220.0" />
+                        <Button fx:id="openFileLogo" layoutX="767.0" layoutY="203.0" mnemonicParsing="false" onAction="#importerLogo" prefHeight="30.0" prefWidth="174.0" styleClass="openFile" stylesheets="@../Resources/style.css" text="Importer un logo" />
                      </children>
                   </AnchorPane>
                </content>
             </Tab>
-          <Tab text="Outils" />
+          <Tab text="Outils">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="tableOutil" layoutX="62.0" layoutY="73.0" onMousePressed="#itemSelectedOutil" prefHeight="377.0" prefWidth="910.0" styleClass="table" stylesheets="@../Resources/style.css">
+                          <columns>
+                            <TableColumn fx:id="image" prefWidth="167.0" text="Image" />
+                            <TableColumn fx:id="nomOutil" prefWidth="108.0" text="Nom" />
+                              <TableColumn fx:id="quantiteOutil" prefWidth="89.0" text="Quantité" />
+                              <TableColumn fx:id="dureeOutil" prefWidth="111.0" text="Durée maximale" />
+                              <TableColumn fx:id="prixOutil" prefWidth="66.0" text="Prix" />
+                              <TableColumn fx:id="addresseOutil" prefWidth="109.0" text="Adresse" />
+                              <TableColumn fx:id="codePostalOutil" prefWidth="82.0" text="Code postal" />
+                              <TableColumn fx:id="villeOutil" prefWidth="68.0" text="Ville" />
+                              <TableColumn fx:id="categorieOutil" prefWidth="110.0" text="Catégorie" />
+                          </columns>
+                        </TableView>
+                        <Button fx:id="ajouterOutil" layoutX="237.0" layoutY="487.0" mnemonicParsing="false" onAction="#ajouterOutilAction" prefHeight="25.0" prefWidth="128.0" styleClass="ajouterBack" stylesheets="@../Resources/style.css" text="Ajouter" />
+                        <Button fx:id="modifierOutil" layoutX="455.0" layoutY="487.0" mnemonicParsing="false" onAction="#modifierOutilAction" styleClass="modifierBack" stylesheets="@../Resources/style.css" text="Modifier" />
+                        <Button fx:id="supprimerOutil" layoutX="669.0" layoutY="487.0" mnemonicParsing="false" onAction="#supprimerOutilAction" styleClass="supprimerBack" stylesheets="@../Resources/style.css" text="Supprimer" />
+                        <Label fx:id="nomL" layoutX="107.0" layoutY="117.0" prefHeight="17.0" prefWidth="77.0" text="Nom :">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="quantiteL" layoutX="107.0" layoutY="167.0" prefHeight="21.0" prefWidth="85.0" text="Quantitée :">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="addresseL" layoutX="481.0" layoutY="117.0" prefHeight="17.0" prefWidth="77.0" text="Addresse :">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="dureeL" layoutX="107.0" layoutY="231.0" prefHeight="21.0" prefWidth="174.0" text="Durée maximale(j(s)) :">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="codePostalL" layoutX="481.0" layoutY="167.0" prefHeight="21.0" prefWidth="110.0" text="Code postal :">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="villeL" layoutX="481.0" layoutY="231.0" prefHeight="17.0" prefWidth="77.0" text="Ville :">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="categorieL" layoutX="481.0" layoutY="284.0" prefHeight="17.0" prefWidth="77.0" text="Catégorie :">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="prixL" layoutX="107.0" layoutY="284.0" prefHeight="17.0" prefWidth="77.0" text="Prix :">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="imageL" layoutX="107.0" layoutY="333.0" prefHeight="17.0" prefWidth="77.0" text="Image :">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="inputNom" layoutX="281.0" layoutY="115.0" />
+                        <TextField fx:id="inputQuantite" layoutX="281.0" layoutY="165.0" />
+                        <TextField fx:id="inputDuree" layoutX="281.0" layoutY="229.0" />
+                        <TextField fx:id="inputPrix" layoutX="281.0" layoutY="282.0" />
+                        <TextField fx:id="inputAddresse" layoutX="628.0" layoutY="115.0" />
+                        <TextField fx:id="inputCodePostal" layoutX="628.0" layoutY="165.0" />
+                        <TextField fx:id="inputVille" layoutX="628.0" layoutY="229.0" />
+                        <ComboBox fx:id="inputCategorieOutil" layoutX="628.0" layoutY="282.0" prefWidth="150.0" />
+                        <Button fx:id="confirmerOutil" layoutX="602.0" layoutY="388.0" mnemonicParsing="false" onAction="#confirmerAction" styleClass="ajouterBack" stylesheets="@../Resources/style.css" text="Confirmer" />
+                        <Button fx:id="retourOutil" layoutX="797.0" layoutY="388.0" mnemonicParsing="false" onAction="#retourAction" styleClass="supprimerBack" stylesheets="@../Resources/style.css" text="Rrtour" />
+                        <Button fx:id="confirmerModificationOutil" layoutX="619.0" layoutY="388.0" mnemonicParsing="false" onAction="#confirmerModificationAction" styleClass="ajouterBack" stylesheets="@../Resources/style.css" text="Confirmer" />
+                        <TextField fx:id="rechercheOutil" layoutX="484.0" layoutY="38.0" prefHeight="25.0" prefWidth="224.0" />
+                        <Button fx:id="openFileImage" layoutX="281.0" layoutY="331.0" mnemonicParsing="false" onAction="#importerImage" styleClass="openFile" stylesheets="@../Resources/style.css" text="Importer une image" />
+                     </children>
+                  </AnchorPane>
+               </content></Tab>
         </tabs>
       </TabPane>
    </children>

@@ -1,0 +1,10 @@
+.logout {
+    -fx-background-color: red;
+    -fx-background-insets: 0,1,2;
+    -fx-text-fill: white;
+}
+.logout:hover {
+    -fx-background-color: #f95e5e;
+    -fx-background-insets: 0,1,2;
+    -fx-text-fill: white;
+}
