@@ -126,3 +126,12 @@
     -fx-pref-width: 128px;
     -fx-font-weight: bold;
 }
+.mdpOublie {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+    -fx-effect: none;
+}
+.mdpOublie:hover {
+    -fx-text-fill: #898989;
+    -fx-effect: none;
+}

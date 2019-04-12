@@ -33,7 +33,7 @@ import javafx.stage.Stage;
  * @author lenovo
  */
 public class LoginController implements Initializable {
-
+    
     @FXML
     private Button connexion;
     @FXML
@@ -42,6 +42,10 @@ public class LoginController implements Initializable {
     private PasswordField password;
     @FXML
     private Label errot;
+    @FXML
+    private Button connexion1;
+    @FXML
+    private Button inscription;
 
     /**
      * Initializes the controller class.
@@ -49,9 +53,9 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         errot.setVisible(false);
-
+        
     }
-
+    
     @FXML
     private void connexionAction(ActionEvent event) {
         errot.setVisible(false);
@@ -61,11 +65,11 @@ public class LoginController implements Initializable {
             try {
                 User U = us.connect(login.getText());
                 if (U.getRoles() == "admin") {
-
+                    
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/backIndex.fxml"));
                     Parent back = fxmlLoader.load();
                     Scene scene = new Scene(back);
-
+                    
                     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     stage.show();
                     stage.setScene(scene);
@@ -76,12 +80,12 @@ public class LoginController implements Initializable {
                     FrontIndexController controller = fxmlLoader.<FrontIndexController>getController();
                     controller.setUser(U);
                     Scene scene = new Scene(front);
-
+                    
                     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     stage.show();
                     stage.setScene(scene);
                 }
-
+                
             } catch (IOException ex) {
                 Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -90,13 +94,43 @@ public class LoginController implements Initializable {
             errot.setVisible(true);
         }
     }
-
+    
     @FXML
     private void keyPressed(KeyEvent event) {
         if (event.getCode().equals(KeyCode.ENTER)) {
-            ActionEvent ae=new ActionEvent(event.getSource(),event.getTarget());
+            ActionEvent ae = new ActionEvent(event.getSource(), event.getTarget());
             connexionAction(ae);
         }
     }
-
+    
+    @FXML
+    private void mdpOublieAction(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/MdpOublie.fxml"));
+            Parent front = fxmlLoader.load();
+            MdpOublieController controller = fxmlLoader.<MdpOublieController>getController();
+            Scene scene = new Scene(front);
+            
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.show();
+            stage.setScene(scene);
+        } catch (IOException iOException) {
+        }
+    }
+    
+    @FXML
+    private void inscriptionAction(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/inscription.fxml"));
+            Parent front = fxmlLoader.load();
+            InscriptionController controller = fxmlLoader.<InscriptionController>getController();
+            Scene scene = new Scene(front);
+            
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.show();
+            stage.setScene(scene);
+        } catch (IOException iOException) {
+        }
+    }
+    
 }
