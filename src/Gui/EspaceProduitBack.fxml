@@ -10,7 +10,7 @@
 
 <AnchorPane id="AnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" style="-fx-background-color: #CCCCCC;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.EspaceProduitBackController">
    <children>
-       <fx:include fx:id="backIndex" source="backIndex.fxml" />
+       <fx:include fx:id="backIndex" source="BackIndex.fxml" />
       <Label layoutX="629.0" layoutY="41.0" prefHeight="51.0" prefWidth="469.0" text="Bienvenue sur FIXIT" textFill="#00ab47">
          <font>
             <Font size="52.0" />

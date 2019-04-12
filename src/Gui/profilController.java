@@ -57,6 +57,7 @@ import javafx.stage.StageStyle;
  */
 public class profilController implements Initializable {
 
+    @FXML
     private FrontIndexController frontIndexController;
     @FXML
     private TabPane Tabwidget;
@@ -186,6 +187,8 @@ public class profilController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Platform.runLater(() -> {
+            
+                
             frontIndexController.setUser(user);
             frontIndexController.initialize(null, null);
             frontIndexController.getProfil().setStyle("-fx-background-color: #f4f4f4");

@@ -19,7 +19,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="690.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.profilController">
    <children>
-      <fx:include fx:id="frontIndex" source="frontIndex.fxml" />
+      <fx:include fx:id="frontIndex" source="FrontIndex.fxml" />
       <AnchorPane layoutX="294.0" layoutY="66.0" prefHeight="624.0" prefWidth="1007.0" />
       <TabPane fx:id="Tabwidget" layoutX="284.0" prefHeight="690.0" prefWidth="1016.0" tabClosingPolicy="UNAVAILABLE">
          <tabs>
