@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
-<?import javafx.scene.image.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" style="-fx-background-color: #CCCCCC;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.EspaceServiceController">
+<AnchorPane id="AnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" style="-fx-background-color: #CCCCCC;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.EspaceServiceController">
     <children>
         <fx:include fx:id="backIndex" source="backIndex.fxml" />
       <ImageView fitHeight="541.0" fitWidth="694.0" layoutX="569.0" layoutY="116.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.2;">
@@ -25,16 +31,16 @@
         <tabs>
           <Tab text="Liste des Catégories">
             <content>
-              <AnchorPane fx:id="listCat" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <AnchorPane fx:id="listCat" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="mo">
                      <children>
-                        <TableView fx:id="categorie" layoutX="118.0" layoutY="96.0" onMousePressed="#enableButton" prefHeight="353.0" prefWidth="529.0">
+                        <TableView fx:id="categorie" layoutX="21.0" layoutY="101.0" onMousePressed="#itemSelected" prefHeight="353.0" prefWidth="529.0">
                           <columns>
                               <TableColumn fx:id="imageCatAff" prefWidth="209.0" text="image" />
-                            <TableColumn fx:id="nomCatAff" onEditCommit="#modifierNom" prefWidth="101.0" text="nom" />
-                              <TableColumn fx:id="descriptionCatAff" onEditCommit="#modifierDescription" prefWidth="218.0" text="description" />
+                            <TableColumn fx:id="nomCatAff" prefWidth="101.0" text="nom" />
+                              <TableColumn fx:id="descriptionCatAff" prefWidth="218.0" text="description" />
                           </columns>
                         </TableView>
-                        <Button fx:id="supprimer" disable="true" layoutX="357.0" layoutY="480.0" mnemonicParsing="false" onAction="#supprimer" prefHeight="37.0" prefWidth="87.0" style="-fx-opacity: 1;" styleClass="supprimerBack" stylesheets="@../Resources/style.css" text="supprimer" textFill="RED">
+                        <Button fx:id="supprimer" layoutX="868.0" layoutY="467.0" mnemonicParsing="false" onAction="#supprimer" prefHeight="37.0" prefWidth="87.0" style="-fx-opacity: 1;" styleClass="supprimerBack" stylesheets="@../Resources/style.css" text="supprimer" textFill="RED">
                            <font>
                               <Font size="14.0" />
                            </font></Button>
@@ -56,38 +62,25 @@
                               <Button fx:id="retour" layoutX="34.0" layoutY="14.0" mnemonicParsing="false" onAction="#retour" prefHeight="41.0" prefWidth="82.0" text="Retour" />
                            </children>
                         </AnchorPane>
-                        <Button fx:id="ajouterC" layoutX="184.0" layoutY="480.0" mnemonicParsing="false" onAction="#ajouterC" prefHeight="33.0" prefWidth="107.0" styleClass="ajouterBack" stylesheets="@../Resources/style.css" text="Ajouter" />
-                        <TextField fx:id="rechercherCat" layoutX="805.0" layoutY="42.0" prefHeight="32.0" prefWidth="180.0" />
+                        <Button fx:id="ajouterC" layoutX="571.0" layoutY="467.0" mnemonicParsing="false" onAction="#ajouterC" prefHeight="33.0" prefWidth="107.0" styleClass="ajouterBack" stylesheets="@../Resources/style.css" text="Ajouter" />
+                        <TextField fx:id="rechercherCat" layoutX="805.0" layoutY="42.0" prefHeight="32.0" prefWidth="180.0" promptText="Rechercher" />
                         <Label fx:id="labelCategorie" alignment="CENTER" layoutX="296.0" layoutY="35.0" prefHeight="31.0" prefWidth="305.0" text="Les catégories">
                            <font>
                               <Font size="32.0" />
                            </font>
                         </Label>
-                        <Label alignment="CENTER" layoutX="680.0" layoutY="82.0" prefHeight="31.0" prefWidth="305.0" text="Détails">
+                        <Button fx:id="modifier" layoutX="721.0" layoutY="467.0" mnemonicParsing="false" onAction="#modifierCategorie" prefHeight="25.0" prefWidth="117.0" styleClass="modifierBack" stylesheets="@../Resources/style.css" text="Modifier" />
+                        <TextField fx:id="nomModif" layoutX="776.0" layoutY="138.0" prefHeight="25.0" prefWidth="187.0" />
+                        <Label fx:id="labNomModif" layoutX="678.0" layoutY="127.0" prefHeight="47.0" prefWidth="63.0" text="Nom">
                            <font>
-                              <Font size="32.0" />
-                           </font>
-                        </Label>
-                        <Label alignment="CENTER" layoutX="674.0" layoutY="216.0" prefHeight="27.0" prefWidth="141.0" text="description">
+                              <Font name="System Bold" size="14.0" />
+                           </font></Label>
+                        <Label fx:id="labDescriptionModif" layoutX="678.0" layoutY="219.0" prefHeight="47.0" prefWidth="98.0" text="Description">
                            <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                        <Label alignment="CENTER" layoutX="603.0" layoutY="175.0" prefHeight="6.0" prefWidth="230.0" text="nom">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="idLabAff" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="805.0" layoutY="209.0" prefHeight="161.0" prefWidth="230.0">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="nomLabAff" alignment="CENTER" layoutX="788.0" layoutY="175.0" prefHeight="6.0" prefWidth="230.0">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
+                              <Font name="System Bold" size="14.0" />
+                           </font></Label>
+                        <TextArea fx:id="descriptionModif" layoutX="776.0" layoutY="206.0" prefHeight="143.0" prefWidth="189.0" />
+                        <Button fx:id="importerImage" layoutX="785.0" layoutY="386.0" mnemonicParsing="false" onAction="#importerImage" text="Importer image" />
                      </children></AnchorPane>
             </content>
           </Tab>
@@ -95,10 +88,10 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="service" layoutX="98.0" layoutY="147.0" onMousePressed="#enableButtonService" prefHeight="271.0" prefWidth="664.0" styleClass="table-langues" stylesheets="@../Resources/style.css">
+                        <TableView fx:id="service" layoutX="98.0" layoutY="147.0" prefHeight="271.0" prefWidth="664.0" styleClass="table-langues" stylesheets="@../Resources/style.css">
                           <columns>
                             <TableColumn fx:id="imageServiceAff" prefWidth="181.0" text="Image" />
-                            <TableColumn fx:id="nomServiceAff" onEditCommit="#modifierNomService" prefWidth="135.0" text="Nom" />
+                            <TableColumn fx:id="nomServiceAff" prefWidth="135.0" text="Nom" />
                               <TableColumn fx:id="descriptionServiceAff" prefWidth="211.0" text="Description" />
                               <TableColumn fx:id="categorieServiceAff" prefWidth="135.0" text="Categorie" />
                           </columns>
@@ -145,7 +138,7 @@
                         <TableView fx:id="historique" layoutX="98.0" layoutY="147.0" prefHeight="271.0" prefWidth="738.0" styleClass="table-langues" stylesheets="@../Resources/style.css">
                            <columns>
                               <TableColumn fx:id="imageHistoriqueAff" prefWidth="181.0" text="Image" />
-                              <TableColumn fx:id="nomHistoriqueAff" onEditCommit="#modifierNomService" prefWidth="135.0" text="Nom" />
+                              <TableColumn fx:id="nomHistoriqueAff" prefWidth="135.0" text="Nom" />
                               <TableColumn fx:id="descriptionHistoriqueAff" prefWidth="197.0" text="Description" />
                               <TableColumn fx:id="categorieHistoriqueAff" prefWidth="99.0" text="Categorie" />
                               <TableColumn fx:id="etatHistoriqueAff" prefWidth="124.0" text="Etat" />

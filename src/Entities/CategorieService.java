@@ -12,6 +12,12 @@ public class CategorieService {
 	public CategorieService() {
 		
 	}
+
+    public CategorieService(int id, String nom, String description) {
+        this.id = id;
+        this.nom = nom;
+        this.description = description;
+    }
 	
 	public CategorieService(String nom,String description) {
 		this.nom=nom;
