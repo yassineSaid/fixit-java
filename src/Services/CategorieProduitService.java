@@ -5,8 +5,8 @@
  */
 package Services;
 
+import Entities.CategorieProduit;
 import Entities.User;
-import Entities.categorie_produit;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,16 +14,18 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  *
  * @author Ali Saidani
  */
-public class CategorieProduit {
+public class CategorieProduitService {
 
     Connection Cn = Connexion.getInstance().getCon();
 
-    public void ajouterCategorie(categorie_produit C) {
+    public void ajouterCategorie(Entities.CategorieProduit C) {
         try {
             String req = "insert into categorie_produit (Nom, description, image) VALUES (?,?,?)";
             PreparedStatement ste = Cn.prepareStatement(req);
@@ -37,7 +39,7 @@ public class CategorieProduit {
 
     }
 
-    public void modifierCategorie(categorie_produit c) {
+    public void modifierCategorie(Entities.CategorieProduit c) {
         try {
             String req = "UPDATE categorie_produit set Nom=?, description=? , image=? where id=?";
             PreparedStatement ste = Cn.prepareStatement(req);
@@ -52,22 +54,26 @@ public class CategorieProduit {
 
     }
 
-    public ObservableList<categorie_produit> getAllCategorie() throws SQLException {
-        ObservableList l = FXCollections.observableArrayList();
+    public ObservableList<CategorieProduit> afficherCategorie() 
+            throws SQLException {
+        ObservableList list = FXCollections.observableArrayList();
         Statement st = Cn.createStatement();
         String req = "select * from categorie_produit";
         ResultSet rs = st.executeQuery(req);
         while (rs.next()) {
-            categorie_produit c = new categorie_produit();
-            c.setId(rs.getInt(1));
-            c.setNom(rs.getString(2));
-            c.setDescription(rs.getString(3));
-            c.setImage(rs.getString(4));
-            l.add(c);}
-        return l;
+            Image image1 = new Image("file:/wamp64/www/fixit/web/uploads/images/categorieProduit/"+rs.getString(4), 120, 120, false, false);
+            CategorieProduit categorie = new CategorieProduit();
+            categorie.setId(rs.getInt(1));
+            categorie.setNom(rs.getString(2));
+            categorie.setDescription(rs.getString(3));
+            categorie.setImage(rs.getString(4));
+            categorie.setIm(new ImageView(image1));
+            list.add(categorie);
+        }
+        return list;
     }
 
-    public void supprimerCategorie(categorie_produit c) {
+    public void supprimerCategorie(Entities.CategorieProduit c) {
         try{
         String req="DELETE from categorie_produit where id=?";
          PreparedStatement ste = Cn.prepareStatement(req);

@@ -7,9 +7,9 @@ package Gui;
 
 import Entities.ListAchat;
 import Entities.User;
-import Entities.categorie_produit;
+import Entities.CategorieProduit;
 import Entities.produit;
-import Services.CategorieProduit;
+import Services.CategorieProduitService;
 import Services.Produit;
 import Services.ReclamationService;
 import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
@@ -81,7 +81,7 @@ public class EspaceProduitFrontController implements Initializable {
     @FXML
     private DatePicker dateExp;
     @FXML
-    private ComboBox<categorie_produit> categorieProduit;
+    private ComboBox<CategorieProduit> categorieProduit;
     @FXML
     private TextField prix;
     @FXML
@@ -185,7 +185,7 @@ public class EspaceProduitFrontController implements Initializable {
             ajouter_Rec.setDisable(false);
 
             //  Categorie
-            ObservableList<categorie_produit> list1 = FXCollections.observableArrayList();
+            ObservableList<CategorieProduit> list1 = FXCollections.observableArrayList();
             ObservableList<produit> list2 = FXCollections.observableArrayList();
             Produit p1 = new Produit();
             Produit p2 = new Produit();

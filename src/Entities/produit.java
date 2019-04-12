@@ -19,7 +19,7 @@ public class produit {
   private int id;
   private String Nom;
   private int Quantite;
-  private  categorie_produit idCategorieProduit;
+  private  CategorieProduit idCategorieProduit;
   private int prix;
   public Timestamp date_exp;
   private User user;
@@ -36,7 +36,7 @@ public class produit {
     }
   public produit(){}
 
-    public produit(String Nom, int Quantite, categorie_produit idCategorieProduit, int prix, Timestamp date_exp, User user, String image) {
+    public produit(String Nom, int Quantite, CategorieProduit idCategorieProduit, int prix, Timestamp date_exp, User user, String image) {
         this.Nom = Nom;
         this.Quantite = Quantite;
         this.idCategorieProduit = idCategorieProduit;
@@ -70,11 +70,11 @@ public class produit {
         this.Quantite = Quantite;
     }
 
-    public categorie_produit getIdCategorieProduit() {
+    public CategorieProduit getIdCategorieProduit() {
         return idCategorieProduit;
     }
 
-    public void setIdCategorieProduit(categorie_produit idCategorieProduit) {
+    public void setIdCategorieProduit(CategorieProduit idCategorieProduit) {
         this.idCategorieProduit = idCategorieProduit;
     }
 

@@ -7,7 +7,7 @@ package Services;
 
 import Entities.ListAchat;
 import Entities.User;
-import Entities.categorie_produit;
+import Entities.CategorieProduit;
 import Entities.produit;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -50,14 +50,14 @@ public class Produit {
 
     }
 
-    public ObservableList<categorie_produit> getCategorie() {
+    public ObservableList<CategorieProduit> getCategorie() {
         try {
-            ObservableList<categorie_produit> list = FXCollections.observableArrayList();
+            ObservableList<CategorieProduit> list = FXCollections.observableArrayList();
             PreparedStatement pt = Cn.prepareStatement("Select * from categorie_produit ");
 
             ResultSet rs = pt.executeQuery();
             while (rs.next()) {
-                categorie_produit serv = new categorie_produit();
+                CategorieProduit serv = new CategorieProduit();
                 serv.setId(rs.getInt("id"));
                 serv.setNom(rs.getString("Nom"));
                 list.add(serv);

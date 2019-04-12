@@ -5,14 +5,18 @@
  */
 package Gui;
 
-import Entities.categorie_produit;
-import Services.CategorieProduit;
+import Entities.CategorieProduit;
+import Services.CategorieProduitService;
+import Services.ImageService;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -25,6 +29,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
 
 /**
  * FXML Controller class
@@ -32,7 +37,8 @@ import javafx.scene.input.MouseEvent;
  * @author Ali Saidani
  */
 public class EspaceProduitBackController implements Initializable {
-     private CategorieProduit crud;
+
+    private CategorieProduitService crud;
     @FXML
     private TextField nomfield;
     @FXML
@@ -40,60 +46,60 @@ public class EspaceProduitBackController implements Initializable {
     @FXML
     private Button ajoutbtn;
     @FXML
-    private TextField imagefield;
-    @FXML
-    private TableView<categorie_produit> tabeCategorie;
-    @FXML
-    private TableColumn<categorie_produit, String> Nomfield;
-    @FXML
-    private TableColumn<categorie_produit, String> descrfield;
-    @FXML
-    private TableColumn<categorie_produit, String> imagfield;
+    private TableView<CategorieProduit> tabeCategorie;
     @FXML
     private Button modbtn;
     @FXML
     private Button supbtn;
+    @FXML
+    private TableColumn<CategorieProduit, String> cat;
+    @FXML
+    private TableColumn<CategorieProduit, String> desc;
+    @FXML
+    private TableColumn<CategorieProduit, String> image;
+    private String imageee;
+    @FXML
+    private Button openFile;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        Platform.runLater(() -> {
         modbtn.setDisable(true);
         supbtn.setDisable(true);
         ajoutbtn.setDisable(false);
-     
-             
-        Nomfield.setCellValueFactory(new PropertyValueFactory<categorie_produit,String>("Nom"));
-     descrfield.setCellValueFactory(new PropertyValueFactory<categorie_produit,String>("description"));
-     imagfield.setCellValueFactory(new PropertyValueFactory<categorie_produit,String>("image"));
-     
-       CategorieProduit crud = new CategorieProduit();
+
+        cat.setCellValueFactory(new PropertyValueFactory<CategorieProduit, String>("Nom"));
+        desc.setCellValueFactory(new PropertyValueFactory<CategorieProduit, String>("description"));
+        image.setCellValueFactory(new PropertyValueFactory<CategorieProduit, String>("im"));
+
+        CategorieProduitService crud = new CategorieProduitService();
         try {
-            tabeCategorie.setItems(crud.getAllCategorie());
+            tabeCategorie.setItems(crud.afficherCategorie());
             // TODO
         } catch (SQLException ex) {
             Logger.getLogger(EspaceProduitBackController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        // TODO
-        // TODO
+        });
     }
 
     @FXML
     private void AjouteClicked(ActionEvent event) {
-        crud = new CategorieProduit();
+        crud = new CategorieProduitService();
 
-        categorie_produit ct = new categorie_produit();
+        CategorieProduit ct = new CategorieProduit();
         System.out.println(ct);
 
         ct.setNom(nomfield.getText());
         ct.setDescription(descriptionfield.getText());
-        ct.setImage(imagefield.getText());
+        ct.setImage(imageee);
         crud.ajouterCategorie(ct);
         System.out.println("categorie ajoutée");
-       initialize(null,null);
+        initialize(null, null);
     }
-    private categorie_produit c = new categorie_produit();
+    private CategorieProduit c = new CategorieProduit();
 
     @FXML
     private void itemSelected(MouseEvent event) {
@@ -105,32 +111,56 @@ public class EspaceProduitBackController implements Initializable {
 
         nomfield.setText(c.getNom());
         descriptionfield.setText(c.getDescription());
-        imagefield.setText(c.getImage());
 
     }
 
     @FXML
     private void supprimeClicked(ActionEvent event) {
-        crud = new CategorieProduit();
+        crud = new CategorieProduitService();
         c = tabeCategorie.getSelectionModel().getSelectedItem();
         crud.supprimerCategorie(c);
         System.out.println("categorie supprimer");
-         initialize(null,null);
+        initialize(null, null);
     }
 
     @FXML
     private void ModifierClicked(ActionEvent event) {
-        crud = new CategorieProduit();
+        crud = new CategorieProduitService();
 
         c = tabeCategorie.getSelectionModel().getSelectedItem();
         System.out.println(c);
 
         c.setNom(nomfield.getText());
         c.setDescription(descriptionfield.getText());
-        c.setImage(imagefield.getText());
+        if(imageee!=""){c.setImage(imageee);}
         crud.modifierCategorie(c);
         System.out.println("categorie modifier");
-         initialize(null,null);
+        initialize(null, null);
+    }
+
+    @FXML
+    private void importerImage(ActionEvent event) {
+         final FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image", "*.jpg", "*.png")
+        );
+        File file = fileChooser.showOpenDialog(null);
+        if (file != null) {
+
+            File currDir = new File(System.getProperty("user.dir", "."));
+            System.out.println(currDir.toPath().getRoot().toString());
+
+            String path = currDir.toPath().getRoot().toString() + "wamp64/www/fixit/web/uploads/images/categorieProduit/";
+            ImageService u = new ImageService();
+            try {
+                u.upload(file, path);
+            } catch (IOException ex) {
+                Logger.getLogger(EspaceOutilBackController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            imageee = file.getName();
+        } else {
+            System.out.println("FICHIER erroné");
+        }
     }
 
 }
