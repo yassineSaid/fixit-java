@@ -87,7 +87,7 @@ public class User {
         this.solde = solde;
     }
 
-	private int id,solde;
+	/*private int id,solde;
 	private String email,username,firstname,lastname,roles,image;
 	public int getId() {
 		return id;
@@ -132,12 +132,9 @@ public class User {
         public void setImage(String image) {
             this.image = image;
         }
-        
+        */
 
-        @Override
-        public String toString() {
-            return username;
-        }
+       
        
 
     public String getEmail_canonical() {
@@ -195,12 +192,15 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+     @Override
+        public String toString() {
+            return username;
+        }
     
-    
-
+/*
     @Override
     public String toString() {
         return username;
-    }
+    }*/
 
 }

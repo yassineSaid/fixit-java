@@ -22,7 +22,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="217.0" prefWidth="411.0">
                      <children>
-                        <Button fx:id="ajoutbtn" layoutX="226.0" layoutY="257.0" mnemonicParsing="false" onAction="#AjouteClicked" prefHeight="31.0" prefWidth="106.0" text="ajouter" />
+                        <Button fx:id="ajoutbtn" layoutX="106.0" layoutY="364.0" mnemonicParsing="false" onAction="#AjouteClicked" prefHeight="31.0" prefWidth="153.0" style="-fx-background-color: #008000;" text="ajouter" />
                         <Label layoutX="68.0" layoutY="125.0" prefHeight="21.0" prefWidth="90.0" text="Nom" />
                         <Label layoutX="68.0" layoutY="165.0" prefHeight="21.0" prefWidth="90.0" text="description" />
                         <TextField fx:id="nomfield" layoutX="211.0" layoutY="110.0" />
@@ -33,11 +33,11 @@
                            <columns>
                               <TableColumn fx:id="Nomfield" prefWidth="75.0" text="Nom" />
                               <TableColumn fx:id="descrfield" prefWidth="147.0" text="deescription" />
-                              <TableColumn fx:id="imagfield" prefWidth="146.0" text="image" />
+                              <TableColumn fx:id="imagfield" prefWidth="288.0" text="image" />
                            </columns>
                         </TableView>
-                        <Button fx:id="modbtn" layoutX="243.0" layoutY="335.0" mnemonicParsing="false" onAction="#ModifierClicked" prefHeight="31.0" prefWidth="106.0" style="-fx-background-color: #FF7F50;" text="modifier" />
-                        <Button fx:id="supbtn" layoutX="243.0" layoutY="367.0" mnemonicParsing="false" onAction="#supprimeClicked" prefHeight="31.0" prefWidth="106.0" style="-fx-background-color: #DC143C;" text="supprimer" />
+                        <Button fx:id="modbtn" layoutX="282.0" layoutY="364.0" mnemonicParsing="false" onAction="#ModifierClicked" prefHeight="31.0" prefWidth="139.0" style="-fx-background-color: #4682B4;" text="modifier" />
+                        <Button fx:id="supbtn" layoutX="431.0" layoutY="364.0" mnemonicParsing="false" onAction="#supprimeClicked" prefHeight="31.0" prefWidth="161.0" style="-fx-background-color: #FF0000;" text="supprimer" />
                      </children>
                   </AnchorPane>
             </content>

@@ -20,11 +20,6 @@
                      <content>
                         <AnchorPane fx:id="ajouterRec" minHeight="0.0" minWidth="0.0" prefHeight="601.0" prefWidth="896.0" stylesheets="@../Resources/style.css">
                            <children>
-                              <ImageView fitHeight="865.0" fitWidth="877.0" layoutX="62.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.06;">
-                                 <image>
-                                    <Image url="@../Resources/marker.png" />
-                                 </image>
-                              </ImageView>
                               <Label layoutX="252.0" layoutY="115.0">
                                  <font>
                                     <Font size="19.0" />

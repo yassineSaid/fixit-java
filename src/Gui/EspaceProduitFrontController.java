@@ -218,6 +218,7 @@ public class EspaceProduitFrontController implements Initializable {
             } catch (SQLException ex) {
                 Logger.getLogger(EspaceProduitFrontController.class.getName()).log(Level.SEVERE, null, ex);
             }
+            System.out.println(user.getId());
 
         });
     }
@@ -240,7 +241,7 @@ public class EspaceProduitFrontController implements Initializable {
         ct.setPrix(Integer.parseInt(prix.getText()));
         String s= Integer.toString(ct.getQuantite());
         System.out.println(s);
-        if ((ct.getNom().length()==0) || (categorieProduit.getValue() == null)||(ct.getImage().length()==0)||(s.length()==0) ){
+        if ((ct.getNom().length()==0) || (categorieProduit.getValue() == null)||(ct.getImage().length()==0)||(QuantiteField.getText().length()<1)||(prix.getText().length()<1) ){
             System.out.println("vérifier vos données");
         } else {
             crud.ajouterProduit(ct);

@@ -210,7 +210,7 @@ public class EspaceOutilBackController implements Initializable {
                 tableOutil.setItems(outil.afficherOutil());
                 // TODO
             } catch (SQLException ex) {
-                Logger.getLogger(CategorieProduitController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(EspaceOutilBackController.class.getName()).log(Level.SEVERE, null, ex);
             }
 
             ObservableList data = table.getItems();

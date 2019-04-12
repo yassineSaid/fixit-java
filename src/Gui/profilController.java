@@ -56,7 +56,7 @@ import javafx.stage.StageStyle;
  * @author Yassine
  */
 public class profilController implements Initializable {
-
+    @FXML
     private FrontIndexController frontIndexController;
     @FXML
     private TabPane Tabwidget;

@@ -59,9 +59,9 @@ public class EspaceProduitBackController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        modbtn.setVisible(false);
-        supbtn.setVisible(false);
-        ajoutbtn.setVisible(true);
+        modbtn.setDisable(true);
+        supbtn.setDisable(true);
+        ajoutbtn.setDisable(false);
      
              
         Nomfield.setCellValueFactory(new PropertyValueFactory<categorie_produit,String>("Nom"));
@@ -97,9 +97,9 @@ public class EspaceProduitBackController implements Initializable {
 
     @FXML
     private void itemSelected(MouseEvent event) {
-        modbtn.setVisible(true);
-        supbtn.setVisible(true);
-        ajoutbtn.setVisible(false);
+        modbtn.setDisable(false);
+        supbtn.setDisable(false);
+        ajoutbtn.setDisable(true);
 
         c = tabeCategorie.getSelectionModel().getSelectedItem();
 
