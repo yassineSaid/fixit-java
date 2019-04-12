@@ -18,7 +18,9 @@ import Services.CategorieServiceService;
 import Services.Connexion;
 import Services.ReclamationService;
 import Services.ServiceService;
+import Services.ImageService;
 import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -49,6 +51,7 @@ import static javafx.scene.input.KeyCode.S;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
 import javafx.util.Callback;
 
 /**
@@ -69,7 +72,7 @@ public class EspaceServiceController implements Initializable {
     private TableColumn<CategorieService, String> nomCatAff;
     @FXML
     private TableColumn descriptionCatAff;
-    private CategorieServiceService cs = new CategorieServiceService();
+    //private CategorieServiceService cs = new CategorieServiceService();
     @FXML
     private TableView<CategorieService> categorie;
     private ObservableList<CategorieService> data;
@@ -131,17 +134,28 @@ public class EspaceServiceController implements Initializable {
     @FXML
     private Button recupererHistorique;
     @FXML
-    private TableColumn<Service,String> etatHistoriqueAff;
+    private TableColumn<Service, String> etatHistoriqueAff;
     @FXML
-    private TableColumn<?, ?> etatHistoriqueAff1;
-    @FXML
+    private TableColumn<String, String> etatHistoriqueAff1;
     private Label idLabAff;
-    @FXML
     private Label nomLabAff;
     @FXML
     private Label labelCategorie;
     @FXML
     private Label labelService;
+    @FXML
+    private Button modifier;
+    @FXML
+    private TextField nomModif;
+    @FXML
+    private TextArea descriptionModif;
+    @FXML
+    private Label labNomModif;
+    @FXML
+    private Label labDescriptionModif;
+    @FXML
+    private Button importerImage;
+    String logooo;
 
     /**
      * Initializes the controller class.
@@ -164,12 +178,12 @@ public class EspaceServiceController implements Initializable {
                     Image image1 = new Image("file:/wamp64/www/fixit/web/uploads/images/categorieService/" + rs.getString(4), 200, 100, false, false);
 
                     // data.add(new CategorieService(rs.getInt(1),rs.getString(2),rs.getString(3),new ImageView("file:/wamp64/www/fixit/web/uploads/images/categorieService/"+rs.getString(4))));
-                    data.add(new CategorieService(rs.getString(2), rs.getString(3), new ImageView(image1)));
+                    data.add(new CategorieService(rs.getInt(1),rs.getString(2), rs.getString(3), new ImageView(image1)));
                 }
-                imageCatAff.setCellValueFactory(new PropertyValueFactory<>("im"));
+                imageCatAff.setCellValueFactory(new PropertyValueFactory<CategorieService,String>("im"));
                 //idCatAff.setCellValueFactory(new PropertyValueFactory<>("id"));
-                nomCatAff.setCellValueFactory(new PropertyValueFactory<>("nom"));
-                descriptionCatAff.setCellValueFactory(new PropertyValueFactory<>("description"));
+                nomCatAff.setCellValueFactory(new PropertyValueFactory<CategorieService,String>("nom"));
+                descriptionCatAff.setCellValueFactory(new PropertyValueFactory<CategorieService,String>("description"));
                 imageServiceAff.setCellValueFactory(new PropertyValueFactory<>("im"));
                 nomServiceAff.setCellValueFactory(new PropertyValueFactory<>("nom"));
                 descriptionServiceAff.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -256,36 +270,7 @@ public class EspaceServiceController implements Initializable {
 
         //categorie.getItems().remove(categorie.getSelectionModel().getSelectedItem());
     }
-    @FXML
-    private void modifierNom(TableColumn.CellEditEvent<CategorieService, String> event) {
-        categorie.setEditable(true);
-        CategorieServiceService cs = new CategorieServiceService();
-        CategorieService cat = categorie.getSelectionModel().getSelectedItem();
-        cat.setNom(event.getNewValue());
-        cs.modifierCategorie(cat);
-
-        this.initialize(null, null);
-
-    }
-    @FXML
-    private void modifierDescription(TableColumn.CellEditEvent<CategorieService, String> event) {
-        categorie.setEditable(true);
-        CategorieServiceService cs = new CategorieServiceService();
-        CategorieService cat = categorie.getSelectionModel().getSelectedItem();
-        cat.setDescription(event.getNewValue());
-        cs.modifierCategorie(cat);
-
-        this.initialize(null, null);
-    }
-
-
-    /*@FXML
-    private void categorieService(ActionEvent event) {
-    ObservableList<CategorieService> list = FXCollections.observableArrayList();
-    CategorieServiceService r= new CategorieServiceService();
-    list=r.listeCate();
-    categoS.setItems(list);
-    }*/
+  
     @FXML
     private void ajouterService(ActionEvent event) {
         ServiceService serv = new ServiceService();
@@ -301,33 +286,33 @@ public class EspaceServiceController implements Initializable {
         ServiceService cc = new ServiceService();
         //cc.supprimerService(service.getSelectionModel().getSelectedItem().getId());
         Service cat = new Service();
-        cat=service.getSelectionModel().getSelectedItem();
+        cat = service.getSelectionModel().getSelectedItem();
         cat.setVisible(0);
         cc.modifierService(cat);
-       // etatHistoriqueAff.setText("supprimé");
-       etatHistoriqueAff.setCellValueFactory(cellData -> new ReadOnlyStringWrapper("supprimé"));
+        // etatHistoriqueAff.setText("supprimé");
+        etatHistoriqueAff.setCellValueFactory(cellData -> new ReadOnlyStringWrapper("supprimé"));
         this.initialize(null, null);
     }
-    @FXML
-    private void modifierNomService(TableColumn.CellEditEvent<Service, String> event) {
+    /*private void modifierNomService(TableColumn.CellEditEvent<Service, String> event) {
         service.setEditable(true);
         ServiceService s = new ServiceService();
         Service serv = service.getSelectionModel().getSelectedItem();
         serv.setNom(event.getNewValue());
+        System.out.println(event.getNewValue());
         s.modifierService(serv);
 
-        this.initialize(null, null);
-    }
-    @FXML
-    private void modifierDescriptionService(TableColumn.CellEditEvent<Service, String> event) {
+        //this.initialize(null, null);
+    }*/
+   /* private void modifierDescriptionService(TableColumn.CellEditEvent<Service, String> event) {
         service.setEditable(true);
         ServiceService s = new ServiceService();
         Service serv = service.getSelectionModel().getSelectedItem();
         serv.setDescription(event.getNewValue());
+        System.out.println(event.getNewValue());
         s.modifierService(serv);
 
-        this.initialize(null, null);
-    }
+        //this.initialize(null, null);
+    }*/
 
     @FXML
     private void ajouterC(ActionEvent event) {
@@ -339,23 +324,13 @@ public class EspaceServiceController implements Initializable {
     }
 
     @FXML
-    private void enableButton(MouseEvent event) {
-        supprimer.setDisable(false);
-        CategorieService c =new CategorieService();
-        c=categorie.getSelectionModel().getSelectedItem();
-        idLabAff.setText(c.getDescription());
-        nomLabAff.setText(c.getNom());
-        
-    }
-
-    @FXML
     private void retour(ActionEvent event) {
 
         categorie.setVisible(true);
         supprimer.setVisible(true);
         ajouterC.setVisible(true);
         ajouterCat.setVisible(false);
-        
+
         labelCategorie.setVisible(true);
 
     }
@@ -379,28 +354,64 @@ public class EspaceServiceController implements Initializable {
         ajouterServ.setVisible(true);
         labelService.setVisible(false);
     }
-  
-    @FXML
-    private void enableButtonService(MouseEvent event) {
-        
-        supprimerService.setDisable(false);
-    }
 
-  
     @FXML
     private void recupererHistorique(ActionEvent event) {
         ServiceService cc = new ServiceService();
         //cc.supprimerService(service.getSelectionModel().getSelectedItem().getId());
         Service cat = new Service();
-        cat=historique.getSelectionModel().getSelectedItem();
+        cat = historique.getSelectionModel().getSelectedItem();
         cat.setVisible(1);
         cc.modifierService(cat);
-       // etatHistoriqueAff.setText("supprimé");
-       //etatHistoriqueAff.setCellValueFactory(cellData -> new ReadOnlyStringWrapper("supprimé"));
+        // etatHistoriqueAff.setText("supprimé");
+        //etatHistoriqueAff.setCellValueFactory(cellData -> new ReadOnlyStringWrapper("supprimé"));
         this.initialize(null, null);
     }
 
-    
+    @FXML
+    private void modifierCategorie(ActionEvent event) {
+        CategorieServiceService cs = new CategorieServiceService();
+        
+        CategorieService c = new CategorieService();
+
+        c = categorie.getSelectionModel().getSelectedItem();
+        c.setNom(nomModif.getText());
+        c.setDescription(descriptionModif.getText());
+        System.out.println(descriptionModif.getText());
+        cs.modifierCategorie(c);
+        System.out.println(c.getId());
+        initialize(null, null);
+    }
+    @FXML
+    private void itemSelected(MouseEvent event) {
+        
+        nomModif.setText(categorie.getSelectionModel().getSelectedItem().getNom());
+        descriptionModif.setText(categorie.getSelectionModel().getSelectedItem().getDescription());
+    }
+
+    @FXML
+    private void importerImage(ActionEvent event) {
+            final FileChooser fileChooser = new FileChooser();
+        File file = fileChooser.showOpenDialog(null);
+        if (file != null) {
+            
+            File currDir = new File(System.getProperty("user.dir", "."));
+        System.out.println(currDir.toPath().getRoot().toString());
+            
+            String path = currDir.toPath().getRoot().toString() + "wamp64/www/fixit/web/uploads/images/categorieService/";
+            ImageService u = new ImageService();
+            try {
+                u.upload(file, path);
+            } catch (IOException ex) {
+                Logger.getLogger(EspaceOutilBackController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            logooo = file.getName();
+        } else {
+            System.out.println("FICHIER erroné");
+        }
+    }
+
+
 
 
 }

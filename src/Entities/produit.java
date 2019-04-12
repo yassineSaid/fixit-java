@@ -9,6 +9,7 @@ import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.DateFormat;
+import javafx.scene.control.Button;
 
 /**
  *
@@ -23,6 +24,16 @@ public class produit {
   public Timestamp date_exp;
   private User user;
   private String image;
+  private Button Detaille;
+  private int idProd;
+
+    public int getIdProd() {
+        return idProd;
+    }
+
+    public void setIdProd(int idProd) {
+        this.idProd = idProd;
+    }
   public produit(){}
 
     public produit(String Nom, int Quantite, categorie_produit idCategorieProduit, int prix, Timestamp date_exp, User user, String image) {
@@ -97,6 +108,19 @@ public class produit {
 
     public void setImage(String image) {
         this.image = image;
+    }
+    
+    public Button getDetaille() {
+        return Detaille;
+    }
+
+    public void setDetaille(Button Detaille) {
+        this.Detaille = Detaille;
+    }
+
+    @Override
+    public String toString() {
+        return Nom + Detaille;
     }
     
 }

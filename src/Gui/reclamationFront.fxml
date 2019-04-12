@@ -61,7 +61,7 @@
                                     <Font size="19.0" />
                                  </font>
                               </Label>
-                              <Button fx:id="ajouter_Rec" layoutX="313.0" layoutY="533.0" mnemonicParsing="false" onAction="#ajouterReclamation" prefHeight="38.0" prefWidth="223.0" text="Ajouter Reclamation">
+                              <Button fx:id="ajouter_Rec" layoutX="275.0" layoutY="533.0" mnemonicParsing="false" onAction="#ajouterReclamation" prefHeight="38.0" prefWidth="223.0" text="Ajouter Reclamation">
                                  <textFill>
                                     <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
                                        <stops>
@@ -78,8 +78,9 @@
                                  </font>
                               </Label>
                               <Separator layoutX="605.0" layoutY="111.0" prefHeight="0.0" prefWidth="328.0" />
-                              <Button fx:id="modifierRec" layoutX="321.0" layoutY="533.0" mnemonicParsing="false" onAction="#modifierRecAction" prefHeight="37.0" prefWidth="208.0" text="Modifier cette Reclamation" />
+                              <Button fx:id="modifierRec" layoutX="283.0" layoutY="533.0" mnemonicParsing="false" onAction="#modifierRecAction" prefHeight="37.0" prefWidth="208.0" text="Modifier cette Reclamation" />
                               <Button fx:id="supprimerRec" layoutX="56.0" layoutY="536.0" mnemonicParsing="false" onAction="#supprimerRecAction" prefHeight="31.0" prefWidth="208.0" text="Supprimer cette reclamation" />
+                              <Button fx:id="annuler" layoutX="604.0" layoutY="584.0" mnemonicParsing="false" onAction="#annulerAction" styleClass="modifierBack" text="Annuler" />
                            </children>
                         </AnchorPane>
                      </content>

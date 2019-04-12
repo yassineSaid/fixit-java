@@ -65,8 +65,8 @@ public class LoginController implements Initializable {
             try {
                 User U = us.connect(login.getText());
                 if (U.getRoles() == "admin") {
-                    
-                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/backIndex.fxml"));
+
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/BackIndex.fxml"));
                     Parent back = fxmlLoader.load();
                     Scene scene = new Scene(back);
                     
@@ -75,7 +75,7 @@ public class LoginController implements Initializable {
                     stage.setScene(scene);
                 } else {
                     //System.out.println(U.getRoles());
-                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/frontIndex.fxml"));
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/FrontIndex.fxml"));
                     Parent front = fxmlLoader.load();
                     FrontIndexController controller = fxmlLoader.<FrontIndexController>getController();
                     controller.setUser(U);

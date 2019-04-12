@@ -166,13 +166,15 @@ public class FrontIndexController implements Initializable {
    
     @FXML
     private void espaceProdAction(ActionEvent event) {
-        try {
-
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/ajoutProduit.fxml"));
-            Parent Rec = fxmlLoader.load();
-            AjoutProduitController controller = fxmlLoader.<AjoutProduitController>getController();
-            controller.setUser(this.getUser());
-            Scene scene = new Scene(Rec);
+          try {
+			
+		 			 
+		 	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/EspaceProduitFront.fxml"));   
+		 	Parent Rec = fxmlLoader.load();          
+		 	EspaceProduitFrontController controller = fxmlLoader.<EspaceProduitFrontController >getController();
+		 	controller.setUser(this.getUser());
+                        Scene scene = new Scene(Rec);
+           
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.show();

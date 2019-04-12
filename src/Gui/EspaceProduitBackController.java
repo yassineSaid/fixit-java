@@ -31,7 +31,7 @@ import javafx.scene.input.MouseEvent;
  *
  * @author Ali Saidani
  */
-public class CategorieProduitController implements Initializable {
+public class EspaceProduitBackController implements Initializable {
      private CategorieProduit crud;
     @FXML
     private TextField nomfield;
@@ -73,8 +73,9 @@ public class CategorieProduitController implements Initializable {
             tabeCategorie.setItems(crud.getAllCategorie());
             // TODO
         } catch (SQLException ex) {
-            Logger.getLogger(CategorieProduitController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EspaceProduitBackController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        // TODO
         // TODO
     }
 
