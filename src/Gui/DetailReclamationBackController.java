@@ -83,7 +83,7 @@ public class DetailReclamationBackController implements Initializable {
                 recServ.vuReclamation(this.reclamation);
                 if(this.reclamation.getArchive()==0 && this.reclamation.getTraite()==0)
                 {
-                      traite.setVisible(true);
+                    traite.setVisible(true);
                     archive.setVisible(true);
                     traiteLb.setVisible(false);
                     archiveLb.setVisible(false);

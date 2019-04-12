@@ -18,7 +18,7 @@ import Services.CategorieServiceService;
 import Services.Connexion;
 import Services.ReclamationService;
 import Services.ServiceService;
-import Services.UploadImage;
+import Services.ImageService;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
@@ -399,7 +399,7 @@ public class EspaceServiceController implements Initializable {
         System.out.println(currDir.toPath().getRoot().toString());
             
             String path = currDir.toPath().getRoot().toString() + "wamp64/www/fixit/web/uploads/images/categorieService/";
-            UploadImage u = new UploadImage();
+            ImageService u = new ImageService();
             try {
                 u.upload(file, path);
             } catch (IOException ex) {
