@@ -1,20 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.control.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.EspaceProduitFrontController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="690.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.EspaceProduitFrontController">
        <children>
-    <fx:include fx:id="frontIndex" source="frontIndex.fxml" />
+    <fx:include fx:id="frontIndex" source="FrontIndex.fxml" />
        <AnchorPane layoutX="275.0" layoutY="14.0" prefHeight="690.0" prefWidth="1300.0">
          <children>
-             <TabPane fx:id="Tabwidget" layoutX="10.0" layoutY="-22.0" prefHeight="690.0" prefWidth="1016.0" tabClosingPolicy="UNAVAILABLE">
+             <TabPane fx:id="Tabwidget" layoutX="10.0" layoutY="-12.0" prefHeight="680.0" prefWidth="1016.0" tabClosingPolicy="UNAVAILABLE">
                <tabs>
                   <Tab fx:id="interfaceAjout" text="AjouterProduit">
                      <content>
@@ -25,7 +33,7 @@
                                     <Font size="19.0" />
                                  </font>
                               </Label>
-                              <Separator layoutX="231.0" layoutY="151.0" prefHeight="15.0" prefWidth="528.0" />
+                              <Separator layoutX="231.0" layoutY="126.0" prefHeight="15.0" prefWidth="528.0" />
                               <Label layoutX="26.0" layoutY="204.0" text="Categorie :">
                                  <font>
                                     <Font size="19.0" />
@@ -53,13 +61,13 @@
                                     </RadialGradient>
                                  </textFill>
                               </Button>
-                              <Label fx:id="MesProduit" layoutX="685.0" layoutY="170.0" text="Mes Produit">
+                              <Label fx:id="MesProduit" layoutX="685.0" layoutY="154.0" text="Mes Produit">
                                  <font>
                                     <Font size="19.0" />
                                  </font>
                               </Label>
                               <Separator layoutX="595.0" layoutY="201.0" prefHeight="0.0" prefWidth="328.0" />
-                              <TableView fx:id="MesProduitss" layoutX="482.0" layoutY="202.0" onMousePressed="#itemselected" prefHeight="514.0" prefWidth="519.0" styleClass="table-langues">
+                              <TableView fx:id="MesProduitss" layoutX="482.0" layoutY="182.0" onMousePressed="#itemselected" prefHeight="460.0" prefWidth="519.0" styleClass="table-langues">
                                 <columns>
                                   <TableColumn fx:id="nomtab" prefWidth="75.0" text="Nom" />
                                   <TableColumn fx:id="dateExpira" prefWidth="134.0" text="Date d'expiration" />
