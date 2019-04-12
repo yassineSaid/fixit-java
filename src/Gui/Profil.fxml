@@ -91,6 +91,16 @@
                               </RadialGradient>
                            </textFill>
                         </Button>
+                        <Button fx:id="modifier1" layoutX="655.0" layoutY="441.0" mnemonicParsing="false" onAction="#changerPhotoAction" prefHeight="38.0" prefWidth="160.0" text="Changez votre photo">
+                           <textFill>
+                              <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                                 <stops>
+                                    <Stop color="BLACK" />
+                                    <Stop color="WHITE" offset="1.0" />
+                                 </stops>
+                              </RadialGradient>
+                           </textFill>
+                        </Button>
                      </children>
                   </AnchorPane>
                </content>

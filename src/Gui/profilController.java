@@ -5,6 +5,7 @@ import Entities.Langue;
 import Entities.Repos;
 import Entities.User;
 import Services.HorraireService;
+import Services.ImageService;
 import Services.ReposService;
 import Services.UserLangueService;
 import Services.UserService;
@@ -22,6 +23,8 @@ import java.sql.Time;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -46,6 +49,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.web.WebView;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -175,6 +179,8 @@ public class profilController implements Initializable {
     private Label erreurHorraire;
     @FXML
     private Label solde;
+    @FXML
+    private Button modifier1;
 
     public User getUser() {
         return user;
@@ -196,7 +202,7 @@ public class profilController implements Initializable {
             email.setText(user.getEmail());
             heureDebut.set24HourView(true);
             heureFin.set24HourView(true);
-            solde.setText("Vous avez "+String.valueOf(user.getSolde())+" SCoins sur votre compte");
+            solde.setText("Vous avez " + String.valueOf(user.getSolde()) + " SCoins sur votre compte");
             loadImage();
             afficherLanguesAction();
             afficherHorraireAction();
@@ -330,7 +336,6 @@ public class profilController implements Initializable {
 
     private void loadImage() {
         File currDir = new File(System.getProperty("user.dir", "."));
-        System.out.println(currDir.toPath().getRoot().toString());
         String path = "file:" + currDir.toPath().getRoot().toString() + "wamp64\\www\\fixit\\web\\uploads\\images\\user\\" + user.getImage();
         Image image = new Image(path);
         photo.setImage(image);
@@ -432,8 +437,8 @@ public class profilController implements Initializable {
 
     @FXML
     private void acheterAction(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/paiement.fxml")); 
-        Parent root = fxmlLoader.load();   
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/paiement.fxml"));
+        Parent root = fxmlLoader.load();
         PaiementController controller = fxmlLoader.<PaiementController>getController();
         controller.setUser(user);
         Scene scene = new Scene(root);
@@ -444,6 +449,40 @@ public class profilController implements Initializable {
         stage.setScene(scene);
         stage.showAndWait();
         modifierAction(event);
-        solde.setText("Vous avez "+String.valueOf(user.getSolde())+" SCoins sur votre compte");
+        solde.setText("Vous avez " + String.valueOf(user.getSolde()) + " SCoins sur votre compte");
+    }
+
+    @FXML
+    private void changerPhotoAction(ActionEvent event) {
+        UserService us = new UserService();
+        File currDir = new File(System.getProperty("user.dir", "."));
+        String filename;
+        final FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image", "*.jpg", "*.png")
+        );
+        File file = fileChooser.showOpenDialog(null);
+        if (file != null) {
+            String path = currDir.toPath().getRoot().toString() + "wamp64/www/fixit/web/uploads/images/user/";
+            ImageService u = new ImageService();
+            try {
+                if (user.getImage() != null) {
+                    File f = new File(currDir.toPath().getRoot().toString() + "wamp64\\www\\fixit\\web\\uploads\\images\\user\\" + user.getImage());
+                    f.delete();
+                }
+                filename=String.valueOf(user.getId())+"."+u.getFileExtension(file);
+                u.uploadNew(file, path, filename);
+                us.ajouterImage(filename, user.getId());
+                user = us.connect(user.getUsername());
+                frontIndexController.setUser(user);
+                frontIndexController.initialize(null, null);
+                loadImage();
+            } catch (IOException ex) {
+                Logger.getLogger(EspaceOutilBackController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            //logooo = file.getName();
+        } else {
+            System.out.println("FICHIER erroné");
+        }
     }
 }
