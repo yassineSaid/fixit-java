@@ -29,7 +29,7 @@ public class Programme extends Application {
 	public void start(Stage primaryStage) {
 		try
 		{
-			Parent root = FXMLLoader.load(getClass().getResource("/Gui/login.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("/Gui/Login.fxml"));
                         Scene scene = new Scene(root);
                         primaryStage.setScene(scene);
                         primaryStage.show();

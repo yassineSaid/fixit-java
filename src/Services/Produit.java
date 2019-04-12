@@ -5,6 +5,7 @@
  */
 package Services;
 
+import Entities.ListAchat;
 import Entities.User;
 import Entities.categorie_produit;
 import Entities.produit;
@@ -12,10 +13,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Button;
 
 /**
  *
@@ -58,7 +61,6 @@ public class Produit {
                 serv.setId(rs.getInt("id"));
                 serv.setNom(rs.getString("Nom"));
                 list.add(serv);
-
             }
             return list;
         } catch (SQLException ex) {
@@ -84,5 +86,226 @@ public class Produit {
         }
 
     }
+
+    public ObservableList<produit> getAllMesProduit(int idUser) throws SQLException {
+        ObservableList l = FXCollections.observableArrayList();
+        PreparedStatement pt = Cn.prepareStatement("SELECT * FROM produit where user=? ");
+        pt.setInt(1, idUser);
+        ResultSet rs = pt.executeQuery();
+        while (rs.next()) {
+            produit c = new produit();
+            c.setId(rs.getInt("id"));
+            c.setNom(rs.getString("Nom"));
+            c.setQuantite(rs.getInt("quantite"));
+            c.setPrix(rs.getInt("prix"));
+            c.setDate_exp(rs.getTimestamp("date_exp"));
+            c.setImage(rs.getString("image"));
+            l.add(c);
+        }
+        return l;
+    }
+
+    public void supprimerProduit(produit p) {
+        try {
+            String req = "DELETE from produit where id=?";
+            PreparedStatement ste = Cn.prepareStatement(req);
+            ste.setInt(1, p.getId());
+
+            ste.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+
+    }
+
+    public void modifierProduit(produit p) {
+        try {
+            String req = "UPDATE produit set Nom=?, Quantite=?, idCategorieProduit=?, prix=?, date_exp=?, user=? ,image=? where id=?";
+            PreparedStatement ste = Cn.prepareStatement(req);
+            ste.setString(1, p.getNom());
+            ste.setInt(2, p.getQuantite());
+            ste.setInt(3, p.getIdCategorieProduit().getId());
+            ste.setInt(4, p.getPrix());
+            ste.setTimestamp(5, p.getDate_exp());
+            ste.setInt(6, p.getUser().getId());
+            ste.setString(7, p.getImage());
+            ste.setInt(8, p.getId());
+            ste.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+    }
+
+    public ObservableList<produit> getAllProduit() {
+        try {
+            ObservableList<produit> list = FXCollections.observableArrayList();
+            PreparedStatement pt = Cn.prepareStatement("Select * from produit ");
+
+            ResultSet rs = pt.executeQuery();
+            while (rs.next()) {
+                Button supprimer = new Button();
+                supprimer.setText("Detaille");
+                supprimer.setId(rs.getString(1));
+                produit p = new produit();
+                p.setId(rs.getInt("id"));
+                p.setNom(rs.getString("Nom"));
+                p.setQuantite(rs.getInt("quantite"));
+                p.setPrix(rs.getInt("prix"));
+                p.setDate_exp(rs.getTimestamp("date_exp"));
+                p.setImage(rs.getString("image"));
+                p.setDetaille(supprimer);
+                list.add(p);
+            }
+            return list;
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return null;
+    }
+
+    public produit DetailleProduit(int idProd) {
+        try {
+            PreparedStatement pt = Cn.prepareStatement("SELECT * FROM produit where id=? ");
+            pt.setInt(1, idProd);
+            ResultSet rs = pt.executeQuery();
+            produit c = new produit();
+            while (rs.next()) {
+                Button supprimer = new Button();
+                supprimer.setText("Acheter");
+                supprimer.setId(rs.getString(1));
+                c.setIdProd(rs.getInt("id"));
+                c.setId(rs.getInt("id"));
+                c.setNom(rs.getString("Nom"));
+                c.setQuantite(rs.getInt("quantite"));
+                c.setPrix(rs.getInt("prix"));
+                c.setDate_exp(rs.getTimestamp("date_exp"));
+                c.setImage(rs.getString("image"));
+                User u = this.getUser(rs.getInt("user"));
+                c.setUser(u);
+                c.setDetaille(supprimer);
+            }
+
+            return c;
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return null;
+    }
+
+    public int verifierQuantite(int id) {
+
+        try {
+            String req = "Select * from produit where id=?";
+            PreparedStatement ste = Cn.prepareStatement(req);
+            ste.setInt(1, id);
+            ResultSet rs = ste.executeQuery();
+            produit c = new produit();
+            while (rs.next()) {
+                Button supprimer = new Button();
+                supprimer.setText("Acheter");
+                supprimer.setId(rs.getString(1));
+                c.setIdProd(rs.getInt("id"));
+                c.setId(rs.getInt("id"));
+                c.setNom(rs.getString("Nom"));
+                c.setQuantite(rs.getInt("quantite"));
+                c.setPrix(rs.getInt("prix"));
+                c.setDate_exp(rs.getTimestamp("date_exp"));
+                c.setImage(rs.getString("image"));
+                c.setDetaille(supprimer);
+            }
+            return c.getQuantite();
+
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return 0;
+    }
+
+    public void AcheterProduit(produit p, int quantite) {
+        try {
+            String req = "UPDATE produit set Quantite=? where id=?";
+            PreparedStatement ste = Cn.prepareStatement(req);
+            ste.setInt(1, quantite);
+            ste.setInt(2, p.getId());
+            ste.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+    }
+
+    public int verifierSolde(int idUsr) {
+        try {
+            String req = "Select * from user where id=?";
+            PreparedStatement ste = Cn.prepareStatement(req);
+            ste.setInt(1, idUsr);
+            ResultSet rs = ste.executeQuery();
+            User c = new User();
+            while (rs.next()) {
+                c.setSolde(rs.getInt("solde"));
+            }
+
+            return c.getSolde();
+
+        }
+        catch (SQLException ex) {
+            System.out.println(ex);
+        }
+
+        return 0;
+    }
+
+    public void ModifierUserAchat(int idUsr1, int prix) {
+              try {
+            String req = "Update user set solde=? where id=?";
+            PreparedStatement ste = Cn.prepareStatement(req);
+            ste.setInt(1, prix);
+            ste.setInt(2, idUsr1);
+            ste.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+
+       
+    }
+     public User getUser(int idUsr) {
+        try {
+            String req = "Select * from user where id=?";
+            PreparedStatement ste = Cn.prepareStatement(req);
+            ste.setInt(1, idUsr);
+            ResultSet rs = ste.executeQuery();
+            User c = new User();
+            while (rs.next()) {
+                c.setSolde(rs.getInt("solde"));
+                 c.setId(rs.getInt("Id"));
+            }
+
+            return c;
+
+        }
+        catch (SQLException ex) {
+            System.out.println(ex);
+        }
+
+        return null;
+    }
+            public void ajouterAchat(ListAchat l) {
+        try {
+            String req = "insert into achat_produit (Produit, Acheteur, quantite, prix, idAcheteur, idProduit, image, date) VALUES (?,?,?,?,?,?,?,?)";
+            PreparedStatement ste = Cn.prepareStatement(req);
+            ste.setString(1, l.getNom());
+            ste.setString(2, l.getAcheteur());
+            ste.setInt(3, l.getQuantite());
+            ste.setInt(4, l.getPrix());
+            ste.setInt(5, l.getIdAcheteur());
+            ste.setInt(6,l.getIdProduit());
+            ste.setString(7, l.getImage());
+            ste.setTimestamp(8, l.getDate());
+            ste.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+
+    }
+    
 
 }

@@ -2,6 +2,7 @@ package Entities;
 
 public class User {
 
+
     private int id, enabled, phone, solde;
     private String email, email_canonical, username, username_canonical, firstname, lastname, roles, image, address, zip_code, city, country, password;
 
@@ -77,6 +78,7 @@ public class User {
         this.phone = phone;
     }
 
+
     public int getSolde() {
         return solde;
     }
@@ -84,6 +86,15 @@ public class User {
     public void setSolde(int solde) {
         this.solde = solde;
     }
+
+	
+        
+
+        @Override
+        public String toString() {
+            return username;
+        }
+       
 
     public String getEmail_canonical() {
         return email_canonical;
@@ -143,9 +154,6 @@ public class User {
     
     
 
-    @Override
-    public String toString() {
-        return username;
-    }
+    
 
 }

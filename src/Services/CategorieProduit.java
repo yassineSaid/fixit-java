@@ -63,10 +63,7 @@ public class CategorieProduit {
             c.setNom(rs.getString(2));
             c.setDescription(rs.getString(3));
             c.setImage(rs.getString(4));
-            
-            l.add(c);
-
-        }
+            l.add(c);}
         return l;
     }
 
@@ -81,8 +78,7 @@ public class CategorieProduit {
        catch (SQLException ex) {
             System.out.println(ex);
         }
-        
-        
     }
+  
 
 }

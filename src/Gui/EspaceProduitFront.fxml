@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.StackPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.EspaceProduitFrontController">
+       <children>
+    <fx:include fx:id="frontIndex" source="frontIndex.fxml" />
+       <AnchorPane layoutX="275.0" layoutY="14.0" prefHeight="690.0" prefWidth="1300.0">
+         <children>
+             <TabPane fx:id="Tabwidget" layoutX="10.0" layoutY="-22.0" prefHeight="690.0" prefWidth="1016.0" tabClosingPolicy="UNAVAILABLE">
+               <tabs>
+                  <Tab fx:id="interfaceAjout" text="AjouterProduit">
+                     <content>
+                        <AnchorPane fx:id="ajouterRec" minHeight="0.0" minWidth="0.0" prefHeight="601.0" prefWidth="896.0" stylesheets="@../Resources/style.css">
+                           <children>
+                              <ImageView fitHeight="865.0" fitWidth="877.0" layoutX="62.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.06;">
+                                 <image>
+                                    <Image url="@../Resources/marker.png" />
+                                 </image>
+                              </ImageView>
+                              <Label layoutX="252.0" layoutY="115.0">
+                                 <font>
+                                    <Font size="19.0" />
+                                 </font>
+                              </Label>
+                              <Separator layoutX="231.0" layoutY="151.0" prefHeight="15.0" prefWidth="528.0" />
+                              <Label layoutX="26.0" layoutY="204.0" text="Categorie :">
+                                 <font>
+                                    <Font size="19.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="16.0" layoutY="265.0" text="Date d'expiration:">
+                                 <font>
+                                    <Font size="19.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="15.0" layoutY="333.0" text="nom de produit :">
+                                 <font>
+                                    <Font size="19.0" />
+                                 </font>
+                              </Label>
+                              <ComboBox fx:id="categorieProduit" layoutX="219.0" layoutY="202.0" prefHeight="31.0" prefWidth="247.0" promptText="Selectionner categorie" />
+                              <TextField fx:id="motif" layoutX="220.0" layoutY="331.0" prefHeight="31.0" prefWidth="247.0" />
+                              <Button fx:id="ajouter_Rec" layoutX="246.0" layoutY="508.0" mnemonicParsing="false" onAction="#ajouterProduitClicked" prefHeight="38.0" prefWidth="223.0" text="Ajouter Produit">
+                                 <textFill>
+                                    <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                                       <stops>
+                                          <Stop color="BLACK" />
+                                          <Stop color="WHITE" offset="1.0" />
+                                       </stops>
+                                    </RadialGradient>
+                                 </textFill>
+                              </Button>
+                              <Label fx:id="MesProduit" layoutX="685.0" layoutY="170.0" text="Mes Produit">
+                                 <font>
+                                    <Font size="19.0" />
+                                 </font>
+                              </Label>
+                              <Separator layoutX="595.0" layoutY="201.0" prefHeight="0.0" prefWidth="328.0" />
+                              <TableView fx:id="MesProduitss" layoutX="482.0" layoutY="202.0" onMousePressed="#itemselected" prefHeight="514.0" prefWidth="519.0" styleClass="table-langues">
+                                <columns>
+                                  <TableColumn fx:id="nomtab" prefWidth="75.0" text="Nom" />
+                                  <TableColumn fx:id="dateExpira" prefWidth="134.0" text="Date d'expiration" />
+                                    <TableColumn fx:id="quantitetab" prefWidth="70.0" text="quantite" />
+                                    <TableColumn fx:id="prixTab" prefWidth="103.0" text="prix" />
+                                    <TableColumn fx:id="imageTab" prefWidth="134.0" text="image" />
+                                </columns>
+                              </TableView>
+                              <TextField fx:id="Quantitefield" layoutX="220.0" layoutY="379.0" prefHeight="31.0" prefWidth="247.0" />
+                              <Label layoutX="15.0" layoutY="381.0" text="Quantite">
+                                 <font>
+                                    <Font size="19.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="14.0" layoutY="464.0" text="image">
+                                 <font>
+                                    <Font size="19.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="imagefield" layoutX="220.0" layoutY="464.0" prefHeight="31.0" prefWidth="247.0" />
+                              <Label layoutX="15.0" layoutY="420.0" text="prix">
+                                 <font>
+                                    <Font size="19.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="prix" layoutX="220.0" layoutY="418.0" prefHeight="31.0" prefWidth="247.0" />
+                              <DatePicker fx:id="dateExp" layoutX="215.0" layoutY="263.0" prefHeight="31.0" prefWidth="253.0" style="-fx-background-color: red;" />
+                              <Button fx:id="modifierProduit" layoutX="247.0" layoutY="554.0" mnemonicParsing="false" onAction="#modifierProduitClicked" prefHeight="38.0" prefWidth="223.0" style="-fx-background-color: coral;" text="Modifier Produit">
+                                 <textFill>
+                                    <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                                       <stops>
+                                          <Stop color="BLACK" />
+                                          <Stop color="WHITE" offset="1.0" />
+                                       </stops>
+                                    </RadialGradient>
+                                 </textFill>
+                              </Button>
+                              <Button fx:id="ajouter_Rec2" layoutX="247.0" layoutY="599.0" mnemonicParsing="false" onAction="#supprimerProduitClicked" prefHeight="38.0" prefWidth="223.0" style="-fx-background-color: red;" text="Supprimer Produit">
+                                 <textFill>
+                                    <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                                       <stops>
+                                          <Stop color="BLACK" />
+                                          <Stop color="WHITE" offset="1.0" />
+                                       </stops>
+                                    </RadialGradient>
+                                 </textFill>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab fx:id="ListProduitVendre" text="ListProduitVendre">
+                     <content>
+                        <AnchorPane fx:id="ajouterRec1" minHeight="0.0" minWidth="0.0" prefHeight="601.0" prefWidth="896.0" stylesheets="@../Resources/style.css">
+                           <children>
+                              <Label layoutX="252.0" layoutY="115.0">
+                                 <font>
+                                    <Font size="19.0" />
+                                 </font>
+                              </Label>
+                              <AnchorPane layoutX="5.0" layoutY="11.0" prefHeight="604.0" prefWidth="1006.0">
+                                 <children>
+                                    <TableView fx:id="allProduit" layoutX="14.0" layoutY="88.0" prefHeight="490.0" prefWidth="887.0">
+                                      <columns>
+                                        <TableColumn fx:id="imageP" prefWidth="197.0" text="image" />
+                                        <TableColumn fx:id="nomP" prefWidth="92.0" text="nom" />
+                                          <TableColumn fx:id="QuantiteP" prefWidth="102.0" text="Quantite" />
+                                          <TableColumn fx:id="prixP" prefWidth="75.0" text="Prix" />
+                                          <TableColumn fx:id="dateP" prefWidth="223.0" text="date d'expiration" />
+                                          <TableColumn fx:id="actionP" prefWidth="223.0" text="Action" />
+                                      </columns>
+                                    </TableView>
+                                    <Button fx:id="retourField" layoutX="855.0" layoutY="14.0" mnemonicParsing="false" onAction="#RetourMesProduits" prefHeight="31.0" prefWidth="97.0" text="Retour" />
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab fx:id="ListProduitVendre1" text="ListProduitVendre">
+                     <content>
+                        <AnchorPane fx:id="ajouterRec11" minHeight="0.0" minWidth="0.0" prefHeight="601.0" prefWidth="896.0" stylesheets="@../Resources/style.css">
+                           <children>
+                              <Label layoutX="252.0" layoutY="115.0">
+                                 <font>
+                                    <Font size="19.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fx:id="image" fitHeight="182.0" fitWidth="268.0" layoutX="340.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true" />
+                              <TextField fx:id="nomF" layoutX="388.0" layoutY="312.0" style="-fx-background-color: transparent;" />
+                              <TextField fx:id="nomF1" layoutX="387.0" layoutY="286.0" style="-fx-background-color: transparent;" />
+                              <TextField fx:id="nomF2" layoutX="388.0" layoutY="342.0" style="-fx-background-color: transparent;" />
+                              <Label layoutX="203.0" layoutY="317.0" prefHeight="21.0" prefWidth="74.0" text="Nom:" />
+                              <Label layoutX="200.0" layoutY="291.0" prefHeight="21.0" prefWidth="153.0" text="Quantite disponible:" />
+                              <Label layoutX="203.0" layoutY="347.0" prefHeight="21.0" prefWidth="74.0" text="Prix:" />
+                              <Button fx:id="AcheterField" layoutX="442.0" layoutY="423.0" mnemonicParsing="false" onAction="#AcheterField" prefHeight="31.0" prefWidth="90.0" text="Acheter" />
+                              <AnchorPane fx:id="achat" layoutX="216.0" layoutY="414.0" prefHeight="47.0" prefWidth="200.0" />
+                              <Label layoutX="203.0" layoutY="373.0" prefHeight="21.0" prefWidth="82.0" text="Quantite" />
+                              <TextField fx:id="QuantiteField" layoutX="388.0" layoutY="379.0" />
+                              <Label fx:id="quantiteLab" layoutX="400.0" layoutY="483.0" prefHeight="21.0" prefWidth="175.0" text="Quantite non disponible" textFill="#fc0a0a" />
+                              <Label fx:id="quantiteLab1" layoutX="402.0" layoutY="504.0" prefHeight="21.0" prefWidth="173.0" text="votre solde insuffisant" textFill="#fc0a0a" />
+                              <Button fx:id="retourField1" layoutX="880.0" layoutY="23.0" mnemonicParsing="false" onAction="#RetourAllProduit" prefHeight="31.0" prefWidth="97.0" text="Retour" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+               </tabs>
+            </TabPane>
+         </children>
+      </AnchorPane>
+   </children>
+    
+</AnchorPane>

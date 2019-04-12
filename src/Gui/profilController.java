@@ -193,6 +193,8 @@ public class profilController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Platform.runLater(() -> {
+            
+                
             frontIndexController.setUser(user);
             frontIndexController.initialize(null, null);
             frontIndexController.getProfil().setStyle("-fx-background-color: #f4f4f4");
@@ -226,6 +228,7 @@ public class profilController implements Initializable {
         table.setItems(uls.getUserLangue(user));
         for (Langue l : table.getItems()) {
             l.getSupprimer().setOnAction(this::supprimerAction);
+            
         }
         listLangues.setItems(uls.getLangues(user));
     }

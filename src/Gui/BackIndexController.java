@@ -114,7 +114,7 @@ public class BackIndexController implements Initializable {
     private void espaceProduit(ActionEvent event) {
         try {
 
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/CategorieProduit.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/EspaceProduitBack.fxml"));
             Parent Rec = fxmlLoader.load();
 
             Scene scene = new Scene(Rec);
