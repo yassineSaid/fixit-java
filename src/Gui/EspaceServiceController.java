@@ -12,6 +12,7 @@ import Services.CategorieServiceService;
 import Services.Connexion;
 import Services.ImageService;
 import Services.ServiceService;
+import Services.ImageService;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;

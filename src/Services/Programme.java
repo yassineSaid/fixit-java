@@ -1,6 +1,6 @@
 package Services;
 
-import Entities.categorie_produit;
+import Entities.CategorieProduit;
 import Entities.produit;
 import java.io.IOException;
 import java.security.InvalidKeyException;
@@ -29,7 +29,7 @@ public class Programme extends Application {
 	public void start(Stage primaryStage) {
 		try
 		{
-			Parent root = FXMLLoader.load(getClass().getResource("/Gui/login.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("/Gui/Login.fxml"));
                         Scene scene = new Scene(root);
                         primaryStage.setScene(scene);
                         primaryStage.show();
@@ -49,7 +49,7 @@ int myMonth = 3;
 int myDay = 24;
 Timestamp ts = Timestamp.valueOf(String.format("%04d-%02d-%02d 00:00:00", 
                                                 myYear, myMonth, myDay));
-categorie_produit c= new categorie_produit("cosmitique","fdgf","zdzd",41);
+CategorieProduit c= new CategorieProduit("cosmitique","fdgf","zdzd",41);
 produit p1=new produit("ffm",2,c,52,ts ,4,"fjeifj");
 p.ajouterProduit(p1);
 */ 
