@@ -32,16 +32,24 @@ import javafx.scene.control.Alert;
 
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Pagination;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class ReclamationFrontController implements Initializable {
@@ -66,7 +74,7 @@ public class ReclamationFrontController implements Initializable {
     private TextArea description;
     @FXML
     private Button ajouter_Rec;
-    
+
     @FXML
     private ListView<Reclamation> listRec;
     @FXML
@@ -77,7 +85,33 @@ public class ReclamationFrontController implements Initializable {
     @FXML
     private Button annuler;
     private User user;
-    
+    @FXML
+    private Tab mesReclamationsTab;
+    @FXML
+    private Pagination paginationRecFront;
+    @FXML
+    private ListView<Reclamation> listReclam;
+    @FXML
+    private Label userDetail;
+    @FXML
+    private Label dateReclamationDetail;
+    @FXML
+    private Label userReclameDetail;
+    @FXML
+    private Label serviceDetail;
+    @FXML
+    private Label objetDetail;
+    @FXML
+    private Label descriptionDetail;
+    @FXML
+    private ProgressBar progressRec;
+    @FXML
+    private Label etape;
+    @FXML
+    private AnchorPane details;
+    @FXML
+    private ProgressIndicator progrssCircle;
+
     public User getUser() {
         return user;
     }
@@ -105,7 +139,10 @@ public class ReclamationFrontController implements Initializable {
             annuler.setVisible(false);
             motif.setText("");
             description.setText("");
-            
+            details.setVisible(false);
+            getReclamations();
+            listReclam.setCellFactory(v -> new Poules());
+
         });
 
     }
@@ -189,7 +226,7 @@ public class ReclamationFrontController implements Initializable {
 
         ReclamationService recServ = new ReclamationService();
 
-        if (event.getClickCount() == 2) {
+       /* if (event.getClickCount() == 2) {
             try {
 
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/detailReclamationFront.fxml"));
@@ -207,7 +244,7 @@ public class ReclamationFrontController implements Initializable {
             } catch (IOException ex) {
                 System.out.println(ex);
             }
-        }
+        }*/
 
         if (event.getClickCount() == 1) {
             Reclamation rec = new Reclamation();
@@ -221,8 +258,7 @@ public class ReclamationFrontController implements Initializable {
                 alert.setHeaderText(null);
                 alert.setContentText("Cette Reclamation est déja vu par les administrateurs\n vous ne pouvez plus la supprimer ni la modifier\n");
                 alert.showAndWait();
-            } 
-            else {
+            } else {
                 motif.setText(rec.getObjet());
                 description.setText(rec.getDescription());
                 System.out.println(rec.getUserReclame());
@@ -237,7 +273,7 @@ public class ReclamationFrontController implements Initializable {
                 supprimerRec.setVisible(true);
                 modifierRec.setDisable(false);
                 supprimerRec.setDisable(false);
-                
+
             }
         }
     }
@@ -301,6 +337,95 @@ public class ReclamationFrontController implements Initializable {
 
     @FXML
     private void annulerAction(ActionEvent event) {
-          initialize(null, null);
+        initialize(null, null);
+    }
+
+    private Node createPage(int pageIndex) {
+        ReclamationService recServ = new ReclamationService();
+
+        ObservableList<Reclamation> data = FXCollections.observableArrayList();
+        data = recServ.getAllReclamation();
+        int fromIndex = pageIndex * 6;
+        int toIndex = Math.min(fromIndex + 6, data.size());
+        listReclam.setItems(FXCollections.observableArrayList(data.subList(fromIndex, toIndex)));
+
+        return listReclam;
+    }
+
+    // Hbox et Vbox
+    private void getReclamations() {
+        ReclamationService r = new ReclamationService();
+        ObservableList<Reclamation> list = FXCollections.observableArrayList();
+        list = r.afficherReclamation(this.getUser().getId());
+        listReclam.setItems(list);
+        paginationRecFront.setPageFactory(this::createPage);
+    }
+
+    @FXML
+    private void detailsReclmations(MouseEvent event) {
+        details.setVisible(true);
+        Reclamation rec = new Reclamation();
+        rec = listReclam.getSelectionModel().getSelectedItem();
+        userDetail.setText(this.user.getUsername());
+        dateReclamationDetail.setText(rec.getDateReclamation().toString());
+        userReclameDetail.setText(rec.getUserReclame().getUsername());
+        serviceDetail.setText(rec.getIdServiceRealise().getNom());
+        description.setText(rec.getDescription());
+        objetDetail.setText(rec.getObjet());
+        if (rec.getSeen() == 0) {
+            progressRec.setProgress(0.02);
+            progrssCircle.setProgress(0.02);
+            etape.setText("Votre reclamation est envoyé avec succés \n elle est en cours de traitement");
+        }
+        if (rec.getSeen() == 1) {
+            progressRec.setProgress(0.5);
+            progrssCircle.setProgress(0.5);
+            etape.setText("Votre reclamation est vu par l'un de nos \n administrateur elle sera bientôt traité");
+        }
+        if (rec.getSeen() == 1 && rec.getTraite() == 1) {
+            progressRec.setProgress(1.0);
+            progrssCircle.setProgress(1.0);
+            etape.setText("Votre reclamation a été bien traité");
+        }
+    }
+
+    public class Poules extends ListCell<Reclamation> {
+
+        public Poules() {
+        }
+
+        protected void updateItem(Reclamation item, boolean bln) {
+            super.updateItem(item, bln);
+            if (item != null) {
+                Text userrec = new Text("Contre :" + item.getUserReclame());
+                Text date = new Text("Le : " + item.getDateReclamation());
+                Text objet = new Text("Objet : " + item.getObjet());
+                userrec.setStyle("-fx-font-size: 15 arial;");
+                date.setStyle("-fx-font-size: 15 arial;");
+                objet.setStyle("-fx-font-size: 15 arial;");
+                Image traite = new Image("file:/wamp64/www/fixit/web/service/images/icons/traite.png", 60, 80, false, false);
+                ImageView traiteV = new ImageView(traite);
+                Image encours = new Image("file:/wamp64/www/fixit/web/service/images/icons/encours.jpg", 60, 80, false, false);
+                ImageView encoursV = new ImageView(encours);
+
+                VBox vBox = new VBox(userrec, date, objet);
+                vBox.setStyle("-fx-font-color: transparent;");
+                vBox.setSpacing(10);
+                if (item.getTraite() == 1) {
+                    HBox hBox = new HBox(traiteV, vBox);
+                    hBox.setStyle("-fx-font-color: transparent;");
+                    hBox.setSpacing(10);
+                    setGraphic(hBox);
+                } else {
+                    HBox hBox = new HBox(encoursV, vBox);
+                    hBox.setStyle("-fx-font-color: transparent;");
+                    hBox.setSpacing(10);
+                    setGraphic(hBox);
+                }
+
+                // hBox.setStyle("-fx-alignment: center ;");
+                //hBox.gets
+            }
+        }
     }
 }
