@@ -91,4 +91,24 @@ public class HorraireService {
             e.printStackTrace();
         }
     }
+    public boolean checkHorraire(User user,Time heureDebut,Time heureFin,int jour)
+    {
+        PreparedStatement pt;
+        try {
+            pt = C.prepareStatement("select * from horraire where User=? and jour=?");
+            pt.setInt(1,user.getId());
+            pt.setInt(2,jour);
+            ResultSet rs=pt.executeQuery();
+            while(rs.next()){
+                if (rs.getTime("heureDebut").before(heureDebut) && rs.getTime("heureFin").after(heureDebut)) return false;
+                if (rs.getTime("heureDebut").before(heureFin) && rs.getTime("heureFin").after(heureFin)) return false;
+                if (heureDebut.before(rs.getTime("heureDebut")) && heureFin.after(rs.getTime("heureDebut"))) return false;
+                if (heureDebut.before(rs.getTime("heureFin")) && heureFin.after(rs.getTime("heureFin"))) return false;
+            }
+        return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(UserLangueService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
 }

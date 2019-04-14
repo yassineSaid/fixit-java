@@ -227,3 +227,44 @@
     -fx-text-fill: #FF0000;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }
+.table-historique .column-header .label {
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+}
+.table-historique .column-header {
+    -fx-background-color: none;
+	-fx-border-color: #00AB47;
+	-fx-border-width: 1 1;
+}
+.table-historique {
+    -fx-text-fill: black;
+}
+.table-historique *.scroll-bar:vertical *.increment-button,
+.table-historique *.scroll-bar:vertical *.decrement-button {
+  -fx-background-color: transparent;
+    -fx-background-radius : 0.0em;
+    -fx-padding :0.0 10.0 0.0 0.0;
+}
+
+.table-historique *.scroll-bar:vertical *.increment-arrow,
+.table-historique *.scroll-bar:vertical *.decrement-arrow {
+  -fx-background-color: white;
+    -fx-shape : " ";    
+    -fx-padding :0.0 0.15em;
+}
+.table-historique *.scroll-bar:vertical .track{
+    -fx-background-color :transparent;
+    -fx-border-color :transparent;
+    -fx-background-radius : 0.0em;
+    -fx-border-radius :2.0em;
+}
+.table-historique *.scroll-bar:vertical .thumb {
+    -fx-background-color :derive(black,90.0%);
+    -fx-background-insets : 2.0, 0.0, 0.0;
+    -fx-background-radius : 2.0em;
+}
+.table-historique *.scroll-bar .increment-arrow,
+.table-historique *.scroll-bar .decrement-arrow{
+    -fx-shape : " ";    
+    -fx-padding :0.15em 0.0;
+}

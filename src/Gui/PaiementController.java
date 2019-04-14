@@ -6,36 +6,25 @@
 package Gui;
 
 import Entities.User;
+import Services.PaiementService;
 import Services.UserService;
-import com.jfoenix.controls.JFXTextField;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Charge;
-import java.io.IOException;
 import java.net.URL;
-import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Background;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javax.swing.text.MaskFormatter;
 
 /**
  * FXML Controller class
@@ -95,7 +84,7 @@ public class PaiementController implements Initializable {
         mn = nbS / 2;
         Stripe.apiKey = "sk_test_rkfr2kuDbj8a7LRmarLt40W7";
         Map<String, Object> chargeMap = new HashMap<String, Object>();
-        chargeMap.put("amount", nbS*100);
+        chargeMap.put("amount", nbS*50);
         chargeMap.put("currency", "usd");
         Map<String, Object> cardMap = new HashMap<String, Object>();
         cardMap.put("number", ccNumber.getText());
@@ -109,7 +98,9 @@ public class PaiementController implements Initializable {
             if (charge.getStatus().equals("succeeded"))
             {
                 UserService us=new UserService();
+                PaiementService ps=new PaiementService();
                 us.modifierSolde(user, nbS);
+                ps.ajouterPaiement(user, mn, nbS, charge.getId());
                 payer.setDisable(false);
                 quitterAction(event);
             }
@@ -172,7 +163,7 @@ public class PaiementController implements Initializable {
         float mn;
         int nbS;
         nbS = Integer.parseInt(nbScoin.getText());
-        mn = nbS / 2;
+        mn = (float) nbS / 2;
         montant.setText(String.valueOf(mn) + " DT");
     }
 
