@@ -13,6 +13,7 @@ import Entities.CategorieOutil;
 import java.sql.Connection;
 import java.sql.*;
 import Entities.Outil;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
@@ -112,7 +113,7 @@ public class OutilService {
         }
         return list;
     }
-
+    
     public void supprimerOutil(int id) {
         try {
             PreparedStatement pt = c.prepareStatement("delete from outils where id=?");

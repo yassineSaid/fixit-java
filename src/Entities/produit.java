@@ -9,6 +9,7 @@ import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.DateFormat;
+import javafx.scene.control.Button;
 
 /**
  *
@@ -18,14 +19,24 @@ public class produit {
   private int id;
   private String Nom;
   private int Quantite;
-  private  categorie_produit idCategorieProduit;
+  private  CategorieProduit idCategorieProduit;
   private int prix;
   public Timestamp date_exp;
   private User user;
   private String image;
+  private Button Detaille;
+  private int idProd;
+
+    public int getIdProd() {
+        return idProd;
+    }
+
+    public void setIdProd(int idProd) {
+        this.idProd = idProd;
+    }
   public produit(){}
 
-    public produit(String Nom, int Quantite, categorie_produit idCategorieProduit, int prix, Timestamp date_exp, User user, String image) {
+    public produit(String Nom, int Quantite, CategorieProduit idCategorieProduit, int prix, Timestamp date_exp, User user, String image) {
         this.Nom = Nom;
         this.Quantite = Quantite;
         this.idCategorieProduit = idCategorieProduit;
@@ -59,11 +70,11 @@ public class produit {
         this.Quantite = Quantite;
     }
 
-    public categorie_produit getIdCategorieProduit() {
+    public CategorieProduit getIdCategorieProduit() {
         return idCategorieProduit;
     }
 
-    public void setIdCategorieProduit(categorie_produit idCategorieProduit) {
+    public void setIdCategorieProduit(CategorieProduit idCategorieProduit) {
         this.idCategorieProduit = idCategorieProduit;
     }
 
@@ -97,6 +108,19 @@ public class produit {
 
     public void setImage(String image) {
         this.image = image;
+    }
+    
+    public Button getDetaille() {
+        return Detaille;
+    }
+
+    public void setDetaille(Button Detaille) {
+        this.Detaille = Detaille;
+    }
+
+    @Override
+    public String toString() {
+        return Nom + Detaille;
     }
     
 }

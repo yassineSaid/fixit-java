@@ -13,32 +13,22 @@ public class CategorieService {
 		
 	}
 
-    public CategorieService(int id, String nom, String description) {
+    public CategorieService(int id, String nom, String description, String image, ImageView im) {
         this.id = id;
         this.nom = nom;
         this.description = description;
+        this.image = image;
+        this.im = im;
     }
-	
-	public CategorieService(String nom,String description) {
-		this.nom=nom;
-		this.description=description;
-	}
-        public CategorieService(int id,String nom) {
-		this.id=id;
-		this.nom=nom;
-	}
-        public CategorieService(int id,String nom,String description,ImageView im) {
-            this.id=id;
-            this.nom=nom;
-             this.description=description;
-             this.im=im;
-	}
-        public CategorieService(String nom,String description,ImageView im) {
-            
-            this.nom=nom;
-             this.description=description;
-             this.im=im;
-	}
+
+    public CategorieService(String nom, String description, String image, ImageView im) {
+        this.nom = nom;
+        this.description = description;
+        this.image = image;
+        this.im = im;
+    }
+
+   
 
     public ImageView getIm() {
         return im;

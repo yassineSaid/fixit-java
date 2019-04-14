@@ -5,27 +5,37 @@
  */
 package Entities;
 
+import javafx.scene.image.ImageView;
+
 /**
  *
  * @author Ali Saidani
  */
-public class categorie_produit {
+public class CategorieProduit {
 
     private int id;
     private String Nom;
     private String description;
     private String image;
-     public categorie_produit() {
+    private ImageView im;
+
+    public CategorieProduit() {
     }
 
-    public categorie_produit(String Nom, String description, String image, int id) {
+    public CategorieProduit(int id, String Nom, String description, String image, ImageView im) {
+        this.id = id;
         this.Nom = Nom;
         this.description = description;
         this.image = image;
-           this.id=id;
+        this.im = im;
     }
 
-
+    public CategorieProduit(String Nom, String description, String image, ImageView im) {
+        this.Nom = Nom;
+        this.description = description;
+        this.image = image;
+        this.im = im;
+    }
 
     public int getId() {
         return id;
@@ -61,7 +71,15 @@ public class categorie_produit {
 
     @Override
     public String toString() {
-        return  Nom ;
+        return Nom;
     }
-    
+
+    public ImageView getIm() {
+        return im;
+    }
+
+    public void setIm(ImageView im) {
+        this.im = im;
+    }
+
 }

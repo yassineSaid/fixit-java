@@ -460,4 +460,16 @@ public class UserService {
             e.printStackTrace();
         }
     }
+    
+    public void ajouterImage(String image,int id) {
+        try {
+            PreparedStatement pt = C.prepareStatement("UPDATE user SET image=? WHERE id=?");
+            pt.setString(1, image);
+            pt.setInt(2, id);
+            pt.execute();
+        } catch (SQLException e) {
+            System.out.println(e.getCause());
+            e.printStackTrace();
+        }
+    }
 }

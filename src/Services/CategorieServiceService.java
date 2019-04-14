@@ -14,59 +14,62 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class CategorieServiceService {
 
     Connection c=Connexion.getInstance().getCon();
-    public List<CategorieService> afficherCategorie(){
-        List<CategorieService> cc=new ArrayList<>();
-        try{
-        PreparedStatement pt=c.prepareStatement("select * from categorie_Service");
-        ResultSet rs=pt.executeQuery();
-        while(rs.next()){
-            CategorieService catS=new CategorieService(
-                    rs.getInt(1),
-                    rs.getString(2),
-                    rs.getString(3)
-            );
-            cc.add(catS);
-                
-        }
-        }
-        catch(SQLException ex){
-            System.out.println("erreur: "+ex.getMessage());
-        }
-        return cc;
+    public void ajouterCategorie(CategorieService C){
+		 try
+	        {
+	            PreparedStatement pt=c.prepareStatement("INSERT INTO categorie_Service (nom,description,image_categorie) Values (?,?,?)");
+	            pt.setString(1, C.getNom() );
+	            pt.setString(2, C.getDescription());
+                    pt.setString(3, C.getImage());
+	            pt.executeUpdate();
+	        } 
+	        catch (SQLException ex) 
+	        {
+	            System.out.println(ex);
+	        }
     }
-    public void ajouterCategorie(CategorieService cs){
-        try {
-        
-         PreparedStatement st=c.prepareStatement("insert into categorie_Service (nom,description) values(?,?)");
-        st.setString(1,cs.getNom());
-        st.setString(2,cs.getDescription());
-        
-        st.executeUpdate();
-        }
-        catch(SQLException ex){
-            System.out.println("erreur: "+ex.getMessage());
-        }
-        
-    }
-    public void modifierCategorie(CategorieService cs){
+    public void modifierCategorie(CategorieService C)
+    {
         try{
-        PreparedStatement pt=c.prepareStatement("update categorie_Service set nom=? , description=? where id=? ");
-        pt.setString(1,cs.getNom());
-        pt.setString(2,cs.getDescription());
-        pt.setInt(3,cs.getId());
+            
+        PreparedStatement pt=c.prepareStatement("update categorie_Service set nom=?,description=? , image_categorie=? where id=? ");
+        pt.setString(1,C.getNom());
+        pt.setString(2,C.getDescription());
+        pt.setString(3,C.getImage());
+        pt.setInt(4,C.getId());
         pt.executeUpdate();
         }
-        catch(SQLException ex){
-            System.out.println("erreur: "+ex.getMessage());
-        }
-        
+        catch(SQLException ex) {}
     }
-    public void supprimerCategorie(int id){
-          try {
+    public ObservableList<CategorieService> afficherCategorie() 
+            throws SQLException {
+        ObservableList list = FXCollections.observableArrayList();
+        Statement st = c.createStatement();
+        String req = "select * from categorie_Service";
+        ResultSet rs = st.executeQuery(req);
+        while (rs.next()) {
+            Image image1 = new Image("file:/wamp64/www/fixit/web/uploads/images/categorieService/"+rs.getString(4), 120, 120, false, false);
+            CategorieService categorie = new CategorieService();
+            categorie.setId(rs.getInt(1));
+            categorie.setNom(rs.getString(2));
+            categorie.setDescription(rs.getString(3));
+            categorie.setImage(rs.getString(4));
+            categorie.setIm(new ImageView(image1));
+            list.add(categorie);
+        }
+        return list;
+    }
+    
+    
+    public void supprimerCategorie(int id)
+    {
+         try {
             PreparedStatement pt=c.prepareStatement("delete from categorie_Service where id=?");
             pt.setInt(1,id);
             pt.execute();
@@ -74,46 +77,24 @@ public class CategorieServiceService {
             Logger.getLogger(CategorieServiceService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public ObservableList<CategorieService> listeCate(){
-         ObservableList<CategorieService> cc=FXCollections.observableArrayList();
-        try{
-        PreparedStatement pt=c.prepareStatement("select * from categorie_Service");
-        ResultSet rs=pt.executeQuery();
-        while(rs.next()){
-            CategorieService cs=new CategorieService();
-            cs.setId(rs.getInt("id"));
-            cs.setNom(rs.getString("nom"));
-            cc.add(cs);
-               
-        }
-        return cc; 
-        }
-        catch(SQLException ex){
-            System.out.println("erreur: "+ex.getMessage());
+    public ObservableList<CategorieService> getALLCategorie() {
+        try {
+            ObservableList<CategorieService> list = FXCollections.observableArrayList();
+            PreparedStatement pt = c.prepareStatement("Select * from categorie_Service ");
+
+            ResultSet rs = pt.executeQuery();
+            while (rs.next()) {
+                CategorieService categorie = new CategorieService();
+                categorie.setId(rs.getInt("id"));
+                categorie.setNom(rs.getString("Nom"));
+                list.add(categorie);
+
+            }
+            return list;
+        } catch (SQLException ex) {
+            System.out.println(ex);
         }
         return null;
-        
-    }
-    public void rechercherCategorie(String nom)
-    {
-        try{
-            
-        List<CategorieService> cc=new ArrayList<>();
-            PreparedStatement pt=c.prepareStatement("select * from categorie_Service where nom like %?%");
-            pt.setString(1, nom);
-            ResultSet rs=pt.executeQuery();
-            while(rs.next()){
-            CategorieService catS=new CategorieService(
-                    rs.getString(2),
-                    rs.getString(3)
-            );
-            cc.add(catS);
-                
-        }
-        }
-        catch(Exception e){
-            System.out.println(e);
-        }
     }
 
 
