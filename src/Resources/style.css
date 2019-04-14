@@ -108,6 +108,15 @@
     -fx-pref-width: 128px;
     -fx-font-weight: bold;
 }
+.ajouterBack:hover
+{
+	-fx-background-color:  #f8f7f7;
+	-fx-text-fill: #008000;
+	-fx-font-size: 14px;
+	-fx-pref-height: 25px;
+    -fx-pref-width: 128px;
+    -fx-font-weight: bold;
+}
 .modifierBack
 {
 	-fx-background-color:   #4682B4;
@@ -117,10 +126,28 @@
     -fx-pref-width: 128px;
     -fx-font-weight: bold;
 }
+.modifierBack:hover
+{
+	-fx-background-color:   #f8f7f7;
+	-fx-text-fill: #4682B4;
+	-fx-font-size: 14px;
+	-fx-pref-height: 25px;
+    -fx-pref-width: 128px;
+    -fx-font-weight: bold;
+}
 .supprimerBack
 {
 	-fx-background-color:   #FF0000;
 	-fx-text-fill: #f8f7f7;
+	-fx-font-size: 14px;
+	-fx-pref-height: 25px;
+    -fx-pref-width: 128px;
+    -fx-font-weight: bold;
+}
+.supprimerBack:hover
+{
+	-fx-background-color:   #f8f7f7;
+	-fx-text-fill: #FF0000;
 	-fx-font-size: 14px;
 	-fx-pref-height: 25px;
     -fx-pref-width: 128px;
@@ -143,4 +170,60 @@
 	-fx-pref-height: 25px;
     -fx-pref-width: 158px;
     -fx-font-weight: bold;
+}
+.greenFront {
+    -fx-background-color: 
+        linear-gradient(#32CD32, #32CD32),
+        linear-gradient(#32CD32 0%,     #32CD32,    #32CD32 100%),
+        linear-gradient(#32CD32 0%, #32CD32 50%);
+    -fx-font-weight: bold;    
+    -fx-background-radius: 8,7,6;
+    -fx-background-insets: 0,1,2;
+    -fx-font-size: 14px;
+	-fx-pref-height: 25px;
+    -fx-pref-width: 158px;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}
+.greenFront:hover {
+    -fx-background-color: 
+        linear-gradient(white, white),
+        linear-gradient(white 0%,     white,    white 100%),
+        linear-gradient(white 0%, white 50%);
+    -fx-font-weight: bold;    
+    -fx-background-radius: 8,7,6;
+    -fx-background-insets: 0,1,2;
+    -fx-font-size: 14px;
+	-fx-pref-height: 25px;
+    -fx-pref-width: 158px;
+    -fx-text-fill: #32CD32;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}
+.redFront {
+    -fx-background-color: 
+        linear-gradient(#FF0000, #FF0000),
+        linear-gradient(#FF0000 0%,     #FF0000,    #FF0000 100%),
+        linear-gradient(#FF0000 0%, #FF0000 50%);
+    -fx-font-weight: bold;    
+    -fx-background-radius: 8,7,6;
+    -fx-background-insets: 0,1,2;
+    -fx-font-size: 14px;
+	-fx-pref-height: 25px;
+    -fx-pref-width: 158px;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}
+.redFront:hover {
+    -fx-background-color: 
+        linear-gradient(white, white),
+        linear-gradient(white 0%,     white,    white 100%),
+        linear-gradient(white 0%, white 50%);
+    -fx-font-weight: bold;    
+    -fx-background-radius: 8,7,6;
+    -fx-background-insets: 0,1,2;
+    -fx-font-size: 14px;
+	-fx-pref-height: 25px;
+    -fx-pref-width: 158px;
+    -fx-text-fill: #FF0000;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }

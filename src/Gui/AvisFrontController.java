@@ -18,6 +18,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import org.controlsfx.control.Rating;
@@ -42,14 +44,23 @@ public class AvisFrontController implements Initializable {
     private Button noter;
     @FXML
     private Button modifier_note;
-    
+    @FXML
+    private Label value;
+    @FXML
+    private Label moyenneLb;
+    @FXML
+    private Separator sep;
+    @FXML
+    private Rating ratingAvg;
+
     public User getUser() {
         return user;
     }
+
     public void setUser(User user) {
         this.user = user;
     }
-    
+
     /**
      * Initializes the controller class.
      */
@@ -58,17 +69,21 @@ public class AvisFrontController implements Initializable {
         Platform.runLater(() -> {
             Avis avis = new Avis();
             AvisService avisSer = new AvisService();
-            avis = avisSer.getUserAvis(this.getUser().getId());
-            //System.out.println(avis.getId());
             frontIndexController.getEspaceAvis().setStyle("-fx-background-color: #f4f4f4");
-            if (avis == null) {
-                ObservableList<String> list = FXCollections.observableArrayList("Non Satisfait", "Moyennement Satisfait", "Totalement Satisfait");
-                satisfaction.setItems(list);
+            ObservableList<String> list = FXCollections.observableArrayList("Non Satisfait", "Moyennement Satisfait", "Totalement Satisfait");
+            satisfaction.setItems(list);
+            ratingAvg.setRating(avisSer.moyenneNotes());
+            moyenneLb.setVisible(false);
+            sep.setVisible(false);
+            ratingAvg.setVisible(false);
+            if (avisSer.getUserAvis(this.getUser().getId()) == null) {
                 modifier_note.setVisible(false);
                 rating.setRating(0.0);
+                value.setText("0");
                 frontIndexController.setUser(user);
                 frontIndexController.initialize(null, null);
             } else {
+                avis = avisSer.getUserAvis(this.getUser().getId());
                 frontIndexController.setUser(user);
                 frontIndexController.initialize(null, null);
                 noter.setVisible(false);
@@ -76,34 +91,38 @@ public class AvisFrontController implements Initializable {
                 rating.setRating((double) avis.getNote());
                 satisfaction.setValue(avis.getSatisfaction());
                 description.setText(avis.getDescription());
+                value.setText(Integer.toHexString((int) rating.getRating()));
             }
 
         });
-    }    
+    }
 
     @FXML
     private void ratingchoose(MouseEvent event) {
-        System.out.print((int)rating.getRating());
+        value.setText(Integer.toString((int) rating.getRating()));
     }
 
     @FXML
     private void NoterAction(ActionEvent event) {
-        AvisService avisServ= new AvisService();
-        Avis avis= new Avis(description.getText(),(int)rating.getRating(),satisfaction.getValue().toString(),this.getUser());
+        AvisService avisServ = new AvisService();
+        Avis avis = new Avis(description.getText(), (int) rating.getRating(), satisfaction.getValue().toString(), this.getUser());
         avisServ.ajouterAvis(avis);
-        initialize(null, null);
-        
-         
+        avisServ.bonus(this.user.getId());
+        ratingAvg.setRating(avisServ.moyenneNotes());
+        moyenneLb.setVisible(true);
+        sep.setVisible(true);
+        ratingAvg.setVisible(true);
     }
 
     @FXML
     private void modifierNoteAction(ActionEvent event) {
-        AvisService avisServ= new AvisService();
-        Avis avis= new Avis(description.getText(),(int)rating.getRating(),satisfaction.getValue().toString(),this.getUser());
-        avisServ.ajouterAvis(avis);
-        initialize(null, null);
+        AvisService avisServ = new AvisService();
+        Avis avis = new Avis(description.getText(), (int) rating.getRating(), satisfaction.getValue().toString(), this.getUser());
+        avisServ.modifierAvis(avis);
+        ratingAvg.setRating(avisServ.moyenneNotes());
+        moyenneLb.setVisible(true);
+        sep.setVisible(true);
+        ratingAvg.setVisible(true);
     }
-    
-    
-    
+
 }

@@ -37,4 +37,17 @@
    <TextField fx:id="description" layoutX="703.0" layoutY="323.0" />
    <Button fx:id="noter" layoutX="725.0" layoutY="422.0" mnemonicParsing="false" onAction="#NoterAction" text="Noter l'application" />
    <Button fx:id="modifier_note" layoutX="731.0" layoutY="422.0" mnemonicParsing="false" onAction="#modifierNoteAction" text="Modifier la noter" />
+   <Label layoutX="991.0" layoutY="161.0" prefHeight="68.0" prefWidth="61.0" text="/5" textFill="#6f6b6b">
+      <font>
+         <Font size="40.0" />
+      </font>
+   </Label>
+   <Label fx:id="value" layoutX="969.0" layoutY="166.0" text="0" textFill="GOLD">
+      <font>
+         <Font size="40.0" />
+      </font>
+   </Label>
+   <Label fx:id="moyenneLb" layoutX="706.0" layoutY="513.0" text="La moyenne des notes est :" />
+   <Separator fx:id="sep" layoutX="696.0" layoutY="543.0" prefWidth="200.0" />
+   <Rating fx:id="ratingAvg" layoutX="709.0" layoutY="553.0" />
 </AnchorPane>

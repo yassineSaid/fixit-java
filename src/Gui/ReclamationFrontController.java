@@ -33,6 +33,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
@@ -43,7 +44,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-public class reclamationFront implements Initializable {
+public class ReclamationFrontController implements Initializable {
 
     @FXML
     private FrontIndexController frontIndexController;
@@ -65,7 +66,7 @@ public class reclamationFront implements Initializable {
     private TextArea description;
     @FXML
     private Button ajouter_Rec;
-    private User user;
+    
     @FXML
     private ListView<Reclamation> listRec;
     @FXML
@@ -75,7 +76,8 @@ public class reclamationFront implements Initializable {
     private Button supprimerRec;
     @FXML
     private Button annuler;
-
+    private User user;
+    
     public User getUser() {
         return user;
     }
@@ -103,6 +105,7 @@ public class reclamationFront implements Initializable {
             annuler.setVisible(false);
             motif.setText("");
             description.setText("");
+            
         });
 
     }
@@ -209,19 +212,33 @@ public class reclamationFront implements Initializable {
         if (event.getClickCount() == 1) {
             Reclamation rec = new Reclamation();
             rec = listRec.getSelectionModel().getSelectedItem();
-            motif.setText(rec.getObjet());
-            description.setText(rec.getDescription());
-            System.out.println(rec.getUserReclame());
-            userReclamer.setValue(rec.getUserReclame());
-            serviceRendu.setValue(rec.getIdServiceRealise());
-            String dateRealisation = rec.getDateRealisation().toString();
-            dateService.setValue(dateRealisation);
-            ajouter_Rec.setVisible(false);
-            modifierRec.setVisible(true);
-            supprimerRec.setVisible(true);
-            annuler.setVisible(true);
-            this.id = rec.getId();
+            if (rec.getSeen() == 1 || (rec.getTraite() == 1 && rec.getSeen() == 1)) {
 
+                modifierRec.setDisable(true);
+                supprimerRec.setDisable(true);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Reclamation vu ou traité");
+                alert.setHeaderText(null);
+                alert.setContentText("Cette Reclamation est déja vu par les administrateurs\n vous ne pouvez plus la supprimer ni la modifier\n");
+                alert.showAndWait();
+            } 
+            else {
+                motif.setText(rec.getObjet());
+                description.setText(rec.getDescription());
+                System.out.println(rec.getUserReclame());
+                userReclamer.setValue(rec.getUserReclame());
+                serviceRendu.setValue(rec.getIdServiceRealise());
+                String dateRealisation = rec.getDateRealisation().toString();
+                dateService.setValue(dateRealisation);
+                annuler.setVisible(true);
+                this.id = rec.getId();
+                ajouter_Rec.setVisible(false);
+                modifierRec.setVisible(true);
+                supprimerRec.setVisible(true);
+                modifierRec.setDisable(false);
+                supprimerRec.setDisable(false);
+                
+            }
         }
     }
 
@@ -235,7 +252,7 @@ public class reclamationFront implements Initializable {
         String stringDate = dateService.getValue();
         Date localdate = new Date();
         java.sql.Date dateReclamation = new java.sql.Date(localdate.getTime());
-         String err = "";
+        String err = "";
         if (UserReclame == null) {
             err += "Selectionner un utilisateur";
             userReclamer.setStyle("-fx-border-color : red");
@@ -258,14 +275,12 @@ public class reclamationFront implements Initializable {
         }
         if (err != "") {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Inscription");
+            alert.setTitle("Champs erronée");
             alert.setHeaderText(null);
             alert.setContentText(err);
             alert.showAndWait();
             err = "";
-        } 
-        else
-        {
+        } else {
             SimpleDateFormat formatter1 = new SimpleDateFormat("yyyy-MM-dd");
             Date date1 = formatter1.parse(stringDate);
             java.sql.Date dateRealisation = new java.sql.Date(date1.getTime());
@@ -286,6 +301,6 @@ public class reclamationFront implements Initializable {
 
     @FXML
     private void annulerAction(ActionEvent event) {
-        initialize(null, null);
+          initialize(null, null);
     }
 }
