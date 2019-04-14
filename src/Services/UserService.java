@@ -18,16 +18,13 @@ public class UserService {
     Connection C = Connexion.getInstance().getCon();
 
     public boolean checkUser(String username, String password) {
-        String crypted = "$2y$13$ANVjZ0bnQfSMtHrt053Nh.oxKcesoimGIRwgQHf5i/mnKpl6bOlvG";
-        //String crypted1="$2a"+crypted.substring(3);
-        //System.out.println(BCrypt.checkpw("00100", crypted1));
         try {
-            PreparedStatement pt = C.prepareStatement("SELECT * FROM user where username=?");
+            PreparedStatement pt = C.prepareStatement("SELECT * FROM user where username=? AND enabled=1");
             pt.setString(1, username);
             ResultSet rs = pt.executeQuery();
             while (rs.next()) {
-                String crypted1 = "$2a" + rs.getString("password").substring(3);
-                if (BCrypt.checkpw(password, crypted1)) {
+                String crypted = "$2a" + rs.getString("password").substring(3);
+                if (BCrypt.checkpw(password, crypted)) {
                     return true;
                 }
             }
@@ -473,22 +470,83 @@ public class UserService {
         }
     }
     
-    public ObservableList<User> getUsers()
+    public ObservableList<User> getUsers(int id)
     {
         ObservableList<User> data;
         data=FXCollections.observableArrayList();
         try {
-            PreparedStatement pt = C.prepareStatement("SELECT * FROM user");
+            PreparedStatement pt = C.prepareStatement("SELECT * FROM user WHERE id!=?");
+            pt.setInt(1, id);
             ResultSet rs = pt.executeQuery();
             while (rs.next()) {
                 if (rs.getString("roles").contains("ADMIN"))
-                    data.add(new User(rs.getInt("id"),rs.getInt("id"),rs.getInt("phone"),rs.getInt("solde"),rs.getString("email"),rs.getString("username"),rs.getString("firstname"),rs.getString("lastname"),"Administrateur",rs.getString("image"),rs.getString("address"),rs.getString("zip_code"),rs.getString("city")));
+                    data.add(new User(rs.getInt("id"),rs.getInt("enabled"),rs.getInt("phone"),rs.getInt("solde"),rs.getString("email"),rs.getString("username"),rs.getString("firstname"),rs.getString("lastname"),"Administrateur",rs.getString("image"),rs.getString("address"),rs.getString("zip_code"),rs.getString("city")));
                 else
-                    data.add(new User(rs.getInt("id"),rs.getInt("id"),rs.getInt("phone"),rs.getInt("solde"),rs.getString("email"),rs.getString("username"),rs.getString("firstname"),rs.getString("lastname"),"Utilisateur",rs.getString("image"),rs.getString("address"),rs.getString("zip_code"),rs.getString("city")));
+                    data.add(new User(rs.getInt("id"),rs.getInt("enabled"),rs.getInt("phone"),rs.getInt("solde"),rs.getString("email"),rs.getString("username"),rs.getString("firstname"),rs.getString("lastname"),"Utilisateur",rs.getString("image"),rs.getString("address"),rs.getString("zip_code"),rs.getString("city")));
             }
             return data;
         } catch (SQLException e) {
         }
         return null;
+    }
+    
+    public void promouvoir(int id)
+    {
+        try {
+            PreparedStatement pt = C.prepareStatement("UPDATE user SET roles='a:1:{i:0;s:10:\"ROLE_ADMIN\";}' WHERE id=?");
+            pt.setInt(1, id);
+            pt.execute();
+        } catch (SQLException e) {
+            System.out.println(e.getCause());
+            e.printStackTrace();
+        }
+    }
+    
+    public void retrograder(int id)
+    {
+        try {
+            PreparedStatement pt = C.prepareStatement("UPDATE user SET roles='a:0:{}' WHERE id=?");
+            pt.setInt(1, id);
+            pt.execute();
+        } catch (SQLException e) {
+            System.out.println(e.getCause());
+            e.printStackTrace();
+        }
+    }
+    
+    public void bloquer(int id)
+    {
+        try {
+            PreparedStatement pt = C.prepareStatement("UPDATE user SET enabled=0 WHERE id=?");
+            pt.setInt(1, id);
+            pt.execute();
+        } catch (SQLException e) {
+            System.out.println(e.getCause());
+            e.printStackTrace();
+        }
+    }
+    
+    public void debloquer(int id)
+    {
+        try {
+            PreparedStatement pt = C.prepareStatement("UPDATE user SET enabled=1 WHERE id=?");
+            pt.setInt(1, id);
+            pt.execute();
+        } catch (SQLException e) {
+            System.out.println(e.getCause());
+            e.printStackTrace();
+        }
+    }
+    
+    public void supprimer(int id)
+    {
+        try {
+            PreparedStatement pt = C.prepareStatement("DELETE FROM user WHERE id=?");
+            pt.setInt(1, id);
+            pt.execute();
+        } catch (SQLException e) {
+            System.out.println(e.getCause());
+            e.printStackTrace();
+        }
     }
 }

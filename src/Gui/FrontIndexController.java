@@ -129,7 +129,6 @@ public class FrontIndexController implements Initializable {
 
     private void loadImage() {
         File currDir = new File(System.getProperty("user.dir", "."));
-        System.out.println(currDir.toPath().getRoot().toString());
         if (user.getImage() != null) {
             String path = "file:" + currDir.toPath().getRoot().toString() + "wamp64\\www\\fixit\\web\\uploads\\images\\user\\" + user.getImage();
             Image image = new Image(path);

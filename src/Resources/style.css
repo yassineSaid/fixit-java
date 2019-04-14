@@ -46,12 +46,14 @@
     -fx-background-color: red;
     -fx-background-radius: 8,7,6;
     -fx-text-fill: white;
+    -fx-text-alignment: center;
 }
 .supprimer:hover
 {
     -fx-background-color: #ff7272;
     -fx-background-radius: 8,7,6;
     -fx-text-fill: white;
+    -fx-text-alignment: center;
 }
 .menuButton
 {
