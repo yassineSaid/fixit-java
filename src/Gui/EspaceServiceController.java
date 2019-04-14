@@ -135,7 +135,7 @@ public class EspaceServiceController implements Initializable {
     @FXML
     private Button retourService;
     @FXML
-    private TableColumn<Service,String> nbrProvidersAff;
+    private TableColumn<Service, String> nbrProvidersAff;
 
     public User getUser() {
         return user;
@@ -151,12 +151,18 @@ public class EspaceServiceController implements Initializable {
         Platform.runLater(() -> {
             modifier.setDisable(true);
             supprimer.setDisable(true);
+            ajouterServ.setVisible(false);
+            labelService.setVisible(true);
+            service.setVisible(true);
+            ajouterS.setVisible(true);
+            modifierS.setVisible(true);
+            supprimerService.setVisible(true);
 
             Connection c = Connexion.getInstance().getCon();
             nomCatAff.setCellValueFactory(new PropertyValueFactory<CategorieService, String>("nom"));
             descriptionCatAff.setCellValueFactory(new PropertyValueFactory<CategorieService, String>("description"));
             imageCatAff.setCellValueFactory(new PropertyValueFactory<>("im"));
-            
+
             imageServiceAff.setCellValueFactory(new PropertyValueFactory<Service, String>("im"));
             nomServiceAff.setCellValueFactory(new PropertyValueFactory<Service, String>("nom"));
             descriptionServiceAff.setCellValueFactory(new PropertyValueFactory<Service, String>("description"));
@@ -170,9 +176,9 @@ public class EspaceServiceController implements Initializable {
                 service.setItems(serv.afficherService());
                 // TODO
             } catch (SQLException ex) {
-                Logger.getLogger(CategorieProduitController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(EspaceServiceController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             ObservableList data = categorie.getItems();
             rechercherCat.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
                 if (oldValue != null && (newValue.length() < oldValue.length())) {
@@ -241,8 +247,8 @@ public class EspaceServiceController implements Initializable {
         c = categorie.getSelectionModel().getSelectedItem();
         c.setNom(nomModif.getText());
         c.setDescription(descriptionModif.getText());
-        if(logooo!="")
-        {c.setImage(logooo);
+        if (logooo != "") {
+            c.setImage(logooo);
         }
         categorieS.modifierCategorie(c);
         logooo = "";
@@ -257,10 +263,10 @@ public class EspaceServiceController implements Initializable {
         );
         File file = fileChooser.showOpenDialog(null);
         if (file != null) {
-            
+
             File currDir = new File(System.getProperty("user.dir", "."));
-        System.out.println(currDir.toPath().getRoot().toString());
-            
+            System.out.println(currDir.toPath().getRoot().toString());
+
             String path = currDir.toPath().getRoot().toString() + "wamp64/www/fixit/web/uploads/images/categorieService/";
             ImageService u = new ImageService();
             try {
@@ -282,19 +288,15 @@ public class EspaceServiceController implements Initializable {
     private void ajouterService(ActionEvent event) {
     }
 
-
     @FXML
     private void ajouterS(ActionEvent event) {
-        service.setVisible(false);
-        labelService.setVisible(false);
-        supprimer.setVisible(false);
-        ajouterS.setVisible(false);
         ajouterServ.setVisible(true);
-        supprimerService.setVisible(false);
+        labelService.setVisible(false);
+        service.setVisible(false);
+        ajouterS.setVisible(false);
         modifierS.setVisible(false);
-        modifierService.setVisible(false);
-        ajoutService.setVisible(true);
-       
+        supprimerService.setVisible(false);
+
     }
 
     @FXML
@@ -319,32 +321,25 @@ public class EspaceServiceController implements Initializable {
         descriptionService.setText(service.getSelectionModel().getSelectedItem().getDescription());
         modifierService.setVisible(true);
         ajoutService.setVisible(false);
-        
+
         supprimerService.setVisible(false);
-        
+
         supprimer.setVisible(false);
-        
+
         ajouterS.setVisible(false);
         modifierS.setVisible(false);
     }
 
     @FXML
     private void retourService(ActionEvent event) {
-        
-        service.setVisible(true);
-        supprimerService.setVisible(true);
+
+        ajouterServ.setVisible(false);
         labelService.setVisible(true);
+        service.setVisible(true);
         ajouterS.setVisible(true);
         modifierS.setVisible(true);
-        
-        
-        ajouterServ.setVisible(false);
-        modifierService.setVisible(false);
-        ajoutService.setVisible(false);
-    
-        ajouterServ.setVisible(false);
-        modifierService.setVisible(false);
-        
+        supprimerService.setVisible(true);
+
     }
 
 }
