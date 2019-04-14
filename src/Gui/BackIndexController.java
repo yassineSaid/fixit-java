@@ -60,7 +60,7 @@ public class BackIndexController implements Initializable {
 
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/EspaceServiceBack.fxml"));
             Parent Rec = fxmlLoader.load();
-            EspaceServiceController controller = fxmlLoader.<EspaceServiceController>getController();
+            EspaceServiceBackController controller = fxmlLoader.<EspaceServiceBackController>getController();
             controller.setUser(this.getUser());
             Scene scene = new Scene(Rec);
 

@@ -59,9 +59,9 @@ public class AvisService
              try
 	        {
 	            PreparedStatement pt=c.prepareStatement("UPDATE avis set note=?,satisfaction=?,description=? where idUser=?");
-	            pt.setString(1, avis.getDescription() );
-	            pt.setInt(2, avis.getNote());
-	            pt.setString(3,avis.getSatisfaction());
+	            pt.setInt(1, avis.getNote());
+	            pt.setString(2, avis.getSatisfaction());
+	            pt.setString(3,avis.getDescription());
 	            pt.setInt(4, avis.getUser().getId());
 	            pt.executeUpdate();
 	        } 
@@ -69,6 +69,36 @@ public class AvisService
 	        {
 	            System.out.println(ex);
 	        }
+         }
+         public void bonus(int idUser)
+         {
+             try
+	        {
+	            PreparedStatement pt=c.prepareStatement("UPDATE User set solde=solde+25 where id=?");
+	            pt.setInt(1, idUser);
+	            pt.executeUpdate();
+	        } 
+	        catch (SQLException ex) 
+	        {
+	            System.out.println(ex);
+	        }
+         }
+         public float moyenneNotes()
+         {
+             try
+	        {
+	            PreparedStatement pt=c.prepareStatement("SELECT AVG(note) from avis");
+	            ResultSet rs=pt.executeQuery();
+                    while(rs.next())
+                    {
+                        return rs.getFloat(1);
+                    }
+	        } 
+	        catch (SQLException ex) 
+	        {
+	            System.out.println(ex);
+	        }
+             return -1;
          }
 
 }

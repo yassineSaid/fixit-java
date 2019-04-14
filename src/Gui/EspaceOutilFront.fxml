@@ -5,6 +5,7 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Pagination?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -15,8 +16,9 @@
    <children>
        <fx:include fx:id="frontIndex" source="FrontIndex.fxml" />
   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-      <ListView fx:id="list" layoutX="457.0" layoutY="76.0" prefHeight="589.0" prefWidth="693.0" style="-fx-background-color: transparent;" />
-      <AnchorPane fx:id="location" layoutX="325.0" layoutY="90.0" prefHeight="589.0" prefWidth="943.0">
+      <Pagination fx:id="paginationOutilFront" layoutX="443.0" layoutY="85.0" prefHeight="599.0" prefWidth="693.0" />
+      <ListView fx:id="list" layoutX="467.0" layoutY="86.0" prefHeight="511.0" prefWidth="683.0" style="-fx-background-color: transparent;" />
+      <AnchorPane fx:id="location" layoutX="325.0" layoutY="90.0" prefHeight="589.0" prefWidth="943.0" visible="false">
          <children>
             <ImageView fx:id="imageDetail" fitHeight="295.0" fitWidth="293.0" layoutX="657.0" layoutY="83.0" pickOnBounds="true" preserveRatio="true" />
             <ImageView fx:id="logoDetail" fitHeight="50.0" fitWidth="48.0" layoutX="657.0" layoutY="388.0" pickOnBounds="true" preserveRatio="true" />

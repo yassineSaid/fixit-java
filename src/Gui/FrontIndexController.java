@@ -188,7 +188,7 @@ public class FrontIndexController implements Initializable {
 
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/reclamationFront.fxml"));
             Parent Rec = fxmlLoader.load();
-            reclamationFront controller = fxmlLoader.<reclamationFront>getController();
+            ReclamationFrontController controller = fxmlLoader.<ReclamationFrontController>getController();
             controller.setUser(this.getUser());
             Scene scene = new Scene(Rec);
 
@@ -201,26 +201,25 @@ public class FrontIndexController implements Initializable {
         }
     }
 
-    @FXML
+     @FXML
     private void profilAction(ActionEvent event) {
-        try {
-
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/Profil.fxml"));
-            Parent Rec = fxmlLoader.load();
-            ProfilController controller = fxmlLoader.<ProfilController>getController();
-            controller.setUser(this.getUser());
-            Scene scene = new Scene(Rec);
-
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.show();
-            stage.setScene(scene);
-
-        } catch (IOException ex) {
-            System.out.println(ex);
-        }
-
+    try {
+    
+    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/Profil.fxml"));
+    Parent Rec = fxmlLoader.load();
+    ProfilController controller = fxmlLoader.<ProfilController>getController();
+    controller.setUser(this.getUser());
+    Scene scene = new Scene(Rec);
+    
+    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    stage.show();
+    stage.setScene(scene);
+    
+    } catch (IOException ex) {
+    System.out.println(ex);
     }
-
+    
+    }
     @FXML
     private void espaceAvisAction(ActionEvent event) {
         try {

@@ -25,28 +25,39 @@ private ImageView im;
     public Service() {
         
     }
-    public Service(String nom, int visible, String description, int nbrProviders, int idCategorieService,ImageView im) {
-        this.nom=nom;
+
+    public Service(String nom, int visible, String description, String image, int nbrProviders, int idCategorieService, String etat, ImageView im) {
+        this.nom = nom;
         this.visible = visible;
         this.description = description;
+        this.image = image;
         this.nbrProviders = nbrProviders;
         this.idCategorieService = idCategorieService;
-        this.im=im;
-    } 
-     public Service(String nom, int visible, String description, int nbrProviders, int idCategorieService) {
-        this.nom=nom;
+        this.etat = etat;
+        this.im = im;
+    }
+
+    public Service(int id, String nom, int visible, String description, String image, int nbrProviders, int idCategorieService, String etat, ImageView im) {
+        this.id = id;
+        this.nom = nom;
         this.visible = visible;
         this.description = description;
+        this.image = image;
         this.nbrProviders = nbrProviders;
         this.idCategorieService = idCategorieService;
-    } 
-    /*public Service(String nom, String description, int idCategorieService) {
-        this.nom=nom;
-        this.visible = ;
+        this.etat = etat;
+        this.im = im;
+    }
+
+    public Service(String nom, int visible, String description, String image, int nbrProviders, int idCategorieService) {
+        this.nom = nom;
+        this.visible = visible;
         this.description = description;
+        this.image = image;
         this.nbrProviders = nbrProviders;
         this.idCategorieService = idCategorieService;
-    }*/
+    }
+    
 
     public ImageView getIm() {
         return im;
