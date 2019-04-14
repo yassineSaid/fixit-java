@@ -79,40 +79,46 @@
                               <TableColumn fx:id="nbrProvidersAff" prefWidth="101.0" text="Nbr Providers" />
                           </columns>
                         </TableView>
-                        <Button fx:id="supprimerService" layoutX="267.0" layoutY="466.0" mnemonicParsing="false" onAction="#supprimerService" prefHeight="25.0" prefWidth="113.0" styleClass="supprimerBack" stylesheets="@../Resources/style.css" text="Supprimer" />
-                        <AnchorPane fx:id="ajouterServ" layoutX="98.0" prefHeight="464.0" prefWidth="802.0" visible="false">
+                        <Button fx:id="supprimerService" layoutX="544.0" layoutY="498.0" mnemonicParsing="false" onAction="#supprimerService" prefHeight="25.0" prefWidth="113.0" styleClass="supprimerBack" stylesheets="@../Resources/style.css" text="Supprimer" />
+                        <AnchorPane fx:id="ajouterServ" layoutX="98.0" prefHeight="489.0" prefWidth="802.0">
 
                            <children>
-                              <ComboBox fx:id="categoS" layoutX="253.0" layoutY="139.0" prefHeight="38.0" prefWidth="285.0" promptText="selectionner une catégorie" />
-                              <Label layoutX="137.0" layoutY="140.0" prefHeight="36.0" prefWidth="94.0" text="Catégorie">
+                              <ComboBox fx:id="categoS" layoutX="543.0" layoutY="53.0" prefHeight="32.0" prefWidth="219.0" promptText="selectionner une catégorie" />
+                              <Label layoutX="443.0" layoutY="51.0" prefHeight="36.0" prefWidth="94.0" text="Catégorie">
                                  <font>
                                     <Font name="System Bold" size="16.0" />
                                  </font>
                               </Label>
-                              <TextArea fx:id="descriptionService" layoutX="253.0" layoutY="206.0" prefHeight="200.0" prefWidth="286.0" />
-                              <Button fx:id="ajoutService" layoutX="352.0" layoutY="423.0" mnemonicParsing="false" onAction="#ajouterService" prefHeight="30.0" prefWidth="84.0" styleClass="ajouterBack" stylesheets="@../Resources/style.css" text="Confirmer" />
-                              <Label layoutX="137.0" layoutY="270.0" prefHeight="36.0" prefWidth="131.0" text="Description">
+                              <TextArea fx:id="descriptionService" layoutX="173.0" layoutY="151.0" prefHeight="173.0" prefWidth="221.0" />
+                              <Button fx:id="ajoutService" layoutX="352.0" layoutY="440.0" mnemonicParsing="false" onAction="#ajouterService" prefHeight="30.0" prefWidth="84.0" styleClass="ajouterBack" stylesheets="@../Resources/style.css" text="Confirmer" />
+                              <Label layoutX="46.0" layoutY="142.0" prefHeight="36.0" prefWidth="131.0" text="Description">
                                  <font>
                                     <Font name="System Bold" size="16.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="nomService" layoutX="253.0" layoutY="49.0" prefHeight="39.0" prefWidth="286.0" />
-                              <Label layoutX="137.0" layoutY="51.0" prefHeight="36.0" prefWidth="94.0" text="Nom ">
+                              <TextField fx:id="nomService" layoutX="177.0" layoutY="53.0" prefHeight="32.0" prefWidth="219.0" />
+                              <Label layoutX="51.0" layoutY="51.0" prefHeight="36.0" prefWidth="94.0" text="Nom ">
                                  <font>
                                     <Font name="System Bold" size="16.0" />
                                  </font>
                               </Label>
-                              <Button fx:id="retourService" layoutX="516.0" layoutY="423.0" mnemonicParsing="false" onAction="#retourService" prefHeight="6.0" prefWidth="86.0" styleClass="supprimerBack" stylesheets="@../Resources/style.css" text="Retour" />
-                              <Button fx:id="modifierService" layoutX="369.0" layoutY="423.0" mnemonicParsing="false" onAction="#modifierService" styleClass="ajouterBack" stylesheets="@../Resources/style.css" text="Confirmer" />
+                              <Button fx:id="retourService" layoutX="516.0" layoutY="440.0" mnemonicParsing="false" onAction="#retourService" prefHeight="6.0" prefWidth="86.0" styleClass="supprimerBack" stylesheets="@../Resources/style.css" text="Retour" />
+                              <Button fx:id="modifierService" layoutX="369.0" layoutY="440.0" mnemonicParsing="false" onAction="#modifierService" styleClass="ajouterBack" stylesheets="@../Resources/style.css" text="Confirmer" />
+                              <Label layoutX="443.0" layoutY="142.0" prefHeight="36.0" prefWidth="94.0" text="Image">
+                                 <font>
+                                    <Font name="System Bold" size="16.0" />
+                                 </font>
+                              </Label>
+                              <Button fx:id="openFileService" layoutX="551.0" layoutY="145.0" mnemonicParsing="false" onAction="#importerImageService" prefHeight="6.0" prefWidth="86.0" styleClass="openFile" stylesheets="@../Resources/style.css" text="Importer une image" />
                            </children>
                         </AnchorPane>
-                        <Button fx:id="ajouterS" layoutX="203.0" layoutY="466.0" mnemonicParsing="false" onAction="#ajouterS" prefHeight="30.0" prefWidth="102.0" styleClass="ajouterBack" stylesheets="@../Resources/style.css" text="Ajouter" />
-                        <Label fx:id="labelService" alignment="CENTER" layoutX="306.0" layoutY="45.0" prefHeight="31.0" prefWidth="305.0" text="Les Services">
+                        <Button fx:id="ajouterS" layoutX="203.0" layoutY="498.0" mnemonicParsing="false" onAction="#ajouterS" prefHeight="30.0" prefWidth="102.0" styleClass="ajouterBack" stylesheets="@../Resources/style.css" text="Ajouter" />
+                        <Label fx:id="labelService" alignment="CENTER" layoutX="306.0" layoutY="45.0" prefHeight="31.0" prefWidth="305.0" text="Les Services" visible="false">
                            <font>
                               <Font size="32.0" />
                            </font>
                         </Label>
-                        <Button fx:id="modifierS" layoutX="381.0" layoutY="466.0" mnemonicParsing="false" onAction="#modifierserv" styleClass="modifierBack" stylesheets="@../Resources/style.css" text="Modifier" />
+                        <Button fx:id="modifierS" layoutX="381.0" layoutY="498.0" mnemonicParsing="false" onAction="#modifierserv" styleClass="modifierBack" stylesheets="@../Resources/style.css" text="Modifier" />
                      </children>
                   </AnchorPane>
                </content>
@@ -121,7 +127,7 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="historique" layoutX="98.0" layoutY="147.0" prefHeight="271.0" prefWidth="738.0" styleClass="table-langues" stylesheets="@../Resources/style.css">
+                        <TableView fx:id="historique" layoutX="98.0" layoutY="147.0" prefHeight="271.0" prefWidth="738.0" styleClass="table" stylesheets="@../Resources/style.css">
                            <columns>
                               <TableColumn fx:id="imageHistoriqueAff" prefWidth="181.0" text="Image" />
                               <TableColumn fx:id="nomHistoriqueAff" prefWidth="135.0" text="Nom" />

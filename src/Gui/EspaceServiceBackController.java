@@ -136,6 +136,8 @@ public class EspaceServiceBackController implements Initializable {
     private Button retourService;
     @FXML
     private TableColumn<Service, String> nbrProvidersAff;
+    @FXML
+    private Button openFileService;
 
     public User getUser() {
         return user;
@@ -337,7 +339,7 @@ public class EspaceServiceBackController implements Initializable {
         c = service.getSelectionModel().getSelectedItem();
         c.setNom(nomService.getText());
         c.setDescription(descriptionService.getText());
-        c.setIdCategorieService(service.getSelectionModel().getSelectedItem().getId());
+       // c.setIdCategorieService(service.getSelectionModel().getSelectedItem().getId());
         if(imageee!="")
         {c.setImage(imageee);
         }
@@ -395,6 +397,10 @@ public class EspaceServiceBackController implements Initializable {
         modifierS.setVisible(true);
         supprimerService.setVisible(true);
 
+    }
+
+    @FXML
+    private void importerImageService(ActionEvent event) {
     }
 
 }
