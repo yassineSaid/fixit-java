@@ -551,6 +551,7 @@ public class ProfilController implements Initializable {
         stage.setScene(scene);
         stage.showAndWait();
     }
+    @FXML
     private void ajouterUnService(ActionEvent event) {
         mesServices.setVisible(false);
         ajouterUnService.setVisible(false);
