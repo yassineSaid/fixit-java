@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -26,6 +27,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Pagination;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -101,6 +103,8 @@ public class EspaceOutilFrontController implements Initializable {
     private Button buttonRetour;
     @FXML
     private Label jour;
+    @FXML
+    private Pagination paginationOutilFront;
 
     public User getUser() {
         return user;
@@ -118,15 +122,27 @@ public class EspaceOutilFrontController implements Initializable {
             loadDataFromDatabase();
             list.setCellFactory(lv -> new Poules());
             list.setVisible(true);
+            paginationOutilFront.setVisible(true);
             location.setVisible(false);
         });
+    }
+    private Node createPage(int pageIndex) {
+    OutilService recServ = new OutilService();
+    
+    ObservableList<Outil> data = FXCollections.observableArrayList();
+    data = recServ.afficherOutil();
+    int fromIndex = pageIndex * 2;
+    int toIndex = Math.min(fromIndex + 2, data.size());
+    list.setItems(FXCollections.observableArrayList(data.subList(fromIndex, toIndex)));
+    
+    return list;
     }
 
     private void loadDataFromDatabase() {
         try {
             OutilService service = new OutilService();
             ObservableList<Outil> rs = service.afficherOutil();
-            list.setItems(rs);
+            paginationOutilFront.setPageFactory(this::createPage);
         } catch (Exception e) {
             System.err.println("Got an exception! ");
             System.err.println(e.getMessage());
@@ -136,6 +152,7 @@ public class EspaceOutilFrontController implements Initializable {
     @FXML
     private void retourAction(ActionEvent event) {
             list.setVisible(true);
+            paginationOutilFront.setVisible(true);
             location.setVisible(false);
     }
 
@@ -190,6 +207,7 @@ public class EspaceOutilFrontController implements Initializable {
                     @Override
                     public void handle(ActionEvent event) {
                         list.setVisible(false);
+                        paginationOutilFront.setVisible(false);
                         location.setVisible(true);
                         Image image1 = new Image("file:/wamp64/www/fixit/web/uploads/images/Outil/" + item.getImage(), 293, 295, false, false);
                         imageDetail.setImage(image1);

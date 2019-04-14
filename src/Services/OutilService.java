@@ -87,8 +87,10 @@ public class OutilService {
         }
 
     public ObservableList<Outil> afficherOutil() 
-            throws SQLException {
-        ObservableList list = FXCollections.observableArrayList();
+             {
+                 try
+                 {
+                     ObservableList list = FXCollections.observableArrayList();
         Statement st = c.createStatement();
         String req = "select * from outils";
         ResultSet rs = st.executeQuery(req);
@@ -112,6 +114,13 @@ public class OutilService {
             list.add(outil);
         }
         return list;
+                 }
+                 catch(SQLException ex)
+                 {
+                     System.out.println(ex);
+                 }
+                 return null;
+        
     }
     
     public void supprimerOutil(int id) {

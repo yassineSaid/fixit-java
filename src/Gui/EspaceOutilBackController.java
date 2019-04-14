@@ -206,12 +206,8 @@ public class EspaceOutilBackController implements Initializable {
             villeOutil.setCellValueFactory(new PropertyValueFactory<Outil, String>("ville"));
 
             OutilService outil = new OutilService();
-            try {
-                tableOutil.setItems(outil.afficherOutil());
-                // TODO
-            } catch (SQLException ex) {
-                Logger.getLogger(EspaceOutilBackController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            tableOutil.setItems(outil.afficherOutil());
+            // TODO
 
             ObservableList data = table.getItems();
             rechercheCategorie.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
