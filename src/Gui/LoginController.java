@@ -67,8 +67,10 @@ public class LoginController implements Initializable {
                 if (U.getRoles() == "admin") {
 
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/BackIndex.fxml"));
-                    Parent back = fxmlLoader.load();
-                    Scene scene = new Scene(back);
+                    Parent front = fxmlLoader.load();
+                    BackIndexController controller = fxmlLoader.<BackIndexController>getController();
+                    controller.setUser(U);
+                    Scene scene = new Scene(front);
                     
                     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     stage.show();

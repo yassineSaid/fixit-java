@@ -53,6 +53,8 @@ public class EspaceUtilisateursBackController implements Initializable {
     private Label adresse;
     @FXML
     private Label ville;
+    
+    private User user;
 
     /**
      * Initializes the controller class.
@@ -62,8 +64,18 @@ public class EspaceUtilisateursBackController implements Initializable {
         Platform.runLater(() -> {
             refreshAction();
             afficherTableAction();
+            System.out.println(user.getId());
         });
     }    
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+    
    @FXML
    public void afficherTableAction()
    {
