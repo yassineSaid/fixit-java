@@ -323,7 +323,7 @@ public class EspaceServiceBackController implements Initializable {
         labelService.setVisible(false);
         modifierService.setVisible(false);
         ajoutService.setVisible(true);
-        
+
     }
 
     @FXML
@@ -355,7 +355,7 @@ public class EspaceServiceBackController implements Initializable {
 
     @FXML
     private void modifierserv(ActionEvent event) {
-        Service s= service.getSelectionModel().getSelectedItem() ;
+        Service s = service.getSelectionModel().getSelectedItem();
         ajouterServ.setVisible(true);
         supprimerService.setVisible(false);
         ajouterS.setVisible(false);
@@ -387,7 +387,7 @@ public class EspaceServiceBackController implements Initializable {
 
     @FXML
     private void importerImageService(ActionEvent event) {
-         final FileChooser fileChooser = new FileChooser();
+        final FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Image", "*.jpg", "*.png")
         );
