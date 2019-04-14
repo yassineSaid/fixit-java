@@ -188,7 +188,7 @@ public class FrontIndexController implements Initializable {
 
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/reclamationFront.fxml"));
             Parent Rec = fxmlLoader.load();
-            reclamationFront controller = fxmlLoader.<reclamationFront>getController();
+            ReclamationFrontController controller = fxmlLoader.<ReclamationFrontController>getController();
             controller.setUser(this.getUser());
             Scene scene = new Scene(Rec);
 
