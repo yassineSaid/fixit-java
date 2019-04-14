@@ -38,7 +38,7 @@ public class BackIndexController implements Initializable {
     private Button service;
     @FXML
     private Button EspaceProd;
-    
+
     private User user;
 
     /**
@@ -55,7 +55,6 @@ public class BackIndexController implements Initializable {
     public void setUser(User user) {
         this.user = user;
     }
-    
 
     @FXML
     void espaceService(ActionEvent event) {
@@ -63,8 +62,8 @@ public class BackIndexController implements Initializable {
 
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/EspaceServiceBack.fxml"));
             Parent Rec = fxmlLoader.load();
-           // EspaceServiceBackController controller = fxmlLoader.<EspaceServiceBackController>getController();
-           // controller.setUser(this.getUser());
+            // EspaceServiceBackController controller = fxmlLoader.<EspaceServiceBackController>getController();
+            // controller.setUser(this.getUser());
             Scene scene = new Scene(Rec);
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -93,7 +92,6 @@ public class BackIndexController implements Initializable {
             System.out.println(ex);
         }
     }
-    
 
     @FXML
     private void espaceReclamation(ActionEvent event) {
@@ -130,16 +128,17 @@ public class BackIndexController implements Initializable {
             System.out.println(ex);
         }
     }
+
     @FXML
-    private void logoutAction(ActionEvent event) { 
+    private void logoutAction(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/login.fxml"));
-                Parent back = fxmlLoader.load();
-                Scene scene = new Scene(back);
+            Parent back = fxmlLoader.load();
+            Scene scene = new Scene(back);
 
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                stage.show();
-                stage.setScene(scene);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.show();
+            stage.setScene(scene);
         } catch (IOException ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -149,12 +148,14 @@ public class BackIndexController implements Initializable {
     private void espaceUtilisateursAction(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/EspaceUtilisateursBack.fxml"));
-                Parent back = fxmlLoader.load();
-                Scene scene = new Scene(back);
+            Parent Rec = fxmlLoader.load();
+            EspaceUtilisateursBackController controller = fxmlLoader.<EspaceUtilisateursBackController>getController();
+            controller.setUser(this.getUser());
+            Scene scene = new Scene(Rec);
 
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                stage.show();
-                stage.setScene(scene);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.show();
+            stage.setScene(scene);
         } catch (IOException ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
