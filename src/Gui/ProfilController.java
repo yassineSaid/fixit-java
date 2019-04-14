@@ -1,12 +1,20 @@
 package Gui;
 
+import Entities.CategorieService;
 import Entities.Horraire;
 import Entities.Langue;
 import Entities.Repos;
+import Entities.Service;
+import Entities.ServiceUser;
+import Entities.ServicesProposes;
 import Entities.User;
+import Services.CategorieServiceService;
 import Services.HorraireService;
 import Services.ImageService;
 import Services.ReposService;
+import Services.ServiceService;
+import Services.ServiceUserService;
+import Services.ServicesProposesService;
 import Services.UserLangueService;
 import Services.UserService;
 import com.jfoenix.controls.JFXTimePicker;
@@ -19,6 +27,7 @@ import java.io.File;
 import java.io.IOException;
 import static java.lang.Integer.parseInt;
 import java.net.URL;
+import java.sql.SQLException;
 import java.sql.Time;
 import java.util.HashMap;
 import java.util.Map;
@@ -39,6 +48,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
@@ -182,6 +192,38 @@ public class ProfilController implements Initializable {
     private Label solde;
     @FXML
     private Button modifier1;
+    @FXML
+    private Tab interfaceAjout1;
+    @FXML
+    private ListView<ServiceUser> mesServices;
+    @FXML
+    private Button ajouterUnService;
+    @FXML
+    private Button proposerUnService;
+    @FXML
+    private AnchorPane service;
+    @FXML
+    private AnchorPane addService;
+    @FXML
+    private ComboBox<CategorieService> categorie;
+    @FXML
+    private TextField prix;
+    @FXML
+    private TextField description;
+    @FXML
+    private Button ajouterS;
+    @FXML
+    private ComboBox<Service> serviceC;
+    @FXML
+    private AnchorPane proposerS;
+    @FXML
+    private TextField descriptionProposition;
+    @FXML
+    private TextField nomProposition;
+    @FXML
+    private ComboBox<CategorieService> categorieProposition;
+    @FXML
+    private Button confirmerProposition;
 
     public User getUser() {
         return user;
@@ -196,20 +238,28 @@ public class ProfilController implements Initializable {
         Platform.runLater(() -> {
             
                 
-            frontIndexController.setUser(user);
-            frontIndexController.initialize(null, null);
-            frontIndexController.getProfil().setStyle("-fx-background-color: #f4f4f4");
-            username.setText(user.getUsername());
-            nom.setText(user.getLastname());
-            prenom.setText(user.getFirstname());
-            email.setText(user.getEmail());
-            heureDebut.set24HourView(true);
-            heureFin.set24HourView(true);
-            solde.setText("Vous avez " + String.valueOf(user.getSolde()) + " SCoins sur votre compte");
-            loadImage();
-            afficherLanguesAction();
-            afficherHorraireAction();
-            afficherReposAction();
+               frontIndexController.setUser(user);
+                frontIndexController.initialize(null, null);
+                frontIndexController.getProfil().setStyle("-fx-background-color: #f4f4f4");
+                username.setText(user.getUsername());
+                nom.setText(user.getLastname());
+                prenom.setText(user.getFirstname());
+                email.setText(user.getEmail());
+                heureDebut.set24HourView(true);
+                heureFin.set24HourView(true);
+                solde.setText("Vous avez " + String.valueOf(user.getSolde()) + " SCoins sur votre compte");
+                loadImage();
+                afficherLanguesAction();
+                afficherHorraireAction();
+                afficherReposAction();
+                System.out.println("aaaaaaa");
+                ServiceUserService r = new ServiceUserService();
+                ObservableList<ServiceUser> list = FXCollections.observableArrayList();
+                list = r.afficherServiceUser(this.user.getId());
+                mesServices.setItems(list);
+                
+           
+ 
         });
     }
 
@@ -488,5 +538,65 @@ public class ProfilController implements Initializable {
         } else {
             System.out.println("FICHIER erroné");
         }
+    }
+
+    @FXML
+    private void ajouterUnService(ActionEvent event) {
+        mesServices.setVisible(false);
+        ajouterUnService.setVisible(false);
+        proposerUnService.setVisible(false);
+        addService.setVisible(true);
+        
+            ObservableList<CategorieService> list = FXCollections.observableArrayList();
+            CategorieServiceService r = new CategorieServiceService();
+            list = r.getALLCategorie();
+            categorie.setItems(list);
+            
+    }
+
+    @FXML
+    private void proposerUnService(ActionEvent event) {
+        
+        mesServices.setVisible(false);
+        ajouterUnService.setVisible(false);
+        proposerUnService.setVisible(false);
+        addService.setVisible(false);
+        proposerS.setVisible(true);
+        
+            ObservableList<CategorieService> list = FXCollections.observableArrayList();
+            CategorieServiceService r = new CategorieServiceService();
+            list = r.getALLCategorie();
+            categorieProposition.setItems(list);
+    }
+
+    @FXML
+    private void ajouterS(ActionEvent event) {
+        ServiceUser s= new ServiceUser();
+        ServiceUserService su = new ServiceUserService();
+        s.setDescription(description.getText());
+        s.setPrix(Integer.parseInt(prix.getText()));
+        s.setIdService(serviceC.getValue().getId());
+        s.setIdUser(this.user.getId());
+        su.ajouterServiceUser(s);
+        
+    }
+
+    @FXML
+    private void cat(ActionEvent event) {
+        
+            ObservableList<Service> listS = FXCollections.observableArrayList();
+            ServiceService s = new  ServiceService();
+            listS = s.getAllServiceC(categorie.getValue().getId());
+            serviceC.setItems(listS);
+    }
+
+    @FXML
+    private void confirmerProposition(ActionEvent event) {
+        ServicesProposes s= new ServicesProposes();
+        ServicesProposesService sp=new ServicesProposesService();
+        s.setNom(nomProposition.getText());
+        s.setDescription(descriptionProposition.getText());
+        s.setCategorieService(categorieProposition.getValue().toString());
+        sp.ajouterService(s);
     }
 }

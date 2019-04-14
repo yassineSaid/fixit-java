@@ -45,7 +45,7 @@ import javafx.stage.FileChooser;
  *
  * @author SELON
  */
-public class EspaceServiceController implements Initializable {
+public class EspaceServiceBackController implements Initializable {
 
     @FXML
     private AnchorPane listCat;
@@ -170,7 +170,7 @@ public class EspaceServiceController implements Initializable {
                 service.setItems(serv.afficherService());
                 // TODO
             } catch (SQLException ex) {
-                Logger.getLogger(CategorieProduitController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(EspaceServiceBackController.class.getName()).log(Level.SEVERE, null, ex);
             }
             
             ObservableList data = categorie.getItems();
@@ -276,24 +276,47 @@ public class EspaceServiceController implements Initializable {
 
     @FXML
     private void supprimerService(ActionEvent event) {
+     ServiceService categorieS = new ServiceService();
+      Service c = service.getSelectionModel().getSelectedItem();
+        categorieS.supprimerService(c.getId());
+        System.out.println("service supprimer");
+        initialize(null, null);
     }
 
     @FXML
     private void ajouterService(ActionEvent event) {
+        ServiceService ss = new  ServiceService();
+
+       Service s = new  Service();
+        s.setNom(nomService.getText());
+        s.setDescription(descriptionService.getText());
+        s.setIdCategorieService(categoS.getValue().getId());
+        s.setNbrProviders(0);
+        s.setVisible(1);
+        s.setImage(imageee);
+        ss.ajouterService(s);
+        System.out.println("service ajoutée");
+        imageee = "";
+
+        initialize(null, null);
     }
 
 
     @FXML
     private void ajouterS(ActionEvent event) {
-        service.setVisible(false);
-        labelService.setVisible(false);
-        supprimer.setVisible(false);
-        ajouterS.setVisible(false);
+        
         ajouterServ.setVisible(true);
         supprimerService.setVisible(false);
+        ajouterS.setVisible(false);
         modifierS.setVisible(false);
+        service.setVisible(false);
+        labelService.setVisible(false);
         modifierService.setVisible(false);
         ajoutService.setVisible(true);
+            ObservableList<CategorieService> list = FXCollections.observableArrayList();
+            CategorieServiceService r = new CategorieServiceService();
+            list = r.getALLCategorie();
+            categoS.setItems(list);
        
     }
 
@@ -303,6 +326,19 @@ public class EspaceServiceController implements Initializable {
 
     @FXML
     private void modifierService(ActionEvent event) {
+       ServiceService categorieS = new ServiceService();
+        Service c = new Service();
+
+        c = service.getSelectionModel().getSelectedItem();
+        c.setNom(nomService.getText());
+        c.setDescription(descriptionService.getText());
+        c.setIdCategorieService(service.getSelectionModel().getSelectedItem().getId());
+        if(imageee!="")
+        {c.setImage(imageee);
+        }
+        categorieS.modifierService(c);
+        imageee = "";
+        initialize(null, null);
     }
 
     @FXML
@@ -312,7 +348,7 @@ public class EspaceServiceController implements Initializable {
 
     @FXML
     private void modifierserv(ActionEvent event) {
-        labelService.setVisible(false);
+        /*labelService.setVisible(false);
         ajouterServ.setVisible(true);
         service.setVisible(false);
         nomService.setText(service.getSelectionModel().getSelectedItem().getNom());
@@ -325,7 +361,23 @@ public class EspaceServiceController implements Initializable {
         supprimer.setVisible(false);
         
         ajouterS.setVisible(false);
+        modifierS.setVisible(false);*/
+        
+        
+        ajouterServ.setVisible(true);
+        supprimerService.setVisible(false);
+        ajouterS.setVisible(false);
         modifierS.setVisible(false);
+        service.setVisible(false);
+        labelService.setVisible(false);
+        modifierService.setVisible(true);
+        ajoutService.setVisible(false);
+        nomService.setText(service.getSelectionModel().getSelectedItem().getNom());
+        descriptionService.setText(service.getSelectionModel().getSelectedItem().getDescription());
+            ObservableList<CategorieService> list = FXCollections.observableArrayList();
+            CategorieServiceService r = new CategorieServiceService();
+            list = r.getALLCategorie();
+            categoS.setItems(list);
     }
 
     @FXML

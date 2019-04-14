@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" style="-fx-background-color: #CCCCCC;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.EspaceServiceController">
+<AnchorPane id="AnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" style="-fx-background-color: #CCCCCC;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.EspaceServiceBackController">
     <children>
         <fx:include fx:id="backIndex" source="BackIndex.fxml" />
       <ImageView fitHeight="541.0" fitWidth="694.0" layoutX="569.0" layoutY="116.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.2;">
@@ -80,7 +80,7 @@
                           </columns>
                         </TableView>
                         <Button fx:id="supprimerService" layoutX="267.0" layoutY="466.0" mnemonicParsing="false" onAction="#supprimerService" prefHeight="25.0" prefWidth="113.0" styleClass="supprimerBack" stylesheets="@../Resources/style.css" text="Supprimer" />
-                        <AnchorPane fx:id="ajouterServ" layoutX="98.0" prefHeight="464.0" prefWidth="802.0">
+                        <AnchorPane fx:id="ajouterServ" layoutX="98.0" prefHeight="464.0" prefWidth="802.0" visible="false">
                            <children>
                               <ComboBox fx:id="categoS" layoutX="253.0" layoutY="139.0" prefHeight="38.0" prefWidth="285.0" promptText="selectionner une catégorie" />
                               <Label layoutX="137.0" layoutY="134.0" prefHeight="36.0" prefWidth="94.0" text="Catégorie">
