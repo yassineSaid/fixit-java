@@ -7,18 +7,6 @@ package Entities;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -65,19 +53,19 @@ public class UserOutil implements Serializable {
         this.total = total;
     }
 
-    public Outil getOutils3() {
+    public Outil getOutil() {
         return outil;
     }
 
-    public void setOutils3(Outil outil) {
+    public void setOutil(Outil outil) {
         this.outil = outil;
     }
 
-    public User getUser3() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser3(User user) {
+    public void setUser(User user) {
         this.user = user;
     }
 

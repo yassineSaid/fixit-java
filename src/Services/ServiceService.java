@@ -35,7 +35,7 @@ public class ServiceService {
 	            pt.setString(3, C.getDescription());
 	            pt.setInt(4, C.getNbrProviders());
 	            pt.setString(5, C.getImage());
-                    pt.setInt(6, C.getIdCategorieService());
+                    pt.setInt(6, C.getCategorie().getId());
 	            pt.executeUpdate();
 	        } 
 	        catch (SQLException ex) 
@@ -47,11 +47,11 @@ public class ServiceService {
     {
         try{
             
-        PreparedStatement pt=c.prepareStatement("update service set nom=?,description=? , image_service=? , idCategorieService =? where id=? ");
+        PreparedStatement pt=c.prepareStatement("update service set nom=?,description=? , image_service=? , idCategorieService=? where id=? ");
         pt.setString(1,C.getNom());
         pt.setString(2,C.getDescription());
         pt.setString(3,C.getImage());
-        pt.setInt(4,C.getIdCategorieService());
+        pt.setInt(4,C.getCategorie().getId());
         pt.setInt(5,C.getId());
         pt.executeUpdate();
         }
@@ -71,7 +71,8 @@ public class ServiceService {
             serv.setDescription(rs.getString(4));
             serv.setNbrProviders(rs.getInt(5));
             serv.setImage(rs.getString(6));
-            serv.setIdCategorieService(rs.getInt(7));
+            CategorieService categorie = this.getCategorieService(rs.getInt(7));
+            serv.setCategorie(categorie);
             serv.setIm(new ImageView(image1));
             list.add(serv);
         }
@@ -108,5 +109,27 @@ public class ServiceService {
         }
         return null;
     }
+      public CategorieService getCategorieService(int Id)
+        {
+            try
+            {
+                PreparedStatement pt=c.prepareStatement("SELECT * from categorie_Service where id=?");
+                pt.setInt(1, Id);
+                ResultSet rs= pt.executeQuery();
+                while(rs.next())
+                {
+                    CategorieService categorie = new CategorieService();
+            categorie.setId(rs.getInt(1));
+            categorie.setNom(rs.getString(2));
+            categorie.setDescription(rs.getString(3));
+            categorie.setImage(rs.getString(4));
+                    return categorie;
+                }
+            }
+            catch(SQLException ex)
+            {
+                System.out.println(ex);
+            }  return null;     
+        }
     
 }

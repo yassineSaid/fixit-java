@@ -151,6 +151,8 @@ public class EspaceServiceBackController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         Platform.runLater(() -> {
+            modifierS.setDisable(true);
+            supprimerService.setDisable(true);
             modifier.setDisable(true);
             supprimer.setDisable(true);
             ajouterServ.setVisible(false);
@@ -168,7 +170,7 @@ public class EspaceServiceBackController implements Initializable {
             imageServiceAff.setCellValueFactory(new PropertyValueFactory<Service, String>("im"));
             nomServiceAff.setCellValueFactory(new PropertyValueFactory<Service, String>("nom"));
             descriptionServiceAff.setCellValueFactory(new PropertyValueFactory<Service, String>("description"));
-            categorieServiceAff.setCellValueFactory(new PropertyValueFactory<Service, String>("idCategorieService"));
+            categorieServiceAff.setCellValueFactory(new PropertyValueFactory<Service, String>("Categorie"));
             nbrProvidersAff.setCellValueFactory(new PropertyValueFactory<Service, String>("nbrProviders"));
 
             CategorieServiceService categorieS = new CategorieServiceService();
@@ -275,7 +277,7 @@ public class EspaceServiceBackController implements Initializable {
             try {
                 u.upload(file, path);
             } catch (IOException ex) {
-                Logger.getLogger(EspaceOutilBackController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(EspaceServiceBackController.class.getName()).log(Level.SEVERE, null, ex);
             }
             logooo = file.getName();
         } else {
@@ -285,8 +287,8 @@ public class EspaceServiceBackController implements Initializable {
 
     @FXML
     private void supprimerService(ActionEvent event) {
-     ServiceService categorieS = new ServiceService();
-      Service c = service.getSelectionModel().getSelectedItem();
+        ServiceService categorieS = new ServiceService();
+        Service c = service.getSelectionModel().getSelectedItem();
         categorieS.supprimerService(c.getId());
         System.out.println("service supprimer");
         initialize(null, null);
@@ -294,12 +296,12 @@ public class EspaceServiceBackController implements Initializable {
 
     @FXML
     private void ajouterService(ActionEvent event) {
-        ServiceService ss = new  ServiceService();
+        ServiceService ss = new ServiceService();
 
-       Service s = new  Service();
+        Service s = new Service();
         s.setNom(nomService.getText());
         s.setDescription(descriptionService.getText());
-        s.setIdCategorieService(categoS.getValue().getId());
+        s.setCategorie(categoS.getValue());
         s.setNbrProviders(0);
         s.setVisible(1);
         s.setImage(imageee);
@@ -312,7 +314,7 @@ public class EspaceServiceBackController implements Initializable {
 
     @FXML
     private void ajouterS(ActionEvent event) {
-        
+
         ajouterServ.setVisible(true);
         supprimerService.setVisible(false);
         ajouterS.setVisible(false);
@@ -321,10 +323,7 @@ public class EspaceServiceBackController implements Initializable {
         labelService.setVisible(false);
         modifierService.setVisible(false);
         ajoutService.setVisible(true);
-            ObservableList<CategorieService> list = FXCollections.observableArrayList();
-            CategorieServiceService r = new CategorieServiceService();
-            list = r.getALLCategorie();
-            categoS.setItems(list);
+        
     }
 
     @FXML
@@ -333,15 +332,15 @@ public class EspaceServiceBackController implements Initializable {
 
     @FXML
     private void modifierService(ActionEvent event) {
-       ServiceService categorieS = new ServiceService();
+        ServiceService categorieS = new ServiceService();
         Service c = new Service();
 
         c = service.getSelectionModel().getSelectedItem();
         c.setNom(nomService.getText());
         c.setDescription(descriptionService.getText());
-       // c.setIdCategorieService(service.getSelectionModel().getSelectedItem().getId());
-        if(imageee!="")
-        {c.setImage(imageee);
+        c.setCategorie(categoS.getValue());
+        if (imageee != "") {
+            c.setImage(imageee);
         }
         categorieS.modifierService(c);
         imageee = "";
@@ -351,26 +350,12 @@ public class EspaceServiceBackController implements Initializable {
     @FXML
     private void itemSelectedS(MouseEvent event) {
         modifierS.setDisable(false);
+        supprimerService.setDisable(false);
     }
 
     @FXML
     private void modifierserv(ActionEvent event) {
-        /*labelService.setVisible(false);
-        ajouterServ.setVisible(true);
-        service.setVisible(false);
-        nomService.setText(service.getSelectionModel().getSelectedItem().getNom());
-        descriptionService.setText(service.getSelectionModel().getSelectedItem().getDescription());
-        modifierService.setVisible(true);
-        ajoutService.setVisible(false);
-
-        supprimerService.setVisible(false);
-
-        supprimer.setVisible(false);
-
-        ajouterS.setVisible(false);
-        modifierS.setVisible(false);*/
-        
-        
+        Service s= service.getSelectionModel().getSelectedItem() ;
         ajouterServ.setVisible(true);
         supprimerService.setVisible(false);
         ajouterS.setVisible(false);
@@ -379,12 +364,13 @@ public class EspaceServiceBackController implements Initializable {
         labelService.setVisible(false);
         modifierService.setVisible(true);
         ajoutService.setVisible(false);
-        nomService.setText(service.getSelectionModel().getSelectedItem().getNom());
-        descriptionService.setText(service.getSelectionModel().getSelectedItem().getDescription());
-            ObservableList<CategorieService> list = FXCollections.observableArrayList();
-            CategorieServiceService r = new CategorieServiceService();
-            list = r.getALLCategorie();
-            categoS.setItems(list);
+        nomService.setText(s.getNom());
+        descriptionService.setText(s.getDescription());
+        categoS.setValue(s.getCategorie());
+        ObservableList<CategorieService> list = FXCollections.observableArrayList();
+        CategorieServiceService r = new CategorieServiceService();
+        list = r.getALLCategorie();
+        categoS.setItems(list);
     }
 
     @FXML
@@ -401,6 +387,28 @@ public class EspaceServiceBackController implements Initializable {
 
     @FXML
     private void importerImageService(ActionEvent event) {
+         final FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image", "*.jpg", "*.png")
+        );
+        File file = fileChooser.showOpenDialog(null);
+        if (file != null) {
+
+            File currDir = new File(System.getProperty("user.dir", "."));
+            System.out.println(currDir.toPath().getRoot().toString());
+
+            String path = currDir.toPath().getRoot().toString() + "wamp64/www/fixit/web/uploads/images/service/";
+            ImageService u = new ImageService();
+            try {
+                u.upload(file, path);
+            } catch (IOException ex) {
+                Logger.getLogger(EspaceServiceBackController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            imageee = file.getName();
+            System.out.println(imageee);
+        } else {
+            System.out.println("FICHIER erroné");
+        }
     }
 
 }
