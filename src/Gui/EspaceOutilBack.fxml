@@ -38,7 +38,7 @@
                             <TableColumn fx:id="nom" prefWidth="279.0" text="Catégorie" />
                           </columns>
                         </TableView>
-                        <Button fx:id="supprimer" contentDisplay="CENTER" layoutX="880.0" layoutY="362.0" mnemonicParsing="false" onAction="#supprimer" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: #FF0000;" styleClass="supprimerBack" stylesheets="@../Resources/style.css" text="Supprimer" textFill="#f8f7f7">
+                        <Button fx:id="supprimer" contentDisplay="CENTER" layoutX="880.0" layoutY="362.0" mnemonicParsing="false" onAction="#supprimer" prefHeight="25.0" prefWidth="128.0" styleClass="supprimerBack" stylesheets="@../Resources/style.css" text="Supprimer" textFill="#f8f7f7">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
@@ -49,12 +49,12 @@
                            </font>
                         </Label>
                         <TextField fx:id="inputCategorie" layoutX="767.0" layoutY="143.0" prefHeight="25.0" prefWidth="160.0" />
-                        <Button fx:id="modifier" contentDisplay="CENTER" layoutX="742.0" layoutY="362.0" mnemonicParsing="false" onAction="#modifier" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: #4682B4;" styleClass="modifierBack" stylesheets="@../Resources/style.css" text="Modifier" textFill="#f8f7f7">
+                        <Button fx:id="modifier" contentDisplay="CENTER" layoutX="742.0" layoutY="362.0" mnemonicParsing="false" onAction="#modifier" prefHeight="25.0" prefWidth="128.0" styleClass="modifierBack" stylesheets="@../Resources/style.css" text="Modifier" textFill="#f8f7f7">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Button>
-                        <Button fx:id="ajouter" contentDisplay="CENTER" layoutX="603.0" layoutY="362.0" mnemonicParsing="false" onAction="#ajouter" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: #008000;" styleClass="ajouterBack" stylesheets="@../Resources/style.css" text="Ajouter" textFill="#f8f7f7">
+                        <Button fx:id="ajouter" contentDisplay="CENTER" layoutX="603.0" layoutY="362.0" mnemonicParsing="false" onAction="#ajouter" prefHeight="25.0" prefWidth="128.0" styleClass="ajouterBack" stylesheets="@../Resources/style.css" text="Ajouter" textFill="#f8f7f7">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>

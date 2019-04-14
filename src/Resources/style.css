@@ -126,7 +126,7 @@
     -fx-pref-width: 128px;
     -fx-font-weight: bold;
 }
-.modifierBack:hoaver
+.modifierBack:hover
 {
 	-fx-background-color:   #f8f7f7;
 	-fx-text-fill: #4682B4;
@@ -144,7 +144,7 @@
     -fx-pref-width: 128px;
     -fx-font-weight: bold;
 }
-.supprimerBack
+.supprimerBack:hover
 {
 	-fx-background-color:   #f8f7f7;
 	-fx-text-fill: #FF0000;
