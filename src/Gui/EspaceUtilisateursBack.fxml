@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="Gui.EspaceUtilisateursBackController">
+    <fx:include fx:id="BackIndex" source="BackIndex.fxml" />
+   <TabPane layoutX="263.0" prefHeight="690.0" prefWidth="1037.0" tabClosingPolicy="UNAVAILABLE">
+     <tabs>
+       <Tab text="Utilisateurs">
+         <content>
+           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <children>
+                     <TableView fx:id="tableUser" layoutX="14.0" layoutY="49.0" prefHeight="325.0" prefWidth="1010.0">
+                       <columns>
+                         <TableColumn fx:id="colNom" prefWidth="164.0" text="Nom" />
+                         <TableColumn fx:id="colPrenom" prefWidth="168.0" text="Prénom" />
+                           <TableColumn fx:id="colPseudo" prefWidth="173.0" text="Pseudo" />
+                           <TableColumn fx:id="colEmail" prefWidth="299.0" text="Email" />
+                           <TableColumn fx:id="colRole" prefWidth="205.0" text="Role" />
+                       </columns>
+                     </TableView>
+                     <Label layoutX="14.0" layoutY="14.0" text="Liste des utilisateurs">
+                        <font>
+                           <Font size="24.0" />
+                        </font>
+                     </Label>
+                     <ImageView fx:id="photo" fitHeight="248.0" fitWidth="200.0" layoutX="14.0" layoutY="381.0" pickOnBounds="true" preserveRatio="true" />
+                     <VBox layoutX="227.0" layoutY="381.0" prefHeight="249.0" prefWidth="472.0" spacing="10.0">
+                        <children>
+                           <Label fx:id="nom" text="Nom: ">
+                              <font>
+                                 <Font size="18.0" />
+                              </font>
+                           </Label>
+                           <Label fx:id="prenom" text="Prénom:">
+                              <font>
+                                 <Font size="18.0" />
+                              </font>
+                           </Label>
+                           <Label fx:id="pseudo" text="Pseudo:">
+                              <font>
+                                 <Font size="18.0" />
+                              </font>
+                           </Label>
+                           <Label fx:id="email" text="Email:">
+                              <font>
+                                 <Font size="18.0" />
+                              </font>
+                           </Label>
+                           <Label fx:id="telephone" text="Téléphone:">
+                              <font>
+                                 <Font size="18.0" />
+                              </font>
+                           </Label>
+                           <Label fx:id="adresse" text="Adresse: ">
+                              <font>
+                                 <Font size="18.0" />
+                              </font>
+                           </Label>
+                           <Label fx:id="ville" text="Ville: ">
+                              <font>
+                                 <Font size="18.0" />
+                              </font>
+                           </Label>
+                        </children>
+                     </VBox>
+                  </children>
+               </AnchorPane>
+         </content>
+       </Tab>
+       <Tab text="Untitled Tab 2">
+         <content>
+           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+         </content>
+       </Tab>
+     </tabs>
+   </TabPane>
+</AnchorPane>

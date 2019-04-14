@@ -236,9 +236,6 @@
 	-fx-border-color: #00AB47;
 	-fx-border-width: 1 1;
 }
-.table-historique {
-    -fx-text-fill: black;
-}
 .table-historique *.scroll-bar:vertical *.increment-button,
 .table-historique *.scroll-bar:vertical *.decrement-button {
   -fx-background-color: transparent;

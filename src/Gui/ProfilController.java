@@ -244,7 +244,6 @@ public class ProfilController implements Initializable {
                 afficherLanguesAction();
                 afficherHorraireAction();
                 afficherReposAction();
-                System.out.println("aaaaaaa");
                 ServiceUserService r = new ServiceUserService();
                 ObservableList<ServiceUser> list = FXCollections.observableArrayList();
                 list = r.afficherServiceUser(this.user.getId());
