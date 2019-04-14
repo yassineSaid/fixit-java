@@ -82,7 +82,7 @@
                               <Font size="24.0" />
                            </font>
                         </Label>
-                        <Button layoutX="497.0" layoutY="545.0" mnemonicParsing="false" onAction="#acheterAction" prefHeight="38.0" prefWidth="112.0" text="Achetez">
+                        <Button layoutX="497.0" layoutY="545.0" mnemonicParsing="false" onAction="#acheterAction" prefHeight="38.0" prefWidth="138.0" text="Achetez-en plus">
                            <textFill>
                               <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
                                  <stops>
@@ -93,6 +93,16 @@
                            </textFill>
                         </Button>
                         <Button fx:id="modifier1" layoutX="655.0" layoutY="441.0" mnemonicParsing="false" onAction="#changerPhotoAction" prefHeight="38.0" prefWidth="160.0" text="Changez votre photo">
+                           <textFill>
+                              <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                                 <stops>
+                                    <Stop color="BLACK" />
+                                    <Stop color="WHITE" offset="1.0" />
+                                 </stops>
+                              </RadialGradient>
+                           </textFill>
+                        </Button>
+                        <Button layoutX="647.0" layoutY="545.0" mnemonicParsing="false" onAction="#historiqueAction" prefHeight="38.0" prefWidth="174.0" style="-fx-background-color: #4682B4;" text="Historique d'achats">
                            <textFill>
                               <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
                                  <stops>
@@ -167,53 +177,53 @@
                               <Font size="20.0" />
                            </font>
                         </Label>
-                        <TableView fx:id="lundiTab" layoutX="14.0" layoutY="111.0" prefHeight="200.0" prefWidth="200.0">
+                        <TableView fx:id="lundiTab" layoutX="14.0" layoutY="111.0" prefHeight="200.0" prefWidth="200.0" styleClass="table-langues">
                           <columns>
-                              <TableColumn fx:id="deb1" prefWidth="75.0" text="Début" />
-                            <TableColumn fx:id="fin1" prefWidth="75.0" text="Fin" />
-                            <TableColumn fx:id="supp1" prefWidth="49.0" />
+                              <TableColumn fx:id="deb1" prefWidth="75.0" style="-fx-alignment: CENTER_LEFT;" text="Début" />
+                            <TableColumn fx:id="fin1" prefWidth="75.0" style="-fx-alignment: CENTER_LEFT;" text="Fin" />
+                            <TableColumn fx:id="supp1" prefWidth="49.0" style="-fx-alignment: CENTER;" />
                           </columns>
                         </TableView>
-                        <TableView fx:id="mardiTab" layoutX="14.0" layoutY="354.0" prefHeight="200.0" prefWidth="200.0">
+                        <TableView fx:id="mardiTab" layoutX="14.0" layoutY="354.0" prefHeight="200.0" prefWidth="200.0" styleClass="table-langues">
                            <columns>
-                              <TableColumn fx:id="deb2" prefWidth="75.0" text="Début" />
-                              <TableColumn fx:id="fin2" prefWidth="75.0" text="Fin" />
-                              <TableColumn fx:id="supp2" prefWidth="49.0" />
+                              <TableColumn fx:id="deb2" prefWidth="75.0" style="-fx-alignment: CENTER_LEFT;" text="Début" />
+                              <TableColumn fx:id="fin2" prefWidth="75.0" style="-fx-alignment: CENTER_LEFT;" text="Fin" />
+                              <TableColumn fx:id="supp2" prefWidth="49.0" style="-fx-alignment: CENTER;" />
                            </columns>
                         </TableView>
-                        <TableView fx:id="mercrediTab" layoutX="261.0" layoutY="111.0" prefHeight="200.0" prefWidth="200.0">
+                        <TableView fx:id="mercrediTab" layoutX="261.0" layoutY="111.0" prefHeight="200.0" prefWidth="200.0" styleClass="table-langues">
                            <columns>
                               <TableColumn fx:id="deb3" prefWidth="75.0" style="-fx-alignment: CENTER_LEFT;" text="Début" />
-                              <TableColumn fx:id="fin3" prefWidth="75.0" text="Fin" />
-                              <TableColumn fx:id="supp3" prefWidth="49.0" />
+                              <TableColumn fx:id="fin3" prefWidth="75.0" style="-fx-alignment: CENTER_LEFT;" text="Fin" />
+                              <TableColumn fx:id="supp3" prefWidth="49.0" style="-fx-alignment: CENTER;" />
                            </columns>
                         </TableView>
-                        <TableView fx:id="jeudiTab" layoutX="261.0" layoutY="354.0" prefHeight="200.0" prefWidth="200.0">
+                        <TableView fx:id="jeudiTab" layoutX="261.0" layoutY="354.0" prefHeight="200.0" prefWidth="200.0" styleClass="table-langues">
                            <columns>
-                              <TableColumn fx:id="deb4" prefWidth="75.0" text="Début" />
-                              <TableColumn fx:id="fin4" prefWidth="75.0" text="Fin" />
-                              <TableColumn fx:id="supp4" prefWidth="49.0" />
+                              <TableColumn fx:id="deb4" prefWidth="75.0" style="-fx-alignment: CENTER_LEFT;" text="Début" />
+                              <TableColumn fx:id="fin4" prefWidth="75.0" style="-fx-alignment: CENTER_LEFT;" text="Fin" />
+                              <TableColumn fx:id="supp4" prefWidth="49.0" style="-fx-alignment: CENTER;" />
                            </columns>
                         </TableView>
-                        <TableView fx:id="vendrediTab" layoutX="508.0" layoutY="111.0" prefHeight="200.0" prefWidth="200.0">
+                        <TableView fx:id="vendrediTab" layoutX="508.0" layoutY="111.0" prefHeight="200.0" prefWidth="200.0" styleClass="table-langues">
                            <columns>
-                              <TableColumn fx:id="deb5" prefWidth="75.0" text="Début" />
-                              <TableColumn fx:id="fin5" prefWidth="75.0" text="Fin" />
-                              <TableColumn fx:id="supp5" prefWidth="49.0" />
+                              <TableColumn fx:id="deb5" prefWidth="75.0" style="-fx-alignment: CENTER_LEFT;" text="Début" />
+                              <TableColumn fx:id="fin5" prefWidth="75.0" style="-fx-alignment: CENTER_LEFT;" text="Fin" />
+                              <TableColumn fx:id="supp5" prefWidth="49.0" style="-fx-alignment: CENTER;" />
                            </columns>
                         </TableView>
-                        <TableView fx:id="dimancheTab" layoutX="744.0" layoutY="111.0" prefHeight="200.0" prefWidth="200.0">
+                        <TableView fx:id="dimancheTab" layoutX="744.0" layoutY="111.0" prefHeight="200.0" prefWidth="200.0" styleClass="table-langues">
                            <columns>
-                              <TableColumn fx:id="deb0" prefWidth="75.0" text="Début" />
-                              <TableColumn fx:id="fin0" prefWidth="75.0" text="Fin" />
-                              <TableColumn fx:id="supp0" prefWidth="49.0" />
+                              <TableColumn fx:id="deb0" prefWidth="75.0" style="-fx-alignment: CENTER_LEFT;" text="Début" />
+                              <TableColumn fx:id="fin0" prefWidth="75.0" style="-fx-alignment: CENTER_LEFT;" text="Fin" />
+                              <TableColumn fx:id="supp0" prefWidth="49.0" style="-fx-alignment: CENTER;" />
                            </columns>
                         </TableView>
-                        <TableView fx:id="samediTab" layoutX="508.0" layoutY="354.0" prefHeight="200.0" prefWidth="200.0">
+                        <TableView fx:id="samediTab" layoutX="508.0" layoutY="354.0" prefHeight="200.0" prefWidth="200.0" styleClass="table-langues">
                            <columns>
-                              <TableColumn fx:id="deb6" prefWidth="75.0" text="Début" />
-                              <TableColumn fx:id="fin6" prefWidth="75.0" text="Fin" />
-                              <TableColumn fx:id="supp6" prefWidth="49.0" />
+                              <TableColumn fx:id="deb6" prefWidth="75.0" style="-fx-alignment: CENTER_LEFT;" text="Début" />
+                              <TableColumn fx:id="fin6" prefWidth="75.0" style="-fx-alignment: CENTER_LEFT;" text="Fin" />
+                              <TableColumn fx:id="supp6" prefWidth="49.0" style="-fx-alignment: CENTER;" />
                            </columns>
                         </TableView>
                         <JFXTimePicker fx:id="heureDebut" layoutX="259.0" layoutY="575.0" />

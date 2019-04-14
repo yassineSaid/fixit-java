@@ -18,19 +18,12 @@ import Services.ServicesProposesService;
 import Services.UserLangueService;
 import Services.UserService;
 import com.jfoenix.controls.JFXTimePicker;
-import com.stripe.Stripe;
-import com.stripe.exception.StripeException;
-import com.stripe.model.Charge;
-import com.stripe.model.Customer;
-import com.stripe.model.Order;
 import java.io.File;
 import java.io.IOException;
 import static java.lang.Integer.parseInt;
 import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Time;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -58,7 +51,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -479,7 +471,12 @@ public class ProfilController implements Initializable {
             if (heureDebut.getValue().isAfter(heureFin.getValue())) {
                 erreurHorraire.setText("Vérifiez les heures");
                 erreur = true;
-            } else {
+            } else if (!uls.checkHorraire(user, java.sql.Time.valueOf(heureDebut.getValue()), java.sql.Time.valueOf(heureFin.getValue()), listJours.getValue().getId())) {
+                erreurHorraire.setText("Vérifiez les heures");
+                erreur=true;
+            }
+            else 
+            {
                 erreurHorraire.setText("");
             }
         }
@@ -540,6 +537,20 @@ public class ProfilController implements Initializable {
         }
     }
 
+    @FXML
+    private void historiqueAction(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/HistoriquePaiement.fxml"));
+        Parent root = fxmlLoader.load();
+        HistoriquePaiementController controller = fxmlLoader.<HistoriquePaiementController>getController();
+        controller.setUser(user);
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initOwner(((Node) event.getSource()).getScene().getWindow());
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setScene(scene);
+        stage.showAndWait();
+    }
     @FXML
     private void ajouterUnService(ActionEvent event) {
         mesServices.setVisible(false);
