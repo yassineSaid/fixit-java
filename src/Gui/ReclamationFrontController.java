@@ -345,8 +345,8 @@ public class ReclamationFrontController implements Initializable {
 
         ObservableList<Reclamation> data = FXCollections.observableArrayList();
         data = recServ.getAllReclamation();
-        int fromIndex = pageIndex * 6;
-        int toIndex = Math.min(fromIndex + 6, data.size());
+        int fromIndex = pageIndex * 2;
+        int toIndex = Math.min(fromIndex + 2, data.size());
         listReclam.setItems(FXCollections.observableArrayList(data.subList(fromIndex, toIndex)));
 
         return listReclam;
@@ -363,6 +363,7 @@ public class ReclamationFrontController implements Initializable {
 
     @FXML
     private void detailsReclmations(MouseEvent event) {
+        System.out.println("aaaaa");
         details.setVisible(true);
         Reclamation rec = new Reclamation();
         rec = listReclam.getSelectionModel().getSelectedItem();

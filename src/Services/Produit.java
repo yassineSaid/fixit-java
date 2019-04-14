@@ -19,6 +19,8 @@ import java.util.Calendar;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  *
@@ -93,6 +95,7 @@ public class Produit {
         pt.setInt(1, idUser);
         ResultSet rs = pt.executeQuery();
         while (rs.next()) {
+            Image image1 = new Image("file:/wamp64/www/fixit/web/uploads/images/produit/" + rs.getString(5), 120, 120, false, false);
             produit c = new produit();
             c.setId(rs.getInt("id"));
             c.setNom(rs.getString("Nom"));
@@ -100,6 +103,7 @@ public class Produit {
             c.setPrix(rs.getInt("prix"));
             c.setDate_exp(rs.getTimestamp("date_exp"));
             c.setImage(rs.getString("image"));
+            c.setIm(new ImageView(image1));
             l.add(c);
         }
         return l;
@@ -143,6 +147,8 @@ public class Produit {
 
             ResultSet rs = pt.executeQuery();
             while (rs.next()) {
+                Image image1 = new Image("file:/wamp64/www/fixit/web/uploads/images/produit/" + rs.getString(5), 120, 120, false, false);
+
                 Button supprimer = new Button();
                 supprimer.setText("Detaille");
                 supprimer.setId(rs.getString(1));
@@ -154,6 +160,7 @@ public class Produit {
                 p.setDate_exp(rs.getTimestamp("date_exp"));
                 p.setImage(rs.getString("image"));
                 p.setDetaille(supprimer);
+                p.setIm(new ImageView(image1));
                 list.add(p);
             }
             return list;
@@ -170,6 +177,7 @@ public class Produit {
             ResultSet rs = pt.executeQuery();
             produit c = new produit();
             while (rs.next()) {
+                Image image1 = new Image("file:/wamp64/www/fixit/web/uploads/images/produit/" + rs.getString(5), 120, 120, false, false);
                 Button supprimer = new Button();
                 supprimer.setText("Acheter");
                 supprimer.setId(rs.getString(1));
@@ -183,6 +191,7 @@ public class Produit {
                 User u = this.getUser(rs.getInt("user"));
                 c.setUser(u);
                 c.setDetaille(supprimer);
+                 c.setIm(new ImageView(image1));
             }
 
             return c;
@@ -246,8 +255,7 @@ public class Produit {
 
             return c.getSolde();
 
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             System.out.println(ex);
         }
 
@@ -255,7 +263,7 @@ public class Produit {
     }
 
     public void ModifierUserAchat(int idUsr1, int prix) {
-              try {
+        try {
             String req = "Update user set solde=? where id=?";
             PreparedStatement ste = Cn.prepareStatement(req);
             ste.setInt(1, prix);
@@ -265,9 +273,9 @@ public class Produit {
             System.out.println(ex);
         }
 
-       
     }
-     public User getUser(int idUsr) {
+
+    public User getUser(int idUsr) {
         try {
             String req = "Select * from user where id=?";
             PreparedStatement ste = Cn.prepareStatement(req);
@@ -276,19 +284,19 @@ public class Produit {
             User c = new User();
             while (rs.next()) {
                 c.setSolde(rs.getInt("solde"));
-                 c.setId(rs.getInt("Id"));
+                c.setId(rs.getInt("Id"));
             }
 
             return c;
 
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             System.out.println(ex);
         }
 
         return null;
     }
-            public void ajouterAchat(ListAchat l) {
+
+    public void ajouterAchat(ListAchat l) {
         try {
             String req = "insert into achat_produit (Produit, Acheteur, quantite, prix, idAcheteur, idProduit, image, date) VALUES (?,?,?,?,?,?,?,?)";
             PreparedStatement ste = Cn.prepareStatement(req);
@@ -297,7 +305,7 @@ public class Produit {
             ste.setInt(3, l.getQuantite());
             ste.setInt(4, l.getPrix());
             ste.setInt(5, l.getIdAcheteur());
-            ste.setInt(6,l.getIdProduit());
+            ste.setInt(6, l.getIdProduit());
             ste.setString(7, l.getImage());
             ste.setTimestamp(8, l.getDate());
             ste.executeUpdate();
@@ -306,6 +314,65 @@ public class Produit {
         }
 
     }
-    
+     public ObservableList<produit> Disponibleroduit() {
+        try {
+            ObservableList<produit> list = FXCollections.observableArrayList();
+            PreparedStatement pt = Cn.prepareStatement("Select * from produit where quantite > 0 ");
+
+            ResultSet rs = pt.executeQuery();
+            while (rs.next()) {
+                Image image1 = new Image("file:/wamp64/www/fixit/web/uploads/images/produit/" + rs.getString(5), 120, 120, false, false);
+
+                Button supprimer = new Button();
+                supprimer.setText("Detaille");
+                supprimer.setId(rs.getString(1));
+                produit p = new produit();
+                p.setId(rs.getInt("id"));
+                p.setNom(rs.getString("Nom"));
+                p.setQuantite(rs.getInt("quantite"));
+                p.setPrix(rs.getInt("prix"));
+                p.setDate_exp(rs.getTimestamp("date_exp"));
+                p.setImage(rs.getString("image"));
+                p.setDetaille(supprimer);
+                p.setIm(new ImageView(image1));
+                list.add(p);
+            }
+            return list;
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return null;
+    }
+          public ObservableList<produit> NonDisponibleroduit() {
+        try {
+            ObservableList<produit> list = FXCollections.observableArrayList();
+            PreparedStatement pt = Cn.prepareStatement("Select * from produit where quantite = 0 ");
+
+            ResultSet rs = pt.executeQuery();
+            while (rs.next()) {
+                Image image1 = new Image("file:/wamp64/www/fixit/web/uploads/images/produit/" + rs.getString(5), 120, 120, false, false);
+
+                Button supprimer = new Button();
+                supprimer.setText("Detaille");
+                supprimer.setId(rs.getString(1));
+                produit p = new produit();
+                p.setId(rs.getInt("id"));
+                p.setNom(rs.getString("Nom"));
+                p.setQuantite(rs.getInt("quantite"));
+                p.setPrix(rs.getInt("prix"));
+                p.setDate_exp(rs.getTimestamp("date_exp"));
+                p.setImage(rs.getString("image"));
+                p.setDetaille(supprimer);
+                p.setIm(new ImageView(image1));
+                list.add(p);
+            }
+            return list;
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return null;
+    }
+
+
 
 }

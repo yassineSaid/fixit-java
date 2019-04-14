@@ -10,10 +10,13 @@ import Entities.User;
 import Entities.CategorieProduit;
 import Entities.produit;
 import Services.CategorieProduitService;
+import Services.ImageService;
 import Services.Produit;
 import Services.ReclamationService;
 import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
 import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
+import java.io.File;
+import java.io.IOException;
 import static java.lang.Integer.parseInt;
 import java.net.URL;
 import java.sql.SQLException;
@@ -38,6 +41,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
@@ -49,6 +53,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.stage.FileChooser;
 
 /**
  * FXML Controller class
@@ -56,6 +61,8 @@ import javafx.scene.layout.HBox;
  * @author Ali Saidani
  */
 public class EspaceProduitFrontController implements Initializable {
+
+    private String imageee;
 
     private Produit crud;
     @FXML
@@ -148,6 +155,10 @@ public class EspaceProduitFrontController implements Initializable {
     private Button retourField;
     @FXML
     private Button retourField1;
+    @FXML
+    private Button openFile;
+    @FXML
+    private TextField scoins;
 
     public int getId() {
         return id;
@@ -171,8 +182,9 @@ public class EspaceProduitFrontController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Platform.runLater(() -> {
-        frontIndexController.setUser(user);
-        frontIndexController.initialize(null, null);
+
+            frontIndexController.setUser(user);
+            frontIndexController.initialize(null, null);
         });
         afficher();
 
@@ -195,15 +207,15 @@ public class EspaceProduitFrontController implements Initializable {
             motif.setText("");
             Quantitefield.setText("");
             prix.setText("");
-            imagefield.setText("");
+
             dateExp.setValue(LocalDate.now());
             //mes produits
             nomtab.setCellValueFactory(new PropertyValueFactory<produit, String>("Nom"));
-            imageTab.setCellValueFactory(new PropertyValueFactory<produit, String>("image"));
+            imageTab.setCellValueFactory(new PropertyValueFactory<produit, String>("im"));
             quantitetab.setCellValueFactory(new PropertyValueFactory<produit, String>("Quantite"));
             prixTab.setCellValueFactory(new PropertyValueFactory<produit, String>("prix"));
             dateExpira.setCellValueFactory(new PropertyValueFactory<produit, String>("date_exp"));
-            imageP.setCellValueFactory(new PropertyValueFactory<produit, String>("image"));
+            imageP.setCellValueFactory(new PropertyValueFactory<produit, String>("im"));
             nomP.setCellValueFactory(new PropertyValueFactory<produit, String>("Nom"));
             QuantiteP.setCellValueFactory(new PropertyValueFactory<produit, String>("Quantite"));
             prixP.setCellValueFactory(new PropertyValueFactory<produit, String>("prix"));
@@ -243,12 +255,12 @@ public class EspaceProduitFrontController implements Initializable {
         Timestamp timestamp = Timestamp.valueOf(stringDate.atStartOfDay().plusHours(1));
         ct.setDate_exp(timestamp);
         ct.setUser(user);
-        ct.setImage(imagefield.getText());
+        ct.setImage(imageee);
         ct.setPrix(Integer.parseInt(prix.getText()));
         String s = Integer.toString(ct.getQuantite());
         System.out.println(s);
 
-        if ((ct.getNom().length()==0) || (categorieProduit.getValue() == null)||(ct.getImage().length()==0)||(QuantiteField.getText().length()<1)||(prix.getText().length()<1) ){
+        if ((ct.getNom().length() == 0) || (categorieProduit.getValue() == null)) {
 
             System.out.println("vérifier vos données");
         } else {
@@ -277,7 +289,7 @@ public class EspaceProduitFrontController implements Initializable {
 
         motif.setText(p.getNom());
         Quantitefield.setText(Integer.toString(p.getQuantite()));
-        imagefield.setText(p.getImage());
+
         prix.setText(Integer.toString(p.getPrix()));
         dateExp.setValue(p.getDate_exp().toLocalDateTime().toLocalDate());
         categorieProduit.setValue(p.getIdCategorieProduit());
@@ -301,9 +313,10 @@ public class EspaceProduitFrontController implements Initializable {
         Timestamp timestamp = Timestamp.valueOf(stringDate.atStartOfDay().plusHours(1));
         ct.setDate_exp(timestamp);
         ct.setUser(user);
-        ct.setImage(imagefield.getText());
         ct.setPrix(Integer.parseInt(prix.getText()));
-
+        if (imageee != "") {
+            ct.setImage(imageee);
+        }
         crud.modifierProduit(ct);
         System.out.println(ct.getId());
         initialize(null, null);
@@ -320,6 +333,7 @@ public class EspaceProduitFrontController implements Initializable {
     }
 
     private void DetailleProduitClicked(ActionEvent event) {
+        scoins.setText(Integer.toString(user.getSolde()));
         Tabwidget.getSelectionModel().select(2);
         Button button = (Button) event.getSource();
         produit p1 = new produit();
@@ -327,6 +341,8 @@ public class EspaceProduitFrontController implements Initializable {
         //rud.DetailleProduit();
         System.out.println(Integer.parseInt(button.getId()));
         p1 = crud.DetailleProduit(Integer.parseInt(button.getId()));
+
+        //  image.setImage(p1.getIm());
         nomF.setText(p1.getNom());
         nomF.setEditable(false);
         nomF1.setText(Integer.toString(p1.getQuantite()));
@@ -389,6 +405,7 @@ public class EspaceProduitFrontController implements Initializable {
             }
 
         }
+        afficher();
 
     }
 
@@ -396,10 +413,38 @@ public class EspaceProduitFrontController implements Initializable {
     private void RetourMesProduits(ActionEvent event) {
 
         Tabwidget.getSelectionModel().select(0);
+        afficher();
     }
 
     @FXML
     private void RetourAllProduit(ActionEvent event) {
         Tabwidget.getSelectionModel().select(1);
+        afficher();
     }
+
+    @FXML
+    private void importerImage(ActionEvent event) {
+        final FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image", "*.jpg", "*.png")
+        );
+        File file = fileChooser.showOpenDialog(null);
+        if (file != null) {
+
+            File currDir = new File(System.getProperty("user.dir", "."));
+            System.out.println(currDir.toPath().getRoot().toString());
+
+            String path = currDir.toPath().getRoot().toString() + "wamp64/www/fixit/web/uploads/images/produit/";
+            ImageService u = new ImageService();
+            try {
+                u.upload(file, path);
+            } catch (IOException ex) {
+                Logger.getLogger(EspaceOutilBackController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            imageee = file.getName();
+        } else {
+            System.out.println("FICHIER erroné");
+        }
+    }
+
 }

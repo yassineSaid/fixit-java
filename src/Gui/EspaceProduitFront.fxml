@@ -4,13 +4,13 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.paint.RadialGradient?>
@@ -71,9 +71,9 @@
                                 <columns>
                                   <TableColumn fx:id="nomtab" prefWidth="75.0" text="Nom" />
                                   <TableColumn fx:id="dateExpira" prefWidth="134.0" text="Date d'expiration" />
-                                    <TableColumn fx:id="quantitetab" prefWidth="70.0" text="quantite" />
-                                    <TableColumn fx:id="prixTab" prefWidth="103.0" text="prix" />
-                                    <TableColumn fx:id="imageTab" prefWidth="134.0" text="image" />
+                                    <TableColumn fx:id="quantitetab" prefWidth="70.0" text="Quantite" />
+                                    <TableColumn fx:id="prixTab" prefWidth="103.0" text="Prix" />
+                                    <TableColumn fx:id="imageTab" prefWidth="134.0" text="Image" />
                                 </columns>
                               </TableView>
                               <TextField fx:id="Quantitefield" layoutX="220.0" layoutY="379.0" prefHeight="31.0" prefWidth="247.0" />
@@ -87,7 +87,6 @@
                                     <Font size="19.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="imagefield" layoutX="220.0" layoutY="464.0" prefHeight="31.0" prefWidth="247.0" />
                               <Label layoutX="15.0" layoutY="420.0" text="prix">
                                  <font>
                                     <Font size="19.0" />
@@ -115,6 +114,7 @@
                                     </RadialGradient>
                                  </textFill>
                               </Button>
+                              <Button fx:id="openFile" layoutX="252.0" layoutY="463.0" mnemonicParsing="false" onAction="#importerImage" prefHeight="30.0" prefWidth="252.0" styleClass="openFile" stylesheets="@../Resources/style.css" text="Importer une image" />
                            </children>
                         </AnchorPane>
                      </content>
@@ -132,8 +132,8 @@
                                  <children>
                                     <TableView fx:id="allProduit" layoutX="14.0" layoutY="88.0" prefHeight="490.0" prefWidth="887.0">
                                       <columns>
-                                        <TableColumn fx:id="imageP" prefWidth="197.0" text="image" />
-                                        <TableColumn fx:id="nomP" prefWidth="92.0" text="nom" />
+                                        <TableColumn fx:id="imageP" prefWidth="197.0" text="Image" />
+                                        <TableColumn fx:id="nomP" prefWidth="92.0" text="Nom" />
                                           <TableColumn fx:id="QuantiteP" prefWidth="102.0" text="Quantite" />
                                           <TableColumn fx:id="prixP" prefWidth="75.0" text="Prix" />
                                           <TableColumn fx:id="dateP" prefWidth="223.0" text="date d'expiration" />
@@ -170,6 +170,21 @@
                               <Label fx:id="quantiteLab" layoutX="400.0" layoutY="483.0" prefHeight="21.0" prefWidth="175.0" text="Quantite non disponible" textFill="#fc0a0a" />
                               <Label fx:id="quantiteLab1" layoutX="402.0" layoutY="504.0" prefHeight="21.0" prefWidth="173.0" text="votre solde insuffisant" textFill="#fc0a0a" />
                               <Button fx:id="retourField1" layoutX="880.0" layoutY="23.0" mnemonicParsing="false" onAction="#RetourAllProduit" prefHeight="31.0" prefWidth="97.0" text="Retour" />
+                              <Label layoutX="482.0" layoutY="24.0" prefHeight="30.0" prefWidth="122.0" text="vous avez ">
+                                 <font>
+                                    <Font name="System Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="scoins" layoutX="582.0" layoutY="17.0" prefHeight="45.0" prefWidth="139.0" style="-fx-background-color: transparent;">
+                                 <font>
+                                    <Font size="21.0" />
+                                 </font>
+                              </TextField>
+                              <Label layoutX="671.0" layoutY="23.0" text="Scoins">
+                                 <font>
+                                    <Font name="System Bold" size="21.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </AnchorPane>
                      </content>
@@ -178,6 +193,7 @@
             </TabPane>
          </children>
       </AnchorPane>
+      <RadioButton mnemonicParsing="false" text="RadioButton" />
    </children>
     
 </AnchorPane>

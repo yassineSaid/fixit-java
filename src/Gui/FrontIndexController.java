@@ -161,6 +161,21 @@ public class FrontIndexController implements Initializable {
 
     @FXML
     private void espaceServAction(ActionEvent event) {
+        try {
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/EspaceServiceFront.fxml"));
+            Parent Rec = fxmlLoader.load();
+            EspaceServiceFrontController controller = fxmlLoader.<EspaceServiceFrontController>getController();
+            controller.setUser(this.getUser());
+            Scene scene = new Scene(Rec);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.show();
+            stage.setScene(scene);
+
+        } catch (IOException ex) {
+            System.out.println(ex);
+        }
     }
 
     @FXML
@@ -181,26 +196,6 @@ public class FrontIndexController implements Initializable {
             System.out.println(ex);
         }
     }
-
-    @FXML
-    private void espaceRecAction(ActionEvent event) {
-        try {
-
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/reclamationFront.fxml"));
-            Parent Rec = fxmlLoader.load();
-            ReclamationFrontController controller = fxmlLoader.<ReclamationFrontController>getController();
-            controller.setUser(this.getUser());
-            Scene scene = new Scene(Rec);
-
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.show();
-            stage.setScene(scene);
-
-        } catch (IOException ex) {
-            System.out.println(ex);
-        }
-    }
-
      @FXML
     private void profilAction(ActionEvent event) {
     try {
@@ -272,4 +267,24 @@ public class FrontIndexController implements Initializable {
             System.out.println(ex);
         }
     }
+
+    @FXML
+    private void espaceRecAction(ActionEvent event) {
+        try {
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/reclamationFront.fxml"));
+            Parent Rec = fxmlLoader.load();
+            ReclamationFrontController controller = fxmlLoader.<ReclamationFrontController>getController();
+            controller.setUser(this.getUser());
+            Scene scene = new Scene(Rec);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.show();
+            stage.setScene(scene);
+
+        } catch (IOException ex) {
+            System.out.println(ex);
+        }
+    }
+
 }
