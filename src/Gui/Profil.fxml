@@ -102,16 +102,7 @@
                               </RadialGradient>
                            </textFill>
                         </Button>
-                        <Button layoutX="647.0" layoutY="545.0" mnemonicParsing="false" onAction="#historiqueAction" prefHeight="38.0" prefWidth="174.0" style="-fx-background-color: #4682B4;" text="Historique d'achats">
-                           <textFill>
-                              <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
-                                 <stops>
-                                    <Stop color="BLACK" />
-                                    <Stop color="WHITE" offset="1.0" />
-                                 </stops>
-                              </RadialGradient>
-                           </textFill>
-                        </Button>
+                        <Button layoutX="709.0" layoutY="545.0" mnemonicParsing="false" onAction="#historiqueAction" prefHeight="38.0" prefWidth="150.0" style="-fx-background-color: #4682B4;" text="Historique d'achat" />
                      </children>
                   </AnchorPane>
                </content>
