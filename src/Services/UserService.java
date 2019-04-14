@@ -472,4 +472,23 @@ public class UserService {
             e.printStackTrace();
         }
     }
+    
+    public ObservableList<User> getUsers()
+    {
+        ObservableList<User> data;
+        data=FXCollections.observableArrayList();
+        try {
+            PreparedStatement pt = C.prepareStatement("SELECT * FROM user");
+            ResultSet rs = pt.executeQuery();
+            while (rs.next()) {
+                if (rs.getString("roles").contains("ADMIN"))
+                    data.add(new User(rs.getInt("id"),rs.getInt("id"),rs.getInt("phone"),rs.getInt("solde"),rs.getString("email"),rs.getString("username"),rs.getString("firstname"),rs.getString("lastname"),"Administrateur",rs.getString("image"),rs.getString("address"),rs.getString("zip_code"),rs.getString("city")));
+                else
+                    data.add(new User(rs.getInt("id"),rs.getInt("id"),rs.getInt("phone"),rs.getInt("solde"),rs.getString("email"),rs.getString("username"),rs.getString("firstname"),rs.getString("lastname"),"Utilisateur",rs.getString("image"),rs.getString("address"),rs.getString("zip_code"),rs.getString("city")));
+            }
+            return data;
+        } catch (SQLException e) {
+        }
+        return null;
+    }
 }
