@@ -27,18 +27,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 public class UserOutil implements Serializable {
     private Date dateLocation;
-    @Basic(optional = false)
-    @Column(name = "dateRetour")
-    @Temporal(TemporalType.DATE)
     private Date dateRetour;
-    @Basic(optional = false)
-    @Column(name = "total")
     private int total;
-    @JoinColumn(name = "idOutil", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
     private Outil outil;
-    @JoinColumn(name = "idUser", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
     private User user;
 
     public UserOutil() {
