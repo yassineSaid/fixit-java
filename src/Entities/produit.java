@@ -10,6 +10,7 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 
 /**
  *
@@ -26,6 +27,7 @@ public class produit {
   private String image;
   private Button Detaille;
   private int idProd;
+  private ImageView im;
 
     public int getIdProd() {
         return idProd;
@@ -36,7 +38,7 @@ public class produit {
     }
   public produit(){}
 
-    public produit(String Nom, int Quantite, CategorieProduit idCategorieProduit, int prix, Timestamp date_exp, User user, String image) {
+    public produit(String Nom, int Quantite, CategorieProduit idCategorieProduit, int prix, Timestamp date_exp, User user, String image, ImageView im) {
         this.Nom = Nom;
         this.Quantite = Quantite;
         this.idCategorieProduit = idCategorieProduit;
@@ -44,6 +46,15 @@ public class produit {
         this.date_exp = date_exp;
         this.user = user;
         this.image = image;
+        this.im=im;
+    }
+
+    public ImageView getIm() {
+        return im;
+    }
+
+    public void setIm(ImageView im) {
+        this.im = im;
     }
 
     public int getId() {

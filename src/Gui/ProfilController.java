@@ -535,9 +535,8 @@ public class ProfilController implements Initializable {
             System.out.println("FICHIER erroné");
         }
     }
-
     @FXML
-    private void historiqueAction(ActionEvent event) throws IOException {
+    private void historiqueAction(ActionEvent event) throws IOException{
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/HistoriquePaiement.fxml"));
         Parent root = fxmlLoader.load();
         HistoriquePaiementController controller = fxmlLoader.<HistoriquePaiementController>getController();
@@ -550,6 +549,8 @@ public class ProfilController implements Initializable {
         stage.setScene(scene);
         stage.showAndWait();
     }
+
+    
     @FXML
     private void ajouterUnService(ActionEvent event) {
         mesServices.setVisible(false);
@@ -609,4 +610,8 @@ public class ProfilController implements Initializable {
         s.setCategorieService(categorieProposition.getValue().toString());
         sp.ajouterService(s);
     }
+
+    
+
+    
 }

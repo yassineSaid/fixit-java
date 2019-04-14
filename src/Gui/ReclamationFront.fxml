@@ -4,6 +4,9 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Pagination?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -27,28 +30,28 @@
                            <children>
                               <Label layoutX="262.0" layoutY="25.0" text="Votre Reclamation est importante pour améliorer nos services">
                                  <font>
-                                    <Font size="19.0" />
+                                    <Font name="System Bold" size="16.0" />
                                  </font>
                               </Label>
                               <Separator layoutX="241.0" layoutY="61.0" prefHeight="15.0" prefWidth="528.0" />
                               <Label layoutX="76.0" layoutY="114.0" text="User à réclamer :">
                                  <font>
-                                    <Font size="19.0" />
+                                    <Font name="System Bold" size="16.0" />
                                  </font>
                               </Label>
                               <Label layoutX="82.0" layoutY="171.0" text="Service rendu :">
                                  <font>
-                                    <Font size="19.0" />
+                                    <Font name="System Bold" size="16.0" />
                                  </font>
                               </Label>
                               <Label layoutX="72.0" layoutY="232.0" text="Date du service :">
                                  <font>
-                                    <Font size="19.0" />
+                                    <Font name="System Bold" size="16.0" />
                                  </font>
                               </Label>
                               <Label layoutX="56.0" layoutY="300.0" text="Motif de réclamation :">
                                  <font>
-                                    <Font size="19.0" />
+                                    <Font name="System Bold" size="16.0" />
                                  </font>
                               </Label>
                               <ComboBox fx:id="userReclamer" layoutX="275.0" layoutY="112.0" onAction="#selectservice" prefHeight="31.0" prefWidth="246.0" promptText="Selection l'utlisateur" />
@@ -58,7 +61,7 @@
                               <TextArea fx:id="description" layoutX="276.0" layoutY="361.0" prefHeight="141.0" prefWidth="249.0" />
                               <Label layoutX="89.0" layoutY="418.0" text="Description :">
                                  <font>
-                                    <Font size="19.0" />
+                                    <Font name="System Bold" size="16.0" />
                                  </font>
                               </Label>
                               <Button fx:id="ajouter_Rec" layoutX="275.0" layoutY="533.0" mnemonicParsing="false" onAction="#ajouterReclamation" prefHeight="38.0" prefWidth="223.0" text="Ajouter Reclamation">
@@ -74,7 +77,7 @@
                               <ListView fx:id="listRec" layoutX="604.0" layoutY="129.0" onMouseClicked="#remplirChamps" prefHeight="442.0" prefWidth="330.0" />
                               <Label layoutX="695.0" layoutY="80.0" text="Mes Réclamations">
                                  <font>
-                                    <Font size="19.0" />
+                                    <Font name="System Bold" size="16.0" />
                                  </font>
                               </Label>
                               <Separator layoutX="605.0" layoutY="111.0" prefHeight="0.0" prefWidth="328.0" />
@@ -84,6 +87,75 @@
                            </children>
                         </AnchorPane>
                      </content>
+                  </Tab>
+                  <Tab fx:id="mesReclamationsTab" text="Mes Reclamations">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Pagination fx:id="paginationRecFront" layoutX="65.0" layoutY="55.0" prefHeight="570.0" prefWidth="475.0" />
+                              <ListView fx:id="listReclam" layoutX="65.0" layoutY="55.0" prefHeight="512.0" prefWidth="475.0" />
+                              <AnchorPane fx:id="details" layoutX="540.0" layoutY="55.0" prefHeight="510.0" prefWidth="466.0">
+                                 <children>
+                                    <Label fx:id="userDetail" layoutX="198.0" layoutY="39.0" text="User name">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font></Label>
+                                    <Label alignment="CENTER" layoutX="89.0" layoutY="103.0" text="Date :">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font></Label>
+                                    <Label fx:id="dateReclamationDetail" layoutX="318.0" layoutY="103.0" text="Date">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font></Label>
+                                    <Label alignment="CENTER" layoutX="43.0" layoutY="154.0" text="Utilisateur reclamé :">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font></Label>
+                                    <Label fx:id="userReclameDetail" layoutX="319.0" layoutY="154.0" text="User">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font></Label>
+                                    <Label alignment="CENTER" layoutX="57.0" layoutY="211.0" text="Service réclamé">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font></Label>
+                                    <Label fx:id="serviceDetail" layoutX="311.0" layoutY="211.0" text="service">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font></Label>
+                                    <Label alignment="CENTER" layoutX="27.0" layoutY="270.0" text="Objet de la reclamation :">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font></Label>
+                                    <Label fx:id="objetDetail" layoutX="317.0" layoutY="270.0" text="objet">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font></Label>
+                                    <Label layoutX="67.0" layoutY="333.0" text="Description :">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font></Label>
+                                    <Label fx:id="descriptionDetail" layoutX="320.0" layoutY="333.0" text="desc">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font></Label>
+                                    <ProgressBar fx:id="progressRec" layoutX="57.0" layoutY="390.0" prefHeight="23.0" prefWidth="332.0" progress="0.0" />
+                                    <Label fx:id="etape" alignment="CENTER" contentDisplay="CENTER" layoutX="123.0" layoutY="445.0" text="Etape">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font></Label>
+                                    <ProgressIndicator fx:id="progrssCircle" layoutX="400.0" layoutY="387.0" progress="0.0" />
+                                 </children>
+                              </AnchorPane>
+                              <Label layoutX="692.0" layoutY="25.0" text="Details de la reclamation">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                              </Label>
+                              <Separator layoutX="676.0" layoutY="48.0" prefWidth="200.0" />
+                           </children></AnchorPane>
+                    </content>
                   </Tab>
                </tabs>
             </TabPane>
