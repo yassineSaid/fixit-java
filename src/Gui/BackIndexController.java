@@ -6,6 +6,7 @@
 package Gui;
 
 import Entities.User;
+import Services.ServiceService;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -18,6 +19,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
@@ -38,7 +42,6 @@ public class BackIndexController implements Initializable {
     private Button service;
     @FXML
     private Button EspaceProd;
-
     private User user;
 
     /**
