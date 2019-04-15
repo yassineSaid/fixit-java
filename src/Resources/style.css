@@ -227,3 +227,45 @@
     -fx-text-fill: #FF0000;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }
+.blueFront {
+    -fx-background-color: 
+        linear-gradient(#4682B4, #4682B4),
+        linear-gradient(#4682B4 0%,     #4682B4,    #4682B4 100%),
+        linear-gradient(#4682B4 0%, #4682B4 50%);
+    -fx-font-weight: bold;    
+    -fx-background-radius: 8,7,6;
+    -fx-background-insets: 0,1,2;
+    -fx-font-size: 14px;
+	-fx-pref-height: 25px;
+    -fx-pref-width: 158px;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}
+.blueFront:hover {
+    -fx-background-color: 
+        linear-gradient(white, white),
+        linear-gradient(white 0%,     white,    white 100%),
+        linear-gradient(white 0%, white 50%);
+    -fx-font-weight: bold;    
+    -fx-background-radius: 8,7,6;
+    -fx-background-insets: 0,1,2;
+    -fx-font-size: 14px;
+	-fx-pref-height: 25px;
+    -fx-pref-width: 158px;
+    -fx-text-fill: #4682B4;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}
+.OpenFileFront {
+    -fx-background-color: 
+        linear-gradient(#9dff70, #9dff70),
+        linear-gradient(#9dff70 0%,     #9dff70,    #9dff70 100%),
+        linear-gradient(#9dff70 0%, #9dff70 50%);
+    -fx-font-weight: bold;    
+    -fx-background-radius: 8,7,6;
+    -fx-background-insets: 0,1,2;
+    -fx-font-size: 14px;
+	-fx-pref-height: 25px;
+    -fx-pref-width: 158px;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}

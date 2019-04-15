@@ -8,6 +8,7 @@ package Services;
 import Entities.ListAchat;
 import Entities.User;
 import Entities.CategorieProduit;
+import Entities.LikeProduit;
 import Entities.produit;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -27,6 +28,7 @@ import javafx.scene.image.ImageView;
  * @author Ali Saidani
  */
 public class Produit {
+    
 
     Connection Cn = Connexion.getInstance().getCon();
 
@@ -191,7 +193,7 @@ public class Produit {
                 User u = this.getUser(rs.getInt("user"));
                 c.setUser(u);
                 c.setDetaille(supprimer);
-                 c.setIm(new ImageView(image1));
+                c.setIm(new ImageView(image1));
             }
 
             return c;
@@ -314,7 +316,8 @@ public class Produit {
         }
 
     }
-     public ObservableList<produit> Disponibleroduit() {
+
+    public ObservableList<produit> Disponibleroduit() {
         try {
             ObservableList<produit> list = FXCollections.observableArrayList();
             PreparedStatement pt = Cn.prepareStatement("Select * from produit where quantite > 0 ");
@@ -343,7 +346,8 @@ public class Produit {
         }
         return null;
     }
-          public ObservableList<produit> NonDisponibleroduit() {
+
+    public ObservableList<produit> NonDisponibleroduit() {
         try {
             ObservableList<produit> list = FXCollections.observableArrayList();
             PreparedStatement pt = Cn.prepareStatement("Select * from produit where quantite = 0 ");
@@ -373,6 +377,60 @@ public class Produit {
         return null;
     }
 
+    public void ajouterLike(LikeProduit l) {
+        try {
 
+            String req = "insert into produit_like (produit, user) VALUES (?,?)";
+            PreparedStatement ste = Cn.prepareStatement(req);
+            ste.setInt(1, l.getProduit());
+            ste.setInt(2, l.getUser());
+            ste.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
 
+    }
+
+    public int NombreLike(int idProd) {
+        int i=0;
+
+        try {
+            String req = "Select * from produit_like where produit=?";
+            PreparedStatement ste = Cn.prepareStatement(req);
+            ste.setInt(1, idProd);
+            ResultSet rs = ste.executeQuery();
+            LikeProduit c = new LikeProduit();
+            while (rs.next()) {
+                i++;
+            }
+            return i;
+
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+
+        return 0;
+    }
+     public int LikeExiste(int idUser, int idProd) {
+        int i=0;
+
+        try {
+            String req = "Select * from produit_like where user=? and produit=?";
+            PreparedStatement ste = Cn.prepareStatement(req);
+            ste.setInt(1, idUser);
+            ste.setInt(2, idProd);
+            ResultSet rs = ste.executeQuery();
+            LikeProduit c = new LikeProduit();
+            while (rs.next()) {
+                i++;
+                System.out.println(i);
+            }
+            return i;
+
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+
+        return 0;
+    }
 }
