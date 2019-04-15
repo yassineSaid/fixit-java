@@ -7,10 +7,19 @@ package Gui;
 
 import Entities.Outil;
 import Entities.User;
+import Entities.UserOutil;
 import Services.OutilService;
+import Services.UserOutilService;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -42,6 +51,7 @@ import javafx.stage.Stage;
  * @author SL-WASSIM
  */
 public class EspaceOutilFrontController implements Initializable {
+
     @FXML
     private FrontIndexController frontIndexController;
 
@@ -124,18 +134,23 @@ public class EspaceOutilFrontController implements Initializable {
             list.setVisible(true);
             paginationOutilFront.setVisible(true);
             location.setVisible(false);
+            outilDejaLoue.setVisible(false);
+            outilEpuise.setVisible(false);
+            erreur.setVisible(false);
+            buttonLouer.setDisable(true);
         });
     }
+
     private Node createPage(int pageIndex) {
-    OutilService recServ = new OutilService();
-    
-    ObservableList<Outil> data = FXCollections.observableArrayList();
-    data = recServ.afficherOutil();
-    int fromIndex = pageIndex * 2;
-    int toIndex = Math.min(fromIndex + 2, data.size());
-    list.setItems(FXCollections.observableArrayList(data.subList(fromIndex, toIndex)));
-    
-    return list;
+        OutilService recServ = new OutilService();
+
+        ObservableList<Outil> data = FXCollections.observableArrayList();
+        data = recServ.afficherOutil();
+        int fromIndex = pageIndex * 2;
+        int toIndex = Math.min(fromIndex + 2, data.size());
+        list.setItems(FXCollections.observableArrayList(data.subList(fromIndex, toIndex)));
+
+        return list;
     }
 
     private void loadDataFromDatabase() {
@@ -151,9 +166,46 @@ public class EspaceOutilFrontController implements Initializable {
 
     @FXML
     private void retourAction(ActionEvent event) {
-            list.setVisible(true);
-            paginationOutilFront.setVisible(true);
-            location.setVisible(false);
+        list.setVisible(true);
+        paginationOutilFront.setVisible(true);
+        location.setVisible(false);
+        initialize(null, null);
+    }
+
+    @FXML
+    private void louerAction(ActionEvent event) {
+    }
+
+    private boolean verifierDate(LocalDate dLocation, LocalDate dRetouer) {
+        try {
+        String d1 = dLocation.toString();
+        SimpleDateFormat formatter1 = new SimpleDateFormat("yyyy-MM-dd");
+        Date dateL;
+        dateL = formatter1.parse(d1);
+        java.sql.Date dL = new java.sql.Date(dateL.getTime());
+        String d2 = dLocation.toString();
+        SimpleDateFormat formatter2 = new SimpleDateFormat("yyyy-MM-dd");
+        Date dateR;
+        dateR = formatter1.parse(d2);
+        java.sql.Date dR = new java.sql.Date(dateR.getTime());
+            System.out.println(dR.compareTo(dL));
+            return true;
+            /*if(dR.compareTo(dL)>0)
+            {
+            
+            }*/
+        } catch (ParseException ex) {
+        Logger.getLogger(EspaceOutilFrontController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    @FXML
+    private boolean verifierCheck() {
+        if(conditions.isSelected())
+        {
+            return true;
+        }
+        return false;
     }
 
     public class Poules extends ListCell<Outil> {
@@ -218,9 +270,44 @@ public class EspaceOutilFrontController implements Initializable {
                         scoinDetailText.setText(Integer.toString(item.getPrix()));
                         jour.setText(Integer.toString(item.getDureeMaximale()));
                         prix1.setText(Integer.toString(item.getPrix()));
-                        int nouveauPrix= (int)(item.getPrix()*1.25);
+                        int nouveauPrix = (int) (item.getPrix() * 1.25);
                         prix2.setText(Integer.toString(nouveauPrix));
-                        
+                        UserOutilService uo = new UserOutilService();
+                        ObservableList<UserOutil> list1 = FXCollections.observableArrayList();
+                        ObservableList<UserOutil> list2 = FXCollections.observableArrayList();
+                        try {
+                            list1 = uo.premierOutilRetourner(item);
+                        } catch (SQLException ex) {
+                            Logger.getLogger(EspaceOutilFrontController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        try {
+                            list2 = uo.verifierLocation(item, user);
+                        } catch (SQLException ex) {
+                            Logger.getLogger(EspaceOutilFrontController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        if (item.getQuantite() > 0) {
+                            if (list2.isEmpty()) {
+                                buttonLouer.setDisable(false);
+                                detailLocation.setVisible(true);
+
+                            } else {
+                                outilDejaLoue.setVisible(true);
+                                detailLocation.setVisible(true);
+                            }
+                        } else {
+                            if (list1.isEmpty()) {
+                                outilEpuise.setVisible(true);
+                                detailLocation.setVisible(false);
+                            } else if (!list2.isEmpty()) {
+                                outilDejaLoue.setVisible(true);
+                                detailLocation.setVisible(true);
+                            } else {
+                                outilEpuise.setVisible(true);
+                                detailLocation.setVisible(false);
+                                outilEpuise.setText("L'outil sera disponible");
+                            }
+                        }
+
                     }
                 });
                 VBox vBox = new VBox();

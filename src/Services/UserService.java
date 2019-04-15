@@ -7,27 +7,32 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import Entities.User;
+import java.io.File;
+import java.io.InputStream;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 
 public class UserService {
 
     Connection C = Connexion.getInstance().getCon();
 
     public boolean checkUser(String username, String password) {
-        String crypted = "$2y$13$ANVjZ0bnQfSMtHrt053Nh.oxKcesoimGIRwgQHf5i/mnKpl6bOlvG";
-        //String crypted1="$2a"+crypted.substring(3);
-        //System.out.println(BCrypt.checkpw("00100", crypted1));
         try {
-            PreparedStatement pt = C.prepareStatement("SELECT * FROM user where username=?");
+            PreparedStatement pt = C.prepareStatement("SELECT * FROM user where username=? AND enabled=1");
             pt.setString(1, username);
             ResultSet rs = pt.executeQuery();
             while (rs.next()) {
-                String crypted1 = "$2a" + rs.getString("password").substring(3);
-                if (BCrypt.checkpw(password, crypted1)) {
+                String crypted = "$2a" + rs.getString("password").substring(3);
+                if (BCrypt.checkpw(password, crypted)) {
                     return true;
                 }
             }
@@ -448,8 +453,8 @@ public class UserService {
         return code;
     }
 
-    public void changerMdp(String email,String mdp) {
-        String password=createPwd(mdp);
+    public void changerMdp(String email, String mdp) {
+        String password = createPwd(mdp);
         try {
             PreparedStatement pt = C.prepareStatement("UPDATE user SET password=? WHERE email_canonical=?");
             pt.setString(1, password);
@@ -460,12 +465,159 @@ public class UserService {
             e.printStackTrace();
         }
     }
-    
-    public void ajouterImage(String image,int id) {
+
+    public void ajouterImage(String image, int id) {
         try {
             PreparedStatement pt = C.prepareStatement("UPDATE user SET image=? WHERE id=?");
             pt.setString(1, image);
             pt.setInt(2, id);
+            pt.execute();
+        } catch (SQLException e) {
+            System.out.println(e.getCause());
+            e.printStackTrace();
+        }
+    }
+
+    public ObservableList<User> getUsers(int id) {
+        ObservableList<User> data;
+        data = FXCollections.observableArrayList();
+        try {
+            PreparedStatement pt = C.prepareStatement("SELECT * FROM user WHERE id!=?");
+            pt.setInt(1, id);
+            ResultSet rs = pt.executeQuery();
+            while (rs.next()) {
+                if (rs.getString("roles").contains("ADMIN")) {
+                    data.add(new User(rs.getInt("id"), rs.getInt("enabled"), rs.getInt("phone"), rs.getInt("solde"), rs.getString("email"), rs.getString("username"), rs.getString("firstname"), rs.getString("lastname"), "Administrateur", rs.getString("image"), rs.getString("address"), rs.getString("zip_code"), rs.getString("city")));
+                } else {
+                    data.add(new User(rs.getInt("id"), rs.getInt("enabled"), rs.getInt("phone"), rs.getInt("solde"), rs.getString("email"), rs.getString("username"), rs.getString("firstname"), rs.getString("lastname"), "Utilisateur", rs.getString("image"), rs.getString("address"), rs.getString("zip_code"), rs.getString("city")));
+                }
+            }
+            return data;
+        } catch (SQLException e) {
+        }
+        return null;
+    }
+
+    public ObservableList<VBox> getUsersVbox(int id,String rech) {
+        ObservableList<VBox> data;
+        data = FXCollections.observableArrayList();
+        try {
+            PreparedStatement pt = C.prepareStatement("SELECT * FROM user WHERE id!=? AND( firstname LIKE ? OR lastname LIKE ?)");
+            pt.setInt(1, id);
+            if (rech==null) {
+                pt.setString(2, "'%'");
+                pt.setString(3, "'%'");
+            } else {
+                pt.setString(2, "%"+rech+"%");
+                pt.setString(3, "%"+rech+"%");
+            }
+            ResultSet rs = pt.executeQuery();
+            while (rs.next()) {
+                User u = new User(rs.getInt("id"), rs.getInt("enabled"), rs.getInt("phone"), rs.getInt("solde"), rs.getString("email"), rs.getString("username"), rs.getString("firstname"), rs.getString("lastname"), "Administrateur", rs.getString("image"), rs.getString("address"), rs.getString("zip_code"), rs.getString("city"));
+                VBox v = new VBox();
+                if (rs.getString("roles").contains("ADMIN")) {
+                    u.setRoles("Administrateur");
+                } else {
+                    u.setRoles("Utilisateur");
+                }
+                v.setAlignment(Pos.CENTER_LEFT);
+                ImageView image=new ImageView();
+                    image=loadImage(u);
+                    v.getChildren().add(image);
+                v.getChildren().add(new Label(Utils.upperCaseFirst(u.getFirstname())+" "+Utils.upperCaseFirst(u.getLastname())));
+                String ville="";
+                v.setId(String.valueOf(u.getId()));
+                data.add(v);
+            }
+            return data;
+        } catch (SQLException e) {
+        }
+        return null;
+    }
+    private ImageView loadImage(User u) {
+        File currDir = new File(System.getProperty("user.dir", "."));
+        String path;
+        if (u.getImage() != null) 
+            path = "file:" + currDir.toPath().getRoot().toString() + "wamp64\\www\\fixit\\web\\uploads\\images\\user\\" + u.getImage();
+        else path=new File("src/Resources/user.png").toURI().toString();
+            Image image = new Image(path);
+            ImageView photo = new ImageView();
+            photo.setFitWidth(100);
+            photo.setFitHeight(100);
+            photo.setImage(image);
+            Image img = photo.getImage();
+            if (img != null) {
+                double w = 0;
+                double h = 0;
+
+                double ratioX = photo.getFitWidth() / img.getWidth();
+                double ratioY = photo.getFitHeight() / img.getHeight();
+
+                double reducCoeff = 0;
+                if (ratioX >= ratioY) {
+                    reducCoeff = ratioY;
+                } else {
+                    reducCoeff = ratioX;
+                }
+
+                w = img.getWidth() * reducCoeff;
+                h = img.getHeight() * reducCoeff;
+
+                photo.setX((photo.getFitWidth() - w) / 2);
+                photo.setY((photo.getFitHeight() - h) / 2);
+                return photo;
+            }
+        return null;
+    }
+
+    public void promouvoir(int id) {
+        try {
+            PreparedStatement pt = C.prepareStatement("UPDATE user SET roles='a:1:{i:0;s:10:\"ROLE_ADMIN\";}' WHERE id=?");
+            pt.setInt(1, id);
+            pt.execute();
+        } catch (SQLException e) {
+            System.out.println(e.getCause());
+            e.printStackTrace();
+        }
+    }
+
+    public void retrograder(int id) {
+        try {
+            PreparedStatement pt = C.prepareStatement("UPDATE user SET roles='a:0:{}' WHERE id=?");
+            pt.setInt(1, id);
+            pt.execute();
+        } catch (SQLException e) {
+            System.out.println(e.getCause());
+            e.printStackTrace();
+        }
+    }
+
+    public void bloquer(int id) {
+        try {
+            PreparedStatement pt = C.prepareStatement("UPDATE user SET enabled=0 WHERE id=?");
+            pt.setInt(1, id);
+            pt.execute();
+        } catch (SQLException e) {
+            System.out.println(e.getCause());
+            e.printStackTrace();
+        }
+    }
+
+    public void debloquer(int id) {
+        try {
+            PreparedStatement pt = C.prepareStatement("UPDATE user SET enabled=1 WHERE id=?");
+            pt.setInt(1, id);
+            pt.execute();
+        } catch (SQLException e) {
+            System.out.println(e.getCause());
+            e.printStackTrace();
+        }
+    }
+
+    public void supprimer(int id) {
+        try {
+            PreparedStatement pt = C.prepareStatement("DELETE FROM user WHERE id=?");
+            pt.setInt(1, id);
             pt.execute();
         } catch (SQLException e) {
             System.out.println(e.getCause());

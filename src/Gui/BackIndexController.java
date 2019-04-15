@@ -42,6 +42,7 @@ public class BackIndexController implements Initializable {
     private Button service;
     @FXML
     private Button EspaceProd;
+    private User user;
 
     /**
      * Initializes the controller class.
@@ -49,7 +50,6 @@ public class BackIndexController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }
-    private User user;
 
     public User getUser() {
         return user;
@@ -138,6 +138,23 @@ public class BackIndexController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/login.fxml"));
             Parent back = fxmlLoader.load();
             Scene scene = new Scene(back);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.show();
+            stage.setScene(scene);
+        } catch (IOException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML
+    private void espaceUtilisateursAction(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/EspaceUtilisateursBack.fxml"));
+            Parent Rec = fxmlLoader.load();
+            EspaceUtilisateursBackController controller = fxmlLoader.<EspaceUtilisateursBackController>getController();
+            controller.setUser(this.getUser());
+            Scene scene = new Scene(Rec);
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.show();

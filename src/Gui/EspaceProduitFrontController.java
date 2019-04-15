@@ -82,8 +82,6 @@ public class EspaceProduitFrontController implements Initializable {
     private produit prod;
     @FXML
     private TextField Quantitefield;
-    @FXML
-    private TextField imagefield;
     private ComboBox<User> userOwner;
     @FXML
     private DatePicker dateExp;
