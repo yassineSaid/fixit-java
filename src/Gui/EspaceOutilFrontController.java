@@ -174,6 +174,10 @@ public class EspaceOutilFrontController implements Initializable {
 
     @FXML
     private void louerAction(ActionEvent event) {
+        if(verifierDate(dateLocation.getValue(),dateRetour.getValue()))
+        {
+            erreur.setVisible(true);
+        }
     }
 
     private boolean verifierDate(LocalDate dLocation, LocalDate dRetouer) {
@@ -289,6 +293,7 @@ public class EspaceOutilFrontController implements Initializable {
                             if (list2.isEmpty()) {
                                 buttonLouer.setDisable(false);
                                 detailLocation.setVisible(true);
+                                louerAction(event);
 
                             } else {
                                 outilDejaLoue.setVisible(true);
