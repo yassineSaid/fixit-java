@@ -129,6 +129,7 @@ public class FrontIndexController implements Initializable {
 
     private void loadImage() {
         File currDir = new File(System.getProperty("user.dir", "."));
+        System.out.println(currDir.toPath().getRoot().toString());
         if (user.getImage() != null) {
             String path = "file:" + currDir.toPath().getRoot().toString() + "wamp64\\www\\fixit\\web\\uploads\\images\\user\\" + user.getImage();
             Image image = new Image(path);
@@ -195,27 +196,25 @@ public class FrontIndexController implements Initializable {
             System.out.println(ex);
         }
     }
-
-    @FXML
+     @FXML
     private void profilAction(ActionEvent event) {
-        try {
-
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/Profil.fxml"));
-            Parent Rec = fxmlLoader.load();
-            ProfilController controller = fxmlLoader.<ProfilController>getController();
-            controller.setUser(this.getUser());
-            Scene scene = new Scene(Rec);
-
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.show();
-            stage.setScene(scene);
-
-        } catch (IOException ex) {
-            System.out.println(ex);
-        }
-
+    try {
+    
+    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/Profil.fxml"));
+    Parent Rec = fxmlLoader.load();
+    ProfilController controller = fxmlLoader.<ProfilController>getController();
+    controller.setUser(this.getUser());
+    Scene scene = new Scene(Rec);
+    
+    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    stage.show();
+    stage.setScene(scene);
+    
+    } catch (IOException ex) {
+    System.out.println(ex);
     }
-
+    
+    }
     @FXML
     private void espaceAvisAction(ActionEvent event) {
         try {

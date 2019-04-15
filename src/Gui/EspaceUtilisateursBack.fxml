@@ -35,41 +35,46 @@
                         </font>
                      </Label>
                      <ImageView fx:id="photo" fitHeight="248.0" fitWidth="200.0" layoutX="14.0" layoutY="381.0" pickOnBounds="true" preserveRatio="true" />
-                     <VBox layoutX="227.0" layoutY="381.0" prefHeight="249.0" prefWidth="472.0" spacing="10.0">
+                     <VBox layoutX="227.0" layoutY="375.0" prefHeight="249.0" prefWidth="472.0" spacing="9.0">
                         <children>
                            <Label fx:id="nom" text="Nom: ">
                               <font>
-                                 <Font size="18.0" />
+                                 <Font size="17.0" />
                               </font>
                            </Label>
                            <Label fx:id="prenom" text="Prénom:">
                               <font>
-                                 <Font size="18.0" />
+                                 <Font size="17.0" />
                               </font>
                            </Label>
                            <Label fx:id="pseudo" text="Pseudo:">
                               <font>
-                                 <Font size="18.0" />
+                                 <Font size="17.0" />
                               </font>
                            </Label>
                            <Label fx:id="email" text="Email:">
                               <font>
-                                 <Font size="18.0" />
+                                 <Font size="17.0" />
+                              </font>
+                           </Label>
+                           <Label fx:id="solde" text="Solde: ">
+                              <font>
+                                 <Font size="17.0" />
                               </font>
                            </Label>
                            <Label fx:id="telephone" text="Téléphone:">
                               <font>
-                                 <Font size="18.0" />
+                                 <Font size="17.0" />
                               </font>
                            </Label>
                            <Label fx:id="adresse" text="Adresse: ">
                               <font>
-                                 <Font size="18.0" />
+                                 <Font size="17.0" />
                               </font>
                            </Label>
                            <Label fx:id="ville" text="Ville: ">
                               <font>
-                                 <Font size="18.0" />
+                                 <Font size="17.0" />
                               </font>
                            </Label>
                         </children>
@@ -84,11 +89,6 @@
                      <TextField fx:id="filterField" layoutX="836.0" layoutY="16.0" promptText="Rechercher..." />
                   </children>
                </AnchorPane>
-         </content>
-       </Tab>
-       <Tab text="Untitled Tab 2">
-         <content>
-           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
          </content>
        </Tab>
      </tabs>

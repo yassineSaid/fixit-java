@@ -74,6 +74,8 @@ public class EspaceUtilisateursBackController implements Initializable {
     private Button supprimer;
     @FXML
     private TextField filterField;
+    @FXML
+    private Label solde;
 
     /**
      * Initializes the controller class.
@@ -139,6 +141,7 @@ public class EspaceUtilisateursBackController implements Initializable {
         telephone.setVisible(false);
         adresse.setVisible(false);
         ville.setVisible(false);
+        solde.setVisible(false);
         grade.setVisible(false);
         bloquer.setVisible(false);
         supprimer.setVisible(false);
@@ -230,6 +233,8 @@ public class EspaceUtilisateursBackController implements Initializable {
     }
     
     void afficherUserAction(User newSelection) {
+        solde.setVisible(true);
+        solde.setText("Solde: "+newSelection.getSolde()+" SCoins");
         if (newSelection.getImage() != null) {
             photo.setVisible(true);
             loadImage(newSelection.getImage());
