@@ -1,5 +1,6 @@
 package Entities;
 
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class CategorieService {

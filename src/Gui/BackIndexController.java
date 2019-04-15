@@ -6,6 +6,7 @@
 package Gui;
 
 import Entities.User;
+import Services.ServiceService;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -18,6 +19,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
@@ -36,6 +40,8 @@ public class BackIndexController implements Initializable {
     private Button espaceReclamation;
     @FXML
     private Button service;
+    @FXML
+    private Button EspaceProd;
 
     /**
      * Initializes the controller class.
@@ -52,7 +58,6 @@ public class BackIndexController implements Initializable {
     public void setUser(User user) {
         this.user = user;
     }
-    
 
     @FXML
     void espaceService(ActionEvent event) {
@@ -60,8 +65,8 @@ public class BackIndexController implements Initializable {
 
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/EspaceServiceBack.fxml"));
             Parent Rec = fxmlLoader.load();
-           // EspaceServiceBackController controller = fxmlLoader.<EspaceServiceBackController>getController();
-           // controller.setUser(this.getUser());
+            // EspaceServiceBackController controller = fxmlLoader.<EspaceServiceBackController>getController();
+            // controller.setUser(this.getUser());
             Scene scene = new Scene(Rec);
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -90,7 +95,6 @@ public class BackIndexController implements Initializable {
             System.out.println(ex);
         }
     }
-    
 
     @FXML
     private void espaceReclamation(ActionEvent event) {
@@ -127,16 +131,17 @@ public class BackIndexController implements Initializable {
             System.out.println(ex);
         }
     }
+
     @FXML
-    private void logoutAction(ActionEvent event) { 
+    private void logoutAction(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/login.fxml"));
-                Parent back = fxmlLoader.load();
-                Scene scene = new Scene(back);
+            Parent back = fxmlLoader.load();
+            Scene scene = new Scene(back);
 
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                stage.show();
-                stage.setScene(scene);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.show();
+            stage.setScene(scene);
         } catch (IOException ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }

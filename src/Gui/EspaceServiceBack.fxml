@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Pagination?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -33,13 +37,6 @@
             <content>
               <AnchorPane fx:id="listCat" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="mo">
                      <children>
-                        <TableView fx:id="categorie" layoutX="21.0" layoutY="101.0" onMousePressed="#itemSelectedC" prefHeight="353.0" prefWidth="529.0" styleClass="table" stylesheets="@../Resources/style.css">
-                          <columns>
-                              <TableColumn fx:id="imageCatAff" prefWidth="209.0" text="image" />
-                            <TableColumn fx:id="nomCatAff" prefWidth="101.0" text="nom" />
-                              <TableColumn fx:id="descriptionCatAff" prefWidth="218.0" text="description" />
-                          </columns>
-                        </TableView>
                         <Button fx:id="supprimer" layoutX="868.0" layoutY="467.0" mnemonicParsing="false" onAction="#supprimerC" prefHeight="37.0" prefWidth="87.0" style="-fx-opacity: 1;" styleClass="supprimerBack" stylesheets="@../Resources/style.css" text="supprimer" textFill="RED">
                            <font>
                               <Font size="14.0" />
@@ -63,6 +60,14 @@
                            </font></Label>
                         <TextArea fx:id="descriptionModif" layoutX="776.0" layoutY="206.0" prefHeight="143.0" prefWidth="189.0" />
                         <Button fx:id="importerImage" layoutX="785.0" layoutY="386.0" mnemonicParsing="false" onAction="#importerImage" styleClass="openFile" stylesheets="@../Resources/style.css" text="Importer image" />
+                        <Pagination fx:id="pagination" layoutX="22.0" layoutY="98.0" prefHeight="421.0" prefWidth="541.0" />
+                        <TableView fx:id="categorie" layoutX="31.0" layoutY="111.0" onMousePressed="#itemSelectedC" prefHeight="353.0" prefWidth="529.0" styleClass="table" stylesheets="@../Resources/style.css">
+                           <columns>
+                              <TableColumn fx:id="imageCatAff" prefWidth="209.0" text="image" />
+                              <TableColumn fx:id="nomCatAff" prefWidth="101.0" text="nom" />
+                              <TableColumn fx:id="descriptionCatAff" prefWidth="218.0" text="description" />
+                           </columns>
+                        </TableView>
                      </children></AnchorPane>
             </content>
           </Tab>
@@ -70,17 +75,8 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="service" layoutX="98.0" layoutY="147.0" onMousePressed="#itemSelectedS" prefHeight="271.0" prefWidth="664.0" styleClass="table" stylesheets="@../Resources/style.css" visible="false">
-                          <columns>
-                            <TableColumn fx:id="imageServiceAff" prefWidth="181.0" text="Image" />
-                            <TableColumn fx:id="nomServiceAff" prefWidth="126.0" text="Nom" />
-                              <TableColumn fx:id="descriptionServiceAff" prefWidth="150.0" text="Description" />
-                              <TableColumn fx:id="categorieServiceAff" prefWidth="105.0" text="Categorie" />
-                              <TableColumn fx:id="nbrProvidersAff" prefWidth="101.0" text="Nbr Providers" />
-                          </columns>
-                        </TableView>
                         <Button fx:id="supprimerService" layoutX="544.0" layoutY="498.0" mnemonicParsing="false" onAction="#supprimerService" prefHeight="25.0" prefWidth="113.0" styleClass="supprimerBack" stylesheets="@../Resources/style.css" text="Supprimer" />
-                        <AnchorPane fx:id="ajouterServ" layoutX="98.0" prefHeight="489.0" prefWidth="802.0">
+                        <AnchorPane fx:id="ajouterServ" layoutX="98.0" prefHeight="489.0" prefWidth="802.0" visible="false">
 
                            <children>
                               <ComboBox fx:id="categoS" layoutX="543.0" layoutY="53.0" prefHeight="32.0" prefWidth="219.0" promptText="selectionner une catégorie" />
@@ -119,6 +115,17 @@
                            </font>
                         </Label>
                         <Button fx:id="modifierS" layoutX="381.0" layoutY="498.0" mnemonicParsing="false" onAction="#modifierserv" styleClass="modifierBack" stylesheets="@../Resources/style.css" text="Modifier" />
+                        <TextField fx:id="rechercherService" layoutX="762.0" layoutY="69.0" prefHeight="30.0" prefWidth="175.0" promptText="Rechercher" />
+                        <Pagination fx:id="paginationS" layoutX="107.0" layoutY="132.0" prefHeight="343.0" prefWidth="669.0" />
+                        <TableView fx:id="service" layoutX="108.0" layoutY="157.0" onMousePressed="#itemSelectedS" prefHeight="271.0" prefWidth="664.0" styleClass="table" stylesheets="@../Resources/style.css">
+                           <columns>
+                              <TableColumn fx:id="imageServiceAff" prefWidth="181.0" text="Image" />
+                              <TableColumn fx:id="nomServiceAff" prefWidth="126.0" text="Nom" />
+                              <TableColumn fx:id="descriptionServiceAff" prefWidth="150.0" text="Description" />
+                              <TableColumn fx:id="categorieServiceAff" prefWidth="105.0" text="Categorie" />
+                              <TableColumn fx:id="nbrProvidersAff" prefWidth="101.0" text="Nbr Providers" />
+                           </columns>
+                        </TableView>
                      </children>
                   </AnchorPane>
                </content>
@@ -127,21 +134,46 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="historique" layoutX="98.0" layoutY="147.0" prefHeight="271.0" prefWidth="738.0" styleClass="table" stylesheets="@../Resources/style.css">
-                           <columns>
-                              <TableColumn fx:id="imageHistoriqueAff" prefWidth="181.0" text="Image" />
-                              <TableColumn fx:id="nomHistoriqueAff" prefWidth="135.0" text="Nom" />
-                              <TableColumn fx:id="descriptionHistoriqueAff" prefWidth="197.0" text="Description" />
-                              <TableColumn fx:id="categorieHistoriqueAff" prefWidth="99.0" text="Categorie" />
-                              <TableColumn fx:id="etatHistoriqueAff" prefWidth="124.0" text="Etat" />
-                              <TableColumn fx:id="etatHistoriqueAff1" prefWidth="124.0" text="Etat" />
-                           </columns>
-                        </TableView>
-                        <Button fx:id="supprimerHistorique" layoutX="355.0" layoutY="457.0" mnemonicParsing="false" onAction="#supprimerService" prefHeight="25.0" prefWidth="113.0" styleClass="supprimerBack" stylesheets="@../Resources/style.css" text="Supprimer" />
-                        <Button fx:id="recupererHistorique" layoutX="526.0" layoutY="457.0" mnemonicParsing="false" onAction="#recupererHistorique" prefHeight="30.0" prefWidth="102.0" styleClass="ajouterBack" stylesheets="@../Resources/style.css" text="Récuperer" />
                         <Label alignment="CENTER" layoutX="256.0" layoutY="36.0" prefHeight="54.0" prefWidth="398.0" text="Historique">
                            <font>
                               <Font size="48.0" />
+                           </font>
+                        </Label>
+                        <TableView fx:id="historique" layoutX="92.0" layoutY="143.0" onMousePressed="#itemSelectedS" prefHeight="271.0" prefWidth="664.0" styleClass="table" stylesheets="@../Resources/style.css">
+                           <columns>
+                              <TableColumn fx:id="imageHistoriqueAff" prefWidth="181.0" text="Image" />
+                              <TableColumn fx:id="nomHistoriqueAff" prefWidth="126.0" text="Nom" />
+                              <TableColumn fx:id="descriptionHistoriqueAff" prefWidth="150.0" text="Description" />
+                              <TableColumn fx:id="categorieHistoriqueAff" prefWidth="105.0" text="Categorie" />
+                              <TableColumn fx:id="nbrHistoriqueAff" prefWidth="101.0" text="Nbr Providers" />
+                           </columns>
+                        </TableView>
+                        <Button fx:id="supprimerHistorique" layoutX="297.0" layoutY="472.0" mnemonicParsing="false" onAction="#supprimerHistorique" styleClass="supprimerBack" stylesheets="@../Resources/style.css" text="Supprimer" />
+                        <Button fx:id="recupererHistorique" layoutX="457.0" layoutY="472.0" mnemonicParsing="false" onAction="#recupererHistorique" styleClass="ajouterBack" stylesheets="@../Resources/style.css" text="Récuperer" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Statistiques">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <BarChart fx:id="stat" layoutX="143.0" layoutY="85.0" prefHeight="400.0" prefWidth="654.0">
+                          <xAxis>
+                            <CategoryAxis side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis side="LEFT" />
+                          </yAxis>
+                        </BarChart>
+                        <Label layoutX="411.0" layoutY="471.0" prefHeight="17.0" prefWidth="231.0" text="Catégories">
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="-5.0" layoutY="244.0" prefHeight="17.0" prefWidth="231.0" rotate="-90.0" text="Nombre de services">
+                           <font>
+                              <Font size="19.0" />
                            </font>
                         </Label>
                      </children>
