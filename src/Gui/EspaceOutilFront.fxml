@@ -18,7 +18,7 @@
   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
       <Pagination fx:id="paginationOutilFront" layoutX="443.0" layoutY="85.0" prefHeight="599.0" prefWidth="693.0" />
       <ListView fx:id="list" layoutX="467.0" layoutY="86.0" prefHeight="511.0" prefWidth="683.0" style="-fx-background-color: transparent;" />
-      <AnchorPane fx:id="location" layoutX="325.0" layoutY="90.0" prefHeight="589.0" prefWidth="943.0" visible="false">
+      <AnchorPane fx:id="location" layoutX="325.0" layoutY="90.0" prefHeight="589.0" prefWidth="943.0">
          <children>
             <ImageView fx:id="imageDetail" fitHeight="295.0" fitWidth="293.0" layoutX="657.0" layoutY="83.0" pickOnBounds="true" preserveRatio="true" />
             <ImageView fx:id="logoDetail" fitHeight="50.0" fitWidth="48.0" layoutX="657.0" layoutY="388.0" pickOnBounds="true" preserveRatio="true" />
@@ -188,7 +188,7 @@
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
-                  <CheckBox fx:id="conditions" layoutX="46.0" layoutY="314.0" mnemonicParsing="false" text="J'accepte les conditions de location">
+                  <CheckBox fx:id="conditions" layoutX="46.0" layoutY="314.0" mnemonicParsing="false" onMouseClicked="#verifierCheck" text="J'accepte les conditions de location">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -200,7 +200,7 @@
                   </Label>
                </children>
             </AnchorPane>
-            <Button fx:id="buttonLouer" layoutX="159.0" layoutY="531.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="93.0" styleClass="greenFront" stylesheets="@../Resources/style.css" text="Louer" />
+            <Button fx:id="buttonLouer" layoutX="159.0" layoutY="531.0" mnemonicParsing="false" onAction="#louerAction" prefHeight="25.0" prefWidth="93.0" styleClass="greenFront" stylesheets="@../Resources/style.css" text="Louer" />
             <Button fx:id="buttonRetour" layoutX="349.0" layoutY="531.0" mnemonicParsing="false" onAction="#retourAction" prefHeight="25.0" prefWidth="93.0" styleClass="redFront" stylesheets="@../Resources/style.css" text="Retour" />
             <Separator layoutX="646.0" layoutY="105.0" orientation="VERTICAL" prefHeight="387.0" prefWidth="9.0" />
          </children>
