@@ -8,15 +8,21 @@ package Gui;
 import Entities.User;
 import Services.UserService;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -27,6 +33,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.controlsfx.glyphfont.FontAwesome;
 
 /**
@@ -35,7 +44,7 @@ import org.controlsfx.glyphfont.FontAwesome;
  * @author Yassine
  */
 public class EspaceUtilisateursBackController implements Initializable {
-    
+
     @FXML
     private TableView<User> tableUser;
     @FXML
@@ -64,7 +73,7 @@ public class EspaceUtilisateursBackController implements Initializable {
     private Label adresse;
     @FXML
     private Label ville;
-    
+
     private User user;
     @FXML
     private Button grade;
@@ -76,6 +85,8 @@ public class EspaceUtilisateursBackController implements Initializable {
     private TextField filterField;
     @FXML
     private Label solde;
+    @FXML
+    private Button historiquePaiement;
 
     /**
      * Initializes the controller class.
@@ -88,15 +99,15 @@ public class EspaceUtilisateursBackController implements Initializable {
             setActionTab();
         });
     }
-    
+
     public User getUser() {
         return user;
     }
-    
+
     public void setUser(User user) {
         this.user = user;
     }
-    
+
     public void afficherTableAction() {
         UserService us = new UserService();
         colNom.setCellValueFactory(new PropertyValueFactory<>("lastname"));
@@ -111,10 +122,10 @@ public class EspaceUtilisateursBackController implements Initializable {
                 if (newValue == null || newValue.isEmpty()) {
                     return true;
                 }
-                
+
                 // Compare first name and last name of every person with filter text.
                 String lowerCaseFilter = newValue.toLowerCase();
-                
+
                 if (u.getFirstname().toLowerCase().contains(lowerCaseFilter)) {
                     return true; // Filter matches first name.
                 } else if (u.getLastname().toLowerCase().contains(lowerCaseFilter)) {
@@ -131,7 +142,7 @@ public class EspaceUtilisateursBackController implements Initializable {
         sortedData.comparatorProperty().bind(tableUser.comparatorProperty());
         tableUser.setItems(sortedData);
     }
-    
+
     public void refreshAction() {
         photo.setVisible(false);
         nom.setVisible(false);
@@ -145,8 +156,18 @@ public class EspaceUtilisateursBackController implements Initializable {
         grade.setVisible(false);
         bloquer.setVisible(false);
         supprimer.setVisible(false);
+        FontAwesome fs1 = new FontAwesome();
+        Node icon = fs1.create(FontAwesome.Glyph.HISTORY).color(Color.WHITE).size(17);
+        icon.setId("icon");
+        historiquePaiement.setGraphic(icon);
+        historiquePaiement.setVisible(false);
     }
-    
+
+    @FXML
+    private void historiqueAction(ActionEvent event) throws IOException {
+
+    }
+
     public void setActionTab() {
         tableUser.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             refreshAction();
@@ -228,13 +249,31 @@ public class EspaceUtilisateursBackController implements Initializable {
                     });
                 }
                 bloquer.setVisible(true);
+                historiquePaiement.setOnAction((event) -> {
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/HistoriquePaiement.fxml"));
+                    Parent root;
+                    try {
+                        root = fxmlLoader.load();
+                        HistoriquePaiementController controller = fxmlLoader.<HistoriquePaiementController>getController();
+                        controller.setUser(newSelection);
+                        Scene scene = new Scene(root);
+                        Stage stage = new Stage();
+                        stage.initModality(Modality.WINDOW_MODAL);
+                        stage.initOwner(((Node) event.getSource()).getScene().getWindow());
+                        stage.initStyle(StageStyle.UNDECORATED);
+                        stage.setScene(scene);
+                        stage.showAndWait();
+                    } catch (IOException ex) {
+                        Logger.getLogger(EspaceUtilisateursBackController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                });
             }
         });
     }
-    
+
     void afficherUserAction(User newSelection) {
         solde.setVisible(true);
-        solde.setText("Solde: "+newSelection.getSolde()+" SCoins");
+        solde.setText("Solde: " + newSelection.getSolde() + " SCoins");
         if (newSelection.getImage() != null) {
             photo.setVisible(true);
             loadImage(newSelection.getImage());
@@ -267,8 +306,9 @@ public class EspaceUtilisateursBackController implements Initializable {
             ville.setVisible(true);
             ville.setText("Ville: " + newSelection.getCity());
         }
+        historiquePaiement.setVisible(true);
     }
-    
+
     private void loadImage(String imageUser) {
         File currDir = new File(System.getProperty("user.dir", "."));
         if (imageUser != null) {
@@ -279,25 +319,25 @@ public class EspaceUtilisateursBackController implements Initializable {
             if (img != null) {
                 double w = 0;
                 double h = 0;
-                
+
                 double ratioX = photo.getFitWidth() / img.getWidth();
                 double ratioY = photo.getFitHeight() / img.getHeight();
-                
+
                 double reducCoeff = 0;
                 if (ratioX >= ratioY) {
                     reducCoeff = ratioY;
                 } else {
                     reducCoeff = ratioX;
                 }
-                
+
                 w = img.getWidth() * reducCoeff;
                 h = img.getHeight() * reducCoeff;
-                
+
                 photo.setX((photo.getFitWidth() - w) / 2);
                 photo.setY((photo.getFitHeight() - h) / 2);
-                
+
             }
         }
     }
-    
+
 }

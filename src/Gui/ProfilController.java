@@ -37,6 +37,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -50,6 +51,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
@@ -61,7 +63,6 @@ import javafx.stage.StageStyle;
  *
  * @author Yassine
  */
-
 public class ProfilController implements Initializable {
 
     @FXML
@@ -216,6 +217,14 @@ public class ProfilController implements Initializable {
     private ComboBox<CategorieService> categorieProposition;
     @FXML
     private Button confirmerProposition;
+    @FXML
+    private TextField adresse;
+    @FXML
+    private TextField ville;
+    @FXML
+    private TextField zip;
+    @FXML
+    private TextField telephone;
 
     public User getUser() {
         return user;
@@ -228,39 +237,73 @@ public class ProfilController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Platform.runLater(() -> {
-            
-                
-               frontIndexController.setUser(user);
-                frontIndexController.initialize(null, null);
-                frontIndexController.getProfil().setStyle("-fx-background-color: #f4f4f4");
-                username.setText(user.getUsername());
-                nom.setText(user.getLastname());
-                prenom.setText(user.getFirstname());
-                email.setText(user.getEmail());
-                heureDebut.set24HourView(true);
-                heureFin.set24HourView(true);
-                solde.setText("Vous avez " + String.valueOf(user.getSolde()) + " SCoins sur votre compte");
-                loadImage();
-                afficherLanguesAction();
-                afficherHorraireAction();
-                afficherReposAction();
-                ServiceUserService r = new ServiceUserService();
-                ObservableList<ServiceUser> list = FXCollections.observableArrayList();
-                list = r.afficherServiceUser(this.user.getId());
-                mesServices.setItems(list);
-                
-           
- 
+
+            frontIndexController.setUser(user);
+            frontIndexController.initialize(null, null);
+            frontIndexController.getProfil().setStyle("-fx-background-color: #f4f4f4");
+            refreshUser();
+            afficherLanguesAction();
+            afficherHorraireAction();
+            afficherReposAction();
+            ServiceUserService r = new ServiceUserService();
+            ObservableList<ServiceUser> list = FXCollections.observableArrayList();
+            list = r.afficherServiceUser(this.user.getId());
+            mesServices.setItems(list);
+
         });
     }
 
     @FXML
     private void modifierAction(ActionEvent event) {
-        UserService us = new UserService();
-        us.modifierNomPrenom(user, nom.getText(), prenom.getText());
-        user = us.connect(user.getUsername());
-        frontIndexController.setUser(user);
-        frontIndexController.initialize(null, null);
+        String erreur="";
+        boolean e=false;
+        if (nom.getText().length()==0){
+            e=true;
+            erreur+="Le champ nom ne peut pas rester vide.";
+        }
+        if (prenom.getText().length()==0){
+            e=true;
+            erreur+="\nLe champ prenom ne peut pas rester vide.";
+        }
+        if (e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Modification");
+            alert.setHeaderText(null);
+            alert.setContentText(erreur);
+            alert.showAndWait();
+        }
+        else{
+            UserService us = new UserService();
+            us.modifierUser(user, nom.getText(), prenom.getText(),adresse.getText(),ville.getText(),zip.getText(),Integer.parseInt(telephone.getText()));
+            user = us.connect(user.getUsername());
+            frontIndexController.setUser(user);
+            frontIndexController.initialize(null, null);
+            refreshUser();
+        }
+    }
+    @FXML
+    private void changerAction(KeyEvent event) {
+        TextField tf = (TextField) event.getSource();
+        char ch = event.getCharacter().charAt(0);
+        if (!Character.isDigit(ch)) {
+            event.consume();
+        }
+    }
+
+    @FXML
+    void refreshUser() {
+        username.setText(user.getUsername());
+        nom.setText(user.getLastname());
+        prenom.setText(user.getFirstname());
+        email.setText(user.getEmail());
+        adresse.setText(user.getAddress());
+        zip.setText(user.getZip_code());
+        ville.setText(user.getCity());
+        telephone.setText(String.valueOf(user.getPhone()));
+        heureDebut.set24HourView(true);
+        heureFin.set24HourView(true);
+        solde.setText("Vous avez " + String.valueOf(user.getSolde()) + " SCoins sur votre compte");
+        loadImage();
     }
 
     private void afficherLanguesAction() {
@@ -270,7 +313,7 @@ public class ProfilController implements Initializable {
         table.setItems(uls.getUserLangue(user));
         for (Langue l : table.getItems()) {
             l.getSupprimer().setOnAction(this::supprimerAction);
-            
+
         }
         listLangues.setItems(uls.getLangues(user));
     }
@@ -472,10 +515,8 @@ public class ProfilController implements Initializable {
                 erreur = true;
             } else if (!uls.checkHorraire(user, java.sql.Time.valueOf(heureDebut.getValue()), java.sql.Time.valueOf(heureFin.getValue()), listJours.getValue().getId())) {
                 erreurHorraire.setText("Vérifiez les heures");
-                erreur=true;
-            }
-            else 
-            {
+                erreur = true;
+            } else {
                 erreurHorraire.setText("");
             }
         }
@@ -520,7 +561,7 @@ public class ProfilController implements Initializable {
                     File f = new File(currDir.toPath().getRoot().toString() + "wamp64\\www\\fixit\\web\\uploads\\images\\user\\" + user.getImage());
                     f.delete();
                 }
-                filename=String.valueOf(user.getId())+"."+u.getFileExtension(file);
+                filename = String.valueOf(user.getId()) + "." + u.getFileExtension(file);
                 u.uploadNew(file, path, filename);
                 us.ajouterImage(filename, user.getId());
                 user = us.connect(user.getUsername());
@@ -535,8 +576,9 @@ public class ProfilController implements Initializable {
             System.out.println("FICHIER erroné");
         }
     }
+
     @FXML
-    private void historiqueAction(ActionEvent event) throws IOException{
+    private void historiqueAction(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/HistoriquePaiement.fxml"));
         Parent root = fxmlLoader.load();
         HistoriquePaiementController controller = fxmlLoader.<HistoriquePaiementController>getController();
@@ -550,68 +592,64 @@ public class ProfilController implements Initializable {
         stage.showAndWait();
     }
 
-    
     @FXML
     private void ajouterUnService(ActionEvent event) {
         mesServices.setVisible(false);
         ajouterUnService.setVisible(false);
         proposerUnService.setVisible(false);
         addService.setVisible(true);
-        
-            ObservableList<CategorieService> list = FXCollections.observableArrayList();
-            CategorieServiceService r = new CategorieServiceService();
-            list = r.getALLCategorie();
-            categorie.setItems(list);
-            
+
+        ObservableList<CategorieService> list = FXCollections.observableArrayList();
+        CategorieServiceService r = new CategorieServiceService();
+        list = r.getALLCategorie();
+        categorie.setItems(list);
+
     }
 
     @FXML
     private void proposerUnService(ActionEvent event) {
-        
+
         mesServices.setVisible(false);
         ajouterUnService.setVisible(false);
         proposerUnService.setVisible(false);
         addService.setVisible(false);
         proposerS.setVisible(true);
-        
-            ObservableList<CategorieService> list = FXCollections.observableArrayList();
-            CategorieServiceService r = new CategorieServiceService();
-            list = r.getALLCategorie();
-            categorieProposition.setItems(list);
+
+        ObservableList<CategorieService> list = FXCollections.observableArrayList();
+        CategorieServiceService r = new CategorieServiceService();
+        list = r.getALLCategorie();
+        categorieProposition.setItems(list);
     }
 
     @FXML
     private void ajouterS(ActionEvent event) {
-        ServiceUser s= new ServiceUser();
+        ServiceUser s = new ServiceUser();
         ServiceUserService su = new ServiceUserService();
         s.setDescription(description.getText());
         s.setPrix(Integer.parseInt(prix.getText()));
         s.setIdService(serviceC.getValue().getId());
         s.setIdUser(this.user.getId());
         su.ajouterServiceUser(s);
-        
+
     }
 
     @FXML
     private void cat(ActionEvent event) {
-        
-            ObservableList<Service> listS = FXCollections.observableArrayList();
-            ServiceService s = new  ServiceService();
-            listS = s.getAllServiceC(categorie.getValue().getId());
-            serviceC.setItems(listS);
+
+        ObservableList<Service> listS = FXCollections.observableArrayList();
+        ServiceService s = new ServiceService();
+        listS = s.getAllServiceC(categorie.getValue().getId());
+        serviceC.setItems(listS);
     }
 
     @FXML
     private void confirmerProposition(ActionEvent event) {
-        ServicesProposes s= new ServicesProposes();
-        ServicesProposesService sp=new ServicesProposesService();
+        ServicesProposes s = new ServicesProposes();
+        ServicesProposesService sp = new ServicesProposesService();
         s.setNom(nomProposition.getText());
         s.setDescription(descriptionProposition.getText());
         s.setCategorieService(categorieProposition.getValue().toString());
         sp.ajouterService(s);
     }
 
-    
-
-    
 }

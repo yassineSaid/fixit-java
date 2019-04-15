@@ -58,6 +58,10 @@ public class UserService {
                 U.setUsername(rs.getString("username"));
                 U.setImage(rs.getString("image"));
                 U.setSolde(rs.getInt("solde"));
+                U.setAddress(rs.getString("address"));
+                U.setCity(rs.getString("city"));
+                U.setZip_code(rs.getString("zip_code"));
+                U.setPhone(rs.getInt("phone"));
                 if (rs.getString("roles").contains("ADMIN")) {
                     U.setRoles("admin");
                 } else {
@@ -72,12 +76,16 @@ public class UserService {
         return null;
     }
 
-    public void modifierNomPrenom(User U, String nom, String prenom) {
+    public void modifierUser(User U, String nom, String prenom,String adresse,String ville,String zip,int telephone) {
         try {
-            PreparedStatement pt = C.prepareStatement("UPDATE user SET firstname=?,lastname=? WHERE id=?");
+            PreparedStatement pt = C.prepareStatement("UPDATE user SET firstname=?,lastname=?,address=?,city=?,zip_code=?,phone=? WHERE id=?");
             pt.setString(1, prenom);
             pt.setString(2, nom);
-            pt.setInt(3, U.getId());
+            pt.setString(3, adresse);
+            pt.setString(4, ville);
+            pt.setString(5, zip);
+            pt.setInt(6, telephone);
+            pt.setInt(7, U.getId());
             pt.execute();
         } catch (SQLException e) {
             System.out.println(e.getCause());
