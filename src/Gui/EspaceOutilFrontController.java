@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -115,6 +116,12 @@ public class EspaceOutilFrontController implements Initializable {
     private Label jour;
     @FXML
     private Pagination paginationOutilFront;
+    @FXML
+    private Label solde;
+    @FXML
+    private ImageView scoin12;
+    @FXML
+    private Button acheter;
 
     public User getUser() {
         return user;
@@ -129,16 +136,19 @@ public class EspaceOutilFrontController implements Initializable {
         Platform.runLater(() -> {
             frontIndexController.setUser(user);
             frontIndexController.initialize(null, null);
-            loadDataFromDatabase();
-            list.setCellFactory(lv -> new Poules());
-            list.setVisible(true);
-            paginationOutilFront.setVisible(true);
-            location.setVisible(false);
-            outilDejaLoue.setVisible(false);
-            outilEpuise.setVisible(false);
-            erreur.setVisible(false);
-            buttonLouer.setDisable(true);
+            frontIndexController.getEspaceOut().setStyle("-fx-background-color: #f4f4f4");
+
         });
+        loadDataFromDatabase();
+        list.setCellFactory(lv -> new Poules());
+        list.setVisible(true);
+        paginationOutilFront.setVisible(true);
+        location.setVisible(false);
+        outilDejaLoue.setVisible(false);
+        outilEpuise.setVisible(false);
+        erreur.setVisible(false);
+        acheter.setVisible(false);
+        buttonLouer.setDisable(true);
     }
 
     private Node createPage(int pageIndex) {
@@ -174,42 +184,147 @@ public class EspaceOutilFrontController implements Initializable {
 
     @FXML
     private void louerAction(ActionEvent event) {
-        if(verifierDate(dateLocation.getValue(),dateRetour.getValue()))
-        {
-            erreur.setVisible(true);
+        verifierCheck();
+
+    }
+
+    private boolean verifierDate(LocalDate dLocation, LocalDate dRetour) {
+
+        java.sql.Date dL = fromDateToSQLDate(dLocation);
+        java.sql.Date dR = fromDateToSQLDate(dRetour);
+        Date ld = new Date();
+        if (dR.compareTo(dL) >= 0) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    private java.sql.Date fromDateToSQLDate(LocalDate date) {
+        try {
+            String d1 = date.toString();
+            SimpleDateFormat formatter1 = new SimpleDateFormat("yyyy-MM-dd");
+            Date dateL;
+            dateL = formatter1.parse(d1);
+            java.sql.Date dL = new java.sql.Date(dateL.getTime());
+            return dL;
+        } catch (ParseException ex) {
+            Logger.getLogger(EspaceOutilFrontController.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+
+    }
+
+    private int differenceEntreDeuxDatesEnJours(LocalDate date1, LocalDate date2) {
+
+        try {
+            String d1 = date1.toString();
+            SimpleDateFormat formatter1 = new SimpleDateFormat("yyyy-MM-dd");
+            Date date11;
+            date11 = formatter1.parse(d1);
+            String d2 = date2.toString();
+            SimpleDateFormat formatter2 = new SimpleDateFormat("yyyy-MM-dd");
+            Date date22;
+            date22 = formatter1.parse(d2);
+            int resultat = (int) ((date22.getTime() - date11.getTime()) / (1000 * 60 * 60 * 24));
+            return resultat;
+        } catch (ParseException ex) {
+            Logger.getLogger(EspaceOutilFrontController.class.getName()).log(Level.SEVERE, null, ex);
+            return 0;
+        }
+
+    }
+
+    private int calculerprix() {
+        int prix;
+        if (Integer.parseInt(jour.getText()) >= differenceEntreDeuxDatesEnJours(dateLocation.getValue(), dateRetour.getValue())) {
+            return prix = differenceEntreDeuxDatesEnJours(dateLocation.getValue(), dateRetour.getValue()) * Integer.parseInt(prix1.getText());
+        } else {
+            return prix = differenceEntreDeuxDatesEnJours(dateLocation.getValue(), dateRetour.getValue()) * Integer.parseInt(prix2.getText());
         }
     }
 
-    private boolean verifierDate(LocalDate dLocation, LocalDate dRetouer) {
-        try {
-        String d1 = dLocation.toString();
-        SimpleDateFormat formatter1 = new SimpleDateFormat("yyyy-MM-dd");
-        Date dateL;
-        dateL = formatter1.parse(d1);
-        java.sql.Date dL = new java.sql.Date(dateL.getTime());
-        String d2 = dLocation.toString();
-        SimpleDateFormat formatter2 = new SimpleDateFormat("yyyy-MM-dd");
-        Date dateR;
-        dateR = formatter1.parse(d2);
-        java.sql.Date dR = new java.sql.Date(dateR.getTime());
-            System.out.println(dR.compareTo(dL));
-            return true;
-            /*if(dR.compareTo(dL)>0)
-            {
-            
-            }*/
-        } catch (ParseException ex) {
-        Logger.getLogger(EspaceOutilFrontController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return false;
-    }
     @FXML
     private boolean verifierCheck() {
-        if(conditions.isSelected())
-        {
+        if (conditions.isSelected()) {
+            erreur.setVisible(false);
+            erreur.setText("vous devez accepté nos conditions!");
+            conditions.setStyle("-fx-border-color: transparent;");
             return true;
+        } else {
+            erreur.setVisible(true);
+            erreur.setText("vous devez accepté nos conditions!");
+            conditions.setStyle("-fx-border-color: red;");
+            return false;
         }
-        return false;
+
+    }
+
+    @FXML
+    private boolean controleSaisieDate(ActionEvent event) {
+        boolean test=false;
+        
+        if (dateRetour.getValue() != null) {
+            try {
+            Calendar c = Calendar.getInstance();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                c.setTime(sdf.parse(dateRetour.getValue().toString()));
+                c.add(Calendar.DAY_OF_MONTH, 3); 
+            limite1.setText(fromDateToSQLDate(dateRetour.getValue()).toString());
+            limite2.setText(sdf.format(c.getTime()));
+            } catch (ParseException ex) {
+                Logger.getLogger(EspaceOutilFrontController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (dateLocation.getValue() != null) {
+         LocalDate now = LocalDate.now();
+            if(!verifierDate(now, dateLocation.getValue()))
+            {
+            
+            erreur.setVisible(true);
+            erreur.setText("Vous devez choisir une date supérieure à celle d'ajourd'hui !");
+            }
+            else{
+            erreur.setVisible(false);
+            }
+            
+        }
+        if (dateLocation.getValue() != null && dateRetour.getValue() != null) {
+            
+            if (!verifierDate(dateLocation.getValue(), dateRetour.getValue())) {
+                erreur.setVisible(true);
+                erreur.setText("Date invalide!");
+                dateLocation.setStyle("-fx-border-color: red;");
+                dateRetour.setStyle("-fx-border-color: red;");
+                
+            } else {
+                erreur.setVisible(false);
+                dateLocation.setStyle("-fx-border-color: transparent;");
+                dateRetour.setStyle("-fx-border-color: transparent;");
+                prixTotal.setText(Integer.toString(calculerprix()));
+                if (user.getSolde() >= (calculerprix() + 10)) {
+                    prixTotal.setStyle("-fx-text-fill: #08941d;");
+                    erreur.setVisible(false);
+                    test=true;
+                } else if ((user.getSolde() >= calculerprix()) && (user.getSolde() < (calculerprix() + 10))) {
+                    prixTotal.setStyle("-fx-text-fill: #f81919;");
+                    erreur.setVisible(true);
+                    erreur.setText("Il faut qu'il vous reste au moins 10 Scoins !");
+                    acheter.setVisible(true);
+                } else {
+                    prixTotal.setStyle("-fx-text-fill: #f81919;");
+                    erreur.setVisible(true);
+                    erreur.setText("Solde insuffisant!");
+                    acheter.setVisible(true);
+                }
+            }
+        }
+        return test;
+    }
+
+    @FXML
+    private void acheterScoin(ActionEvent event) {
     }
 
     public class Poules extends ListCell<Outil> {
@@ -272,6 +387,7 @@ public class EspaceOutilFrontController implements Initializable {
                         logoDetailText.setText(item.getNomCategorie());
                         adresseDetailText.setText(item.getAdresse() + "  ," + item.getVille());
                         scoinDetailText.setText(Integer.toString(item.getPrix()));
+                        solde.setText(Integer.toString(user.getSolde()));
                         jour.setText(Integer.toString(item.getDureeMaximale()));
                         prix1.setText(Integer.toString(item.getPrix()));
                         int nouveauPrix = (int) (item.getPrix() * 1.25);
