@@ -49,7 +49,21 @@
 }
 .supprimer:hover
 {
-    -fx-background-color: #ff7272;
+    -fx-background-color: #1866e2;
+    -fx-background-radius: 8,7,6;
+    -fx-text-fill: white;
+    -fx-text-alignment: center;
+}
+.historiquePaiement
+{
+    -fx-background-color: #3882f7;
+    -fx-background-radius: 8,7,6;
+    -fx-text-fill: white;
+    -fx-text-alignment: center;
+}
+.historiquePaiement:hover
+{
+    -fx-background-color: #2f68c4;
     -fx-background-radius: 8,7,6;
     -fx-text-fill: white;
 }
