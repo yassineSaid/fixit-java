@@ -64,6 +64,16 @@ public class OutilService {
         } catch (SQLException ex) {
         }
     }
+    
+    public void updateQuantie(Outil O) {
+        try {
+            PreparedStatement pt = c.prepareStatement("update outils set  Quantite=?  where id=? ");
+            pt.setInt(1, (O.getQuantite()-1));
+            pt.setInt(2, O.getId());
+            pt.execute();
+        } catch (SQLException ex) {
+        }
+    }
     public CategorieOutil getCategorieOutil(int Id)
         {
             try
