@@ -34,6 +34,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -63,6 +64,10 @@ public class FrontAccueilController implements Initializable {
     private Pagination paginator;
     @FXML
     private ListView<Avis> listAvis;
+    @FXML
+    private AnchorPane recherchePane;
+    @FXML
+    private AnchorPane accueilPane;
 
     public User getUser() {
         return user;
@@ -77,33 +82,43 @@ public class FrontAccueilController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-        
+        accueilPane.setVisible(true);
+        recherchePane.setVisible(false);
         Platform.runLater(() -> {
+            System.out.println(user.getId());
             frontIndexController.setUser(user);
-            frontIndexController.initialize(null, null);
+            frontIndexController.refresh();
             rechercher.textProperty().addListener((observable, oldValue, newValue) -> {
+                afficherUsers();
+            });
+            rechercher.focusedProperty().addListener((ov, oldV, newV) -> {
+                if (newV) {
+                    accueilPane.setVisible(false);
+                    recherchePane.setVisible(true);
+                    afficherUsers();
+                } 
+            });
             afficherUsers();
-           
+            afficherAvis();
         });
-             AvisService avisServ = new AvisService();
+    }
+
+    public void afficherAvis() {
+        AvisService avisServ = new AvisService();
         ObservableList<Avis> list = FXCollections.observableArrayList();
         list = avisServ.top5();
-            paginator.setMaxPageIndicatorCount(5);
-            paginator.setPageCount(list.size());
-            Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(3), event -> {
-            int pos = (paginator.getCurrentPageIndex()+1) % paginator.getPageCount();
+        paginator.setMaxPageIndicatorCount(5);
+        paginator.setPageCount(list.size());
+        Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(3), event -> {
+            int pos = (paginator.getCurrentPageIndex() + 1) % paginator.getPageCount();
             paginator.setCurrentPageIndex(pos);
         }));
         fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
         fiveSecondsWonder.play();
-             getAvis();
-            listAvis.setCellFactory(v -> new Poules());
-            afficherUsers();
-        });
+        getAvis();
+        listAvis.setCellFactory(v -> new Poules());
     }
 
-    @FXML
     public void afficherUsers() {
         final String IDLE_STYLE = " -fx-background-color:  rgba(226,226,226,0.7); -fx-background-radius: 8,7,6;";
         final String HOVERED_STYLE = "-fx-background-color: rgba(255,255,255,0.3);";
@@ -154,7 +169,6 @@ public class FrontAccueilController implements Initializable {
 
     }
 
-    @FXML
     private ImageView loadImage(String imageUser) {
         File currDir = new File(System.getProperty("user.dir", "."));
         if (imageUser != null) {
@@ -189,43 +203,39 @@ public class FrontAccueilController implements Initializable {
         }
         return null;
     }
-    
-    public void getAvis()
-    {
-        
+
+    public void getAvis() {
+
         AvisService avisServ = new AvisService();
         ObservableList<Avis> list = FXCollections.observableArrayList();
         list = avisServ.top5();
         listAvis.setItems(list);
         paginator.setPageFactory(this::createPage);
     }
-    
+
     private Node createPage(int pageIndex) {
-        
+
         AvisService avisServ = new AvisService();
         ObservableList<Avis> list = FXCollections.observableArrayList();
         list = avisServ.top5();
         int fromIndex;
         int toIndex;
-        if(pageIndex==list.size())
-        {
-            pageIndex=0;
+        if (pageIndex == list.size()) {
+            pageIndex = 0;
             fromIndex = pageIndex * 1;
-            toIndex = Math.min(fromIndex +1 , list.size());
-        }
-        else
-        {
-            pageIndex=paginator.getCurrentPageIndex();
+            toIndex = Math.min(fromIndex + 1, list.size());
+        } else {
+            pageIndex = paginator.getCurrentPageIndex();
             fromIndex = pageIndex * 1;
-            toIndex = Math.min(fromIndex +1 , list.size());
+            toIndex = Math.min(fromIndex + 1, list.size());
         }
-       
+
         listAvis.setItems(FXCollections.observableArrayList(list.subList(fromIndex, toIndex)));
 
         return listAvis;
     }
-    
-     public class Poules extends ListCell<Avis> {
+
+    public class Poules extends ListCell<Avis> {
 
         public Poules() {
         }
@@ -239,24 +249,23 @@ public class FrontAccueilController implements Initializable {
                 satisfaction.setStyle("-fx-font-size: 23 arial;");
                 description.setStyle("-fx-font-size: 14 arial;");
                 userName.setStyle("-fx-font-size: 18 arial;");
-               Rating rate= new Rating();
-               rate.setRating(item.getNote());
-               EventHandler<MouseEvent> handler = MouseEvent::consume;
-        rate.addEventFilter(MouseEvent.ANY, handler);
-               rate.setMaxHeight(1);
-                VBox vBox = new VBox(satisfaction,userName, description);
+                Rating rate = new Rating();
+                rate.setRating(item.getNote());
+                EventHandler<MouseEvent> handler = MouseEvent::consume;
+                rate.addEventFilter(MouseEvent.ANY, handler);
+                rate.setMaxHeight(1);
+                VBox vBox = new VBox(satisfaction, userName, description);
                 vBox.setStyle("-fx-font-color: transparent;");
                 vBox.setSpacing(10);
                 Text txt = new Text("");
-                VBox vBox1 = new VBox(txt,rate);
+                VBox vBox1 = new VBox(txt, rate);
                 vBox1.setStyle("-fx-font-color: transparent;");
                 vBox1.setSpacing(15);
-                    HBox hBox = new HBox(vBox1, vBox);
-                    hBox.setStyle("-fx-font-color: transparent;");
-                    hBox.setSpacing(50);
-                    
-                    setGraphic(hBox);
-                
+                HBox hBox = new HBox(vBox1, vBox);
+                hBox.setStyle("-fx-font-color: transparent;");
+                hBox.setSpacing(50);
+
+                setGraphic(hBox);
 
                 // hBox.setStyle("-fx-alignment: center ;");
                 //hBox.gets
