@@ -190,6 +190,38 @@ public class UserOutilService {
                  return null;
         
     }
+     public ObservableList<UserOutil> afficherOutilFront(User user) 
+             {
+                 try
+                 {
+                     ObservableList list = FXCollections.observableArrayList();
+        PreparedStatement pt = c.prepareStatement("SELECT * FROM user_outil  where idUser=?");
+            pt.setInt(1, user.getId());
+        ResultSet rs = pt.executeQuery();
+        while (rs.next()) {
+            UserOutil uo = new UserOutil();
+            User u = new User();
+            u=this.getUser(rs.getInt(4));
+            Outil o = new Outil();
+            o=this.getOutil(rs.getInt(5));
+             Image image1 = new Image("file:/wamp64/www/fixit/web/uploads/images/Outil/"+o.getImage(), 150, 150, false, false);
+            uo.setDateLocation(rs.getDate(1));
+            uo.setDateRetour(rs.getDate(2));
+            uo.setTotal(rs.getInt(3));
+            uo.setUser(u);
+            uo.setOutil(o);
+            uo.setIm(new ImageView(image1));
+            list.add(uo);
+        }
+        return list;
+                 }
+                 catch(SQLException ex)
+                 {
+                     System.out.println(ex);
+                 }
+                 return null;
+        
+    }
     
 
 }
