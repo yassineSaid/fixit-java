@@ -59,7 +59,8 @@ public class FrontAccueilController implements Initializable {
     @FXML
     private TextField rechercher;
 
-    User user;
+    private User user;
+    private String rech;
     @FXML
     private Pagination paginator;
     @FXML
@@ -77,6 +78,15 @@ public class FrontAccueilController implements Initializable {
         this.user = user;
     }
 
+    public String getRech() {
+        return rech;
+    }
+
+    public void setRech(String rech) {
+        this.rech = rech;
+    }
+    
+
     /**
      * Initializes the controller class.
      */
@@ -91,6 +101,7 @@ public class FrontAccueilController implements Initializable {
             frontIndexController.getAccueil().setStyle("-fx-background-color: #f4f4f4");
             rechercher.textProperty().addListener((observable, oldValue, newValue) -> {
                 afficherUsers();
+                rech=rechercher.getText();
             });
             rechercher.focusedProperty().addListener((ov, oldV, newV) -> {
                 if (newV) {
@@ -150,6 +161,7 @@ public class FrontAccueilController implements Initializable {
                             Parent Rec = fxmlLoader.load();
                             ProfilUserController controller = fxmlLoader.<ProfilUserController>getController();
                             controller.setUser(user);
+                            controller.setRech(rech);
                             controller.setId(v.getId());
                             Scene scene = new Scene(Rec);
 
