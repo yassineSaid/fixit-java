@@ -18,7 +18,7 @@
   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
       <Pagination fx:id="paginationOutilFront" layoutX="443.0" layoutY="85.0" prefHeight="599.0" prefWidth="693.0" />
       <ListView fx:id="list" layoutX="467.0" layoutY="86.0" prefHeight="511.0" prefWidth="683.0" style="-fx-background-color: transparent;" />
-      <AnchorPane fx:id="location" layoutX="325.0" layoutY="90.0" prefHeight="589.0" prefWidth="943.0">
+      <AnchorPane fx:id="location" layoutX="325.0" layoutY="53.0" prefHeight="619.0" prefWidth="950.0">
          <children>
             <ImageView fx:id="imageDetail" fitHeight="295.0" fitWidth="293.0" layoutX="657.0" layoutY="83.0" pickOnBounds="true" preserveRatio="true" />
             <ImageView fx:id="logoDetail" fitHeight="50.0" fitWidth="48.0" layoutX="657.0" layoutY="388.0" pickOnBounds="true" preserveRatio="true" />
@@ -64,7 +64,7 @@
                   <Font name="System Bold" size="39.0" />
                </font>
             </Label>
-            <AnchorPane fx:id="detailLocation" layoutX="4.0" layoutY="131.0" prefHeight="387.0" prefWidth="635.0">
+            <AnchorPane fx:id="detailLocation" layoutX="4.0" layoutY="131.0" prefHeight="420.0" prefWidth="635.0">
                <children>
                   <Label fx:id="outilDejaLoue" layoutX="43.0" layoutY="13.0" text="Vous Avez Déjà Loué Cet Outil" textFill="#f81919">
                      <font>
@@ -193,15 +193,30 @@
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </CheckBox>
-                  <Label fx:id="erreur" layoutX="183.0" layoutY="354.0" text="Label" textFill="#f81919">
+                  <Label fx:id="erreur" layoutX="183.0" layoutY="345.0" text="Label" textFill="#f81919">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="erreur1" layoutX="183.0" layoutY="365.0" text="Label" textFill="#f81919">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="erreur2" layoutX="183.0" layoutY="385.0" text="Label" textFill="#f81919">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="erreur3" layoutX="183.0" layoutY="405.0" text="Label" textFill="#f81919">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
                </children>
             </AnchorPane>
-            <Button fx:id="buttonLouer" layoutX="159.0" layoutY="531.0" mnemonicParsing="false" onAction="#louerAction" prefHeight="25.0" prefWidth="93.0" styleClass="greenFront" stylesheets="@../Resources/style.css" text="Louer" />
-            <Button fx:id="buttonRetour" layoutX="349.0" layoutY="531.0" mnemonicParsing="false" onAction="#retourAction" prefHeight="25.0" prefWidth="93.0" styleClass="redFront" stylesheets="@../Resources/style.css" text="Retour" />
+            <Button fx:id="buttonLouer" layoutX="159.0" layoutY="566.0" mnemonicParsing="false" onAction="#louerAction" prefHeight="25.0" prefWidth="93.0" styleClass="greenFront" stylesheets="@../Resources/style.css" text="Louer" />
+            <Button fx:id="buttonRetour" layoutX="349.0" layoutY="566.0" mnemonicParsing="false" onAction="#retourAction" prefHeight="25.0" prefWidth="93.0" styleClass="redFront" stylesheets="@../Resources/style.css" text="Retour" />
             <Separator layoutX="646.0" layoutY="105.0" orientation="VERTICAL" prefHeight="387.0" prefWidth="9.0" />
             <Label layoutX="384.0" layoutY="105.0" text="Vous avez">
                <font>

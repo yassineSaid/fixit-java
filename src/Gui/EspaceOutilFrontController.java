@@ -122,6 +122,12 @@ public class EspaceOutilFrontController implements Initializable {
     private ImageView scoin12;
     @FXML
     private Button acheter;
+    @FXML
+    private Label erreur1;
+    @FXML
+    private Label erreur2;
+    @FXML
+    private Label erreur3;
 
     public User getUser() {
         return user;
@@ -147,6 +153,9 @@ public class EspaceOutilFrontController implements Initializable {
         outilDejaLoue.setVisible(false);
         outilEpuise.setVisible(false);
         erreur.setVisible(false);
+        erreur1.setVisible(false);
+        erreur2.setVisible(false);
+        erreur3.setVisible(false);
         acheter.setVisible(false);
         buttonLouer.setDisable(true);
     }
@@ -248,13 +257,12 @@ public class EspaceOutilFrontController implements Initializable {
     @FXML
     private boolean verifierCheck() {
         if (conditions.isSelected()) {
-            erreur.setVisible(false);
-            erreur.setText("vous devez accepté nos conditions!");
+            erreur2.setVisible(false);
             conditions.setStyle("-fx-border-color: transparent;");
             return true;
         } else {
-            erreur.setVisible(true);
-            erreur.setText("vous devez accepté nos conditions!");
+            erreur2.setVisible(true);
+            erreur2.setText("vous devez accepté nos conditions!");
             conditions.setStyle("-fx-border-color: red;");
             return false;
         }
@@ -282,11 +290,11 @@ public class EspaceOutilFrontController implements Initializable {
             if(!verifierDate(now, dateLocation.getValue()))
             {
             
-            erreur.setVisible(true);
-            erreur.setText("Vous devez choisir une date supérieure à celle d'ajourd'hui !");
+            erreur3.setVisible(true);
+            erreur3.setText("Vous devez choisir une date supérieure à celle d'ajourd'hui !");
             }
             else{
-            erreur.setVisible(false);
+            erreur3.setVisible(false);
             }
             
         }
@@ -305,17 +313,17 @@ public class EspaceOutilFrontController implements Initializable {
                 prixTotal.setText(Integer.toString(calculerprix()));
                 if (user.getSolde() >= (calculerprix() + 10)) {
                     prixTotal.setStyle("-fx-text-fill: #08941d;");
-                    erreur.setVisible(false);
+                    erreur1.setVisible(false);
                     test=true;
                 } else if ((user.getSolde() >= calculerprix()) && (user.getSolde() < (calculerprix() + 10))) {
                     prixTotal.setStyle("-fx-text-fill: #f81919;");
-                    erreur.setVisible(true);
-                    erreur.setText("Il faut qu'il vous reste au moins 10 Scoins !");
+                    erreur1.setVisible(true);
+                    erreur1.setText("Il faut qu'il vous reste au moins 10 Scoins !");
                     acheter.setVisible(true);
                 } else {
                     prixTotal.setStyle("-fx-text-fill: #f81919;");
-                    erreur.setVisible(true);
-                    erreur.setText("Solde insuffisant!");
+                    erreur1.setVisible(true);
+                    erreur1.setText("Solde insuffisant!");
                     acheter.setVisible(true);
                 }
             }
