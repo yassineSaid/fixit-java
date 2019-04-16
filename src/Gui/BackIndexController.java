@@ -35,14 +35,14 @@ public class BackIndexController implements Initializable {
     @FXML
     private Button espaceOutil;
     @FXML
-    private Button EspaceProduit;
-    @FXML
     private Button espaceReclamation;
     @FXML
     private Button service;
     @FXML
     private Button EspaceProd;
     private User user;
+    @FXML
+    private Button espaceAvis;
 
     /**
      * Initializes the controller class.
@@ -161,6 +161,24 @@ public class BackIndexController implements Initializable {
             stage.setScene(scene);
         } catch (IOException ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML
+    private void espaceAvis(ActionEvent event) {
+         try {
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/EspaceAvisBack.fxml"));
+            Parent Rec = fxmlLoader.load();
+            Scene scene = new Scene(Rec);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.show();
+            stage.setScene(scene);
+
+        } catch (IOException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex);
         }
     }
 

@@ -310,3 +310,6 @@
     -fx-shape : " ";    
     -fx-padding :0.15em 0.0;
 }
+.number-button{
+    -fx-opacity: 0;
+}
