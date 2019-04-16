@@ -162,7 +162,6 @@ public class UserOutilService {
      
      public ObservableList<UserOutil> afficherOutil() 
              {
-                 System.out.println("aaaaaaaaaa");
                  try
                  {
                      ObservableList list = FXCollections.observableArrayList();
@@ -180,7 +179,6 @@ public class UserOutilService {
             uo.setTotal(rs.getInt(3));
             uo.setUser(u);
             uo.setOutil(o);
-            System.out.println(uo.getOutil());
             list.add(uo);
         }
         return list;

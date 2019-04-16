@@ -231,7 +231,7 @@ public class EspaceOutilBackController implements Initializable {
                 nomOutil.setCellValueFactory(new PropertyValueFactory<>("nom"));
                 dureeOutil.setCellValueFactory(new PropertyValueFactory<>("dureeMaximale"));
                 image.setCellValueFactory(new PropertyValueFactory<>("Im"));
-                prixOutil.setCellValueFactory(new PropertyValueFactory<>("prix"+" Scoins"));
+                prixOutil.setCellValueFactory(new PropertyValueFactory<>("prix"));
                 addresseOutil.setCellValueFactory(new PropertyValueFactory<>("adresse"));
                 codePostalOutil.setCellValueFactory(new PropertyValueFactory<>("codePostal"));
                 categorieOutil.setCellValueFactory(new PropertyValueFactory<>("nomCategorie"));
@@ -246,7 +246,7 @@ public class EspaceOutilBackController implements Initializable {
                 userNomOutil.setCellValueFactory(new PropertyValueFactory<>("outil"));
                 dateLocation.setCellValueFactory(new PropertyValueFactory<>("dateLocation"));
                 dateRetour.setCellValueFactory(new PropertyValueFactory<>("dateRetour"));
-                prix.setCellValueFactory(new PropertyValueFactory<>("total"+" Scoins"));
+                prix.setCellValueFactory(new PropertyValueFactory<>("total"));
                 
                 UserOutilService uo = new UserOutilService();
 
@@ -256,7 +256,7 @@ public class EspaceOutilBackController implements Initializable {
                 userNomOutil1.setCellValueFactory(new PropertyValueFactory<>("idOutil"));
                 dateLocation1.setCellValueFactory(new PropertyValueFactory<>("dateLocation"));
                 dateRetour1.setCellValueFactory(new PropertyValueFactory<>("dateRetour"));
-                prix1.setCellValueFactory(new PropertyValueFactory<>("total"+" Scoins"));
+                prix1.setCellValueFactory(new PropertyValueFactory<>("total"));
                 
                 HistoriqueLocationService ho = new HistoriqueLocationService();
                 tableHistorique.setItems(ho.afficherOutil());
