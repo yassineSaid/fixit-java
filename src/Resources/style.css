@@ -46,14 +46,26 @@
     -fx-background-color: red;
     -fx-background-radius: 8,7,6;
     -fx-text-fill: white;
-    -fx-text-alignment: center;
 }
 .supprimer:hover
 {
-    -fx-background-color: #ff7272;
+    -fx-background-color: #1866e2;
     -fx-background-radius: 8,7,6;
     -fx-text-fill: white;
     -fx-text-alignment: center;
+}
+.historiquePaiement
+{
+    -fx-background-color: #3882f7;
+    -fx-background-radius: 8,7,6;
+    -fx-text-fill: white;
+    -fx-text-alignment: center;
+}
+.historiquePaiement:hover
+{
+    -fx-background-color: #2f68c4;
+    -fx-background-radius: 8,7,6;
+    -fx-text-fill: white;
 }
 .menuButton
 {
@@ -229,6 +241,34 @@
     -fx-text-fill: #FF0000;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }
+.blueFront {
+    -fx-background-color: 
+        linear-gradient(#4682B4, #4682B4),
+        linear-gradient(#4682B4 0%,     #4682B4,    #4682B4 100%),
+        linear-gradient(#4682B4 0%, #4682B4 50%);
+    -fx-font-weight: bold;    
+    -fx-background-radius: 8,7,6;
+    -fx-background-insets: 0,1,2;
+    -fx-font-size: 14px;
+	-fx-pref-height: 25px;
+    -fx-pref-width: 158px;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}
+.blueFront:hover {
+    -fx-background-color: 
+        linear-gradient(white, white),
+        linear-gradient(white 0%,     white,    white 100%),
+        linear-gradient(white 0%, white 50%);
+    -fx-font-weight: bold;    
+    -fx-background-radius: 8,7,6;
+    -fx-background-insets: 0,1,2;
+    -fx-font-size: 14px;
+	-fx-pref-height: 25px;
+    -fx-pref-width: 158px;
+    -fx-text-fill: #4682B4;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}
 .table-historique .column-header .label {
     -fx-text-fill: black;
     -fx-font-weight: bold;
@@ -237,6 +277,9 @@
     -fx-background-color: none;
 	-fx-border-color: #00AB47;
 	-fx-border-width: 1 1;
+}
+.table-historique {
+    -fx-text-fill: black;
 }
 .table-historique *.scroll-bar:vertical *.increment-button,
 .table-historique *.scroll-bar:vertical *.decrement-button {
