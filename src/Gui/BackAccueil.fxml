@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="backIndex" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="690.0" prefWidth="1300.0" style="-fx-background-color: #CCCCCC;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.BackAccueilController">
+   <fx:include fx:id="backIndex" source="BackIndex.fxml" />
+   <AnchorPane layoutX="263.0" prefHeight="690.0" prefWidth="1037.0">
+      <children>
+         <BarChart fx:id="statsAnnee" alternativeRowFillVisible="false" barGap="12.0" layoutX="37.0" layoutY="258.0" prefHeight="401.0" prefWidth="792.0" styleClass="statsAnnee" stylesheets="@../Resources/style.css" title="Revenus provenants de la vente de SCoins (DT)">
+           <xAxis>
+             <CategoryAxis fx:id="mois" animated="false" side="BOTTOM" tickLabelGap="0.0" />
+           </xAxis>
+           <yAxis>
+             <NumberAxis fx:id="revenus" side="LEFT" />
+           </yAxis>
+         </BarChart>
+      </children></AnchorPane>
+</AnchorPane>

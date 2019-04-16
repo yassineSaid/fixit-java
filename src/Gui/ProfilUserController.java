@@ -401,6 +401,7 @@ public class ProfilUserController implements Initializable {
                 Scene scene = new Scene(Rec);
                 FrontAccueilController controller = fxmlLoader.<FrontAccueilController>getController();
                 controller.setUser(this.user);
+                controller.setRech(rech);
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 stage.show();
                 stage.setScene(scene);

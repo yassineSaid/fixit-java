@@ -325,6 +325,6 @@
 .listServicesProfil .list-view {
     -fx-background-color: transparent;
 }
-.rechercheButton{
-	
+.statsAnnee .chart-plot-background{
+	-fx-background-color: rgba(255,255,255,0.9);
 }
