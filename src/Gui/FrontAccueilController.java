@@ -88,6 +88,7 @@ public class FrontAccueilController implements Initializable {
             System.out.println(user.getId());
             frontIndexController.setUser(user);
             frontIndexController.refresh();
+            frontIndexController.getAccueil().setStyle("-fx-background-color: #f4f4f4");
             rechercher.textProperty().addListener((observable, oldValue, newValue) -> {
                 afficherUsers();
             });

@@ -59,6 +59,8 @@ public class FrontIndexController implements Initializable {
     private Button profil;
     @FXML
     private Button deconnexion;
+    @FXML
+    private Button accueil;
 
     public User getUser() {
         return user;
@@ -115,6 +117,16 @@ public class FrontIndexController implements Initializable {
     public void setProfil(Button profil) {
         this.profil = profil;
     }
+
+    public Button getAccueil() {
+        return accueil;
+    }
+
+    public void setAccueil(Button accueil) {
+        this.accueil = accueil;
+    }
+    
+    
 
     /**
      * Initializes the controller class.
@@ -285,6 +297,25 @@ public class FrontIndexController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/reclamationFront.fxml"));
             Parent Rec = fxmlLoader.load();
             ReclamationFrontController controller = fxmlLoader.<ReclamationFrontController>getController();
+            controller.setUser(this.getUser());
+            Scene scene = new Scene(Rec);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.show();
+            stage.setScene(scene);
+
+        } catch (IOException ex) {
+            System.out.println(ex);
+        }
+    }
+
+    @FXML
+    private void AccueilAction(ActionEvent event) {
+        try {
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/FrontAccueil.fxml"));
+            Parent Rec = fxmlLoader.load();
+            FrontAccueilController controller = fxmlLoader.<FrontAccueilController>getController();
             controller.setUser(this.getUser());
             Scene scene = new Scene(Rec);
 
