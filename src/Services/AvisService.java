@@ -103,7 +103,6 @@ public class AvisService {
     public ObservableList<Avis> top5() {
         try {
             // System.out.println(idUser);
-            System.out.println("aaaaaa");
             ObservableList<Avis> list = FXCollections.observableArrayList();
             // to correct idUserDemandeur -> idUserOffreur
             PreparedStatement pt = c.prepareStatement("Select * From Avis  ORDER BY id DESC LIMIT 5");

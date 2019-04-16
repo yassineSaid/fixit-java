@@ -350,7 +350,6 @@ public class DetailReclamationBackController implements Initializable {
                 }
                 if(this.reclamation.getArchive()==1)
                 {
-                    System.out.println("aaaa");
                     archive.setVisible(false);
                     traiteLb.setVisible(false);
                     archiveLb.setVisible(true);

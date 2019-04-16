@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -56,6 +57,12 @@
                <Insets left="10.0" />
             </padding>
          </HBox>
+         <Label text="Services proposés:">
+            <font>
+               <Font name="System Bold" size="18.0" />
+            </font>
+         </Label>
+         <ListView fx:id="services" prefHeight="301.0" prefWidth="673.0" style="-fx-background-color: rgba(255,255,255,0.5);" styleClass="listServicesProfil" stylesheets="@../Resources/style.css" />
       </children>
    </VBox>
 </AnchorPane>

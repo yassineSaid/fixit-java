@@ -11,6 +11,7 @@ import Entities.User;
 import Services.CategorieServiceService;
 import Services.HorraireService;
 import Services.ImageService;
+import Services.ProfilMesServices;
 import Services.ReposService;
 import Services.ServiceService;
 import Services.ServiceUserService;
@@ -42,6 +43,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -53,6 +55,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -186,38 +191,6 @@ public class ProfilController implements Initializable {
     @FXML
     private Button modifier1;
     @FXML
-    private Tab interfaceAjout1;
-    @FXML
-    private ListView<ServiceUser> mesServices;
-    @FXML
-    private Button ajouterUnService;
-    @FXML
-    private Button proposerUnService;
-    @FXML
-    private AnchorPane service;
-    @FXML
-    private AnchorPane addService;
-    @FXML
-    private ComboBox<CategorieService> categorie;
-    @FXML
-    private TextField prix;
-    @FXML
-    private TextField description;
-    @FXML
-    private Button ajouterS;
-    @FXML
-    private ComboBox<Service> serviceC;
-    @FXML
-    private AnchorPane proposerS;
-    @FXML
-    private TextField descriptionProposition;
-    @FXML
-    private TextField nomProposition;
-    @FXML
-    private ComboBox<CategorieService> categorieProposition;
-    @FXML
-    private Button confirmerProposition;
-    @FXML
     private TextField adresse;
     @FXML
     private TextField ville;
@@ -245,42 +218,38 @@ public class ProfilController implements Initializable {
             afficherLanguesAction();
             afficherHorraireAction();
             afficherReposAction();
-            ServiceUserService r = new ServiceUserService();
-            ObservableList<ServiceUser> list = FXCollections.observableArrayList();
-            list = r.afficherServiceUser(this.user.getId());
-            mesServices.setItems(list);
-
         });
     }
+ 
 
     @FXML
     private void modifierAction(ActionEvent event) {
-        String erreur="";
-        boolean e=false;
-        if (nom.getText().length()==0){
-            e=true;
-            erreur+="Le champ nom ne peut pas rester vide.";
+        String erreur = "";
+        boolean e = false;
+        if (nom.getText().length() == 0) {
+            e = true;
+            erreur += "Le champ nom ne peut pas rester vide.";
         }
-        if (prenom.getText().length()==0){
-            e=true;
-            erreur+="\nLe champ prenom ne peut pas rester vide.";
+        if (prenom.getText().length() == 0) {
+            e = true;
+            erreur += "\nLe champ prenom ne peut pas rester vide.";
         }
-        if (e){
+        if (e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Modification");
             alert.setHeaderText(null);
             alert.setContentText(erreur);
             alert.showAndWait();
-        }
-        else{
+        } else {
             UserService us = new UserService();
-            us.modifierUser(user, nom.getText(), prenom.getText(),adresse.getText(),ville.getText(),zip.getText(),Integer.parseInt(telephone.getText()));
+            us.modifierUser(user, nom.getText(), prenom.getText(), adresse.getText(), ville.getText(), zip.getText(), Integer.parseInt(telephone.getText()));
             user = us.connect(user.getUsername());
             frontIndexController.setUser(user);
             frontIndexController.initialize(null, null);
             refreshUser();
         }
     }
+
     @FXML
     private void changerAction(KeyEvent event) {
         TextField tf = (TextField) event.getSource();
@@ -290,7 +259,6 @@ public class ProfilController implements Initializable {
         }
     }
 
-    @FXML
     void refreshUser() {
         username.setText(user.getUsername());
         nom.setText(user.getLastname());
@@ -592,64 +560,6 @@ public class ProfilController implements Initializable {
         stage.showAndWait();
     }
 
-    @FXML
-    private void ajouterUnService(ActionEvent event) {
-        mesServices.setVisible(false);
-        ajouterUnService.setVisible(false);
-        proposerUnService.setVisible(false);
-        addService.setVisible(true);
-
-        ObservableList<CategorieService> list = FXCollections.observableArrayList();
-        CategorieServiceService r = new CategorieServiceService();
-        list = r.getALLCategorie();
-        categorie.setItems(list);
-
-    }
-
-    @FXML
-    private void proposerUnService(ActionEvent event) {
-
-        mesServices.setVisible(false);
-        ajouterUnService.setVisible(false);
-        proposerUnService.setVisible(false);
-        addService.setVisible(false);
-        proposerS.setVisible(true);
-
-        ObservableList<CategorieService> list = FXCollections.observableArrayList();
-        CategorieServiceService r = new CategorieServiceService();
-        list = r.getALLCategorie();
-        categorieProposition.setItems(list);
-    }
-
-    @FXML
-    private void ajouterS(ActionEvent event) {
-        ServiceUser s = new ServiceUser();
-        ServiceUserService su = new ServiceUserService();
-        s.setDescription(description.getText());
-        s.setPrix(Integer.parseInt(prix.getText()));
-        s.setIdService(serviceC.getValue().getId());
-        s.setIdUser(this.user.getId());
-        su.ajouterServiceUser(s);
-
-    }
-
-    @FXML
-    private void cat(ActionEvent event) {
-
-        ObservableList<Service> listS = FXCollections.observableArrayList();
-        ServiceService s = new ServiceService();
-        listS = s.getAllServiceC(categorie.getValue().getId());
-        serviceC.setItems(listS);
-    }
-
-    @FXML
-    private void confirmerProposition(ActionEvent event) {
-        ServicesProposes s = new ServicesProposes();
-        ServicesProposesService sp = new ServicesProposesService();
-        s.setNom(nomProposition.getText());
-        s.setDescription(descriptionProposition.getText());
-        s.setCategorieService(categorieProposition.getValue().toString());
-        sp.ajouterService(s);
-    }
+    
 
 }
