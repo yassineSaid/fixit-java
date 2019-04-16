@@ -29,7 +29,6 @@ public class ServiceUserService {
         try
             {                    
                 ObservableList<ServiceUser> list = FXCollections.observableArrayList();
-                    System.out.println("aaaaa");
 
                 PreparedStatement pt=c.prepareStatement("SELECT * from service_user where idUser=?");
                 pt.setInt(1, id);
@@ -54,7 +53,6 @@ public class ServiceUserService {
     public String  getServiceName(int id) throws SQLException
     {
        String list ="";
-                    System.out.println("aaaaa");
 
                 PreparedStatement pt=c.prepareStatement("SELECT nom from service where id=?");
                 pt.setInt(1, id);

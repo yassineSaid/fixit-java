@@ -64,7 +64,7 @@
                <font>
                   <Font name="Calibri Bold" size="20.0" />
                </font></Button>
-            <Button layoutY="57.0" mnemonicParsing="false" onAction="#logoutAction" styleClass="logout" stylesheets="@../Resources/styleY.css" text="Déconnexion" />
+            <Button fx:id="deconnexion" layoutY="57.0" mnemonicParsing="false" onAction="#logoutAction" styleClass="logout" stylesheets="@../Resources/styleY.css" text="Déconnexion" />
 
          </children>
          <effect>

@@ -28,7 +28,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import org.controlsfx.glyphfont.FontAwesome;
 
 /**
  * FXML Controller class
@@ -55,6 +57,8 @@ public class FrontIndexController implements Initializable {
     private Button espaceAvis;
     @FXML
     private Button profil;
+    @FXML
+    private Button deconnexion;
 
     public User getUser() {
         return user;
@@ -119,14 +123,20 @@ public class FrontIndexController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         Platform.runLater(() -> {
             if (user != null) {
-                userName.setText(Utils.upperCaseFirst(user.getFirstname()) + " " + Utils.upperCaseFirst(user.getLastname()));
-                loadImage();
-
+                
+                refresh();
             }
 
         });
     }
-
+    public void refresh(){
+        FontAwesome fs = new FontAwesome();
+        Node icon = fs.create(FontAwesome.Glyph.SIGN_OUT).color(Color.WHITE).size(17);
+        icon.setId("icon");
+        deconnexion.setGraphic(icon);
+        userName.setText(Utils.upperCaseFirst(user.getFirstname()) + " " + Utils.upperCaseFirst(user.getLastname()));
+        loadImage();
+    }
     private void loadImage() {
         File currDir = new File(System.getProperty("user.dir", "."));
         System.out.println(currDir.toPath().getRoot().toString());
