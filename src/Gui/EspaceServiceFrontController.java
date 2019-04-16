@@ -13,6 +13,7 @@ import Entities.ServiceUser;
 import Entities.ServicesProposes;
 import Entities.User;
 import Services.CategorieServiceService;
+import Services.MailService;
 import Services.ProfilMesServices;
 import Services.QuizUserService;
 import Services.ServiceService;
@@ -192,7 +193,266 @@ public class EspaceServiceFrontController implements Initializable {
         });
         // TODO
     }
-
+    private void SendMail() throws Exception{
+        String mailContentReclamant="<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n" +
+"<html>\n" +
+"<head>\n" +
+"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n" +
+"<!--[if !mso]><!-->\n" +
+"<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />\n" +
+"<!--<![endif]-->\n" +
+"<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n" +
+"<title></title>\n" +
+"<style type=\"text/css\">\n" +
+"* {\n" +
+"	-webkit-font-smoothing: antialiased;\n" +
+"}\n" +
+"body {\n" +
+"	Margin: 0;\n" +
+"	padding: 0;\n" +
+"	min-width: 100%;\n" +
+"	font-family: Arial, sans-serif;\n" +
+"	-webkit-font-smoothing: antialiased;\n" +
+"	mso-line-height-rule: exactly;\n" +
+"}\n" +
+"table {\n" +
+"	border-spacing: 0;\n" +
+"	color: #333333;\n" +
+"	font-family: Arial, sans-serif;\n" +
+"}\n" +
+"img {\n" +
+"	border: 0;\n" +
+"}\n" +
+".wrapper {\n" +
+"	width: 100%;\n" +
+"	table-layout: fixed;\n" +
+"	-webkit-text-size-adjust: 100%;\n" +
+"	-ms-text-size-adjust: 100%;\n" +
+"}\n" +
+".webkit {\n" +
+"	max-width: 600px;\n" +
+"}\n" +
+".outer {\n" +
+"	Margin: 0 auto;\n" +
+"	width: 100%;\n" +
+"	max-width: 600px;\n" +
+"}\n" +
+".full-width-image img {\n" +
+"	width: 100%;\n" +
+"	max-width: 600px;\n" +
+"	height: auto;\n" +
+"}\n" +
+".inner {\n" +
+"	padding: 10px;\n" +
+"}\n" +
+"p {\n" +
+"	Margin: 0;\n" +
+"	padding-bottom: 10px;\n" +
+"}\n" +
+".h1 {\n" +
+"	font-size: 21px;\n" +
+"	font-weight: bold;\n" +
+"	Margin-top: 15px;\n" +
+"	Margin-bottom: 5px;\n" +
+"	font-family: Arial, sans-serif;\n" +
+"	-webkit-font-smoothing: antialiased;\n" +
+"}\n" +
+".h2 {\n" +
+"	font-size: 18px;\n" +
+"	font-weight: bold;\n" +
+"	Margin-top: 10px;\n" +
+"	Margin-bottom: 5px;\n" +
+"	font-family: Arial, sans-serif;\n" +
+"	-webkit-font-smoothing: antialiased;\n" +
+"}\n" +
+".one-column .contents {\n" +
+"	text-align: left;\n" +
+"	font-family: Arial, sans-serif;\n" +
+"	-webkit-font-smoothing: antialiased;\n" +
+"}\n" +
+".one-column p {\n" +
+"	font-size: 14px;\n" +
+"	Margin-bottom: 10px;\n" +
+"	font-family: Arial, sans-serif;\n" +
+"	-webkit-font-smoothing: antialiased;\n" +
+"}\n" +
+".two-column {\n" +
+"	text-align: center;\n" +
+"	font-size: 0;\n" +
+"}\n" +
+".two-column .column {\n" +
+"	width: 100%;\n" +
+"	max-width: 300px;\n" +
+"	display: inline-block;\n" +
+"	vertical-align: top;\n" +
+"}\n" +
+".contents {\n" +
+"	width: 100%;\n" +
+"}\n" +
+".two-column .contents {\n" +
+"	font-size: 14px;\n" +
+"	text-align: left;\n" +
+"}\n" +
+".two-column img {\n" +
+"	width: 100%;\n" +
+"	max-width: 280px;\n" +
+"	height: auto;\n" +
+"}\n" +
+".two-column .text {\n" +
+"	padding-top: 10px;\n" +
+"}\n" +
+".three-column {\n" +
+"	text-align: center;\n" +
+"	font-size: 0;\n" +
+"	padding-top: 10px;\n" +
+"	padding-bottom: 10px;\n" +
+"}\n" +
+".three-column .column {\n" +
+"	width: 100%;\n" +
+"	max-width: 200px;\n" +
+"	display: inline-block;\n" +
+"	vertical-align: top;\n" +
+"}\n" +
+".three-column .contents {\n" +
+"	font-size: 14px;\n" +
+"	text-align: center;\n" +
+"}\n" +
+".three-column img {\n" +
+"	width: 100%;\n" +
+"	max-width: 180px;\n" +
+"	height: auto;\n" +
+"}\n" +
+".three-column .text {\n" +
+"	padding-top: 10px;\n" +
+"}\n" +
+".img-align-vertical img {\n" +
+"	display: inline-block;\n" +
+"	vertical-align: middle;\n" +
+"}\n" +
+"@media only screen and (max-device-width: 480px) {\n" +
+"table[class=hide], img[class=hide], td[class=hide] {\n" +
+"	display: none !important;\n" +
+"}\n" +
+".contents1 {\n" +
+"	width: 100%;\n" +
+"}\n" +
+".contents1 {\n" +
+"	width: 100%;\n" +
+"}\n" +
+"</style>\n" +
+"</head>\n" +
+"\n" +
+"<body style=\"Margin:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;min-width:100%;background-color:#f3f2f0;\">\n" +
+"<center class=\"wrapper\" style=\"width:100%;table-layout:fixed;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;background-color:#f3f2f0;\">\n" +
+"  <table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"background-color:#f3f2f0;\" bgcolor=\"#f3f2f0;\">\n" +
+"    <tr>\n" +
+"      <td width=\"100%\"><div class=\"webkit\" style=\"max-width:600px;Margin:0 auto;\"> \n" +
+"          <table class=\"outer\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"border-spacing:0;Margin:0 auto;width:100%;max-width:600px;\">\n" +
+"            <tr>\n" +
+"              <td style=\"padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;\"><!-- ======= start header ======= -->\n" +
+"                \n" +
+"                <table border=\"0\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\"  >\n" +
+"                  <tr>\n" +
+"                    <td><table style=\"width:100%;\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\">\n" +
+"                        <tbody>\n" +
+"                          <tr>\n" +
+"                            <td align=\"center\"><center>\n" +
+"                                <table border=\"0\" align=\"center\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"Margin: 0 auto;\">\n" +
+"                                  <tbody>\n" +
+"                                    <tr>\n" +
+"                                      <td class=\"one-column\" style=\"padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;\" bgcolor=\"#FFFFFF\"><!-- ======= start header ======= -->\n" +
+"                                        \n" +
+"                                        <table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\" bgcolor=\"#f3f2f0\">\n" +
+"                                          <tr>\n" +
+"                                            <td class=\"two-column\" style=\"padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;text-align:left;font-size:0;\" >                                          \n" +
+"                                              </td>\n" +
+"                                          </tr>\n" +
+"                                          <tr>\n" +
+"                                            <td>&nbsp;</td>\n" +
+"                                          </tr>\n" +
+"                                        </table></td>\n" +
+"                                    </tr>\n" +
+"                                  </tbody>\n" +
+"                                </table>\n" +
+"                              </center></td>\n" +
+"                          </tr>\n" +
+"                        </tbody>\n" +
+"                      </table></td>\n" +
+"                  </tr>\n" +
+"                </table>\n" +
+"                \n" +
+"                <!-- ======= end header ======= --> \n" +
+"                \n" +
+"                <!-- ======= start hero ======= -->\n" +
+"                \n" +
+"                <table class=\"one-column\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"border-spacing:0; border-left:1px solid #e8e7e5; border-right:1px solid #e8e7e5; border-bottom:1px solid #e8e7e5; border-top:1px solid #e8e7e5\" bgcolor=\"#FFFFFF\">\n" +
+"                  <tr>\n" +
+"                    <td background=\"https://gallery.mailchimp.com/fdcaf86ecc5056741eb5cbc18/images/42ba8b72-65d6-4dea-b8ab-3ecc12676337.jpg\" bgcolor=\"#2f9780\" width=\"100\" height=\"100\" valign=\"top\" align=\"center\" style=\"padding:50px 50px 50px 50px\">\n" +
+" \n" +
+"                      \n" +
+"                      <div>\n" +
+"                        <br />\n" +
+"                        <br />\n" +
+"                        <br />\n" +
+"                        <br />\n" +
+"                        <p style=\"color:#ffffff; font-size:60px; text-align:center; font-family: Verdana, Geneva, sans-serif\">FIX IT</p>\n" +
+"                  \n" +
+"                      </div>\n" +
+"                      </td>\n" +
+"                  </tr>\n" +
+"                </table>\n" +
+"                \n" +
+"                <table class=\"one-column\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"border-spacing:0; border-left:1px solid #e8e7e5; border-right:1px solid #e8e7e5; border-bottom:1px solid #e8e7e5; border-top:1px solid #e8e7e5\" bgcolor=\"#FFFFFF\">\n" +
+"                  <tr>\n" +
+"                    <td align=\"center\" style=\"padding:50px 50px 50px 50px\"><p style=\"color:#262626; font-size:24px; text-align:center; font-family: Verdana, Geneva, sans-serif\"><strong>Mr </strong></p>\n" +
+"                      <p style=\"color:#262626; font-size:16px; text-align:center; font-family: Verdana, Geneva, sans-serif; line-height:22px \"> Un service a été proposé par "+this.getUser().getUsername()+" <br />\n" +
+"                      <p> Veuillez Vérifier cette proposition </p>\n" +
+"                        <br />\n" +
+"                        <br />\n" +
+"                      </p>\n" +
+"                     \n" +
+"                          </tr>\n" +
+"                        </tbody>\n" +
+"                      </table>\n" +
+"                      <p style=\"color:#000000; font-size:12px; text-align:center; font-family: Verdana, Geneva, sans-serif; line-height:22px \"> <br />\n" +
+"                        <br />\n" +
+"                        Lorem Ipsum loren ipsum</p></td>\n" +
+"                  </tr>\n" +
+"                </table>\n" +
+"                \n" +
+"                </td>\n" +
+"            </tr>\n" +
+"          </table>\n" +
+"        </div></td>\n" +
+"    </tr>\n" +
+"  </table>\n" +
+"</center>\n" +
+"</body>\n" +
+"</html>";
+        
+        UserService us=new UserService();
+        ObservableList<User> list = FXCollections.observableArrayList();
+        ObservableList<User> list2 = FXCollections.observableArrayList();
+        list=us.getUsers(this.getUser().getId());
+        for (User u : list) {
+          if(u.getRoles().equals("Administrateur")){
+            System.out.println("slim");
+            //  MailService mailService= new MailService("slim.bensalah@esprit.tn","Services Proposés",mailContentReclamant);
+              try{ 
+                  MailService mailService= new MailService("slim.bensalah@esprit.tn","Services Proposés",mailContentReclamant);
+              mailService.sendEmail();
+              }
+              catch(Exception e){
+                  System.out.println(e);
+              }
+            }
+            }
+       // MailService mailService= new MailService(list2,"Reclamation contre vous",mailContentReclamant);
+       
+         
+       
+        
+    }
     private void checkQuiz() {
 
         labelQ1.setMaxWidth(328);
@@ -776,7 +1036,7 @@ public class EspaceServiceFrontController implements Initializable {
     }
 
     @FXML
-    private void proposerUnService(ActionEvent event) {
+    private void proposerUnService(ActionEvent event){
         mesServices.setVisible(false);
         ajouterUnService.setVisible(false);
         proposerUnService.setVisible(false);
@@ -829,7 +1089,7 @@ public class EspaceServiceFrontController implements Initializable {
     }
 
     @FXML
-    private void confirmerProposition(ActionEvent event) {
+    private void confirmerProposition(ActionEvent event) throws Exception {
         ServicesProposes s = new ServicesProposes();
         ServicesProposesService sp = new ServicesProposesService();
         s.setNom(nomProposition.getText());
@@ -842,6 +1102,9 @@ public class EspaceServiceFrontController implements Initializable {
         proposerUnService.setVisible(true);
         mesServices.setVisible(true);
         supprimerSU.setVisible(true);
+    
+            SendMail();
+    
         this.initialize(null, null);
     }
 
