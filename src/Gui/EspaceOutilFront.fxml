@@ -7,229 +7,261 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Pagination?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" style="-fx-background-color: #CCCCCC;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.EspaceOutilFrontController">
+<AnchorPane id="AnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="690.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.EspaceOutilFrontController">
    <children>
        <fx:include fx:id="frontIndex" source="FrontIndex.fxml" />
-  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-      <Pagination fx:id="paginationOutilFront" layoutX="443.0" layoutY="85.0" prefHeight="599.0" prefWidth="693.0" />
-      <ListView fx:id="list" layoutX="467.0" layoutY="86.0" prefHeight="511.0" prefWidth="683.0" style="-fx-background-color: transparent;" />
-      <AnchorPane fx:id="location" layoutX="325.0" layoutY="53.0" prefHeight="619.0" prefWidth="950.0">
-         <children>
-            <ImageView fx:id="imageDetail" fitHeight="295.0" fitWidth="293.0" layoutX="657.0" layoutY="83.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="logoDetail" fitHeight="50.0" fitWidth="48.0" layoutX="657.0" layoutY="388.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="adresseDetail" fitHeight="50.0" fitWidth="48.0" layoutX="657.0" layoutY="448.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Resources/adresse.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="scoinDetail" fitHeight="50.0" fitWidth="48.0" layoutX="657.0" layoutY="508.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Resources/scoin.png" />
-               </image>
-            </ImageView>
-            <Label fx:id="logoDetailText" layoutX="715.0" layoutY="403.0" text="Label">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Label>
-            <Label fx:id="adresseDetailText" layoutX="715.0" layoutY="463.0" text="Label">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Label>
-            <Label fx:id="scoinDetailText" layoutX="715.0" layoutY="523.0" text="Label">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Label>
-            <Separator layoutX="704.0" layoutY="63.0" prefWidth="200.0" />
-            <Label layoutX="773.0" layoutY="24.0" text="Outil">
-               <font>
-                  <Font name="System Bold" size="27.0" />
-               </font>
-            </Label>
-            <Label layoutX="138.0" layoutY="24.0" text="Informations de location">
-               <font>
-                  <Font name="System Bold" size="27.0" />
-               </font>
-            </Label>
-            <Separator layoutX="114.0" layoutY="65.0" prefHeight="3.0" prefWidth="361.0" />
-            <Label fx:id="outilEpuise" layoutX="65.0" layoutY="222.0" text="Outil Épuisé Dans Le Stock" textFill="#f81919" visible="false">
-               <font>
-                  <Font name="System Bold" size="39.0" />
-               </font>
-            </Label>
-            <AnchorPane fx:id="detailLocation" layoutX="4.0" layoutY="131.0" prefHeight="420.0" prefWidth="635.0">
-               <children>
-                  <Label fx:id="outilDejaLoue" layoutX="43.0" layoutY="13.0" text="Vous Avez Déjà Loué Cet Outil" textFill="#f81919">
-                     <font>
-                        <Font name="System Bold" size="16.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="4.0" layoutY="65.0" text="La date de location">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="331.0" layoutY="65.0" text="La date de retour">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-                  <DatePicker fx:id="dateLocation" layoutX="144.0" layoutY="63.0" onAction="#controleSaisieDate" />
-                  <DatePicker fx:id="dateRetour" layoutX="456.0" layoutY="64.0" onAction="#controleSaisieDate" />
-                  <Label layoutX="4.0" layoutY="111.0" text="Prix total">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="prixTotal" layoutX="78.0" layoutY="111.0" text="0" textFill="#f81919">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-                  <ImageView fx:id="scoin1" fitHeight="31.0" fitWidth="28.0" layoutX="110.0" layoutY="108.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Resources/scoin.png" />
-                     </image>
-                  </ImageView>
-                  <Label layoutX="4.0" layoutY="154.0" text="- Vous devez payez">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="prix1" layoutX="150.0" layoutY="154.0" text="0">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-                  <ImageView fx:id="scoin11" fitHeight="31.0" fitWidth="28.0" layoutX="169.0" layoutY="151.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Resources/scoin.png" />
-                     </image>
-                  </ImageView>
-                  <Label layoutX="203.0" layoutY="154.0" text="/jour si vous louez l'outil pendant">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="jour" layoutX="446.0" layoutY="154.0" text="0">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="464.0" layoutY="154.0" text="jour(s).">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="4.0" layoutY="194.0" text="- Vous devez payez">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="prix2" layoutX="150.0" layoutY="194.0" text="0">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-                  <ImageView fx:id="scoin111" fitHeight="31.0" fitWidth="28.0" layoutX="169.0" layoutY="194.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Resources/scoin.png" />
-                     </image>
-                  </ImageView>
-                  <Label layoutX="203.0" layoutY="194.0" text="/jour si vous dépassez cette durée.">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="4.0" layoutY="234.0" text="- Si vous retournez l'outil aprés le">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="limite1" layoutX="249.0" layoutY="234.0" text="jj/mm/aaaa" textFill="#f81919">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="337.0" layoutY="234.0" text="vous allez être penalisé de 10">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="4.0" layoutY="274.0" text="- Si vous retournez l'outil aprés le">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="limite2" layoutX="251.0" layoutY="274.0" text="jj/mm/aaaa" textFill="#f81919">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="338.0" layoutY="274.0" text="votre compte sera banné.">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-                  <ImageView fx:id="scoin1111" fitHeight="31.0" fitWidth="28.0" layoutX="546.0" layoutY="231.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Resources/scoin.png" />
-                     </image>
-                  </ImageView>
-                  <Label layoutX="578.0" layoutY="234.0" text=".">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-                  <CheckBox fx:id="conditions" layoutX="46.0" layoutY="314.0" mnemonicParsing="false" onMouseClicked="#verifierCheck" text="J'accepte les conditions de location">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </CheckBox>
-                  <Label fx:id="erreur1" layoutX="183.0" layoutY="365.0" text="Label" textFill="#f81919">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="erreur2" layoutX="183.0" layoutY="385.0" text="Label" textFill="#f81919">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="erreur3" layoutX="183.0" layoutY="405.0" text="Label" textFill="#f81919">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-               </children>
-            </AnchorPane>
-            <Button fx:id="buttonLouer" layoutX="159.0" layoutY="566.0" mnemonicParsing="false" onAction="#louerAction" prefHeight="25.0" prefWidth="93.0" styleClass="greenFront" stylesheets="@../Resources/style.css" text="Louer" />
-            <Button fx:id="buttonRetour" layoutX="349.0" layoutY="566.0" mnemonicParsing="false" onAction="#retourAction" prefHeight="25.0" prefWidth="93.0" styleClass="redFront" stylesheets="@../Resources/style.css" text="Retour" />
-            <Separator layoutX="646.0" layoutY="105.0" orientation="VERTICAL" prefHeight="387.0" prefWidth="9.0" />
-            <Label layoutX="384.0" layoutY="105.0" text="Vous avez">
-               <font>
-                  <Font name="System Bold" size="16.0" />
-               </font>
-            </Label>
-            <Label fx:id="solde" layoutX="470.0" layoutY="105.0" prefHeight="25.0" prefWidth="28.0" text="0" textFill="#08941d">
-               <font>
-                  <Font name="System Bold" size="16.0" />
-               </font>
-            </Label>
-            <ImageView fx:id="scoin12" fitHeight="31.0" fitWidth="28.0" layoutX="510.0" layoutY="104.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Resources/scoin.png" />
-               </image>
-            </ImageView>
-            <Button fx:id="acheter" layoutX="177.0" layoutY="103.0" mnemonicParsing="false" onAction="#acheterScoin" styleClass="blueFront" stylesheets="@../Resources/style.css" text="Acheter" />
-         </children>
-      </AnchorPane>
+      <TabPane layoutX="286.0" prefHeight="690.0" prefWidth="1014.0" tabClosingPolicy="UNAVAILABLE">
+         <tabs>
+            <Tab text="Outils à Loués">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Pagination fx:id="paginationOutilFront" layoutX="129.0" layoutY="31.0" prefHeight="599.0" prefWidth="693.0" style="-fx-background-color: transparent;" />
+                        <ListView fx:id="list" layoutX="129.0" layoutY="31.0" prefHeight="511.0" prefWidth="683.0" style="-fx-background-color: transparent;" />
+                        <AnchorPane fx:id="location" prefHeight="653.0" prefWidth="1014.0">
+                           <children>
+                              <ImageView fx:id="imageDetail" fitHeight="295.0" fitWidth="293.0" layoutX="713.0" layoutY="83.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="logoDetail" fitHeight="50.0" fitWidth="48.0" layoutX="713.0" layoutY="388.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="adresseDetail" fitHeight="50.0" fitWidth="48.0" layoutX="713.0" layoutY="448.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../Resources/adresse.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="scoinDetail" fitHeight="50.0" fitWidth="48.0" layoutX="713.0" layoutY="508.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../Resources/scoin.png" />
+                                 </image>
+                              </ImageView>
+                              <Label fx:id="logoDetailText" layoutX="771.0" layoutY="403.0" text="Label">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="adresseDetailText" layoutX="771.0" layoutY="463.0" text="Label">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="scoinDetailText" layoutX="771.0" layoutY="523.0" text="Label">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Separator layoutX="760.0" layoutY="63.0" prefWidth="200.0" />
+                              <Label layoutX="829.0" layoutY="24.0" text="Outil">
+                                 <font>
+                                    <Font name="System Bold" size="27.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="138.0" layoutY="24.0" text="Informations de location">
+                                 <font>
+                                    <Font name="System Bold" size="27.0" />
+                                 </font>
+                              </Label>
+                              <Separator layoutX="114.0" layoutY="65.0" prefHeight="3.0" prefWidth="361.0" />
+                              <Label fx:id="outilEpuise" layoutX="65.0" layoutY="222.0" text="Outil Épuisé Dans Le Stock" textFill="#f81919" visible="false">
+                                 <font>
+                                    <Font name="System Bold" size="39.0" />
+                                 </font>
+                              </Label>
+                              <AnchorPane fx:id="detailLocation" layoutX="4.0" layoutY="131.0" prefHeight="426.0" prefWidth="701.0">
+                                 <children>
+                                    <Label fx:id="outilDejaLoue" layoutX="43.0" layoutY="13.0" text="Vous Avez Déjà Loué Cet Outil" textFill="#f81919">
+                                       <font>
+                                          <Font name="System Bold" size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="4.0" layoutY="65.0" text="Date de location">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="371.0" layoutY="65.0" text="Date de retour">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <DatePicker fx:id="dateLocation" layoutX="125.0" layoutY="60.0" onAction="#controleSaisieDate" />
+                                    <DatePicker fx:id="dateRetour" layoutX="479.0" layoutY="60.0" onAction="#controleSaisieDate" />
+                                    <Label layoutX="4.0" layoutY="111.0" text="Prix total">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="prixTotal" layoutX="78.0" layoutY="111.0" text="0000" textFill="#f81919">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <ImageView fx:id="scoin1" fitHeight="31.0" fitWidth="28.0" layoutX="119.0" layoutY="108.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../Resources/scoin.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label layoutX="4.0" layoutY="154.0" text="- Vous devez payez">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="prix1" layoutX="150.0" layoutY="154.0" text="0">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <ImageView fx:id="scoin11" fitHeight="31.0" fitWidth="28.0" layoutX="169.0" layoutY="151.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../Resources/scoin.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label layoutX="203.0" layoutY="154.0" text="/jour si vous louez l'outil pendant">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="jour" layoutX="446.0" layoutY="154.0" text="0">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="464.0" layoutY="154.0" text="jour(s).">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="4.0" layoutY="194.0" text="- Vous devez payez">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="prix2" layoutX="150.0" layoutY="194.0" text="0">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <ImageView fx:id="scoin111" fitHeight="31.0" fitWidth="28.0" layoutX="169.0" layoutY="194.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../Resources/scoin.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label layoutX="203.0" layoutY="194.0" text="/jour si vous dépassez cette durée.">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="4.0" layoutY="234.0" text="- Si vous retournez l'outil aprés le">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="limite1" layoutX="249.0" layoutY="234.0" text="jj/mm/aaaa" textFill="#f81919">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="337.0" layoutY="234.0" text="vous allez être penalisé de 10">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="4.0" layoutY="274.0" text="- Si vous retournez l'outil aprés le">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="limite2" layoutX="251.0" layoutY="274.0" text="jj/mm/aaaa" textFill="#f81919">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="338.0" layoutY="274.0" text="votre compte sera banné.">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <ImageView fx:id="scoin1111" fitHeight="31.0" fitWidth="28.0" layoutX="546.0" layoutY="231.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../Resources/scoin.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label layoutX="578.0" layoutY="234.0" text=".">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <CheckBox fx:id="conditions" layoutX="46.0" layoutY="314.0" mnemonicParsing="false" onMouseClicked="#verifierCheck" text="J'accepte les conditions de location">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </CheckBox>
+                                    <Label fx:id="erreur1" layoutX="183.0" layoutY="365.0" text="Label" textFill="#f81919">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="erreur2" layoutX="183.0" layoutY="385.0" text="Label" textFill="#f81919">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="erreur3" layoutX="183.0" layoutY="405.0" text="Label" textFill="#f81919">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                              <Button fx:id="buttonLouer" layoutX="159.0" layoutY="566.0" mnemonicParsing="false" onAction="#louerAction" prefHeight="25.0" prefWidth="93.0" styleClass="greenFront" stylesheets="@../Resources/style.css" text="Louer" />
+                              <Button fx:id="buttonRetour" layoutX="349.0" layoutY="566.0" mnemonicParsing="false" onAction="#retourAction" prefHeight="25.0" prefWidth="93.0" styleClass="redFront" stylesheets="@../Resources/style.css" text="Retour" />
+                              <Separator layoutX="702.0" layoutY="105.0" orientation="VERTICAL" prefHeight="387.0" prefWidth="9.0" />
+                              <Label layoutX="384.0" layoutY="105.0" text="Vous avez">
+                                 <font>
+                                    <Font name="System Bold" size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="solde" layoutX="470.0" layoutY="105.0" prefHeight="25.0" prefWidth="58.0" text="0000" textFill="#08941d">
+                                 <font>
+                                    <Font name="System Bold" size="16.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fx:id="scoin12" fitHeight="31.0" fitWidth="28.0" layoutX="514.0" layoutY="104.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../Resources/scoin.png" />
+                                 </image>
+                              </ImageView>
+                              <Button fx:id="acheter" layoutX="177.0" layoutY="103.0" mnemonicParsing="false" onAction="#acheterScoin" styleClass="blueFront" stylesheets="@../Resources/style.css" text="Acheter" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Mes outils">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="tableMesOutils" layoutX="152.0" layoutY="120.0" prefHeight="421.0" prefWidth="712.0" styleClass="table" stylesheets="@../Resources/style.css">
+                           <columns>
+                              <TableColumn fx:id="imageMesOutils" prefWidth="198.0" text="Image" />
+                              <TableColumn fx:id="nomOutilMesOutils" prefWidth="144.0" text="Nom de l'outil" />
+                              <TableColumn fx:id="dateLocationMesOutils" prefWidth="138.0" text="Date de location" />
+                              <TableColumn fx:id="dateREtourMesOutils" minWidth="0.0" prefWidth="125.0" text="Date de retour" />
+                              <TableColumn fx:id="prixMesOutils" minWidth="0.0" prefWidth="107.0" text="Prix" />
+                           </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+         </tabs>
+      </TabPane>
    </children>
 </AnchorPane>

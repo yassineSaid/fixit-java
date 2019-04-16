@@ -104,6 +104,7 @@ public class HorraireService {
                 if (rs.getTime("heureDebut").before(heureFin) && rs.getTime("heureFin").after(heureFin)) return false;
                 if (heureDebut.before(rs.getTime("heureDebut")) && heureFin.after(rs.getTime("heureDebut"))) return false;
                 if (heureDebut.before(rs.getTime("heureFin")) && heureFin.after(rs.getTime("heureFin"))) return false;
+                if (heureDebut.equals(rs.getTime("heureDebut")) && heureFin.equals(rs.getTime("heureFin"))) return false;
             }
         return true;
         } catch (SQLException ex) {

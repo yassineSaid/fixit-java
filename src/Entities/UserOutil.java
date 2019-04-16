@@ -7,6 +7,7 @@ package Entities;
 
 import java.io.Serializable;
 import java.sql.Date;
+import javafx.scene.image.ImageView;
 
 
 /**
@@ -20,6 +21,7 @@ public class UserOutil implements Serializable {
     private int total;
     private Outil outil;
     private User user;
+    private ImageView im;
 
     public UserOutil() {
     }
@@ -68,6 +70,14 @@ public class UserOutil implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public ImageView getIm() {
+        return im;
+    }
+
+    public void setIm(ImageView im) {
+        this.im = im;
     }
 
    

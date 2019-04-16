@@ -108,7 +108,6 @@ public class AvisService {
             PreparedStatement pt = c.prepareStatement("Select * From Avis  ORDER BY id DESC LIMIT 5");
             ResultSet rs = pt.executeQuery();
             while (rs.next()) {
-                System.out.println("aaaaaa");
                 Avis avis = new Avis();
                 avis.setId(rs.getInt("id"));
                 avis.setDescription(rs.getString("Description"));

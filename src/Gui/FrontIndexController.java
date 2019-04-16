@@ -28,7 +28,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import org.controlsfx.glyphfont.FontAwesome;
 
 /**
  * FXML Controller class
@@ -55,6 +57,10 @@ public class FrontIndexController implements Initializable {
     private Button espaceAvis;
     @FXML
     private Button profil;
+    @FXML
+    private Button deconnexion;
+    @FXML
+    private Button accueil;
 
     public User getUser() {
         return user;
@@ -112,6 +118,16 @@ public class FrontIndexController implements Initializable {
         this.profil = profil;
     }
 
+    public Button getAccueil() {
+        return accueil;
+    }
+
+    public void setAccueil(Button accueil) {
+        this.accueil = accueil;
+    }
+    
+    
+
     /**
      * Initializes the controller class.
      */
@@ -119,14 +135,20 @@ public class FrontIndexController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         Platform.runLater(() -> {
             if (user != null) {
-                userName.setText(Utils.upperCaseFirst(user.getFirstname()) + " " + Utils.upperCaseFirst(user.getLastname()));
-                loadImage();
-
+                
+                refresh();
             }
 
         });
     }
-
+    public void refresh(){
+        FontAwesome fs = new FontAwesome();
+        Node icon = fs.create(FontAwesome.Glyph.SIGN_OUT).color(Color.WHITE).size(17);
+        icon.setId("icon");
+        deconnexion.setGraphic(icon);
+        userName.setText(Utils.upperCaseFirst(user.getFirstname()) + " " + Utils.upperCaseFirst(user.getLastname()));
+        loadImage();
+    }
     private void loadImage() {
         File currDir = new File(System.getProperty("user.dir", "."));
         System.out.println(currDir.toPath().getRoot().toString());
@@ -275,6 +297,25 @@ public class FrontIndexController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/reclamationFront.fxml"));
             Parent Rec = fxmlLoader.load();
             ReclamationFrontController controller = fxmlLoader.<ReclamationFrontController>getController();
+            controller.setUser(this.getUser());
+            Scene scene = new Scene(Rec);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.show();
+            stage.setScene(scene);
+
+        } catch (IOException ex) {
+            System.out.println(ex);
+        }
+    }
+
+    @FXML
+    private void AccueilAction(ActionEvent event) {
+        try {
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/FrontAccueil.fxml"));
+            Parent Rec = fxmlLoader.load();
+            FrontAccueilController controller = fxmlLoader.<FrontAccueilController>getController();
             controller.setUser(this.getUser());
             Scene scene = new Scene(Rec);
 

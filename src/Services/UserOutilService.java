@@ -33,20 +33,20 @@ public class UserOutilService {
             pt.setInt(1, Id);
             ResultSet rs = pt.executeQuery();
             while (rs.next()) {
-                Image image1 = new Image("file:/wamp64/www/fixit/web/uploads/images/Outil/" + rs.getString(9), 150, 150, false, false);
+                Image image1 = new Image("file:/wamp64/www/fixit/web/uploads/images/Outil/" + rs.getString("image"), 150, 150, false, false);
                 Outil outil = new Outil();
-                outil.setId(rs.getInt(1));
-                outil.setNom(rs.getString(2));
-                outil.setQuantite(rs.getInt(3));
-                outil.setDureeMaximale(rs.getInt(4));
-                outil.setPrix(rs.getInt(5));
-                outil.setAdresse(rs.getString(6));
-                outil.setCodePostal(rs.getInt(7));
-                outil.setVille(rs.getString(8));
-                outil.setImage(rs.getString(9));
+                outil.setId(rs.getInt("id"));
+                outil.setNom(rs.getString("Nom"));
+                outil.setQuantite(rs.getInt("Quantite"));
+                outil.setDureeMaximale(rs.getInt("dureeMaximale"));
+                outil.setPrix(rs.getInt("prix"));
+                outil.setAdresse(rs.getString("adresse"));
+                outil.setCodePostal(rs.getInt("codePostal"));
+                outil.setVille(rs.getString("ville"));
+                outil.setImage(rs.getString("image"));
                 outil.setIm(new ImageView(image1));
                 OutilService categorieService = new OutilService();
-                CategorieOutil categorie = categorieService.getCategorieOutil(rs.getInt(10));
+                CategorieOutil categorie = categorieService.getCategorieOutil(rs.getInt("idCategorieOutils"));
                 outil.setC(categorie);
                 outil.setNomCategorie(categorie.getNom());
                 return outil;
@@ -179,6 +179,38 @@ public class UserOutilService {
             uo.setTotal(rs.getInt(3));
             uo.setUser(u);
             uo.setOutil(o);
+            list.add(uo);
+        }
+        return list;
+                 }
+                 catch(SQLException ex)
+                 {
+                     System.out.println(ex);
+                 }
+                 return null;
+        
+    }
+     public ObservableList<UserOutil> afficherOutilFront(User user) 
+             {
+                 try
+                 {
+                     ObservableList list = FXCollections.observableArrayList();
+        PreparedStatement pt = c.prepareStatement("SELECT * FROM user_outil  where idUser=?");
+            pt.setInt(1, user.getId());
+        ResultSet rs = pt.executeQuery();
+        while (rs.next()) {
+            UserOutil uo = new UserOutil();
+            User u = new User();
+            u=this.getUser(rs.getInt(4));
+            Outil o = new Outil();
+            o=this.getOutil(rs.getInt(5));
+             Image image1 = new Image("file:/wamp64/www/fixit/web/uploads/images/Outil/"+o.getImage(), 150, 150, false, false);
+            uo.setDateLocation(rs.getDate(1));
+            uo.setDateRetour(rs.getDate(2));
+            uo.setTotal(rs.getInt(3));
+            uo.setUser(u);
+            uo.setOutil(o);
+            uo.setIm(new ImageView(image1));
             list.add(uo);
         }
         return list;
