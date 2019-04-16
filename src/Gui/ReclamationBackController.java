@@ -101,7 +101,6 @@ public class ReclamationBackController implements Initializable {
                 for (int i = 0; i < tableReclamation.getItems().size(); i++) {
                     for (int j = 0; j < count; j++) {
                         String entry = "" + tableReclamation.getColumns().get(j).getCellData(i);
-                        System.out.println(entry);
                         if (entry.toLowerCase().contains(value)) {
                             subentries.add(tableReclamation.getItems().get(i));
                             break;

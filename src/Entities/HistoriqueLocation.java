@@ -6,7 +6,7 @@
 package Entities;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 
 /**
  *
@@ -14,8 +14,8 @@ import java.util.Date;
  */
 public class HistoriqueLocation implements Serializable {
     private int id;
-    private int idUser;
-    private int idOutil;
+    private User idUser;
+    private Outil idOutil;
     private Date dateLocation;
     private Date dateRetour;
     private int total;
@@ -23,11 +23,7 @@ public class HistoriqueLocation implements Serializable {
     public HistoriqueLocation() {
     }
 
-    public HistoriqueLocation(Integer id) {
-        this.id = id;
-    }
-
-    public HistoriqueLocation(Integer id, int idUser, int idOutil, Date dateLocation, Date dateRetour, int total) {
+    public HistoriqueLocation(int id, User idUser, Outil idOutil, Date dateLocation, Date dateRetour, int total) {
         this.id = id;
         this.idUser = idUser;
         this.idOutil = idOutil;
@@ -36,27 +32,35 @@ public class HistoriqueLocation implements Serializable {
         this.total = total;
     }
 
-    public Integer getId() {
+    public HistoriqueLocation(User idUser, Outil idOutil, Date dateLocation, Date dateRetour, int total) {
+        this.idUser = idUser;
+        this.idOutil = idOutil;
+        this.dateLocation = dateLocation;
+        this.dateRetour = dateRetour;
+        this.total = total;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public int getIdUser() {
+    public User getIdUser() {
         return idUser;
     }
 
-    public void setIdUser(int idUser) {
+    public void setIdUser(User idUser) {
         this.idUser = idUser;
     }
 
-    public int getIdOutil() {
+    public Outil getIdOutil() {
         return idOutil;
     }
 
-    public void setIdOutil(int idOutil) {
+    public void setIdOutil(Outil idOutil) {
         this.idOutil = idOutil;
     }
 
@@ -83,6 +87,9 @@ public class HistoriqueLocation implements Serializable {
     public void setTotal(int total) {
         this.total = total;
     }
+
+    
+
 
    
 

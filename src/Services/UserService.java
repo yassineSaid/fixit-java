@@ -47,8 +47,8 @@ public class UserService {
     public User connect(String username) {
         User U = new User();
         try {
-            PreparedStatement pt = C.prepareStatement("SELECT * FROM user where username=?");
-            pt.setString(1, username);
+            PreparedStatement pt = C.prepareStatement("SELECT * FROM user where username_canonical=?");
+            pt.setString(1, username.toLowerCase());
             ResultSet rs = pt.executeQuery();
             while (rs.next()) {
                 U.setEmail(rs.getString("email"));
@@ -58,6 +58,10 @@ public class UserService {
                 U.setUsername(rs.getString("username"));
                 U.setImage(rs.getString("image"));
                 U.setSolde(rs.getInt("solde"));
+                U.setAddress(rs.getString("address"));
+                U.setCity(rs.getString("city"));
+                U.setZip_code(rs.getString("zip_code"));
+                U.setPhone(rs.getInt("phone"));
                 if (rs.getString("roles").contains("ADMIN")) {
                     U.setRoles("admin");
                 } else {
@@ -72,12 +76,48 @@ public class UserService {
         return null;
     }
 
-    public void modifierNomPrenom(User U, String nom, String prenom) {
+    public User getUser(String id) {
+        User U = new User();
         try {
-            PreparedStatement pt = C.prepareStatement("UPDATE user SET firstname=?,lastname=? WHERE id=?");
+            PreparedStatement pt = C.prepareStatement("SELECT * FROM user where id=?");
+            pt.setInt(1, Integer.parseInt(id));
+            ResultSet rs = pt.executeQuery();
+            while (rs.next()) {
+                U.setEmail(rs.getString("email"));
+                U.setFirstname(rs.getString("firstname"));
+                U.setLastname(rs.getString("lastname"));
+                U.setId(rs.getInt("id"));
+                U.setUsername(rs.getString("username"));
+                U.setImage(rs.getString("image"));
+                U.setSolde(rs.getInt("solde"));
+                U.setAddress(rs.getString("address"));
+                U.setCity(rs.getString("city"));
+                U.setZip_code(rs.getString("zip_code"));
+                U.setPhone(rs.getInt("phone"));
+                if (rs.getString("roles").contains("ADMIN")) {
+                    U.setRoles("admin");
+                } else {
+                    U.setRoles("user");
+                }
+            }
+            return U;
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void modifierUser(User U, String nom, String prenom,String adresse,String ville,String zip,int telephone) {
+        try {
+            PreparedStatement pt = C.prepareStatement("UPDATE user SET firstname=?,lastname=?,address=?,city=?,zip_code=?,phone=? WHERE id=?");
             pt.setString(1, prenom);
             pt.setString(2, nom);
-            pt.setInt(3, U.getId());
+            pt.setString(3, adresse);
+            pt.setString(4, ville);
+            pt.setString(5, zip);
+            pt.setInt(6, telephone);
+            pt.setInt(7, U.getId());
             pt.execute();
         } catch (SQLException e) {
             System.out.println(e.getCause());
@@ -520,13 +560,15 @@ public class UserService {
                 } else {
                     u.setRoles("Utilisateur");
                 }
-                v.setAlignment(Pos.CENTER_LEFT);
+                //v.setAlignment(Pos.CENTER_LEFT);
                 ImageView image=new ImageView();
                     image=loadImage(u);
                     v.getChildren().add(image);
                 v.getChildren().add(new Label(Utils.upperCaseFirst(u.getFirstname())+" "+Utils.upperCaseFirst(u.getLastname())));
                 String ville="";
                 v.setId(String.valueOf(u.getId()));
+                v.setAlignment(Pos.CENTER);
+                
                 data.add(v);
             }
             return data;
@@ -624,4 +666,5 @@ public class UserService {
             e.printStackTrace();
         }
     }
+    
 }

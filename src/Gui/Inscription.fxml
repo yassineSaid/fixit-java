@@ -60,7 +60,7 @@
                   </HBox>
                   <HBox prefHeight="49.0" prefWidth="469.0" spacing="10.0">
                      <children>
-                        <TextField fx:id="zip_code" prefHeight="47.0" prefWidth="336.0" promptText="Code postal" />
+                        <TextField fx:id="zip_code" onKeyTyped="#changerAction" prefHeight="47.0" prefWidth="336.0" promptText="Code postal" />
                         <TextField fx:id="phone" onKeyTyped="#changerAction" prefHeight="47.0" prefWidth="336.0" promptText="Téléphone" />
                      </children>
                   </HBox>

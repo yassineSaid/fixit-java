@@ -14,6 +14,7 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -66,6 +67,8 @@ public class AvisFrontController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        EventHandler<MouseEvent> handler = MouseEvent::consume;
+        ratingAvg.addEventFilter(MouseEvent.ANY, handler);
         Platform.runLater(() -> {
             Avis avis = new Avis();
             AvisService avisSer = new AvisService();

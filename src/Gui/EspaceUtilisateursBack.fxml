@@ -79,11 +79,12 @@
                            </Label>
                         </children>
                      </VBox>
-                     <VBox alignment="CENTER" layoutX="699.0" layoutY="373.0" prefHeight="277.0" prefWidth="206.0" spacing="50.0" stylesheets="@../Resources/style.css">
+                     <VBox alignment="CENTER" layoutX="660.0" layoutY="373.0" prefHeight="277.0" prefWidth="279.0" spacing="30.0" stylesheets="@../Resources/style.css">
                         <children>
-                           <Button fx:id="grade" mnemonicParsing="false" prefHeight="40.0" prefWidth="140.0" text="Promouvoir" />
-                           <Button fx:id="bloquer" mnemonicParsing="false" prefHeight="40.0" prefWidth="140.0" styleClass="supprimer" text="Bloquer" textFill="WHITE" />
-                           <Button fx:id="supprimer" mnemonicParsing="false" prefHeight="40.0" prefWidth="140.0" styleClass="supprimer" text="Supprimer" />
+                           <Button fx:id="grade" mnemonicParsing="false" prefHeight="40.0" prefWidth="220.0" text="Promouvoir" />
+                           <Button fx:id="bloquer" mnemonicParsing="false" prefHeight="40.0" prefWidth="220.0" styleClass="supprimer" text="Bloquer" textFill="WHITE" />
+                           <Button fx:id="supprimer" mnemonicParsing="false" prefHeight="40.0" prefWidth="220.0" styleClass="supprimer" text="Supprimer" />
+                           <Button fx:id="historiquePaiement" mnemonicParsing="false" prefHeight="40.0" prefWidth="220.0" styleClass="historiquePaiement" text="Historique de paiements" />
                         </children>
                      </VBox>
                      <TextField fx:id="filterField" layoutX="836.0" layoutY="16.0" promptText="Rechercher..." />

@@ -34,22 +34,22 @@
                            </font>
                         </Label>
                         <Separator layoutX="244.0" layoutY="55.0" prefHeight="15.0" prefWidth="528.0" />
-                        <Label layoutX="66.0" layoutY="204.0" text="Nom d'utilisateur:">
+                        <Label layoutX="34.0" layoutY="93.0" text="Nom d'utilisateur:">
                            <font>
                               <Font size="19.0" />
                            </font>
                         </Label>
-                        <Label layoutX="66.0" layoutY="261.0" text="Nom:">
+                        <Label layoutX="35.0" layoutY="170.0" text="Nom:">
                            <font>
                               <Font size="19.0" />
                            </font>
                         </Label>
-                        <Label layoutX="65.0" layoutY="382.0" text="Email:">
+                        <Label layoutX="34.0" layoutY="131.0" text="Email:">
                            <font>
                               <Font size="19.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="nom" layoutX="267.0" layoutY="260.0" prefHeight="31.0" prefWidth="247.0" />
+                        <TextField fx:id="nom" layoutX="236.0" layoutY="167.0" prefHeight="31.0" prefWidth="247.0" />
                         <Button fx:id="modifier" layoutX="168.0" layoutY="457.0" mnemonicParsing="false" onAction="#modifierAction" prefHeight="38.0" prefWidth="223.0" text="Sauvegarder">
                            <textFill>
                               <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
@@ -60,23 +60,23 @@
                               </RadialGradient>
                            </textFill>
                         </Button>
-                        <Label layoutX="65.0" layoutY="320.0" text="Prénom:">
+                        <Label layoutX="34.0" layoutY="208.0" text="Prénom:">
                            <font>
                               <Font size="19.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="prenom" layoutX="267.0" layoutY="319.0" prefHeight="31.0" prefWidth="247.0" />
-                        <Label fx:id="email" layoutX="268.0" layoutY="382.0">
+                        <TextField fx:id="prenom" layoutX="236.0" layoutY="206.0" prefHeight="31.0" prefWidth="247.0" />
+                        <Label fx:id="email" layoutX="237.0" layoutY="131.0" text="Email">
                            <font>
                               <Font size="19.0" />
                            </font>
                         </Label>
-                        <Label fx:id="username" layoutX="268.0" layoutY="204.0">
+                        <Label fx:id="username" layoutX="236.0" layoutY="93.0" text="Pseudo">
                            <font>
                               <Font size="19.0" />
                            </font>
                         </Label>
-                        <ImageView fx:id="photo" fitHeight="214.0" fitWidth="200.0" layoutX="635.0" layoutY="216.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="photo" fitHeight="214.0" fitWidth="200.0" layoutX="635.0" layoutY="115.0" pickOnBounds="true" preserveRatio="true" />
                         <Label fx:id="solde" layoutX="51.0" layoutY="546.0" text="Vous avez 0 SCoins sur votre compte">
                            <font>
                               <Font size="24.0" />
@@ -92,7 +92,7 @@
                               </RadialGradient>
                            </textFill>
                         </Button>
-                        <Button fx:id="modifier1" layoutX="655.0" layoutY="441.0" mnemonicParsing="false" onAction="#changerPhotoAction" prefHeight="38.0" prefWidth="160.0" text="Changez votre photo">
+                        <Button fx:id="modifier1" layoutX="655.0" layoutY="343.0" mnemonicParsing="false" onAction="#changerPhotoAction" prefHeight="38.0" prefWidth="160.0" text="Changez votre photo">
                            <textFill>
                               <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
                                  <stops>
@@ -103,6 +103,30 @@
                            </textFill>
                         </Button>
                         <Button layoutX="709.0" layoutY="545.0" mnemonicParsing="false" onAction="#historiqueAction" prefHeight="38.0" prefWidth="150.0" style="-fx-background-color: #4682B4;" text="Historique d'achat" />
+                        <Label layoutX="34.0" layoutY="249.0" text="Adresse:">
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="adresse" layoutX="236.0" layoutY="247.0" prefHeight="31.0" prefWidth="247.0" />
+                        <Label layoutX="34.0" layoutY="290.0" text="Ville:">
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="ville" layoutX="236.0" layoutY="288.0" prefHeight="31.0" prefWidth="247.0" />
+                        <Label layoutX="34.0" layoutY="331.0" text="Code postal:">
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="zip" layoutX="237.0" layoutY="329.0" onKeyTyped="#changerAction" prefHeight="31.0" prefWidth="247.0" />
+                        <Label layoutX="34.0" layoutY="373.0" text="Numéro de téléphone:">
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="telephone" layoutX="237.0" layoutY="372.0" onKeyTyped="#changerAction" prefHeight="31.0" prefWidth="247.0" />
                      </children>
                   </AnchorPane>
                </content>

@@ -103,6 +103,7 @@ public class ReclamationService {
 
     public ObservableList<Reclamation> afficherReclamation(int idUser) {
         try {
+           // System.out.println(idUser);
             ObservableList<Reclamation> list = FXCollections.observableArrayList();
             // to correct idUserDemandeur -> idUserOffreur
             PreparedStatement pt = c.prepareStatement("Select * From Reclamation where user = ?");
@@ -370,6 +371,22 @@ public class ReclamationService {
             System.out.println(ex);
         }
     }
+     
+     public int countReclamationUser(int idUser)
+     {
+          try {
+            PreparedStatement pt = c.prepareStatement("Select count(*) From Reclamation where userreclame=?");
+            pt.setInt(1, idUser);
+            ResultSet rs = pt.executeQuery();
+            while (rs.next()) {
+               return rs.getInt(1);
+            }
+            
+        } catch (SQLException ex) {
+
+        }
+        return -1;
+     }
     
     
 
