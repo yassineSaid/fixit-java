@@ -16,6 +16,8 @@ import Entities.Reclamation;
 import Entities.Service;
 import Entities.User;
 import Services.ReclamationService;
+import java.awt.Desktop;
+import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Iterator;
@@ -151,7 +153,7 @@ public class ReclamationFrontController implements Initializable {
     public void selectservice() {
         ObservableList<Service> list = FXCollections.observableArrayList();
         ReclamationService r = new ReclamationService();
-        list = r.getServiceuserreclamer(userReclamer.getValue().toString());
+        list = r.getServiceuserreclamer(userReclamer.getValue().getUsername());
         serviceRendu.setItems(list);
     }
 
@@ -226,7 +228,7 @@ public class ReclamationFrontController implements Initializable {
 
         ReclamationService recServ = new ReclamationService();
 
-       /* if (event.getClickCount() == 2) {
+        /* if (event.getClickCount() == 2) {
             try {
 
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/detailReclamationFront.fxml"));
@@ -245,7 +247,6 @@ public class ReclamationFrontController implements Initializable {
                 System.out.println(ex);
             }
         }*/
-
         if (event.getClickCount() == 1) {
             Reclamation rec = new Reclamation();
             rec = listRec.getSelectionModel().getSelectedItem();
@@ -386,6 +387,19 @@ public class ReclamationFrontController implements Initializable {
             progressRec.setProgress(1.0);
             progrssCircle.setProgress(1.0);
             etape.setText("Votre reclamation a été bien traité");
+        }
+        if (event.getClickCount() == 2) {
+            if (rec.getTraite() == 1) {
+                File currDir = new File(System.getProperty("user.dir", "."));
+                String path = currDir.toPath().getRoot().toString() + "wamp64/www/fixit1/web/RapportsReclamation/r" + rec.getId() + ".pdf";
+                File f = new File(path);
+                try {
+                    Desktop.getDesktop().open(f);
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+
+            }
         }
     }
 
