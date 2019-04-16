@@ -12,6 +12,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -33,7 +34,7 @@ import javafx.stage.Stage;
  * @author lenovo
  */
 public class LoginController implements Initializable {
-    
+
     @FXML
     private Button connexion;
     @FXML
@@ -53,9 +54,14 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         errot.setVisible(false);
-        
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                login.requestFocus();
+            }
+        });
     }
-    
+
     @FXML
     private void connexionAction(ActionEvent event) {
         errot.setVisible(false);
@@ -67,25 +73,28 @@ public class LoginController implements Initializable {
                 if (U.getRoles() == "admin") {
 
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/BackIndex.fxml"));
-                    Parent back = fxmlLoader.load();
-                    Scene scene = new Scene(back);
-                    
+                    Parent front = fxmlLoader.load();
+                    BackIndexController controller = fxmlLoader.<BackIndexController>getController();
+                    controller.setUser(U);
+                    Scene scene = new Scene(front);
+
                     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     stage.show();
                     stage.setScene(scene);
                 } else {
                     //System.out.println(U.getRoles());
-                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/FrontIndex.fxml"));
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/FrontAccueil.fxml"));
                     Parent front = fxmlLoader.load();
-                    FrontIndexController controller = fxmlLoader.<FrontIndexController>getController();
+                    FrontAccueilController controller = fxmlLoader.<FrontAccueilController>getController();
                     controller.setUser(U);
                     Scene scene = new Scene(front);
-                    
+
                     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     stage.show();
                     stage.setScene(scene);
+                    
                 }
-                
+
             } catch (IOException ex) {
                 Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -94,7 +103,7 @@ public class LoginController implements Initializable {
             errot.setVisible(true);
         }
     }
-    
+
     @FXML
     private void keyPressed(KeyEvent event) {
         if (event.getCode().equals(KeyCode.ENTER)) {
@@ -102,7 +111,7 @@ public class LoginController implements Initializable {
             connexionAction(ae);
         }
     }
-    
+
     @FXML
     private void mdpOublieAction(ActionEvent event) {
         try {
@@ -110,14 +119,14 @@ public class LoginController implements Initializable {
             Parent front = fxmlLoader.load();
             MdpOublieController controller = fxmlLoader.<MdpOublieController>getController();
             Scene scene = new Scene(front);
-            
+
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.show();
             stage.setScene(scene);
         } catch (IOException iOException) {
         }
     }
-    
+
     @FXML
     private void inscriptionAction(ActionEvent event) {
         try {
@@ -125,12 +134,12 @@ public class LoginController implements Initializable {
             Parent front = fxmlLoader.load();
             InscriptionController controller = fxmlLoader.<InscriptionController>getController();
             Scene scene = new Scene(front);
-            
+
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.show();
             stage.setScene(scene);
         } catch (IOException iOException) {
         }
     }
-    
+
 }

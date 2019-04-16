@@ -12,6 +12,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
@@ -29,7 +31,6 @@ public class ServiceUserService {
         try
             {                    
                 ObservableList<ServiceUser> list = FXCollections.observableArrayList();
-                    System.out.println("aaaaa");
 
                 PreparedStatement pt=c.prepareStatement("SELECT * from service_user where idUser=?");
                 pt.setInt(1, id);
@@ -54,7 +55,6 @@ public class ServiceUserService {
     public String  getServiceName(int id) throws SQLException
     {
        String list ="";
-                    System.out.println("aaaaa");
 
                 PreparedStatement pt=c.prepareStatement("SELECT nom from service where id=?");
                 pt.setInt(1, id);
@@ -64,6 +64,23 @@ public class ServiceUserService {
             Service su = new Service();
             su.setNom(rs.getString("nom"));        
             list+=rs.getString("nom");
+                   
+                }
+                return list;
+    }
+      public String  getServiceImage(int id) throws SQLException
+    {
+                String list ="";
+                    System.out.println("aaaaa");
+
+                PreparedStatement pt=c.prepareStatement("SELECT image_service from service where id=?");
+                pt.setInt(1, id);
+                ResultSet rs= pt.executeQuery();
+                while(rs.next())
+                {
+            Service su = new Service();
+            su.setNom(rs.getString("image_service"));        
+            list+=rs.getString("image_service");
                    
                 }
                 return list;
@@ -82,6 +99,17 @@ public class ServiceUserService {
 	        {
 	            System.out.println(ex);
 	        }
+    }
+     public void supprimerServiceUser(int idS,int idU)
+    {
+         try {
+            PreparedStatement pt=c.prepareStatement("delete from service_user where idService=? and idUser=?");
+            pt.setInt(1,idS);
+            pt.setInt(2,idU);
+            pt.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(ServiceService.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }

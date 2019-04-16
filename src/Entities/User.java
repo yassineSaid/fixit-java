@@ -1,10 +1,34 @@
 package Entities;
 
+import Services.Utils;
+
 public class User {
 
 
     private int id, enabled, phone, solde;
     private String email, email_canonical, username, username_canonical, firstname, lastname, roles, image, address, zip_code, city, country, password;
+    
+    public User(){
+        
+    }
+
+    public User(int id, int enabled, int phone, int solde, String email, String username, String firstname, String lastname, String roles, String image, String address, String zip_code, String city) {
+        this.id = id;
+        this.enabled = enabled;
+        this.phone = phone;
+        this.solde = solde;
+        this.email = email;
+        this.username = username;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.roles = roles;
+        this.image = image;
+        this.address = address;
+        this.zip_code = zip_code;
+        this.city = city;
+    }
+    
+    
 
     public int getId() {
         return id;
@@ -144,7 +168,7 @@ public class User {
     }
      @Override
         public String toString() {
-            return username;
+            return Utils.upperCaseFirst(firstname)+" "+Utils.upperCaseFirst(lastname);
         }
     
 

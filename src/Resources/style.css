@@ -49,7 +49,21 @@
 }
 .supprimer:hover
 {
-    -fx-background-color: #ff7272;
+    -fx-background-color: #1866e2;
+    -fx-background-radius: 8,7,6;
+    -fx-text-fill: white;
+    -fx-text-alignment: center;
+}
+.historiquePaiement
+{
+    -fx-background-color: #3882f7;
+    -fx-background-radius: 8,7,6;
+    -fx-text-fill: white;
+    -fx-text-alignment: center;
+}
+.historiquePaiement:hover
+{
+    -fx-background-color: #2f68c4;
     -fx-background-radius: 8,7,6;
     -fx-text-fill: white;
 }
@@ -268,4 +282,63 @@
     -fx-pref-width: 158px;
     -fx-text-fill: white;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}
+.table-historique .column-header .label {
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+}
+.table-historique .column-header {
+    -fx-background-color: none;
+	-fx-border-color: #00AB47;
+	-fx-border-width: 1 1;
+}
+.table-historique {
+    -fx-text-fill: black;
+}
+.table-historique *.scroll-bar:vertical *.increment-button,
+.table-historique *.scroll-bar:vertical *.decrement-button {
+  -fx-background-color: transparent;
+    -fx-background-radius : 0.0em;
+    -fx-padding :0.0 10.0 0.0 0.0;
+}
+
+.table-historique *.scroll-bar:vertical *.increment-arrow,
+.table-historique *.scroll-bar:vertical *.decrement-arrow {
+  -fx-background-color: white;
+    -fx-shape : " ";    
+    -fx-padding :0.0 0.15em;
+}
+.table-historique *.scroll-bar:vertical .track{
+    -fx-background-color :transparent;
+    -fx-border-color :transparent;
+    -fx-background-radius : 0.0em;
+    -fx-border-radius :2.0em;
+}
+.table-historique *.scroll-bar:vertical .thumb {
+    -fx-background-color :derive(black,90.0%);
+    -fx-background-insets : 2.0, 0.0, 0.0;
+    -fx-background-radius : 2.0em;
+}
+.table-historique *.scroll-bar .increment-arrow,
+.table-historique *.scroll-bar .decrement-arrow{
+    -fx-shape : " ";    
+    -fx-padding :0.15em 0;
+}
+.number-button{
+    -fx-opacity: 0;
+}
+.listServicesProfil .list-cell:odd {
+    -fx-background-color: rgba(255,255,255,0.3);
+}
+.listServicesProfil .list-cell:even {
+    -fx-background-color: rgba(255,255,255,0.7);
+}
+.listServicesProfil .list-cell:selected {
+    -fx-background-color: rgba(188,188,188,0.7);
+}
+.listServicesProfil .list-view {
+    -fx-background-color: transparent;
+}
+.rechercheButton{
+	
 }

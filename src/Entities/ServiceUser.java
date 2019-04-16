@@ -77,7 +77,7 @@ public class ServiceUser {
         try {
             ServiceUserService s=new ServiceUserService();
             //s.getServiceName(this.idService);
-            return ""+s.getServiceName(this.idService)+"     " + description + "       " + prix + "-SCoins" ;
+            return ""+s.getServiceName(this.idService)+"                    " + description + "                  " + prix + "-SCoins" ;
         } catch (SQLException ex) {
             Logger.getLogger(ServiceUser.class.getName()).log(Level.SEVERE, null, ex);
         }
