@@ -159,6 +159,39 @@ public class UserOutilService {
         }
         return list;
     }
+     
+     public ObservableList<UserOutil> afficherOutil() 
+             {
+                 System.out.println("aaaaaaaaaa");
+                 try
+                 {
+                     ObservableList list = FXCollections.observableArrayList();
+        Statement st = c.createStatement();
+        String req = "select * from user_outil";
+        ResultSet rs = st.executeQuery(req);
+        while (rs.next()) {
+            UserOutil uo = new UserOutil();
+            User u = new User();
+            u=this.getUser(rs.getInt(4));
+            Outil o = new Outil();
+            o=this.getOutil(rs.getInt(5));
+            uo.setDateLocation(rs.getDate(1));
+            uo.setDateRetour(rs.getDate(2));
+            uo.setTotal(rs.getInt(3));
+            uo.setUser(u);
+            uo.setOutil(o);
+            System.out.println(uo.getOutil());
+            list.add(uo);
+        }
+        return list;
+                 }
+                 catch(SQLException ex)
+                 {
+                     System.out.println(ex);
+                 }
+                 return null;
+        
+    }
     
 
 }

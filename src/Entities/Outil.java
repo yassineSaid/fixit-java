@@ -158,6 +158,11 @@ public class Outil {
     public void setIm(ImageView im) {
         this.im = im;
     }
+    
+    @Override
+        public String toString(){
+            return nom;
+        }
 
    
     

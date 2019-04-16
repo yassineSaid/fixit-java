@@ -8,19 +8,12 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" style="-fx-background-color: #CCCCCC;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.EspaceOutilBackController">
    <children>
              <fx:include fx:id="backIndex" source="BackIndex.fxml" />
-      <ImageView fitHeight="541.0" fitWidth="694.0" layoutX="569.0" layoutY="116.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.2;">
-         <image>
-            <Image url="@../Resources/marker.png" />
-         </image>
-      </ImageView>
       <Label layoutX="629.0" layoutY="41.0" prefHeight="51.0" prefWidth="469.0" text="Bienvenue sur FIXIT" textFill="#00ab47">
          <font>
             <Font size="52.0" />
@@ -151,6 +144,41 @@
                      </children>
                   </AnchorPane>
                </content></Tab>
+            <Tab text="Outils loués">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="tableOutilsLoues" layoutX="193.0" layoutY="51.0" prefHeight="421.0" prefWidth="653.0" styleClass="table" stylesheets="@../Resources/style.css">
+                          <columns>
+                            <TableColumn fx:id="nomUser" prefWidth="140.0" text="Nom de l'utilisateur" />
+                            <TableColumn fx:id="userNomOutil" prefWidth="107.0" text="Nom de l'outil" />
+                              <TableColumn fx:id="dateLocation" prefWidth="130.0" text="Date de location" />
+                              <TableColumn fx:id="dateRetour" minWidth="0.0" prefWidth="134.0" text="Date de retour" />
+                              <TableColumn fx:id="prix" minWidth="0.0" prefWidth="141.0" text="Prix" />
+                          </columns>
+                        </TableView>
+                        <Button fx:id="retourner" layoutX="641.0" layoutY="500.0" mnemonicParsing="false" onAction="#retournerAction" styleClass="modifierBack" stylesheets="@../Resources/style.css" text="Retourner" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Historique des locations">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="tableHistorique" layoutX="193.0" layoutY="73.0" prefHeight="421.0" prefWidth="653.0" styleClass="table" stylesheets="@../Resources/style.css">
+                           <columns>
+                              <TableColumn fx:id="nomUser1" prefWidth="140.0" text="Nom de l'utilisateur" />
+                              <TableColumn fx:id="userNomOutil1" prefWidth="107.0" text="Nom de l'outil" />
+                              <TableColumn fx:id="dateLocation1" prefWidth="130.0" text="Date de location" />
+                              <TableColumn fx:id="dateRetour1" minWidth="0.0" prefWidth="134.0" text="Date de retour" />
+                              <TableColumn fx:id="prix1" minWidth="0.0" prefWidth="141.0" text="Prix" />
+                           </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
         </tabs>
       </TabPane>
    </children>

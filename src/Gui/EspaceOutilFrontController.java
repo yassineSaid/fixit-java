@@ -107,8 +107,6 @@ public class EspaceOutilFrontController implements Initializable {
     @FXML
     private CheckBox conditions;
     @FXML
-    private Label erreur;
-    @FXML
     private Button buttonLouer;
     @FXML
     private Button buttonRetour;
@@ -152,7 +150,6 @@ public class EspaceOutilFrontController implements Initializable {
         location.setVisible(false);
         outilDejaLoue.setVisible(false);
         outilEpuise.setVisible(false);
-        erreur.setVisible(false);
         erreur1.setVisible(false);
         erreur2.setVisible(false);
         erreur3.setVisible(false);
@@ -301,13 +298,13 @@ public class EspaceOutilFrontController implements Initializable {
         if (dateLocation.getValue() != null && dateRetour.getValue() != null) {
             
             if (!verifierDate(dateLocation.getValue(), dateRetour.getValue())) {
-                erreur.setVisible(true);
-                erreur.setText("Date invalide!");
+                erreur1.setVisible(true);
+                erreur1.setText("Date invalide!");
                 dateLocation.setStyle("-fx-border-color: red;");
                 dateRetour.setStyle("-fx-border-color: red;");
                 
             } else {
-                erreur.setVisible(false);
+                erreur1.setVisible(false);
                 dateLocation.setStyle("-fx-border-color: transparent;");
                 dateRetour.setStyle("-fx-border-color: transparent;");
                 prixTotal.setText(Integer.toString(calculerprix()));

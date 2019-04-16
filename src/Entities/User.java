@@ -1,5 +1,7 @@
 package Entities;
 
+import Services.Utils;
+
 public class User {
 
 
@@ -166,7 +168,7 @@ public class User {
     }
      @Override
         public String toString() {
-            return username;
+            return Utils.upperCaseFirst(firstname)+" "+Utils.upperCaseFirst(lastname);
         }
     
 
