@@ -47,6 +47,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javax.mail.MessagingException;
 import org.controlsfx.glyphfont.FontAwesome;
 
 /**
@@ -404,7 +405,7 @@ public class EspaceServiceFrontController implements Initializable {
 "                \n" +
 "                <table class=\"one-column\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"border-spacing:0; border-left:1px solid #e8e7e5; border-right:1px solid #e8e7e5; border-bottom:1px solid #e8e7e5; border-top:1px solid #e8e7e5\" bgcolor=\"#FFFFFF\">\n" +
 "                  <tr>\n" +
-"                    <td align=\"center\" style=\"padding:50px 50px 50px 50px\"><p style=\"color:#262626; font-size:24px; text-align:center; font-family: Verdana, Geneva, sans-serif\"><strong>Mr </strong></p>\n" +
+"                    <td align=\"center\" style=\"padding:50px 50px 50px 50px\"><p style=\"color:#262626; font-size:24px; text-align:center; font-family: Verdana, Geneva, sans-serif\"><strong>Mr l'administrateur</strong></p>\n" +
 "                      <p style=\"color:#262626; font-size:16px; text-align:center; font-family: Verdana, Geneva, sans-serif; line-height:22px \"> Un service a été proposé par "+this.getUser().getUsername()+" <br />\n" +
 "                      <p> Veuillez Vérifier cette proposition </p>\n" +
 "                        <br />\n" +
@@ -416,7 +417,7 @@ public class EspaceServiceFrontController implements Initializable {
 "                      </table>\n" +
 "                      <p style=\"color:#000000; font-size:12px; text-align:center; font-family: Verdana, Geneva, sans-serif; line-height:22px \"> <br />\n" +
 "                        <br />\n" +
-"                        Lorem Ipsum loren ipsum</p></td>\n" +
+"                        </p></td>\n" +
 "                  </tr>\n" +
 "                </table>\n" +
 "                \n" +
@@ -436,13 +437,13 @@ public class EspaceServiceFrontController implements Initializable {
         list=us.getUsers(this.getUser().getId());
         for (User u : list) {
           if(u.getRoles().equals("Administrateur")){
-            System.out.println("slim");
+            System.out.println(u.getEmail());
             //  MailService mailService= new MailService("slim.bensalah@esprit.tn","Services Proposés",mailContentReclamant);
               try{ 
-                  MailService mailService= new MailService("slim.bensalah@esprit.tn","Services Proposés",mailContentReclamant);
+                  MailService mailService= new MailService(u.getEmail(),"Services Proposés",mailContentReclamant);
               mailService.sendEmail();
               }
-              catch(Exception e){
+              catch(MessagingException e){
                   System.out.println(e);
               }
             }

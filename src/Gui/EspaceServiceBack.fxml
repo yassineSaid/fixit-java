@@ -13,19 +13,12 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" style="-fx-background-color: #CCCCCC;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.EspaceServiceBackController">
     <children>
         <fx:include fx:id="backIndex" source="BackIndex.fxml" />
-      <ImageView fitHeight="541.0" fitWidth="694.0" layoutX="569.0" layoutY="116.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.2;">
-         <image>
-            <Image url="@../Resources/marker.png" />
-         </image>
-      </ImageView>
       <Label layoutX="629.0" layoutY="41.0" prefHeight="51.0" prefWidth="469.0" text="Bienvenue sur FIXIT" textFill="#00ab47">
          <font>
             <Font size="52.0" />
@@ -76,7 +69,7 @@
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <Button fx:id="supprimerService" layoutX="544.0" layoutY="498.0" mnemonicParsing="false" onAction="#supprimerService" prefHeight="25.0" prefWidth="113.0" styleClass="supprimerBack" stylesheets="@../Resources/style.css" text="Supprimer" />
-                        <AnchorPane fx:id="ajouterServ" layoutX="98.0" prefHeight="489.0" prefWidth="802.0" visible="false">
+                        <AnchorPane fx:id="ajouterServ" layoutX="98.0" prefHeight="489.0" prefWidth="802.0">
 
                            <children>
                               <ComboBox fx:id="categoS" layoutX="543.0" layoutY="53.0" prefHeight="32.0" prefWidth="219.0" promptText="selectionner une catégorie" />
@@ -153,6 +146,23 @@
                      </children>
                   </AnchorPane>
                </content>
+            </Tab>
+            <Tab text="Services proposés">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="tableProposition" layoutX="55.0" layoutY="79.0" onMousePressed="#itemSelectedP" prefHeight="354.0" prefWidth="665.0">
+                          <columns>
+                            <TableColumn fx:id="nomServicePropose" prefWidth="176.99996948242188" text="Nom" />
+                            <TableColumn fx:id="categorieServicePropose" prefWidth="157.0" text="Catégorie" />
+                              <TableColumn fx:id="descriptionServicePropose" prefWidth="330.0" text="Description" />
+                          </columns>
+                        </TableView>
+                        <Button fx:id="traiterProposition" layoutX="789.0" layoutY="115.0" mnemonicParsing="false" onAction="#traiterProposition" prefHeight="30.0" prefWidth="150.0" styleClass="ajouterBack" stylesheets="@../Resources/style.css" text="Traiter" />
+                        <Button fx:id="rejeterProposition" layoutX="789.0" layoutY="174.0" mnemonicParsing="false" onAction="#rejeterProposition" styleClass="supprimerBack" stylesheets="@../Resources/style.css" text="Rejeter" />
+                     </children>
+                  </AnchorPane>
+              </content>
             </Tab>
             <Tab text="Statistiques">
                <content>

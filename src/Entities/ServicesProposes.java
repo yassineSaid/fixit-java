@@ -10,11 +10,27 @@ package Entities;
  * @author SELON
  */
 public class ServicesProposes {
+    private int id;
     private String nom;
     private String categorieService;
     private String description;
 
     public ServicesProposes() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public ServicesProposes(int id, String nom, String categorieService, String description) {
+        this.id = id;
+        this.nom = nom;
+        this.categorieService = categorieService;
+        this.description = description;
     }
 
     public ServicesProposes(String nom, String categorieService, String description) {

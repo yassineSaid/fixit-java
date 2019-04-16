@@ -38,7 +38,6 @@ public class QuizUserService {
         try
             {                    
                 ObservableList<Integer> list = FXCollections.observableArrayList();
-                    System.out.println("aaaaa");
 
                 PreparedStatement pt=c.prepareStatement("SELECT * from quiz_user where idUser=?");
                 pt.setInt(1, id);
@@ -62,7 +61,6 @@ public class QuizUserService {
         try
             {                    
                 //ObservableList<Integer> list = FXCollections.observableArrayList();
-                    System.out.println("aaaaa");
                     int a=0;
 
                 PreparedStatement pt=c.prepareStatement("SELECT * from quiz_user where idUser=? and idQuiz=?");
