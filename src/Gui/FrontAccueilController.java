@@ -5,24 +5,38 @@
  */
 package Gui;
 
+import Entities.Avis;
 import Entities.User;
+import Services.AvisService;
 import Services.UserService;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.control.Pagination;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.util.Duration;
 import org.controlsfx.control.GridCell;
 import org.controlsfx.control.GridView;
+import org.controlsfx.control.Rating;
 
 /**
  * FXML Controller class
@@ -39,6 +53,10 @@ public class FrontAccueilController implements Initializable {
     private TextField rechercher;
 
     User user;
+    @FXML
+    private Pagination paginator;
+    @FXML
+    private ListView<Avis> listAvis;
 
     public User getUser() {
         return user;
@@ -53,12 +71,29 @@ public class FrontAccueilController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        
         Platform.runLater(() -> {
             frontIndexController.setUser(user);
             frontIndexController.initialize(null, null);
             rechercher.textProperty().addListener((observable, oldValue, newValue) -> {
-                afficherUsers();
+            afficherUsers();
+           
         });
+             AvisService avisServ = new AvisService();
+        ObservableList<Avis> list = FXCollections.observableArrayList();
+        list = avisServ.top5();
+            paginator.setMaxPageIndicatorCount(5);
+            paginator.setPageCount(list.size());
+            Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(3), event -> {
+            int pos = (paginator.getCurrentPageIndex()+1) % paginator.getPageCount();
+            paginator.setCurrentPageIndex(pos);
+        }));
+        fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
+        fiveSecondsWonder.play();
+             getAvis();
+            listAvis.setCellFactory(v -> new Poules());
+            
             afficherUsers();
         });
     }
@@ -124,5 +159,79 @@ public class FrontAccueilController implements Initializable {
             }
         }
         return null;
+    }
+    
+    public void getAvis()
+    {
+        
+        AvisService avisServ = new AvisService();
+        ObservableList<Avis> list = FXCollections.observableArrayList();
+        list = avisServ.top5();
+        listAvis.setItems(list);
+        paginator.setPageFactory(this::createPage);
+    }
+    
+    private Node createPage(int pageIndex) {
+        
+        AvisService avisServ = new AvisService();
+        ObservableList<Avis> list = FXCollections.observableArrayList();
+        list = avisServ.top5();
+        int fromIndex;
+        int toIndex;
+        if(pageIndex==list.size())
+        {
+            pageIndex=0;
+            fromIndex = pageIndex * 1;
+            toIndex = Math.min(fromIndex +1 , list.size());
+        }
+        else
+        {
+            pageIndex=paginator.getCurrentPageIndex();
+            fromIndex = pageIndex * 1;
+            toIndex = Math.min(fromIndex +1 , list.size());
+        }
+       
+        listAvis.setItems(FXCollections.observableArrayList(list.subList(fromIndex, toIndex)));
+
+        return listAvis;
+    }
+    
+     public class Poules extends ListCell<Avis> {
+
+        public Poules() {
+        }
+
+        protected void updateItem(Avis item, boolean bln) {
+            super.updateItem(item, bln);
+            if (item != null) {
+                Text satisfaction = new Text(item.getSatisfaction());
+                Text description = new Text(item.getDescription());
+                Text userName = new Text(item.getUser().getUsername());
+                satisfaction.setStyle("-fx-font-size: 23 arial;");
+                description.setStyle("-fx-font-size: 14 arial;");
+                userName.setStyle("-fx-font-size: 18 arial;");
+               Rating rate= new Rating();
+               rate.setRating(item.getNote());
+               EventHandler<MouseEvent> handler = MouseEvent::consume;
+        rate.addEventFilter(MouseEvent.ANY, handler);
+               rate.setMaxHeight(1);
+                VBox vBox = new VBox(satisfaction,userName, description);
+                vBox.setStyle("-fx-font-color: transparent;");
+                vBox.setSpacing(10);
+                Text txt = new Text("");
+                VBox vBox1 = new VBox(txt,rate);
+                vBox1.setStyle("-fx-font-color: transparent;");
+                vBox1.setSpacing(15);
+                    HBox hBox = new HBox(vBox1, vBox);
+                    hBox.setStyle("-fx-font-color: transparent;");
+                    hBox.setSpacing(50);
+                    
+                    setGraphic(hBox);
+                
+
+                // hBox.setStyle("-fx-alignment: center ;");
+                //hBox.gets
+            }
+        }
     }
 }

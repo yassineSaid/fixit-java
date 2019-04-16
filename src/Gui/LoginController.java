@@ -92,6 +92,7 @@ public class LoginController implements Initializable {
                     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     stage.show();
                     stage.setScene(scene);
+                    
                 }
 
             } catch (IOException ex) {

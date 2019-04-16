@@ -14,17 +14,16 @@
                   <Image url="@../Resources/marker.png" />
                </image>
             </ImageView>
-            <Button fx:id="service" layoutX="12.0" layoutY="233.0" mnemonicParsing="false" onAction="#espaceService" prefHeight="57.0" prefWidth="234.0" text="Espace Service" />
-            <Button fx:id="espaceOutil" layoutX="13.0" layoutY="306.0" mnemonicParsing="false" onAction="#espaceOutil" prefHeight="51.0" prefWidth="234.0" text="Espace Outils" />
+            <Button fx:id="service" layoutX="13.0" layoutY="202.0" mnemonicParsing="false" onAction="#espaceService" prefHeight="57.0" prefWidth="234.0" text="Espace Service" />
+            <Button fx:id="espaceOutil" layoutX="14.0" layoutY="275.0" mnemonicParsing="false" onAction="#espaceOutil" prefHeight="51.0" prefWidth="234.0" text="Espace Outils" />
 
-            <Button fx:id="EspaceProd" layoutX="15.0" layoutY="370.0" mnemonicParsing="false" onAction="#espaceProduit" prefHeight="51.0" prefWidth="234.0" text="Espace Produits" />
-
-            <Button fx:id="EspaceProduit" layoutX="15.0" layoutY="371.0" mnemonicParsing="false" onAction="#espaceProduit" prefHeight="51.0" prefWidth="234.0" text="Espace Produits" />
-            <Button fx:id="espaceReclamation" layoutX="15.0" layoutY="434.0" mnemonicParsing="false" onAction="#espaceReclamation" prefHeight="51.0" prefWidth="234.0" text="Espace Réclamations" />
+            <Button fx:id="EspaceProd" layoutX="16.0" layoutY="339.0" mnemonicParsing="false" onAction="#espaceProduit" prefHeight="51.0" prefWidth="234.0" text="Espace Produits" />
+            <Button fx:id="espaceReclamation" layoutX="16.0" layoutY="403.0" mnemonicParsing="false" onAction="#espaceReclamation" prefHeight="51.0" prefWidth="234.0" text="Espace Réclamations" />
       
-            <Button layoutX="15.0" layoutY="500.0" mnemonicParsing="false" onAction="#espaceUtilisateursAction" prefHeight="51.0" prefWidth="234.0" text="Espace Utilisateurs" />
-            <Button layoutX="15.0" layoutY="565.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="234.0" text="Espace Annonces" />
+            <Button layoutX="16.0" layoutY="469.0" mnemonicParsing="false" onAction="#espaceUtilisateursAction" prefHeight="51.0" prefWidth="234.0" text="Espace Utilisateurs" />
+            <Button layoutX="16.0" layoutY="534.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="234.0" text="Espace Annonces" />
             <Button layoutY="14.0" mnemonicParsing="false" onAction="#logoutAction" styleClass="logout" stylesheets="@../Resources/styleY.css" text="Déconnexion" />
+            <Button fx:id="espaceAvis" layoutX="16.0" layoutY="597.0" mnemonicParsing="false" onAction="#espaceAvis" prefHeight="51.0" prefWidth="234.0" text="Espace Avis" />
          </children>
       </AnchorPane>
       <ImageView fitHeight="701.0" fitWidth="746.0" layoutX="426.0" layoutY="-5.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.2;">
