@@ -379,6 +379,12 @@ public class EspaceOutilFrontController implements Initializable {
         os.updateQuantie(o);
         uo.setOutil(o);
         uoservice.inserer(uo);
+        UserService us = new UserService();
+        us.modifierSolde(user, idOutilInserer);
+         user = us.connect(user.getUsername());
+            frontIndexController.setUser(user);
+            frontIndexController.initialize(null, null);
+        solde.setText(String.valueOf(user.getSolde()));
         
         initialize(null, null);
     }
