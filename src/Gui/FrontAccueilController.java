@@ -128,7 +128,40 @@ public class FrontAccueilController implements Initializable {
         fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
         fiveSecondsWonder.play();
         getAvis();
-        listAvis.setCellFactory(v -> new Poules());
+        listAvis.setCellFactory(item -> new ListCell<Avis>(){
+            protected void updateItem(Avis item, boolean bln) {
+            super.updateItem(item, bln);
+            if (item != null) {
+                Text satisfaction = new Text(item.getSatisfaction());
+                Text description = new Text(item.getDescription());
+                Text userName = new Text(item.getUser().getUsername());
+                satisfaction.setStyle("-fx-font-size: 23 arial;");
+                description.setStyle("-fx-font-size: 14 arial;");
+                userName.setStyle("-fx-font-size: 18 arial;");
+                Rating rate = new Rating();
+                rate.setRating(item.getNote());
+                EventHandler<MouseEvent> handler = MouseEvent::consume;
+                rate.addEventFilter(MouseEvent.ANY, handler);
+                rate.setMaxHeight(1);
+                VBox vBox = new VBox(satisfaction, userName, description);
+                vBox.setStyle("-fx-font-color: transparent;");
+                vBox.setSpacing(10);
+                Text txt = new Text("");
+                VBox vBox1 = new VBox(txt, rate);
+                vBox1.setStyle("-fx-font-color: transparent;");
+                vBox1.setSpacing(15);
+                HBox hBox = new HBox(vBox1, vBox);
+                hBox.setStyle("-fx-font-color: transparent;");
+                hBox.setSpacing(50);
+
+                setGraphic(hBox);
+
+                // hBox.setStyle("-fx-alignment: center ;");
+                //hBox.gets
+            }
+        }
+            
+        });
     }
 
     public void afficherUsers() {
@@ -248,41 +281,5 @@ public class FrontAccueilController implements Initializable {
         return listAvis;
     }
 
-    public class Poules extends ListCell<Avis> {
 
-        public Poules() {
-        }
-
-        protected void updateItem(Avis item, boolean bln) {
-            super.updateItem(item, bln);
-            if (item != null) {
-                Text satisfaction = new Text(item.getSatisfaction());
-                Text description = new Text(item.getDescription());
-                Text userName = new Text(item.getUser().getUsername());
-                satisfaction.setStyle("-fx-font-size: 23 arial;");
-                description.setStyle("-fx-font-size: 14 arial;");
-                userName.setStyle("-fx-font-size: 18 arial;");
-                Rating rate = new Rating();
-                rate.setRating(item.getNote());
-                EventHandler<MouseEvent> handler = MouseEvent::consume;
-                rate.addEventFilter(MouseEvent.ANY, handler);
-                rate.setMaxHeight(1);
-                VBox vBox = new VBox(satisfaction, userName, description);
-                vBox.setStyle("-fx-font-color: transparent;");
-                vBox.setSpacing(10);
-                Text txt = new Text("");
-                VBox vBox1 = new VBox(txt, rate);
-                vBox1.setStyle("-fx-font-color: transparent;");
-                vBox1.setSpacing(15);
-                HBox hBox = new HBox(vBox1, vBox);
-                hBox.setStyle("-fx-font-color: transparent;");
-                hBox.setSpacing(50);
-
-                setGraphic(hBox);
-
-                // hBox.setStyle("-fx-alignment: center ;");
-                //hBox.gets
-            }
-        }
-    }
 }

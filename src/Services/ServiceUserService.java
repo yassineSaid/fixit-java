@@ -71,7 +71,6 @@ public class ServiceUserService {
       public String  getServiceImage(int id) throws SQLException
     {
                 String list ="";
-                    System.out.println("aaaaa");
 
                 PreparedStatement pt=c.prepareStatement("SELECT image_service from service where id=?");
                 pt.setInt(1, id);
