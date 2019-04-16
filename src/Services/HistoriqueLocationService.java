@@ -107,4 +107,20 @@ public class HistoriqueLocationService {
         
     }
     
+    public void archiver(HistoriqueLocation ho) {
+        try {
+            PreparedStatement pt = c.prepareStatement("INSERT INTO historique_location "
+                    + "(dateLocation,dateRetour,total,idUser,idOutil) "
+                    + "Values (?,?,?,?,?)");
+            pt.setDate(1, ho.getDateLocation());
+            pt.setDate(2, ho.getDateRetour());
+            pt.setInt(3, ho.getTotal());
+            pt.setInt(4, ho.getIdUser().getId());
+            pt.setInt(5, ho.getIdOutil().getId());
+            pt.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+    }
+    
 }

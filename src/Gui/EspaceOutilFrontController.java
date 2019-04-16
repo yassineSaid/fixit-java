@@ -17,6 +17,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -277,8 +278,25 @@ public class EspaceOutilFrontController implements Initializable {
                                 louerAction(event);
                                 
                             } else {
-                                outilDejaLoue.setVisible(true);
-                                detailLocation.setVisible(true);
+                                try {
+                                    outilDejaLoue.setVisible(true);
+                                    detailLocation.setVisible(true);
+                                    dateLocation.setValue(LocalDate.parse(list2.get(0).getDateLocation().toString(), DateTimeFormatter.ISO_DATE));
+                                    dateRetour.setValue(LocalDate.parse(list2.get(0).getDateRetour().toString(), DateTimeFormatter.ISO_DATE));
+                                    prixTotal.setText(Integer.toString(list2.get(0).getTotal()));
+                                    Calendar c = Calendar.getInstance();
+                                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                                    c.setTime(sdf.parse(list2.get(0).getDateRetour().toString()));
+                                    c.add(Calendar.DAY_OF_MONTH, 3);
+                                    limite1.setText(list2.get(0).getDateRetour().toString());
+                                    limite2.setText(sdf.format(c.getTime()));
+                                    conditions.setSelected(true);
+                                    erreur1.setVisible(false);
+                                    erreur2.setVisible(false);
+                                    erreur3.setVisible(false);
+                                } catch (ParseException ex) {
+                                    Logger.getLogger(EspaceOutilFrontController.class.getName()).log(Level.SEVERE, null, ex);
+                                }
                             }
                         } else {
                             if (list1.isEmpty()) {
@@ -287,6 +305,23 @@ public class EspaceOutilFrontController implements Initializable {
                             } else if (!list2.isEmpty()) {
                                 outilDejaLoue.setVisible(true);
                                 detailLocation.setVisible(true);
+                                dateLocation.setValue(LocalDate.parse(list2.get(0).getDateLocation().toString(), DateTimeFormatter.ISO_DATE));
+                                    dateRetour.setValue(LocalDate.parse(list2.get(0).getDateRetour().toString(), DateTimeFormatter.ISO_DATE));
+                                    prixTotal.setText(Integer.toString(list2.get(0).getTotal()));
+                                    Calendar c = Calendar.getInstance();
+                                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                                try {
+                                    c.setTime(sdf.parse(list2.get(0).getDateRetour().toString()));
+                                } catch (ParseException ex) {
+                                    Logger.getLogger(EspaceOutilFrontController.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                    c.add(Calendar.DAY_OF_MONTH, 3);
+                                    limite1.setText(list2.get(0).getDateRetour().toString());
+                                    limite2.setText(sdf.format(c.getTime()));
+                                    conditions.setSelected(true);
+                                    erreur1.setVisible(false);
+                                    erreur2.setVisible(false);
+                                    erreur3.setVisible(false);
                             } else {
                                 outilEpuise.setVisible(true);
                                 detailLocation.setVisible(false);
@@ -329,6 +364,12 @@ public class EspaceOutilFrontController implements Initializable {
         acheter.setVisible(false);
         buttonLouer.setDisable(true);
         list.setStyle("-fx-control-inner-background:  transparent;");
+        dateLocation.setValue(null);
+        dateRetour.setValue(null);
+        conditions.setSelected(false);
+        prixTotal.setText("0");
+        limite1.setText("jj/mm/aaaa");
+        limite2.setText("jj/mm/aaaa");
     }
     
     private Node createPage(int pageIndex) {
@@ -376,11 +417,11 @@ public class EspaceOutilFrontController implements Initializable {
         uo.setUser(user);
         uo.setTotal(Integer.parseInt(prixTotal.getText()));
         Outil o = uoservice.getOutil(idOutilInserer);
-        os.updateQuantie(o);
+        os.updateQuantie(o,(-1));
         uo.setOutil(o);
         uoservice.inserer(uo);
         UserService us = new UserService();
-        us.modifierSolde(user, idOutilInserer);
+        us.modifierSolde(user, (-(Integer.parseInt(prixTotal.getText())+10)));
          user = us.connect(user.getUsername());
             frontIndexController.setUser(user);
             frontIndexController.initialize(null, null);

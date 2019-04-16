@@ -225,12 +225,14 @@ public class UserOutilService {
         
     }
      
-     public void supprimerUserOutil(int id) {
+     public void supprimerUserOutil(UserOutil uo) {
         try {
-            PreparedStatement pt = c.prepareStatement("delete from user_outil where id=?");
-            pt.setInt(1, id);
+            PreparedStatement pt = c.prepareStatement("delete from user_outil where idUser=? and idOutil=?");
+            pt.setInt(1, uo.getUser().getId());
+            pt.setInt(2, uo.getOutil().getId());
             pt.execute();
         } catch (SQLException ex) {
+            System.out.println("teeeest");
             Logger.getLogger(OutilService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

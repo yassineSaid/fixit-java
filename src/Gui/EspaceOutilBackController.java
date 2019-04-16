@@ -15,6 +15,7 @@ import Services.HistoriqueLocationService;
 import Services.OutilService;
 import Services.ImageService;
 import Services.UserOutilService;
+import Services.UserService;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -187,6 +188,7 @@ public class EspaceOutilBackController implements Initializable {
                 
                 modifierOutil.setDisable(true);
                 supprimerOutil.setDisable(true);
+                retourner.setDisable(true);
                 
                 nomL.setVisible(false);
                 quantiteL.setVisible(false);
@@ -571,5 +573,27 @@ public class EspaceOutilBackController implements Initializable {
 
     @FXML
     private void retournerAction(ActionEvent event) {
+        HistoriqueLocation hl = new HistoriqueLocation();
+        HistoriqueLocationService hs = new HistoriqueLocationService();
+        UserOutilService us = new UserOutilService();
+         OutilService os = new OutilService();
+        UserOutil uo = tableOutilsLoues.getSelectionModel().getSelectedItem();
+        hl.setDateLocation(uo.getDateLocation());
+        hl.setDateRetour(uo.getDateRetour());
+        hl.setIdOutil(uo.getOutil());
+        hl.setIdUser(uo.getUser());
+        hl.setTotal(uo.getTotal());
+        hs.archiver(hl);
+        
+        os.updateQuantie(uo.getOutil(),(1));
+        us.supprimerUserOutil(uo);
+        UserService userservice = new UserService();
+        userservice.modifierSolde(uo.getUser(), 10);
+        initialize(null, null);
+    }
+
+    @FXML
+    private void itemSelectedOutilLoues(MouseEvent event) {
+        retourner.setDisable(false);
     }
 }
