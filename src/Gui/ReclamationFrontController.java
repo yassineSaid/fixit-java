@@ -143,7 +143,41 @@ public class ReclamationFrontController implements Initializable {
             description.setText("");
             details.setVisible(false);
             getReclamations();
-            listReclam.setCellFactory(v -> new Poules());
+            listReclam.setCellFactory(item -> new ListCell<Reclamation>(){
+                protected void updateItem(Reclamation item, boolean bln) {
+            super.updateItem(item, bln);
+            if (item != null) {
+                Text userrec = new Text("Contre :" + item.getUserReclame());
+                Text date = new Text("Le : " + item.getDateReclamation());
+                Text objet = new Text("Objet : " + item.getObjet());
+                userrec.setStyle("-fx-font-size: 15 arial;");
+                date.setStyle("-fx-font-size: 15 arial;");
+                objet.setStyle("-fx-font-size: 15 arial;");
+                Image traite = new Image("file:/wamp64/www/fixit/web/service/images/icons/traite.png", 60, 80, false, false);
+                ImageView traiteV = new ImageView(traite);
+                Image encours = new Image("file:/wamp64/www/fixit/web/service/images/icons/encours.jpg", 60, 80, false, false);
+                ImageView encoursV = new ImageView(encours);
+
+                VBox vBox = new VBox(userrec, date, objet);
+                vBox.setStyle("-fx-font-color: transparent;");
+                vBox.setSpacing(10);
+                if (item.getTraite() == 1) {
+                    HBox hBox = new HBox(traiteV, vBox);
+                    hBox.setStyle("-fx-font-color: transparent;");
+                    hBox.setSpacing(10);
+                    setGraphic(hBox);
+                } else {
+                    HBox hBox = new HBox(encoursV, vBox);
+                    hBox.setStyle("-fx-font-color: transparent;");
+                    hBox.setSpacing(10);
+                    setGraphic(hBox);
+                }
+
+                // hBox.setStyle("-fx-alignment: center ;");
+                //hBox.gets
+            }
+        }
+            });
 
         });
 
@@ -399,46 +433,6 @@ public class ReclamationFrontController implements Initializable {
                     System.out.println(e);
                 }
 
-            }
-        }
-    }
-
-    public class Poules extends ListCell<Reclamation> {
-
-        public Poules() {
-        }
-
-        protected void updateItem(Reclamation item, boolean bln) {
-            super.updateItem(item, bln);
-            if (item != null) {
-                Text userrec = new Text("Contre :" + item.getUserReclame());
-                Text date = new Text("Le : " + item.getDateReclamation());
-                Text objet = new Text("Objet : " + item.getObjet());
-                userrec.setStyle("-fx-font-size: 15 arial;");
-                date.setStyle("-fx-font-size: 15 arial;");
-                objet.setStyle("-fx-font-size: 15 arial;");
-                Image traite = new Image("file:/wamp64/www/fixit/web/service/images/icons/traite.png", 60, 80, false, false);
-                ImageView traiteV = new ImageView(traite);
-                Image encours = new Image("file:/wamp64/www/fixit/web/service/images/icons/encours.jpg", 60, 80, false, false);
-                ImageView encoursV = new ImageView(encours);
-
-                VBox vBox = new VBox(userrec, date, objet);
-                vBox.setStyle("-fx-font-color: transparent;");
-                vBox.setSpacing(10);
-                if (item.getTraite() == 1) {
-                    HBox hBox = new HBox(traiteV, vBox);
-                    hBox.setStyle("-fx-font-color: transparent;");
-                    hBox.setSpacing(10);
-                    setGraphic(hBox);
-                } else {
-                    HBox hBox = new HBox(encoursV, vBox);
-                    hBox.setStyle("-fx-font-color: transparent;");
-                    hBox.setSpacing(10);
-                    setGraphic(hBox);
-                }
-
-                // hBox.setStyle("-fx-alignment: center ;");
-                //hBox.gets
             }
         }
     }
