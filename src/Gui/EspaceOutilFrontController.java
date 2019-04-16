@@ -10,6 +10,7 @@ import Entities.User;
 import Entities.UserOutil;
 import Services.OutilService;
 import Services.UserOutilService;
+import Services.UserService;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -47,7 +48,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * FXML Controller class
@@ -517,7 +520,23 @@ public class EspaceOutilFrontController implements Initializable {
     }
     
     @FXML
-    private void acheterScoin(ActionEvent event) {
+    private void acheterScoin(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/paiement.fxml"));
+        Parent root = fxmlLoader.load();
+        PaiementController controller = fxmlLoader.<PaiementController>getController();
+        controller.setUser(user);
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initOwner(((Node) event.getSource()).getScene().getWindow());
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setScene(scene);
+        stage.showAndWait();
+        UserService us = new UserService();
+        user = us.connect(user.getUsername());
+            frontIndexController.setUser(user);
+            frontIndexController.initialize(null, null);
+        solde.setText(String.valueOf(user.getSolde()));
     }
     
     
