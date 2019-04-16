@@ -277,7 +277,7 @@ public class ReclamationService {
                 u1.setUsername(this.getUserName(u1.getId()));
                 u1.setEmail(this.getUserEmail(rs.getInt("user")));
                 u1.setFirstname(this.getUserName(rs.getInt("user")));
-                u1.setLastname(this.getUserName(rs.getInt("userSStoufa  ")));
+                u1.setLastname(this.getUserName(rs.getInt("user")));
                 rec.setUserReclamant(u1);
 
                 rec.setDateReclamation(rs.getDate("DateReclamation"));

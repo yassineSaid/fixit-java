@@ -70,8 +70,9 @@ public class ProfilUserController implements Initializable {
     @FXML
     private VBox horraires;
 
-    String id;
-    User user;
+    private String id;
+    private String rech;
+    private User user;
     @FXML
     private HBox langues;
     @FXML
@@ -98,6 +99,15 @@ public class ProfilUserController implements Initializable {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public String getRech() {
+        return rech;
+    }
+
+    public void setRech(String rech) {
+        this.rech = rech;
+    }
+    
 
     /**
      * Initializes the controller class.
