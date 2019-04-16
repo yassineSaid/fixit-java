@@ -6,6 +6,7 @@
 package Services;
 
 import Entities.CategorieProduit;
+import Entities.ListAchat;
 import Entities.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -54,14 +55,14 @@ public class CategorieProduitService {
 
     }
 
-    public ObservableList<CategorieProduit> afficherCategorie() 
+    public ObservableList<CategorieProduit> afficherCategorie()
             throws SQLException {
         ObservableList list = FXCollections.observableArrayList();
         Statement st = Cn.createStatement();
         String req = "select * from categorie_produit";
         ResultSet rs = st.executeQuery(req);
         while (rs.next()) {
-            Image image1 = new Image("file:/wamp64/www/fixit/web/uploads/images/categorieProduit/"+rs.getString(4), 120, 120, false, false);
+            Image image1 = new Image("file:/wamp64/www/fixit/web/uploads/images/categorieProduit/" + rs.getString(4), 120, 120, false, false);
             CategorieProduit categorie = new CategorieProduit();
             categorie.setId(rs.getInt(1));
             categorie.setNom(rs.getString(2));
@@ -74,17 +75,39 @@ public class CategorieProduitService {
     }
 
     public void supprimerCategorie(Entities.CategorieProduit c) {
-        try{
-        String req="DELETE from categorie_produit where id=?";
-         PreparedStatement ste = Cn.prepareStatement(req);
-         ste.setInt(1, c.getId());
-         
-        ste.executeUpdate();
-        }
-       catch (SQLException ex) {
+        try {
+            String req = "DELETE from categorie_produit where id=?";
+            PreparedStatement ste = Cn.prepareStatement(req);
+            ste.setInt(1, c.getId());
+
+            ste.executeUpdate();
+        } catch (SQLException ex) {
             System.out.println(ex);
         }
     }
-  
+
+    public ObservableList<ListAchat> listAchat() {
+        try {
+            ObservableList<ListAchat> list = FXCollections.observableArrayList();
+            PreparedStatement pt = Cn.prepareStatement("SELECT* from achat_produit ");
+
+            ResultSet rs = pt.executeQuery();
+
+            while (rs.next()) {
+                Image image1 = new Image("file:/wamp64/www/fixit/web/uploads/images/produit/" + rs.getString("image"), 120, 120, false, false);
+                ListAchat p = new ListAchat();
+                p.setNom(rs.getString("Produit"));
+                p.setQuantite(rs.getInt("quantite"));
+                p.setPrix(rs.getInt("prix"));
+                p.setImage(rs.getString("image"));
+                p.setIm(new ImageView(image1));
+                list.add(p);
+            }
+            return list;
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return null;
+    }
 
 }

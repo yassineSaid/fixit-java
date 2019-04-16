@@ -6,6 +6,7 @@
 package Gui;
 
 import Entities.CategorieProduit;
+import Entities.ListAchat;
 import Services.CategorieProduitService;
 import Services.ImageService;
 import java.io.File;
@@ -60,6 +61,16 @@ public class EspaceProduitBackController implements Initializable {
     private String imageee;
     @FXML
     private Button openFile;
+    @FXML
+    private TableView<ListAchat> listDachat;
+    @FXML
+    private TableColumn<ListAchat, String> imageAchat;
+    @FXML
+    private TableColumn<ListAchat, String> produitAchat;
+    @FXML
+    private TableColumn<ListAchat, String> prixAchat;
+    @FXML
+    private TableColumn<ListAchat, String> QuantiteaAchat;
 
     /**
      * Initializes the controller class.
@@ -70,6 +81,11 @@ public class EspaceProduitBackController implements Initializable {
         modbtn.setDisable(true);
         supbtn.setDisable(true);
         ajoutbtn.setDisable(false);
+        imageAchat.setCellValueFactory(new PropertyValueFactory<ListAchat, String>("im"));
+        produitAchat.setCellValueFactory(new PropertyValueFactory<ListAchat, String>("Nom"));
+        prixAchat.setCellValueFactory(new PropertyValueFactory<ListAchat, String>("prix"));
+      QuantiteaAchat.setCellValueFactory(new PropertyValueFactory<ListAchat, String>("Quantite"));
+        
 
         cat.setCellValueFactory(new PropertyValueFactory<CategorieProduit, String>("Nom"));
         desc.setCellValueFactory(new PropertyValueFactory<CategorieProduit, String>("description"));
@@ -78,6 +94,7 @@ public class EspaceProduitBackController implements Initializable {
         CategorieProduitService crud = new CategorieProduitService();
         try {
             tabeCategorie.setItems(crud.afficherCategorie());
+            listDachat.setItems(crud.listAchat());
             // TODO
         } catch (SQLException ex) {
             Logger.getLogger(EspaceProduitBackController.class.getName()).log(Level.SEVERE, null, ex);

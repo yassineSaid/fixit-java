@@ -28,7 +28,6 @@ import javafx.scene.image.ImageView;
  * @author Ali Saidani
  */
 public class Produit {
-    
 
     Connection Cn = Connexion.getInstance().getCon();
 
@@ -145,7 +144,7 @@ public class Produit {
     public ObservableList<produit> getAllProduit() {
         try {
             ObservableList<produit> list = FXCollections.observableArrayList();
-            PreparedStatement pt = Cn.prepareStatement("Select * from produit ");
+            PreparedStatement pt = Cn.prepareStatement("Select * from produit p where p.quantite > 0  ");
 
             ResultSet rs = pt.executeQuery();
             while (rs.next()) {
@@ -287,6 +286,8 @@ public class Produit {
             while (rs.next()) {
                 c.setSolde(rs.getInt("solde"));
                 c.setId(rs.getInt("Id"));
+                c.setEmail(rs.getString("email"));
+                c.setAddress(rs.getString("address"));
             }
 
             return c;
@@ -392,7 +393,7 @@ public class Produit {
     }
 
     public int NombreLike(int idProd) {
-        int i=0;
+        int i = 0;
 
         try {
             String req = "Select * from produit_like where produit=?";
@@ -411,8 +412,9 @@ public class Produit {
 
         return 0;
     }
-     public int LikeExiste(int idUser, int idProd) {
-        int i=0;
+
+    public int LikeExiste(int idUser, int idProd) {
+        int i = 0;
 
         try {
             String req = "Select * from produit_like where user=? and produit=?";
@@ -432,5 +434,30 @@ public class Produit {
         }
 
         return 0;
+    }
+
+    public ObservableList<ListAchat> topProduit() {
+        try {
+            ObservableList<ListAchat> list = FXCollections.observableArrayList();
+            PreparedStatement pt = Cn.prepareStatement("SELECT SUM(p.quantite) somme ,p.produit ,p.image  FROM achat_produit p GROUP BY p.idProduit ORDER BY somme DESC");
+
+            ResultSet rs = pt.executeQuery();
+
+            while (rs.next()) {
+                Image image1 = new Image("file:/wamp64/www/fixit/web/uploads/images/produit/" + rs.getString(5), 120, 120, false, false);
+
+                ListAchat p = new ListAchat();
+                p.setId(rs.getInt("id"));
+                p.setNom(rs.getString("Nom"));
+                p.setQuantite(rs.getInt("somme"));
+                p.setImage(rs.getString("image"));
+                p.setIm(new ImageView(image1));
+                list.add(p);
+            }
+            return list;
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return null;
     }
 }
