@@ -245,42 +245,46 @@ public class ProfilController implements Initializable {
             afficherLanguesAction();
             afficherHorraireAction();
             afficherReposAction();
-            ServiceUserService r = new ServiceUserService();
-            ObservableList<ServiceUser> list = FXCollections.observableArrayList();
-            list = r.afficherServiceUser(this.user.getId());
-            mesServices.setItems(list);
-
+            afficherServices();
         });
     }
 
     @FXML
+    public void afficherServices() {
+        ServiceUserService r = new ServiceUserService();
+        ObservableList<ServiceUser> list = FXCollections.observableArrayList();
+        list = r.afficherServiceUser(this.user.getId());
+        mesServices.setItems(list);
+    }
+
+    @FXML
     private void modifierAction(ActionEvent event) {
-        String erreur="";
-        boolean e=false;
-        if (nom.getText().length()==0){
-            e=true;
-            erreur+="Le champ nom ne peut pas rester vide.";
+        String erreur = "";
+        boolean e = false;
+        if (nom.getText().length() == 0) {
+            e = true;
+            erreur += "Le champ nom ne peut pas rester vide.";
         }
-        if (prenom.getText().length()==0){
-            e=true;
-            erreur+="\nLe champ prenom ne peut pas rester vide.";
+        if (prenom.getText().length() == 0) {
+            e = true;
+            erreur += "\nLe champ prenom ne peut pas rester vide.";
         }
-        if (e){
+        if (e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Modification");
             alert.setHeaderText(null);
             alert.setContentText(erreur);
             alert.showAndWait();
-        }
-        else{
+        } else {
             UserService us = new UserService();
-            us.modifierUser(user, nom.getText(), prenom.getText(),adresse.getText(),ville.getText(),zip.getText(),Integer.parseInt(telephone.getText()));
+            us.modifierUser(user, nom.getText(), prenom.getText(), adresse.getText(), ville.getText(), zip.getText(), Integer.parseInt(telephone.getText()));
             user = us.connect(user.getUsername());
             frontIndexController.setUser(user);
             frontIndexController.initialize(null, null);
             refreshUser();
         }
     }
+
     @FXML
     private void changerAction(KeyEvent event) {
         TextField tf = (TextField) event.getSource();

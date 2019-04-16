@@ -6,25 +6,35 @@
 package Gui;
 
 import Entities.Horraire;
-import Entities.Langue;
-import Entities.User;
 import Services.HorraireService;
-import Services.LangueService;
+import Entities.Langue;
 import Services.UserLangueService;
+import Entities.ServiceUser;
+import Entities.User;
+import Services.ServiceUserService;
 import Services.UserService;
 import Services.Utils;
+import com.jfoenix.controls.JFXListView;
 import java.io.File;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -52,6 +62,8 @@ public class ProfilUserController implements Initializable {
     User user;
     @FXML
     private HBox langues;
+    @FXML
+    private ListView<HBox> services;
 
     public String getId() {
         return id;
@@ -84,6 +96,7 @@ public class ProfilUserController implements Initializable {
         HorraireService hs = new HorraireService();
         User u = us.getUser(id);
         loadLangues(u);
+        loadServices(u);
         loadHorraires(hs.getUserHorraire(u, 0), "dimanche");
         loadHorraires(hs.getUserHorraire(u, 1), "lundi");
         loadHorraires(hs.getUserHorraire(u, 2), "mardi");
@@ -134,9 +147,45 @@ public class ProfilUserController implements Initializable {
         }
     }
     
+    public void loadServices(User u)
+    {
+        ServiceUserService r = new ServiceUserService();
+        ObservableList<ServiceUser> list = r.afficherServiceUser(u.getId());
+        ObservableList<HBox> listHbox=FXCollections.observableArrayList();
+        for (ServiceUser su : list){
+            HBox h=new HBox();
+            HBox hp=new HBox();
+            VBox v=new VBox();
+            try {
+                Label prix=new Label(String.valueOf((int)su.getPrix())+" SCoins");
+                prix.setAlignment(Pos.CENTER_RIGHT);
+                //prix.setFont(Font.font(17));
+                hp.setAlignment(Pos.CENTER_RIGHT);
+                hp.setMaxWidth(Double.MAX_VALUE);
+                hp.getChildren().add(prix);
+                
+                Label nomService=new Label(r.getServiceName(su.getIdService()));
+                //nomService.setFont(Font.font(17));
+                nomService.setStyle("-fx-font-weight: bold");
+                Label description=new Label(su.getDescription());
+                //description.setFont(Font.font(16));
+                v.getChildren().add(nomService);
+                v.getChildren().add(description);
+                h.getChildren().add(v);
+                HBox.setHgrow(hp, Priority.ALWAYS);
+                h.getChildren().add(hp);
+                listHbox.add(h);
+            } catch (SQLException ex) {
+                Logger.getLogger(ProfilUserController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        services.setItems(listHbox);
+        services.applyCss();
+        
+    }
+    
     private void loadImage(User u) {
         File currDir = new File(System.getProperty("user.dir", "."));
-        System.out.println(currDir.toPath().getRoot().toString());
         if (u.getImage() != null) {
             String path = "file:" + currDir.toPath().getRoot().toString() + "wamp64\\www\\fixit\\web\\uploads\\images\\user\\" + u.getImage();
             Image image = new Image(path);
