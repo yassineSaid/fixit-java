@@ -11,6 +11,7 @@ import Entities.User;
 import Services.CategorieServiceService;
 import Services.HorraireService;
 import Services.ImageService;
+import Services.ProfilMesServices;
 import Services.ReposService;
 import Services.ServiceService;
 import Services.ServiceUserService;
@@ -279,52 +280,6 @@ public class ProfilController implements Initializable {
         su.supprimerServiceUser(s.getIdService(), s.getIdUser());
         this.initialize(null, null);
     }
-  public class Poules extends ListCell<ServiceUser> {
-
-        public Poules() {
-        }
-
-        protected void updateItem(ServiceUser item, boolean bln) {
-            super.updateItem(item, bln);
-            if (item != null) {
-                try {
-                    ServiceUserService ss=new ServiceUserService();
-                    Text nom = new Text(ss.getServiceName(item.getIdService()));
-                    Text description = new Text(item.getDescription());
-                    Text prix = new Text(Float.toString(item.getPrix()));
-                    Text s =new Text("SCoins");
-                    description.setWrappingWidth(300);;
-                    nom.setStyle("-fx-font-size: 25 arial;");
-                    description.setStyle("-fx-font-size: 15 arial;"
-                            + "-fx-pref-width: 158px;");
-                    VBox vBox = new VBox(nom, description);
-                    vBox.setStyle("-fx-font-color: transparent;");
-                    vBox.setSpacing(10);
-                    
-                    Image image = new Image("file:/wamp64/www/fixit/web/uploads/images/service/" + ss.getServiceImage(item.getIdService()), 120, 120, false, false);
-                    ImageView img = new ImageView(image);
-                    
-                    HBox hBox = new HBox(img, vBox,prix,s);
-                    hBox.setStyle("-fx-font-color: transparent;");
-                    hBox.setSpacing(10);
-                    setGraphic(hBox);
-                    /*   listCategorie.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
-                    @Override
-                    public void handle(javafx.scene.input.MouseEvent event) {
-                    
-                    CategorieService a = (CategorieService) listCategorie.getItems().get(listCategorie.getSelectionModel().getSelectedIndex());
-                    loadServiceFromDatabase(a.getId());
-                    listService.setCellFactory(lv -> new PoulesService());
-                    System.out.println("test");
-                    }
-                    });*/
-                } catch (SQLException ex) {
-                    Logger.getLogger(ProfilController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
-            }
-        }
-    }
     @FXML
     public void afficherServices() {
 
@@ -334,7 +289,7 @@ public class ProfilController implements Initializable {
                // mesServices.setItems(list);
                 
             loadServiceUserFromDatabase();
-            mesServices.setCellFactory(lv -> new Poules());
+            mesServices.setCellFactory(lv -> new ProfilMesServices());
     }
 
     @FXML
