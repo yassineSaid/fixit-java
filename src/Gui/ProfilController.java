@@ -41,6 +41,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -51,6 +52,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -216,6 +220,14 @@ public class ProfilController implements Initializable {
     private ComboBox<CategorieService> categorieProposition;
     @FXML
     private Button confirmerProposition;
+    @FXML
+    private Button retourAjouterService;
+    @FXML
+    private Button retourPropService;
+    @FXML
+    private Label labelMesServices;
+    @FXML
+    private Button supprimerSU;
 
     public User getUser() {
         return user;
@@ -244,16 +256,84 @@ public class ProfilController implements Initializable {
                 afficherLanguesAction();
                 afficherHorraireAction();
                 afficherReposAction();
+                /*SLIM*/ 
                 ServiceUserService r = new ServiceUserService();
                 ObservableList<ServiceUser> list = FXCollections.observableArrayList();
                 list = r.afficherServiceUser(this.user.getId());
-                mesServices.setItems(list);
+               // mesServices.setItems(list);
+                
+            loadServiceUserFromDatabase();
+            mesServices.setCellFactory(lv -> new Poules());
                 
            
  
         });
     }
+  private void loadServiceUserFromDatabase() {
+        try {
+            ServiceUserService su = new ServiceUserService();
+            ObservableList<ServiceUser> rs = su.afficherServiceUser(this.getUser().getId());
+            //paginationOutilFront.setPageFactory(this::createPage);
+            mesServices.setItems(rs);
+        } catch (Exception e) {
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+        }
+    }
 
+    @FXML
+    private void supprimerSU(ActionEvent event) {
+        ServiceUserService su =new ServiceUserService();
+        ServiceUser s = mesServices.getSelectionModel().getSelectedItem();
+        su.supprimerServiceUser(s.getIdService(), s.getIdUser());
+        this.initialize(null, null);
+    }
+  public class Poules extends ListCell<ServiceUser> {
+
+        public Poules() {
+        }
+
+        protected void updateItem(ServiceUser item, boolean bln) {
+            super.updateItem(item, bln);
+            if (item != null) {
+                try {
+                    ServiceUserService ss=new ServiceUserService();
+                    Text nom = new Text(ss.getServiceName(item.getIdService()));
+                    Text description = new Text(item.getDescription());
+                    Text prix = new Text(Float.toString(item.getPrix()));
+                    Text s =new Text("SCoins");
+                    description.setWrappingWidth(300);;
+                    nom.setStyle("-fx-font-size: 25 arial;");
+                    description.setStyle("-fx-font-size: 15 arial;"
+                            + "-fx-pref-width: 158px;");
+                    VBox vBox = new VBox(nom, description);
+                    vBox.setStyle("-fx-font-color: transparent;");
+                    vBox.setSpacing(10);
+                    
+                    Image image = new Image("file:/wamp64/www/fixit/web/uploads/images/service/" + ss.getServiceImage(item.getIdService()), 120, 120, false, false);
+                    ImageView img = new ImageView(image);
+                    
+                    HBox hBox = new HBox(img, vBox,prix,s);
+                    hBox.setStyle("-fx-font-color: transparent;");
+                    hBox.setSpacing(10);
+                    setGraphic(hBox);
+                    /*   listCategorie.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
+                    @Override
+                    public void handle(javafx.scene.input.MouseEvent event) {
+                    
+                    CategorieService a = (CategorieService) listCategorie.getItems().get(listCategorie.getSelectionModel().getSelectedIndex());
+                    loadServiceFromDatabase(a.getId());
+                    listService.setCellFactory(lv -> new PoulesService());
+                    System.out.println("test");
+                    }
+                    });*/
+                } catch (SQLException ex) {
+                    Logger.getLogger(ProfilController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            }
+        }
+    }
     @FXML
     private void modifierAction(ActionEvent event) {
         UserService us = new UserService();
@@ -557,6 +637,9 @@ public class ProfilController implements Initializable {
         ajouterUnService.setVisible(false);
         proposerUnService.setVisible(false);
         addService.setVisible(true);
+        retourAjouterService.setVisible(true);
+        supprimerSU.setVisible(false);
+        this.initialize(null, null);
         
             ObservableList<CategorieService> list = FXCollections.observableArrayList();
             CategorieServiceService r = new CategorieServiceService();
@@ -573,6 +656,8 @@ public class ProfilController implements Initializable {
         proposerUnService.setVisible(false);
         addService.setVisible(false);
         proposerS.setVisible(true);
+        retourPropService.setVisible(true);
+        supprimerSU.setVisible(false);
         
             ObservableList<CategorieService> list = FXCollections.observableArrayList();
             CategorieServiceService r = new CategorieServiceService();
@@ -589,6 +674,13 @@ public class ProfilController implements Initializable {
         s.setIdService(serviceC.getValue().getId());
         s.setIdUser(this.user.getId());
         su.ajouterServiceUser(s);
+        addService.setVisible(false);
+        labelMesServices.setVisible(true);
+        ajouterUnService.setVisible(true);
+        proposerUnService.setVisible(true);
+        mesServices.setVisible(true);
+        supprimerSU.setVisible(true);
+        this.initialize(null, null);
         
     }
 
@@ -609,6 +701,34 @@ public class ProfilController implements Initializable {
         s.setDescription(descriptionProposition.getText());
         s.setCategorieService(categorieProposition.getValue().toString());
         sp.ajouterService(s);
+        proposerS.setVisible(false);
+        labelMesServices.setVisible(true);
+        ajouterUnService.setVisible(true);
+        proposerUnService.setVisible(true);
+        mesServices.setVisible(true);    
+        supprimerSU.setVisible(true);
+        this.initialize(null, null);
+    }
+
+    @FXML
+    private void retourAjouterService(ActionEvent event) {
+        addService.setVisible(false);
+        labelMesServices.setVisible(true);
+        ajouterUnService.setVisible(true);
+        proposerUnService.setVisible(true);
+        mesServices.setVisible(true);
+        supprimerSU.setVisible(true);
+    }
+
+    @FXML
+    private void retourPropService(ActionEvent event) {
+        
+        proposerS.setVisible(false);
+        labelMesServices.setVisible(true);
+        ajouterUnService.setVisible(true);
+        proposerUnService.setVisible(true);
+        mesServices.setVisible(true);
+        supprimerSU.setVisible(true);
     }
 
     

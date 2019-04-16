@@ -1,12 +1,131 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" prefHeight="690.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.EspaceServiceFrontController">
     <children>
       <fx:include fx:id="frontIndex" source="FrontIndex.fxml" />
-      <ListView fx:id="listCategorie" layoutX="343.0" layoutY="47.0" prefHeight="594.0" prefWidth="449.0" />
-      <ListView fx:id="listService" layoutX="844.0" layoutY="47.0" prefHeight="594.0" prefWidth="402.0" /> 
+      <TabPane layoutX="286.0" layoutY="-3.0" prefHeight="697.0" prefWidth="1013.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Services">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ListView fx:id="listCategorie" layoutX="58.0" layoutY="37.0" prefHeight="594.0" prefWidth="449.0" />
+                        <ListView fx:id="listService" layoutX="552.0" layoutY="37.0" prefHeight="594.0" prefWidth="402.0" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Quiz">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fx:id="imageQuiz1" fitHeight="150.0" fitWidth="200.0" layoutX="114.0" layoutY="208.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Resources/quiz.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imageQuiz2" fitHeight="150.0" fitWidth="200.0" layoutX="332.0" layoutY="208.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Resources/quiz.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imageQuiz3" fitHeight="150.0" fitWidth="200.0" layoutX="578.0" layoutY="208.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Resources/quiz.png" />
+                           </image>
+                        </ImageView>
+                        <Button fx:id="jouerQuiz1" layoutX="114.0" layoutY="384.0" mnemonicParsing="false" onAction="#jouerQuiz1" styleClass="greenFront" stylesheets="@../Resources/style.css" text="Jouer" />
+                        <Button fx:id="jouerQuiz2" layoutX="355.0" layoutY="384.0" mnemonicParsing="false" onAction="#jouerQuiz2" styleClass="greenFront" stylesheets="@../Resources/style.css" text="Jouer" />
+                        <Button fx:id="jouerQuiz3" layoutX="593.0" layoutY="384.0" mnemonicParsing="false" onAction="#jouerQuiz3" styleClass="greenFront" stylesheets="@../Resources/style.css" text="Jouer" />
+                        <ImageView fx:id="sg100" fitHeight="47.0" fitWidth="42.0" layoutX="230.0" layoutY="334.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Resources/scoin.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="sg500" fitHeight="47.0" fitWidth="42.0" layoutX="465.0" layoutY="334.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Resources/scoin.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="sg1000" fitHeight="47.0" fitWidth="42.0" layoutX="709.0" layoutY="334.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Resources/scoin.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="labelg100" layoutX="128.0" layoutY="342.0" prefHeight="27.0" prefWidth="112.0" text="Gagner 100">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="labelg500" layoutX="367.0" layoutY="342.0" prefHeight="27.0" prefWidth="112.0" text="Gagner 500">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="labelg1000" layoutX="605.0" layoutY="342.0" prefHeight="27.0" prefWidth="112.0" text="Gagner 1000">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <AnchorPane fx:id="quiz1" layoutX="84.0" layoutY="14.0" prefHeight="548.0" prefWidth="722.0">
+                           <children>
+                              <Label fx:id="labelQuizNum" layoutX="292.0" layoutY="35.0">
+                                 <font>
+                                    <Font name="Baskerville Old Face" size="33.0" />
+                                 </font>
+                              </Label>
+                              <Separator layoutX="209.0" layoutY="75.0" prefHeight="17.0" prefWidth="276.0" />
+                              <ComboBox fx:id="quiz1Question1" layoutX="361.0" layoutY="123.0" prefHeight="25.0" prefWidth="203.0" promptText="Choisir une réponse" />
+                              <ComboBox fx:id="quiz1Question2" layoutX="361.0" layoutY="181.0" prefHeight="25.0" prefWidth="203.0" promptText="Choisir une réponse" />
+                              <ComboBox fx:id="quiz1Question3" layoutX="361.0" layoutY="246.0" prefHeight="25.0" prefWidth="203.0" promptText="Choisir une réponse" />
+                              <ComboBox fx:id="quiz1Question4" layoutX="361.0" layoutY="302.0" prefHeight="25.0" prefWidth="203.0" promptText="Choisir une réponse" />
+                              <ComboBox fx:id="quiz1Question5" layoutX="361.0" layoutY="363.0" prefHeight="25.0" prefWidth="203.0" promptText="Choisir une réponse" />
+                              <Button fx:id="confirmerQuiz1" layoutX="295.0" layoutY="499.0" mnemonicParsing="false" onAction="#confirmerQuiz1" prefHeight="31.0" prefWidth="123.0" styleClass="greenFront" stylesheets="@../Resources/style.css" text="Confirmer" />
+                              <Button fx:id="retourQuiz1" layoutX="473.0" layoutY="499.0" mnemonicParsing="false" onAction="#retourQuiz1" styleClass="redFront" stylesheets="@../Resources/style.css" text="Retour" />
+                              <Label fx:id="labelQ1" layoutX="27.0" layoutY="118.0" prefHeight="48.0" prefWidth="328.0" />
+                              <Label fx:id="labelQ2" layoutX="27.0" layoutY="176.0" prefHeight="48.0" prefWidth="323.0" />
+                              <Label fx:id="labelQ3" layoutX="27.0" layoutY="241.0" prefHeight="48.0" prefWidth="327.0" />
+                              <Label fx:id="labelQ4" layoutX="27.0" layoutY="297.0" prefHeight="48.0" prefWidth="330.0" />
+                              <Label fx:id="labelQ5" layoutX="27.0" layoutY="358.0" prefHeight="48.0" prefWidth="324.0" />
+                              <Button fx:id="confirmerQuiz2" layoutX="295.0" layoutY="499.0" mnemonicParsing="false" onAction="#confirmerQuiz2" prefHeight="31.0" prefWidth="123.0" styleClass="greenFront" stylesheets="@../Resources/style.css" text="Confirmer" />
+                              <Button fx:id="confirmerQuiz3" layoutX="295.0" layoutY="499.0" mnemonicParsing="false" onAction="#confirmerQuiz3" prefHeight="31.0" prefWidth="123.0" styleClass="greenFront" stylesheets="@../Resources/style.css" text="Confirmer" />
+                           </children>
+                        </AnchorPane>
+                        <Label fx:id="labelQ2Pass" layoutX="355.0" layoutY="438.0" prefHeight="31.0" prefWidth="206.0">
+                           <font>
+                              <Font size="14.0" />
+                           </font></Label>
+                        <Label fx:id="labelQ3Pass" layoutX="605.0" layoutY="438.0" prefHeight="31.0" prefWidth="206.0">
+                           <font>
+                              <Font size="14.0" />
+                           </font></Label>
+                        <Label fx:id="resultatQuiz" layoutX="127.0" layoutY="555.0" prefHeight="84.0" prefWidth="673.0">
+                           <font>
+                              <Font name="Baskerville Old Face" size="30.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="labelQ1Pass" layoutX="111.0" layoutY="438.0" prefHeight="31.0" prefWidth="206.0">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane> 
       </children>
 </AnchorPane>
