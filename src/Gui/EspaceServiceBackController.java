@@ -7,12 +7,14 @@ package Gui;
 
 import Entities.CategorieService;
 import Entities.Service;
+import Entities.ServicesProposes;
 import Entities.User;
 import Services.CategorieServiceService;
 import Services.Connexion;
 import Services.ImageService;
 import Services.ServiceService;
 import Services.ImageService;
+import Services.ServicesProposesService;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -148,7 +150,19 @@ public class EspaceServiceBackController implements Initializable {
     @FXML
     private Pagination paginationS;
     @FXML
-    private BarChart<String,Number> stat;
+    private BarChart<String, Number> stat;
+    @FXML
+    private TableView<ServicesProposes> tableProposition;
+    @FXML
+    private Button traiterProposition;
+    @FXML
+    private Button rejeterProposition;
+    @FXML
+    private TableColumn<ServicesProposes, String> nomServicePropose;
+    @FXML
+    private TableColumn<ServicesProposes, String> categorieServicePropose;
+    @FXML
+    private TableColumn<ServicesProposes, String> descriptionServicePropose;
 
     public User getUser() {
         return user;
@@ -162,137 +176,167 @@ public class EspaceServiceBackController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         Platform.runLater(() -> {
-            
-        ServiceService s = new ServiceService();
+
+            ServiceService s = new ServiceService();
             stat.getData().add(s.graph());
-            modifierS.setDisable(true);
-            supprimerService.setDisable(true);
-            modifier.setDisable(true);
-            supprimer.setDisable(true);
-            ajouterServ.setVisible(false);
-            labelService.setVisible(true);
-            service.setVisible(true);
-            ajouterS.setVisible(true);
-            modifierS.setVisible(true);
-            supprimerService.setVisible(true);
-
             Connection c = Connexion.getInstance().getCon();
-            nomCatAff.setCellValueFactory(new PropertyValueFactory<CategorieService, String>("nom"));
-            descriptionCatAff.setCellValueFactory(new PropertyValueFactory<CategorieService, String>("description"));
-            imageCatAff.setCellValueFactory(new PropertyValueFactory<>("im"));
-
-            imageServiceAff.setCellValueFactory(new PropertyValueFactory<Service, String>("im"));
-            nomServiceAff.setCellValueFactory(new PropertyValueFactory<Service, String>("nom"));
-            descriptionServiceAff.setCellValueFactory(new PropertyValueFactory<Service, String>("description"));
-            categorieServiceAff.setCellValueFactory(new PropertyValueFactory<Service, String>("Categorie"));
-            nbrProvidersAff.setCellValueFactory(new PropertyValueFactory<Service, String>("nbrProviders"));
-            
-            imageHistoriqueAff.setCellValueFactory(new PropertyValueFactory<Service, String>("im"));
-            nomHistoriqueAff.setCellValueFactory(new PropertyValueFactory<Service, String>("nom"));
-            descriptionHistoriqueAff.setCellValueFactory(new PropertyValueFactory<Service, String>("description"));
-            categorieHistoriqueAff.setCellValueFactory(new PropertyValueFactory<Service, String>("Categorie"));
-            nbrHistoriqueAff.setCellValueFactory(new PropertyValueFactory<Service, String>("nbrProviders"));
-            
+            refreshCategorie();
+            refreshService();
+            afficherHistorique();
+            afficherProposition();
+            initTableColumn();
             pagination.setPageFactory(this::createPage);
             paginationS.setPageFactory(this::createPageService);
-           // CategorieServiceService categorieS = new CategorieServiceService();
-            ServiceService serv = new ServiceService();
-            try {
-                //categorie.setItems(categorieS.afficherCategorie());
-                //service.setItems(serv.afficherService());
-                historique.setItems(serv.afficherServiceHistorique());
-                // TODO
-            } catch (SQLException ex) {
-                Logger.getLogger(EspaceServiceBackController.class.getName()).log(Level.SEVERE, null, ex);
-
-            }
-
-            ObservableList data = categorie.getItems();
-            rechercherCat.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-                if (oldValue != null && (newValue.length() < oldValue.length())) {
-                    categorie.setItems(data);
-                }
-                String value = newValue.toLowerCase();
-                ObservableList<CategorieService> subentries = FXCollections.observableArrayList();
-
-                long count = categorie.getColumns().stream().count();
-                for (int i = 0; i < categorie.getItems().size(); i++) {
-                    for (int j = 0; j < count; j++) {
-                        String entry = "" + categorie.getColumns().get(j).getCellData(i);
-                        if (entry.toLowerCase().contains(value)) {
-                            subentries.add(categorie.getItems().get(i));
-                            break;
-                        }
-                    }
-                }
-                categorie.setItems(subentries);
-            });
-            ObservableList data2 = service.getItems();
-            rechercherService.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-                if (oldValue != null && (newValue.length() < oldValue.length())) {
-                    service.setItems(data2);
-                }
-                String value = newValue.toLowerCase();
-                ObservableList<Service> subentries = FXCollections.observableArrayList();
-
-                long count = service.getColumns().stream().count();
-                for (int i = 0; i < service.getItems().size(); i++) {
-                    for (int j = 0; j < count; j++) {
-                        String entry = "" + service.getColumns().get(j).getCellData(i);
-                        if (entry.toLowerCase().contains(value)) {
-                            subentries.add(service.getItems().get(i));
-                            break;
-                        }
-                    }
-                }
-                service.setItems(subentries);
-            });
+            searchCategorie();
+            searchService();
         });
 
     }
-    
-    private Node createPage(int pageIndex)  {
-        try
-        {
-            
-        CategorieServiceService cs = new CategorieServiceService();
 
-        ObservableList<CategorieService> data = FXCollections.observableArrayList();
-        data = cs.afficherCategorie();
-        int fromIndex = pageIndex * 2;
-        int toIndex = Math.min(fromIndex + 2, data.size());
-        categorie.setItems(FXCollections.observableArrayList(data.subList(fromIndex, toIndex)));
+    private void searchCategorie() {
+        ObservableList data = categorie.getItems();
+        rechercherCat.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            if (oldValue != null && (newValue.length() < oldValue.length())) {
+                categorie.setItems(data);
+            }
+            String value = newValue.toLowerCase();
+            ObservableList<CategorieService> subentries = FXCollections.observableArrayList();
 
-        return categorie;
+            long count = categorie.getColumns().stream().count();
+            for (int i = 0; i < categorie.getItems().size(); i++) {
+                for (int j = 0; j < count; j++) {
+                    String entry = "" + categorie.getColumns().get(j).getCellData(i);
+                    if (entry.toLowerCase().contains(value)) {
+                        subentries.add(categorie.getItems().get(i));
+                        break;
+                    }
+                }
+            }
+            categorie.setItems(subentries);
+        });
+    }
+
+    private void searchService() {
+        ObservableList data2 = service.getItems();
+        rechercherService.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            if (oldValue != null && (newValue.length() < oldValue.length())) {
+                service.setItems(data2);
+            }
+            String value = newValue.toLowerCase();
+            ObservableList<Service> subentries = FXCollections.observableArrayList();
+
+            long count = service.getColumns().stream().count();
+            for (int i = 0; i < service.getItems().size(); i++) {
+                for (int j = 0; j < count; j++) {
+                    String entry = "" + service.getColumns().get(j).getCellData(i);
+                    if (entry.toLowerCase().contains(value)) {
+                        subentries.add(service.getItems().get(i));
+                        break;
+                    }
+                }
+            }
+            service.setItems(subentries);
+        });
+    }
+
+    private void initTableColumn() {
+        nomCatAff.setCellValueFactory(new PropertyValueFactory<CategorieService, String>("nom"));
+        descriptionCatAff.setCellValueFactory(new PropertyValueFactory<CategorieService, String>("description"));
+        imageCatAff.setCellValueFactory(new PropertyValueFactory<>("im"));
+
+        imageServiceAff.setCellValueFactory(new PropertyValueFactory<Service, String>("im"));
+        nomServiceAff.setCellValueFactory(new PropertyValueFactory<Service, String>("nom"));
+        descriptionServiceAff.setCellValueFactory(new PropertyValueFactory<Service, String>("description"));
+        categorieServiceAff.setCellValueFactory(new PropertyValueFactory<Service, String>("Categorie"));
+        nbrProvidersAff.setCellValueFactory(new PropertyValueFactory<Service, String>("nbrProviders"));
+
+        imageHistoriqueAff.setCellValueFactory(new PropertyValueFactory<Service, String>("im"));
+        nomHistoriqueAff.setCellValueFactory(new PropertyValueFactory<Service, String>("nom"));
+        descriptionHistoriqueAff.setCellValueFactory(new PropertyValueFactory<Service, String>("description"));
+        categorieHistoriqueAff.setCellValueFactory(new PropertyValueFactory<Service, String>("Categorie"));
+        nbrHistoriqueAff.setCellValueFactory(new PropertyValueFactory<Service, String>("nbrProviders"));
+
+        nomServicePropose.setCellValueFactory(new PropertyValueFactory<ServicesProposes, String>("nom"));
+        categorieServicePropose.setCellValueFactory(new PropertyValueFactory<ServicesProposes, String>("categorieService"));
+        descriptionServicePropose.setCellValueFactory(new PropertyValueFactory<ServicesProposes, String>("description"));
+    }
+
+    private void afficherHistorique() {
+
+        try {
+
+            ServiceService serv = new ServiceService();
+
+            historique.setItems(serv.afficherServiceHistorique());
+        } catch (SQLException ex) {
+            Logger.getLogger(EspaceServiceBackController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        catch(SQLException ex)
-        {
-            
+    }
+
+    private void afficherProposition() {
+
+        try {
+            ServicesProposesService sps = new ServicesProposesService();
+            tableProposition.setItems(sps.afficherServicesProposes());
+        } catch (SQLException ex) {
+            Logger.getLogger(EspaceServiceBackController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void refreshService() {
+        service.setVisible(true);
+        rechercherService.setVisible(true);
+        paginationS.setVisible(true);
+        ajouterS.setVisible(true);
+        modifierS.setVisible(true);
+        supprimerService.setVisible(true);
+        ajouterServ.setVisible(false);
+    }
+
+    private void refreshCategorie() {
+
+        modifier.setDisable(true);
+        supprimer.setDisable(true);
+    }
+
+    private Node createPage(int pageIndex) {
+        try {
+
+            CategorieServiceService cs = new CategorieServiceService();
+
+            ObservableList<CategorieService> data = FXCollections.observableArrayList();
+            data = cs.afficherCategorie();
+            int fromIndex = pageIndex * 2;
+            int toIndex = Math.min(fromIndex + 2, data.size());
+            categorie.setItems(FXCollections.observableArrayList(data.subList(fromIndex, toIndex)));
+
+            return categorie;
+        } catch (SQLException ex) {
+
             System.out.println(ex);
         }
         return null;
     }
-    private Node createPageService(int pageIndex)  {
-        try
-        {
-            
-         ServiceService cs = new  ServiceService();
 
-        ObservableList<Service> data = FXCollections.observableArrayList();
-        data = cs.afficherService();
-        int fromIndex = pageIndex * 2;
-        int toIndex = Math.min(fromIndex + 2, data.size());
-        service.setItems(FXCollections.observableArrayList(data.subList(fromIndex, toIndex)));
+    private Node createPageService(int pageIndex) {
+        try {
 
-        return service;
-        }
-        catch(SQLException ex)
-        {
-            
+            ServiceService cs = new ServiceService();
+
+            ObservableList<Service> data = FXCollections.observableArrayList();
+            data = cs.afficherService();
+            int fromIndex = pageIndex * 2;
+            int toIndex = Math.min(fromIndex + 2, data.size());
+            service.setItems(FXCollections.observableArrayList(data.subList(fromIndex, toIndex)));
+
+            return service;
+        } catch (SQLException ex) {
+
             System.out.println(ex);
         }
         return null;
     }
+
     @FXML
     private void itemSelectedC(MouseEvent event) {
         modifier.setDisable(false);
@@ -400,7 +444,8 @@ public class EspaceServiceBackController implements Initializable {
 
     @FXML
     private void ajouterS(ActionEvent event) {
-
+        rechercherService.setVisible(false);
+        paginationS.setVisible(false);
         ajouterServ.setVisible(true);
         supprimerService.setVisible(false);
         ajouterS.setVisible(false);
@@ -412,9 +457,9 @@ public class EspaceServiceBackController implements Initializable {
 
     }
 
-
     @FXML
     private void modifierService(ActionEvent event) {
+
         ServiceService categorieS = new ServiceService();
         Service c = new Service();
 
@@ -422,6 +467,7 @@ public class EspaceServiceBackController implements Initializable {
         c.setNom(nomService.getText());
         c.setDescription(descriptionService.getText());
         c.setCategorie(categoS.getValue());
+        c.setVisible(1);
         if (imageee != "") {
             c.setImage(imageee);
         }
@@ -448,12 +494,15 @@ public class EspaceServiceBackController implements Initializable {
         modifierService.setVisible(true);
         ajoutService.setVisible(false);
         nomService.setText(s.getNom());
+        rechercherService.setVisible(false);
         descriptionService.setText(s.getDescription());
         categoS.setValue(s.getCategorie());
         ObservableList<CategorieService> list = FXCollections.observableArrayList();
         CategorieServiceService r = new CategorieServiceService();
         list = r.getALLCategorie();
         categoS.setItems(list);
+        rechercherService.setVisible(true);
+        paginationS.setVisible(false);
     }
 
     @FXML
@@ -465,6 +514,9 @@ public class EspaceServiceBackController implements Initializable {
         ajouterS.setVisible(true);
         modifierS.setVisible(true);
         supprimerService.setVisible(true);
+        service.setVisible(true);
+        rechercherService.setVisible(true);
+        paginationS.setVisible(true);
 
     }
 
@@ -496,22 +548,43 @@ public class EspaceServiceBackController implements Initializable {
 
     @FXML
     private void supprimerHistorique(ActionEvent event) {
-        ServiceService ss=new ServiceService();
-        Service s=historique.getSelectionModel().getSelectedItem();
+        ServiceService ss = new ServiceService();
+        Service s = historique.getSelectionModel().getSelectedItem();
         ss.supprimerService(s.getId());
         this.initialize(null, null);
     }
 
     @FXML
     private void recupererHistorique(ActionEvent event) {
-        ServiceService ss=new ServiceService();
-        Service s=new Service();
-              s= historique.getSelectionModel().getSelectedItem();
+        ServiceService ss = new ServiceService();
+        Service s = new Service();
+        s = historique.getSelectionModel().getSelectedItem();
         s.setVisible(1);
-        System.out.println(s.getId()+" "+s.getNom()+" "+s.getVisible());
+        System.out.println(s.getId() + " " + s.getNom() + " " + s.getVisible());
         ss.modifierService(s);
         this.initialize(null, null);
-    
+
+    }
+
+    @FXML
+    private void traiterProposition(ActionEvent event) {
+    }
+
+    @FXML
+    private void rejeterProposition(ActionEvent event) {
+        ServicesProposes sp = new ServicesProposes();
+        ServicesProposesService sps = new ServicesProposesService();
+        sp = tableProposition.getSelectionModel().getSelectedItem();
+        sps.supprimerServicePropose(sp.getId());
+
+    }
+
+    @FXML
+    private void itemSelectedP(MouseEvent event) {
+        traiterProposition.setDisable(false);
+        rejeterProposition.setDisable(false);
+        /*ServicesProposes sp =new ServicesProposes();
+        sp=tableProposition.getSelectionModel().getSelectedItem();*/
     }
 
 }
