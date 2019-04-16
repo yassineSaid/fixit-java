@@ -363,7 +363,6 @@ public class ReclamationFrontController implements Initializable {
 
     @FXML
     private void detailsReclmations(MouseEvent event) {
-        System.out.println("aaaaa");
         details.setVisible(true);
         Reclamation rec = new Reclamation();
         rec = listReclam.getSelectionModel().getSelectedItem();
