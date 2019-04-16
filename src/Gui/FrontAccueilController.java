@@ -96,10 +96,7 @@ public class FrontAccueilController implements Initializable {
                     accueilPane.setVisible(false);
                     recherchePane.setVisible(true);
                     afficherUsers();
-                } else {
-                    accueilPane.setVisible(true);
-                    recherchePane.setVisible(false);
-                }
+                } 
             });
             afficherUsers();
             afficherAvis();
