@@ -64,75 +64,70 @@ public class OutilService {
         } catch (SQLException ex) {
         }
     }
-    
+
     public void updateQuantie(Outil O) {
         try {
             PreparedStatement pt = c.prepareStatement("update outils set  Quantite=?  where id=? ");
-            pt.setInt(1, (O.getQuantite()-1));
+            pt.setInt(1, (O.getQuantite() - 1));
             pt.setInt(2, O.getId());
             pt.execute();
         } catch (SQLException ex) {
         }
     }
-    public CategorieOutil getCategorieOutil(int Id)
-        {
-            try
-            {
-                PreparedStatement pt=c.prepareStatement("SELECT * from categorie_outils where id=?");
-                pt.setInt(1, Id);
-                ResultSet rs= pt.executeQuery();
-                while(rs.next())
-                {
-                    CategorieOutil categorie = new CategorieOutil();
-            categorie.setId(rs.getInt(1));
-            categorie.setNom(rs.getString(2));
-            categorie.setLogo(rs.getString(3));
-                    return categorie;
-                }
-            }
-            catch(SQLException ex)
-            {
-                System.out.println(ex);
-            }  return null;     
-        }
 
-    public ObservableList<Outil> afficherOutil() 
-             {
-                 try
-                 {
-                     ObservableList list = FXCollections.observableArrayList();
-        Statement st = c.createStatement();
-        String req = "select * from outils";
-        ResultSet rs = st.executeQuery(req);
-        while (rs.next()) {
-            Image image1 = new Image("file:/wamp64/www/fixit/web/uploads/images/Outil/"+rs.getString(9), 150, 150, false, false);
-            Outil outil = new Outil();
-            outil.setId(rs.getInt(1));
-            outil.setNom(rs.getString(2));
-            outil.setQuantite(rs.getInt(3));
-            outil.setDureeMaximale(rs.getInt(4));
-            outil.setPrix(rs.getInt(5));
-            outil.setAdresse(rs.getString(6));
-            outil.setCodePostal(rs.getInt(7));
-            outil.setVille(rs.getString(8));
-            outil.setImage(rs.getString(9));
-            outil.setIm(new ImageView(image1));
-            CategorieOutil categorie = this.getCategorieOutil(rs.getInt(10));
-            outil.setC(categorie);
-            outil.setNomCategorie(categorie.getNom());
-            
-            list.add(outil);
+    public CategorieOutil getCategorieOutil(int Id) {
+        try {
+            PreparedStatement pt = c.prepareStatement("SELECT * from categorie_outils where id=?");
+            pt.setInt(1, Id);
+            ResultSet rs = pt.executeQuery();
+            while (rs.next()) {
+                CategorieOutil categorie = new CategorieOutil();
+                categorie.setId(rs.getInt(1));
+                categorie.setNom(rs.getString(2));
+                categorie.setLogo(rs.getString(3));
+                return categorie;
+            }
+        } catch (SQLException ex) {
+            System.out.println("Services.OutilService.getCategorieOutil()");
+            System.out.println(ex);
         }
-        return list;
-                 }
-                 catch(SQLException ex)
-                 {
-                     System.out.println(ex);
-                 }
-                 return null;
-        
+        return null;
     }
-    
+
+    public ObservableList<Outil> afficherOutil() {
+        try {
+            ObservableList list = FXCollections.observableArrayList();
+            Statement st = c.createStatement();
+            String req = "select * from outils";
+            ResultSet rs = st.executeQuery(req);
+            while (rs.next()) {
+                Image image1 = new Image("file:/wamp64/www/fixit/web/uploads/images/Outil/" + rs.getString("image"), 150, 150, false, false);
+                Outil outil = new Outil();
+                outil.setId(rs.getInt("id"));
+                outil.setNom(rs.getString("Nom"));
+                outil.setQuantite(rs.getInt("Quantite"));
+                outil.setDureeMaximale(rs.getInt("dureeMaximale"));
+                outil.setPrix(rs.getInt("prix"));
+                outil.setAdresse(rs.getString("adresse"));
+                outil.setCodePostal(rs.getInt("codePostal"));
+                outil.setVille(rs.getString("ville"));
+                outil.setImage(rs.getString("image"));
+                outil.setIm(new ImageView(image1));
+                CategorieOutil categorie = this.getCategorieOutil(rs.getInt("idCategorieOutils"));
+                outil.setC(categorie);
+                outil.setNomCategorie(categorie.getNom());
+
+                list.add(outil);
+            }
+            return list;
+        } catch (SQLException ex) {
+            System.out.println("Services.OutilService.afficherOutil()");
+            System.out.println(ex);
+        }
+        return null;
+
+    }
+
     public void supprimerOutil(int id) {
         try {
             PreparedStatement pt = c.prepareStatement("delete from outils where id=?");

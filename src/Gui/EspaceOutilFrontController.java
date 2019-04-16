@@ -349,7 +349,8 @@ public class EspaceOutilFrontController implements Initializable {
             ObservableList<Outil> rs = service.afficherOutil();
             paginationOutilFront.setPageFactory(this::createPage);
         } catch (Exception e) {
-            System.err.println("Got an exception! ");
+            //System.err.println("Got an exception! ");
+            System.out.println("Gui.EspaceOutilFrontController.loadDataFromDatabase()");
             System.err.println(e.getMessage());
         }
     }
