@@ -3,6 +3,7 @@
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -14,7 +15,7 @@
    <fx:include fx:id="backIndex" source="BackIndex.fxml" />
    <AnchorPane layoutX="263.0" prefHeight="690.0" prefWidth="1037.0">
       <children>
-         <BarChart fx:id="statsAnnee" alternativeRowFillVisible="false" barGap="12.0" layoutY="14.0" legendVisible="false" prefHeight="401.0" prefWidth="784.0" styleClass="statsAnnee" stylesheets="@../Resources/style.css" title="Revenus mensuels provenants de la vente de SCoins (DT)">
+         <BarChart fx:id="statsAnnee" alternativeRowFillVisible="false" barGap="12.0" layoutY="14.0" legendVisible="false" prefHeight="401.0" prefWidth="758.0" styleClass="statsAnnee" stylesheets="@../Resources/style.css" title="Revenus mensuels provenants de la vente de SCoins (DT)">
            <xAxis>
              <CategoryAxis fx:id="mois" animated="false" />
            </xAxis>
@@ -28,7 +29,7 @@
                <Font name="System Bold" size="27.0" />
             </font>
          </Label>
-         <VBox layoutX="10.0" layoutY="410.0" prefHeight="265.0" prefWidth="765.0" spacing="30.0">
+         <VBox layoutX="10.0" layoutY="416.0" prefHeight="249.0" prefWidth="765.0" spacing="20.0">
             <children>
                <HBox prefHeight="110.0" prefWidth="765.0" spacing="86.0">
                   <children>
@@ -85,5 +86,6 @@
                </HBox>
             </children>
          </VBox>
+         <Button fx:id="saveAsPng" layoutX="652.0" layoutY="20.0" mnemonicParsing="false" onAction="#saveAsPngAction" prefHeight="30.0" prefWidth="137.0" styleClass="modifierBack" stylesheets="@../Resources/style.css" text="Enregistrer" />
       </children></AnchorPane>
 </AnchorPane>
