@@ -8,6 +8,8 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -59,6 +61,11 @@
                         </Label>
                         <TextField fx:id="rechercheCategorie" layoutX="529.0" layoutY="48.0" prefHeight="25.0" prefWidth="220.0" />
                         <Button fx:id="openFileLogo" layoutX="767.0" layoutY="203.0" mnemonicParsing="false" onAction="#importerLogo" prefHeight="30.0" prefWidth="174.0" styleClass="openFile" stylesheets="@../Resources/style.css" text="Importer un logo" />
+                        <ImageView fx:id="imageNotification" fitHeight="75.0" fitWidth="90.0" layoutX="48.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                           <image>
+                              <Image url="@../Resources/tik.png" />
+                           </image>
+                        </ImageView>
                      </children>
                   </AnchorPane>
                </content>

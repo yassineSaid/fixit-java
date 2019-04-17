@@ -36,13 +36,19 @@ import javafx.collections.ObservableList;
 
 import javafx.scene.control.Button;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
+import javafx.util.Duration;
+import org.controlsfx.control.Notifications;
 
 /**
  * FXML Controller class
@@ -168,6 +174,9 @@ public class EspaceOutilBackController implements Initializable {
     private TableColumn<HistoriqueLocation, String> dateRetour1;
     @FXML
     private TableColumn<HistoriqueLocation, String> prix1;
+    private ImageView iiiiiiiiiiiiiii;
+    @FXML
+    private ImageView imageNotification;
 
     /**
      * Initializes the controller class.
@@ -317,6 +326,15 @@ public class EspaceOutilBackController implements Initializable {
         CategorieOutil c = table.getSelectionModel().getSelectedItem();
         categorie.supprimerCategorie(c.getId());
         System.out.println("categorie supprimer");
+        Image img =imageNotification.getImage();
+        Notifications notificationBuilder = Notifications.create().title("Notification").text("La catégorie "+c.getNom()+" est supprimée avec succés").graphic(new ImageView(img)).hideAfter(Duration.seconds(15)).position(Pos.BOTTOM_RIGHT).onAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("clicked");
+            }
+        });
+        notificationBuilder.darkStyle();
+        notificationBuilder.show();
         initialize(null, null);
     }
 
@@ -344,6 +362,15 @@ public class EspaceOutilBackController implements Initializable {
         }
         categorie.modifierCategorie(c);
         logooo = "";
+        Image img =imageNotification.getImage();
+        Notifications notificationBuilder = Notifications.create().title("Notification").text("La catégorie "+c.getNom()+" est modifiée avec succés").graphic(new ImageView(img)).hideAfter(Duration.seconds(15)).position(Pos.BOTTOM_RIGHT).onAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("clicked");
+            }
+        });
+        notificationBuilder.darkStyle();
+        notificationBuilder.show();
         initialize(null, null);
     }
 
@@ -357,6 +384,15 @@ public class EspaceOutilBackController implements Initializable {
         categorie.ajouterCategorie(c);
         System.out.println("categorie ajoutée");
         logooo = "";
+            Image img =imageNotification.getImage();
+        Notifications notificationBuilder = Notifications.create().title("Notification").text("La catégorie "+c.getNom()+" est ajoutée avec succés").graphic(new ImageView(img)).hideAfter(Duration.seconds(15)).position(Pos.BOTTOM_RIGHT).onAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("clicked");
+            }
+        });
+        notificationBuilder.darkStyle();
+        notificationBuilder.show();
 
         initialize(null, null);
     }
@@ -447,6 +483,15 @@ public class EspaceOutilBackController implements Initializable {
         Outil o = tableOutil.getSelectionModel().getSelectedItem();
         outil.supprimerOutil(o.getId());
         System.out.println("outil supprimer");
+        Image img =imageNotification.getImage();
+        Notifications notificationBuilder = Notifications.create().title("Notification").text("L'outil "+o.getNom()+" est supprimé avec succés").graphic(new ImageView(img)).hideAfter(Duration.seconds(15)).position(Pos.BOTTOM_RIGHT).onAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("clicked");
+            }
+        });
+        notificationBuilder.darkStyle();
+        notificationBuilder.show();
         initialize(null, null);
     }
 
@@ -466,6 +511,15 @@ public class EspaceOutilBackController implements Initializable {
         outil.ajouterOutil(o);
         System.out.println("outil ajoutée");
         imageee = "";
+        Image img =imageNotification.getImage();
+        Notifications notificationBuilder = Notifications.create().title("Notification").text("L'outil "+o.getNom()+" est ajouté avec succés").graphic(new ImageView(img)).hideAfter(Duration.seconds(15)).position(Pos.BOTTOM_RIGHT).onAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("clicked");
+            }
+        });
+        notificationBuilder.darkStyle();
+        notificationBuilder.show();
         initialize(null, null);
     }
 
@@ -518,6 +572,15 @@ public class EspaceOutilBackController implements Initializable {
         outil.modifierOutil(o);
         System.out.println("outil ajoutée");
         imageee = "";
+        Image img =imageNotification.getImage();
+        Notifications notificationBuilder = Notifications.create().title("Notification").text("L'outil "+o.getNom()+" est modifié avec succés").graphic(new ImageView(img)).hideAfter(Duration.seconds(15)).position(Pos.BOTTOM_RIGHT).onAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("clicked");
+            }
+        });
+        notificationBuilder.darkStyle();
+        notificationBuilder.show();
         initialize(null, null);
     }
 
