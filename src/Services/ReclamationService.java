@@ -28,6 +28,8 @@ public class ReclamationService {
                 User u = new User();
                 u.setId(rs.getInt("id"));
                 u.setUsername(rs.getString("username"));
+                u.setFirstname(rs.getString("firstname"));
+                u.setLastname(rs.getString("lastname"));
                 list.add(u);
             }
             return list;
@@ -119,12 +121,16 @@ public class ReclamationService {
                 u.setId(rs.getInt("userreclame"));
                 System.out.println(rs.getInt("userreclame"));
                 u.setUsername(this.getUserName(rs.getInt("userreclame")));
+                u.setFirstname(this.getUserName(rs.getInt("userreclame")));
+                u.setLastname(this.getUserName(rs.getInt("userreclame")));
                 System.out.println(u);
                 rec.setUserReclame(u);
 
                 User u1 = new User();
                 u1.setId(rs.getInt("user"));
                 u1.setUsername(this.getUserName(u1.getId()));
+                u1.setFirstname(this.getUserName(rs.getInt("user")));
+                u1.setLastname(this.getUserName(rs.getInt("user")));
                 rec.setUserReclamant(u1);
 
                 rec.setDateReclamation(rs.getDate("DateReclamation"));
@@ -166,6 +172,32 @@ public class ReclamationService {
             ResultSet rs = pt.executeQuery();
             while (rs.next()) {
                 return rs.getString("email");
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return "aaa";
+    }
+     public String getUserFirstName(int userId) {
+        try {
+            PreparedStatement pt = c.prepareStatement("SELECT * from User where id=?");
+            pt.setInt(1, userId);
+            ResultSet rs = pt.executeQuery();
+            while (rs.next()) {
+                return rs.getString("firstName");
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return "aaa";
+    }
+      public String getUserLastName(int userId) {
+        try {
+            PreparedStatement pt = c.prepareStatement("SELECT * from User where id=?");
+            pt.setInt(1, userId);
+            ResultSet rs = pt.executeQuery();
+            while (rs.next()) {
+                return rs.getString("lastname");
             }
         } catch (SQLException ex) {
             System.out.println(ex);
@@ -236,12 +268,16 @@ public class ReclamationService {
                 u.setId(rs.getInt("userreclame"));
                 u.setUsername(this.getUserName(rs.getInt("userreclame")));
                 u.setEmail(this.getUserEmail(rs.getInt("userreclame")));
+                u.setFirstname(this.getUserName(rs.getInt("userreclame")));
+                u.setLastname(this.getUserName(rs.getInt("userreclame")));
                 rec.setUserReclame(u);
 
                 User u1 = new User();
                 u1.setId(rs.getInt("user"));
                 u1.setUsername(this.getUserName(u1.getId()));
                 u1.setEmail(this.getUserEmail(rs.getInt("user")));
+                u1.setFirstname(this.getUserName(rs.getInt("user")));
+                u1.setLastname(this.getUserName(rs.getInt("user")));
                 rec.setUserReclamant(u1);
 
                 rec.setDateReclamation(rs.getDate("DateReclamation"));

@@ -148,7 +148,7 @@
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="tableOutilsLoues" layoutX="193.0" layoutY="51.0" prefHeight="421.0" prefWidth="653.0" styleClass="table" stylesheets="@../Resources/style.css">
+                        <TableView fx:id="tableOutilsLoues" layoutX="193.0" layoutY="51.0" onMousePressed="#itemSelectedOutilLoues" prefHeight="421.0" prefWidth="653.0" styleClass="table" stylesheets="@../Resources/style.css">
                           <columns>
                             <TableColumn fx:id="nomUser" prefWidth="140.0" text="Nom de l'utilisateur" />
                             <TableColumn fx:id="userNomOutil" prefWidth="107.0" text="Nom de l'outil" />

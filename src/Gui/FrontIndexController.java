@@ -149,7 +149,7 @@ public class FrontIndexController implements Initializable {
         userName.setText(Utils.upperCaseFirst(user.getFirstname()) + " " + Utils.upperCaseFirst(user.getLastname()));
         loadImage();
     }
-    private void loadImage() {
+    public void loadImage() {
         File currDir = new File(System.getProperty("user.dir", "."));
         System.out.println(currDir.toPath().getRoot().toString());
         if (user.getImage() != null) {
