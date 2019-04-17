@@ -10,6 +10,7 @@ import Entities.RealisationService;
 import Entities.User;
 import Services.AvisService;
 import Services.RealisationServiceService;
+import Services.UserService;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -164,6 +165,7 @@ public class AvisFrontController implements Initializable {
 
     @FXML
     private void NoterAction(ActionEvent event) {
+        UserService us = new UserService();
         AvisService avisServ = new AvisService();
         Avis avis = new Avis(description.getText(), (int) rating.getRating(), satisfaction.getValue().toString(), this.getUser());
         avisServ.ajouterAvis(avis);
@@ -172,6 +174,9 @@ public class AvisFrontController implements Initializable {
         moyenneLb.setVisible(true);
         sep.setVisible(true);
         ratingAvg.setVisible(true);
+        this.setUser(us.getUser(Integer.toString(this.user.getId())));
+                frontIndexController.setUser(this.user);
+                frontIndexController.refresh();
     }
 
     @FXML

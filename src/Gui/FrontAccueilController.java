@@ -327,6 +327,11 @@ public class FrontAccueilController implements Initializable {
                 java.sql.Date dateAttribution = new java.sql.Date(localdate.getTime());
                 Bonus bonus = new Bonus(this.user,dateAttribution,25);
                 bs.insertBonus(bonus);
+                UserService us = new UserService();
+                us.modifierSolde(this.user, 25);
+                this.setUser(us.getUser(Integer.toString(this.user.getId())));
+                frontIndexController.setUser(this.user);
+                frontIndexController.refresh();
                 URL path = getClass().getResource("/Resources/scoin.png");
                 Image img = new Image(path.toString());
                 Notifications notificationBuilder = Notifications.create().title("Notification").text("Vous avez été bien noté pendant ce mois vous aurez un bonus de 25 SCOINs").graphic(new ImageView(img)).hideAfter(Duration.seconds(10)).position(Pos.BOTTOM_RIGHT).onAction(new EventHandler<ActionEvent>() {
