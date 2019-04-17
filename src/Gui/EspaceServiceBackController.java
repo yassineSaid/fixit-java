@@ -112,6 +112,7 @@ public class EspaceServiceBackController implements Initializable {
     private Label labelService;
     String logooo;
     String imageee;
+    String img;
 
     /**
      * Initializes the controller class.
@@ -163,6 +164,22 @@ public class EspaceServiceBackController implements Initializable {
     private TableColumn<ServicesProposes, String> categorieServicePropose;
     @FXML
     private TableColumn<ServicesProposes, String> descriptionServicePropose;
+    @FXML
+    private TextField nomProposition;
+    @FXML
+    private ComboBox<CategorieService> categorieProposition;
+    @FXML
+    private TextField descriptionProposition;
+    @FXML
+    private Button imageProposition;
+    @FXML
+    private Button confirmerProposition;
+    @FXML
+    private Button retourProposition;
+    @FXML
+    private AnchorPane traitementProposition;
+    @FXML
+    private Label erreurService;
 
     public User getUser() {
         return user;
@@ -189,10 +206,18 @@ public class EspaceServiceBackController implements Initializable {
             paginationS.setPageFactory(this::createPageService);
             searchCategorie();
             searchService();
+            refreshProposition();
         });
 
     }
-
+    private void refreshProposition(){
+        traitementProposition.setVisible(false);
+        traiterProposition.setVisible(true);
+        rejeterProposition.setVisible(true);
+        tableProposition.setVisible(true);
+        traiterProposition.setDisable(true);
+        rejeterProposition.setDisable(true);
+    } 
     private void searchCategorie() {
         ObservableList data = categorie.getItems();
         rechercherCat.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
@@ -359,6 +384,19 @@ public class EspaceServiceBackController implements Initializable {
 
     @FXML
     private void ajouterC(ActionEvent event) {
+        int i=0;
+        if(nomModif.getText().equals(""))
+        {   
+            nomModif.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+        }
+        if(descriptionModif.getText().equals(""))
+        {   
+            descriptionModif.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+        }
+        if(categoS.getValue()==null)
+        {   
+            categoS.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+        }
         CategorieServiceService categorieS = new CategorieServiceService();
 
         CategorieService c = new CategorieService();
@@ -426,8 +464,29 @@ public class EspaceServiceBackController implements Initializable {
 
     @FXML
     private void ajouterService(ActionEvent event) {
+        String e="Vous devez remplir le(s) champ(s) ";
+        int i=0;
+        if(nomService.getText().equals(""))
+        {   nomService.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+            e+="nom ";
+            i=1;
+        }
+        if(descriptionService.getText().equals(""))
+        {   descriptionService.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+            e+=",description ";
+            i=1;
+        }
+        if(categoS.getValue()==null)
+        {   categoS.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+            e+=",categorie ";
+            i=1;
+        }
+        if(i==1){
+            erreurService.setText(e);
+        }
+        else{
+            nomService.setStyle(null);
         ServiceService ss = new ServiceService();
-
         Service s = new Service();
         s.setNom(nomService.getText());
         s.setDescription(descriptionService.getText());
@@ -438,8 +497,9 @@ public class EspaceServiceBackController implements Initializable {
         ss.ajouterService(s);
         System.out.println("service ajoutée");
         imageee = "";
-
         initialize(null, null);
+        }
+        
     }
 
     @FXML
@@ -454,6 +514,11 @@ public class EspaceServiceBackController implements Initializable {
         labelService.setVisible(false);
         modifierService.setVisible(false);
         ajoutService.setVisible(true);
+        ObservableList<CategorieService> list = FXCollections.observableArrayList();
+        CategorieServiceService r = new CategorieServiceService();
+        list = r.getALLCategorie();
+        categoS.setItems(list);
+        
 
     }
 
@@ -568,6 +633,19 @@ public class EspaceServiceBackController implements Initializable {
 
     @FXML
     private void traiterProposition(ActionEvent event) {
+        traitementProposition.setVisible(true);
+        traiterProposition.setVisible(false);
+        rejeterProposition.setVisible(false);
+        tableProposition.setVisible(false);
+        
+        ServicesProposes sp =new ServicesProposes();
+        sp=tableProposition.getSelectionModel().getSelectedItem();
+        nomProposition.setText(sp.getNom());
+        descriptionProposition.setText(sp.getDescription());
+        ObservableList<CategorieService> list = FXCollections.observableArrayList();
+        CategorieServiceService r = new CategorieServiceService();
+        list = r.getALLCategorie();
+        categorieProposition.setItems(list);
     }
 
     @FXML
@@ -585,6 +663,60 @@ public class EspaceServiceBackController implements Initializable {
         rejeterProposition.setDisable(false);
         /*ServicesProposes sp =new ServicesProposes();
         sp=tableProposition.getSelectionModel().getSelectedItem();*/
+    }
+
+    @FXML
+    private void confirmerProposition(ActionEvent event) {
+        ServiceService ss=new ServiceService();
+        Service s =new Service();
+        ServicesProposesService sps=new ServicesProposesService();
+        ServicesProposes sp=new ServicesProposes();
+        s.setNom(nomProposition.getText());
+        s.setDescription(descriptionProposition.getText());
+        s.setCategorie(categorieProposition.getValue());
+        s.setVisible(1);
+        s.setNbrProviders(0);
+        if (img != "") {
+            s.setImage(img);
+        }
+        ss.ajouterService(s);
+        sps.supprimerServicePropose(tableProposition.getSelectionModel().getSelectedItem().getId());
+        
+        img = "";
+    }
+
+    @FXML
+    private void retourProposition(ActionEvent event) {
+        
+        traitementProposition.setVisible(false);
+        traiterProposition.setVisible(true);
+        rejeterProposition.setVisible(true);
+        tableProposition.setVisible(true);
+    }
+
+    @FXML
+    private void importerImageProposition(ActionEvent event) {
+        final FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image", "*.jpg", "*.png")
+        );
+        File file = fileChooser.showOpenDialog(null);
+        if (file != null) {
+
+            File currDir = new File(System.getProperty("user.dir", "."));
+            System.out.println(currDir.toPath().getRoot().toString());
+
+            String path = currDir.toPath().getRoot().toString() + "wamp64/www/fixit/web/uploads/images/service/";
+            ImageService u = new ImageService();
+            try {
+                u.upload(file, path);
+            } catch (IOException ex) {
+                Logger.getLogger(EspaceServiceBackController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            img = file.getName();
+        } else {
+            System.out.println("FICHIER erroné");
+        }
     }
 
 }

@@ -65,22 +65,22 @@
                               <Image url="@../Resources/scoin.png" />
                            </image>
                         </ImageView>
-                        <Label fx:id="labelg100" layoutX="128.0" layoutY="342.0" prefHeight="27.0" prefWidth="112.0" text="Gagner 100">
+                        <Label fx:id="labelg100" layoutX="128.0" layoutY="342.0" prefHeight="27.0" prefWidth="112.0" text="Gagner 10">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <Label fx:id="labelg500" layoutX="367.0" layoutY="342.0" prefHeight="27.0" prefWidth="112.0" text="Gagner 500">
+                        <Label fx:id="labelg500" layoutX="367.0" layoutY="342.0" prefHeight="27.0" prefWidth="112.0" text="Gagner 10">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <Label fx:id="labelg1000" layoutX="605.0" layoutY="342.0" prefHeight="27.0" prefWidth="112.0" text="Gagner 1000">
+                        <Label fx:id="labelg1000" layoutX="605.0" layoutY="342.0" prefHeight="27.0" prefWidth="112.0" text="Gagner 10">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <AnchorPane fx:id="quiz1" layoutX="84.0" layoutY="14.0" prefHeight="548.0" prefWidth="722.0">
+                        <AnchorPane fx:id="quiz1" layoutX="84.0" layoutY="14.0" prefHeight="548.0" prefWidth="722.0" visible="false">
                            <children>
                               <Label fx:id="labelQuizNum" layoutX="292.0" layoutY="35.0">
                                  <font>
@@ -122,6 +122,18 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
+                        <AnchorPane fx:id="SMSForm" layoutX="191.0" layoutY="163.0" prefHeight="251.0" prefWidth="509.0" visible="false">
+                           <children>
+                              <TextField fx:id="textSMS" layoutX="110.0" layoutY="83.0" prefHeight="35.0" prefWidth="251.0" />
+                              <Button fx:id="envoyerSMS" layoutX="156.0" layoutY="141.0" mnemonicParsing="false" onAction="#envoyerSMS" styleClass="greenFront" stylesheets="@../Resources/style.css" text="Envoyer" />
+                              <Label fx:id="labelSMS" alignment="CENTER" contentDisplay="CENTER" layoutX="12.0" layoutY="34.0" prefHeight="31.0" prefWidth="477.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Button fx:id="verifierCode" layoutX="156.0" layoutY="141.0" mnemonicParsing="false" onAction="#verifierCode" styleClass="greenFront" stylesheets="@../Resources/style.css" text="Envoyer" />
+                           </children>
+                        </AnchorPane>
                      </children>
                   </AnchorPane>
             </content>
@@ -169,7 +181,7 @@
                               <Button fx:id="retourAjouterService" layoutX="346.0" layoutY="306.0" mnemonicParsing="false" onAction="#retourAjouterService" styleClass="redFront" stylesheets="@../Resources/style.css" text="Retour" visible="false" />
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="proposerS" layoutX="190.0" layoutY="123.0" prefHeight="416.0" prefWidth="600.0" visible="false">
+                        <AnchorPane fx:id="proposerS" layoutX="190.0" layoutY="123.0" prefHeight="416.0" prefWidth="600.0">
                            <children>
                               <TextField fx:id="descriptionProposition" layoutX="151.0" layoutY="73.0" prefHeight="33.0" prefWidth="292.0" />
                               <TextField fx:id="nomProposition" layoutX="151.0" layoutY="199.0" prefHeight="33.0" prefWidth="292.0" />

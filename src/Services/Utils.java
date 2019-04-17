@@ -19,4 +19,18 @@ public class Utils {
         // Return string.
         return new String(array);
     }
+    public static String convertMonth(int month) {
+        if (month==1) return "Janvier";
+        else if (month==2) return "Février";
+        else if (month==3) return "Mars";
+        else if (month==4) return "Avril";
+        else if (month==5) return "Mai";
+        else if (month==6) return "Juin";
+        else if (month==7) return "Juillet";
+        else if (month==8) return "Août";
+        else if (month==9) return "Septembre";
+        else if (month==10) return "Octobre";
+        else if (month==11) return "Novembre";
+        else return "Décembre";
+    }
 }

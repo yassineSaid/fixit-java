@@ -16,6 +16,7 @@ import Services.CategorieServiceService;
 import Services.MailService;
 import Services.ProfilMesServices;
 import Services.QuizUserService;
+import Services.SMSService;
 import Services.ServiceService;
 import Services.ServiceUserService;
 import Services.ServicesProposesService;
@@ -167,6 +168,16 @@ public class EspaceServiceFrontController implements Initializable {
     private Button retourPropService;
     @FXML
     private Button supprimerSU;
+    @FXML
+    private AnchorPane SMSForm;
+    @FXML
+    private TextField textSMS;
+    @FXML
+    private Button envoyerSMS;
+    @FXML
+    private Label labelSMS;
+    @FXML
+    private Button verifierCode;
 
     public User getUser() {
         return user;
@@ -190,9 +201,36 @@ public class EspaceServiceFrontController implements Initializable {
             loadCategorieFromDatabase();
             listCategorie.setCellFactory(lv -> new Poules());
             checkQuiz();
+            initQuiz();
+            listCategorie.setStyle("-fx-background-color: transparent;");
+            //listCategorie.
+            
 
         });
         // TODO
+    }
+    private void initQuiz(){
+        quiz1.setVisible(false);
+        labelQ1Pass.setVisible(true);
+        labelQ2Pass.setVisible(true);
+        labelQ3Pass.setVisible(true);
+        confirmerQuiz1.setVisible(true);
+        confirmerQuiz2.setVisible(false);
+        confirmerQuiz3.setVisible(true);
+        jouerQuiz1.setVisible(true);
+        jouerQuiz2.setVisible(true);
+        jouerQuiz3.setVisible(true);
+        imageQuiz1.setVisible(true);
+        imageQuiz2.setVisible(true);
+        imageQuiz3.setVisible(true);
+        labelg100.setVisible(true);
+        labelg500.setVisible(true);
+        labelg1000.setVisible(true);
+        sg100.setVisible(true);
+        sg500.setVisible(true);
+        sg1000.setVisible(true);
+        labelQuizNum.setVisible(false);
+        //SMSForm.setVisible(false);
     }
     private void SendMail() throws Exception{
         String mailContentReclamant="<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n" +
@@ -501,7 +539,7 @@ public class EspaceServiceFrontController implements Initializable {
                     sg100.setVisible(false);
                 }
                 if (qus.getTentative(this.getUser().getId(), 1) == 1) {
-                    labelg100.setText("gagner 50");
+                    labelg100.setText("gagner 5");
                     labelQ1Pass.setTextFill(Color.web("red"));
 
                     labelQ1Pass.setText("Il vous reste une tentative ! ");
@@ -526,7 +564,7 @@ public class EspaceServiceFrontController implements Initializable {
                     sg500.setVisible(false);
                 }
                 if (qus.getTentative(this.getUser().getId(), 2) == 1) {
-                    labelg500.setText("Gagner 250");
+                    labelg500.setText("Gagner 5");
                     labelQ2Pass.setTextFill(Color.web("red"));
                     labelQ2Pass.setText("Il vous reste une tentative !");
                 }
@@ -551,7 +589,7 @@ public class EspaceServiceFrontController implements Initializable {
                     sg1000.setVisible(false);
                 }
                 if (qus.getTentative(this.getUser().getId(), 3) == 1) {
-                    labelg1000.setText("Gagner 500");
+                    labelg1000.setText("Gagner 5");
                     labelQ3Pass.setTextFill(Color.web("red"));
                     labelQ3Pass.setText("Il vous reste une tentative !");
                 }
@@ -573,7 +611,6 @@ public class EspaceServiceFrontController implements Initializable {
         }
     }
 
-    @FXML
     public void afficherServices() {
 
         ServiceUserService r = new ServiceUserService();
@@ -611,7 +648,12 @@ public class EspaceServiceFrontController implements Initializable {
 
     @FXML
     private void jouerQuiz1(ActionEvent event) {
-
+        
+        quiz1Question1.getItems().clear();
+        quiz1Question2.getItems().clear();
+        quiz1Question3.getItems().clear();
+        quiz1Question4.getItems().clear();
+        quiz1Question5.getItems().clear();
         resultatQuiz.setVisible(false);
         retourQuiz1.setDisable(false);
         retourQuiz1.setVisible(true);
@@ -652,7 +694,12 @@ public class EspaceServiceFrontController implements Initializable {
 
     @FXML
     private void jouerQuiz2(ActionEvent event) {
-
+        
+        quiz1Question1.getItems().clear();
+        quiz1Question2.getItems().clear();
+        quiz1Question3.getItems().clear();
+        quiz1Question4.getItems().clear();
+        quiz1Question5.getItems().clear();
         resultatQuiz.setVisible(false);
 
         quiz1.setVisible(true);
@@ -693,6 +740,12 @@ public class EspaceServiceFrontController implements Initializable {
 
     @FXML
     private void jouerQuiz3(ActionEvent event) {
+        
+        quiz1Question1.getItems().clear();
+        quiz1Question2.getItems().clear();
+        quiz1Question3.getItems().clear();
+        quiz1Question4.getItems().clear();
+        quiz1Question5.getItems().clear();
         resultatQuiz.setVisible(false);
         quiz1.setVisible(true);
         retourQuiz1.setDisable(false);
@@ -732,6 +785,7 @@ public class EspaceServiceFrontController implements Initializable {
 
     @FXML
     private void confirmerQuiz1(ActionEvent event) {
+        int j=0;
         QuizUser qu = new QuizUser();
         QuizUserService qus = new QuizUserService();
         if (qus.verifier(this.getUser().getId(), 1)) {
@@ -754,6 +808,7 @@ public class EspaceServiceFrontController implements Initializable {
                 && quiz1Question3.getValue().equals("Le bêlement")
                 && quiz1Question4.getValue().equals("Un cheval")
                 && quiz1Question5.getValue().equals("Un mouton")) {
+            j=1;
             if (qus.getTentative(this.getUser().getId(), 1) == 1) {
                 qu.setIdQuiz(1);
                 qu.setTentative(3);
@@ -761,7 +816,7 @@ public class EspaceServiceFrontController implements Initializable {
                 qus.modifierQuizUser(qu);
                 UserService u = new UserService();
                 u.modifierSolde(this.getUser(), 100);
-                resultatQuiz.setText("Bravo vous Avez gagné 100 Scoins");
+                resultatQuiz.setText("Bravo vous Avez gagné 10 Scoins");
             }
             if (qus.getTentative(this.getUser().getId(), 1) == 2) {
                 qu.setIdQuiz(1);
@@ -770,9 +825,8 @@ public class EspaceServiceFrontController implements Initializable {
                 qus.modifierQuizUser(qu);
                 UserService u = new UserService();
                 u.modifierSolde(this.getUser(), 50);
-                resultatQuiz.setText("Bravo vous Avez gagné 50 Scoins");
+                resultatQuiz.setText("Bravo vous Avez gagné 5 Scoins");
             }
-            System.out.println("selon");
 
         } else {
             System.out.println("non");
@@ -781,8 +835,8 @@ public class EspaceServiceFrontController implements Initializable {
                 qu.setTentative(1);
                 qu.setIdUser(this.getUser().getId());
                 qus.modifierQuizUser(qu);
-                resultatQuiz.setText("Vous avez échoué.Réessayer et gagner 50 SCoins!");
-                labelg100.setText("Gagner 50");
+                resultatQuiz.setText("Vous avez échoué.Réessayer et gagner 5 SCoins!");
+                labelg100.setText("Gagner 5");
             }
             if (qus.getTentative(this.getUser().getId(), 1) == 2) {
                 qu.setTentative(2);
@@ -792,6 +846,7 @@ public class EspaceServiceFrontController implements Initializable {
                 labelg100.setVisible(false);
                 sg100.setVisible(false);
             }
+            this.initialize(null, null);
 
         }
         quiz1.setVisible(false);
@@ -814,8 +869,34 @@ public class EspaceServiceFrontController implements Initializable {
         sg500.setVisible(true);
         sg1000.setVisible(true);
         labelQuizNum.setVisible(false);
+        if(j==1){
+            SMSForm.setVisible(true);
+            labelSMS.setText("Tapez votre numéro ,un code vous sera communiqué !");
+            labelSMS.setVisible(true);
+        labelQ1Pass.setVisible(false);
+        labelQ2Pass.setVisible(false);
+        labelQ3Pass.setVisible(false);
+        confirmerQuiz1.setVisible(false);
+        confirmerQuiz2.setVisible(false);
+        confirmerQuiz3.setVisible(false);
+        jouerQuiz1.setVisible(false);
+        jouerQuiz2.setVisible(false);
+        jouerQuiz3.setVisible(false);
+        imageQuiz1.setVisible(false);
+        imageQuiz2.setVisible(false);
+        imageQuiz3.setVisible(false);
+        sg100.setVisible(false);
+        sg500.setVisible(false);
+        sg1000.setVisible(false);
+        labelg100.setVisible(false);
+        labelg500.setVisible(false);
+        labelg1000.setVisible(false);
+        envoyerSMS.setVisible(true);
+        verifierCode.setVisible(false);
+        }
+      
 
-        this.initialize(null, null);
+        
 
     }
 
@@ -845,7 +926,7 @@ public class EspaceServiceFrontController implements Initializable {
 
     @FXML
     private void confirmerQuiz2(ActionEvent event) {
-
+        int j=0;
         QuizUser qu = new QuizUser();
         QuizUserService qus = new QuizUserService();
         if (qus.verifier(this.getUser().getId(), 2)) {
@@ -868,25 +949,25 @@ public class EspaceServiceFrontController implements Initializable {
                 && quiz1Question3.getValue().equals("Le pacanier")
                 && quiz1Question4.getValue().equals("Le travail")
                 && quiz1Question5.getValue().equals("New Delhi")) {
+            j=1;
             if (qus.getTentative(this.getUser().getId(), 2) == 1) {
                 qu.setIdQuiz(2);
                 qu.setTentative(3);
                 qu.setIdUser(this.getUser().getId());
                 qus.modifierQuizUser(qu);
-                UserService u = new UserService();
-                u.modifierSolde(this.getUser(), 500);
-                resultatQuiz.setText("Bravo vous Avez gagné 500 Scoins");
+                /*UserService u = new UserService();
+                u.modifierSolde(this.getUser(), 500);*/
+                resultatQuiz.setText("Bravo vous Avez gagné 10 Scoins");
             }
             if (qus.getTentative(this.getUser().getId(), 2) == 2) {
                 qu.setIdQuiz(2);
                 qu.setTentative(3);
                 qu.setIdUser(this.getUser().getId());
                 qus.modifierQuizUser(qu);
-                UserService u = new UserService();
-                u.modifierSolde(this.getUser(), 250);
-                resultatQuiz.setText("Bravo vous Avez gagné 250 Scoins");
+                /*UserService u = new UserService();
+                u.modifierSolde(this.getUser(), 250);*/
+                resultatQuiz.setText("Bravo vous Avez gagné 5 Scoins");
             }
-            System.out.println("selon");
 
         } else {
             System.out.println("non");
@@ -895,8 +976,8 @@ public class EspaceServiceFrontController implements Initializable {
                 qu.setTentative(1);
                 qu.setIdUser(this.getUser().getId());
                 qus.modifierQuizUser(qu);
-                resultatQuiz.setText("Vous avez échoué.Réessayer et gagner 250 SCoins!");
-                labelg500.setText("Gagner 250");
+                resultatQuiz.setText("Vous avez échoué.Réessayer et gagner 5 SCoins!");
+                labelg500.setText("Gagner 50");
             }
             if (qus.getTentative(this.getUser().getId(), 2) == 2) {
                 qu.setTentative(2);
@@ -929,11 +1010,37 @@ public class EspaceServiceFrontController implements Initializable {
         sg500.setVisible(true);
         sg1000.setVisible(true);
         labelQuizNum.setVisible(false);
+        if(j==1){
+            SMSForm.setVisible(true);
+            labelSMS.setText("Tapez votre numéro ,un code vous sera communiqué !");
+            labelSMS.setVisible(true);
+        labelQ1Pass.setVisible(false);
+        labelQ2Pass.setVisible(false);
+        labelQ3Pass.setVisible(false);
+        confirmerQuiz1.setVisible(false);
+        confirmerQuiz2.setVisible(false);
+        confirmerQuiz3.setVisible(false);
+        jouerQuiz1.setVisible(false);
+        jouerQuiz2.setVisible(false);
+        jouerQuiz3.setVisible(false);
+        imageQuiz1.setVisible(false);
+        imageQuiz2.setVisible(false);
+        imageQuiz3.setVisible(false);
+        sg100.setVisible(false);
+        sg500.setVisible(false);
+        sg1000.setVisible(false);
+        labelg100.setVisible(false);
+        labelg500.setVisible(false);
+        labelg1000.setVisible(false);
+        envoyerSMS.setVisible(true);
+        verifierCode.setVisible(false);
+        }
 
     }
 
     @FXML
     private void confirmerQuiz3(ActionEvent event) {
+        int j=0;
         QuizUser qu = new QuizUser();
         QuizUserService qus = new QuizUserService();
         if (qus.verifier(this.getUser().getId(), 3)) {
@@ -956,25 +1063,25 @@ public class EspaceServiceFrontController implements Initializable {
                 && quiz1Question3.getValue().equals("Vincent Van Gogh")
                 && quiz1Question4.getValue().equals("Bilbao")
                 && quiz1Question5.getValue().equals("Le baroque")) {
+            j=1;
             if (qus.getTentative(this.getUser().getId(), 3) == 1) {
                 qu.setIdQuiz(3);
                 qu.setTentative(3);
                 qu.setIdUser(this.getUser().getId());
                 qus.modifierQuizUser(qu);
-                UserService u = new UserService();
-                u.modifierSolde(this.getUser(), 1000);
-                resultatQuiz.setText("Bravo vous Avez gagné 1000 Scoins");
+                /*UserService u = new UserService();
+                u.modifierSolde(this.getUser(), 1000);*/
+                resultatQuiz.setText("Bravo vous Avez gagné 10 Scoins");
             }
             if (qus.getTentative(this.getUser().getId(), 3) == 2) {
                 qu.setIdQuiz(3);
                 qu.setTentative(3);
                 qu.setIdUser(this.getUser().getId());
                 qus.modifierQuizUser(qu);
-                UserService u = new UserService();
-                u.modifierSolde(this.getUser(), 500);
-                resultatQuiz.setText("Bravo vous Avez gagné 500 Scoins");
+                /*UserService u = new UserService();
+                u.modifierSolde(this.getUser(), 500);*/
+                resultatQuiz.setText("Bravo vous Avez gagné 5 Scoins");
             }
-            System.out.println("selon");
 
         } else {
             System.out.println("non");
@@ -983,8 +1090,8 @@ public class EspaceServiceFrontController implements Initializable {
                 qu.setTentative(1);
                 qu.setIdUser(this.getUser().getId());
                 qus.modifierQuizUser(qu);
-                resultatQuiz.setText("Vous avez échoué.Réessayer et gagner 500 SCoins!");
-                labelg500.setText("Gagner 500");
+                resultatQuiz.setText("Vous avez échoué.Réessayer et gagner 5 SCoins!");
+                labelg500.setText("Gagner 5");
             }
             if (qus.getTentative(this.getUser().getId(), 3) == 2) {
                 qu.setTentative(2);
@@ -1017,6 +1124,31 @@ public class EspaceServiceFrontController implements Initializable {
         sg500.setVisible(true);
         sg1000.setVisible(true);
         labelQuizNum.setVisible(false);
+        if(j==1){
+            SMSForm.setVisible(true);
+            labelSMS.setText("Tapez votre numéro ,un code vous sera communiqué !");
+            labelSMS.setVisible(true);
+        labelQ1Pass.setVisible(false);
+        labelQ2Pass.setVisible(false);
+        labelQ3Pass.setVisible(false);
+        confirmerQuiz1.setVisible(false);
+        confirmerQuiz2.setVisible(false);
+        confirmerQuiz3.setVisible(false);
+        jouerQuiz1.setVisible(false);
+        jouerQuiz2.setVisible(false);
+        jouerQuiz3.setVisible(false);
+        imageQuiz1.setVisible(false);
+        imageQuiz2.setVisible(false);
+        imageQuiz3.setVisible(false);
+        sg100.setVisible(false);
+        sg500.setVisible(false);
+        sg1000.setVisible(false);
+        labelg100.setVisible(false);
+        labelg500.setVisible(false);
+        labelg1000.setVisible(false);
+        envoyerSMS.setVisible(true);
+        verifierCode.setVisible(false);
+        }
     }
 
     @FXML
@@ -1128,6 +1260,54 @@ public class EspaceServiceFrontController implements Initializable {
         this.initialize(null, null);
     }
 
+    @FXML
+    private void envoyerSMS(ActionEvent event) {
+        String num="+216"+textSMS.getText();
+        String sender="FIXIT";
+        String code="Votre code est \n FIXIT-"+this.getUser().getId()+"-2019";
+                 SMSService sms=new SMSService();
+                
+                sms.sendSms(code, sender, num);
+                textSMS.clear();
+                envoyerSMS.setVisible(false);
+                verifierCode.setVisible(true);
+        
+    }
+
+    @FXML
+    private void verifierCode(ActionEvent event) {
+        String code="FIXIT-"+this.getUser().getId()+"-2019";
+                
+        if(textSMS.getText().equals(code)){
+            
+                UserService u = new UserService();
+                u.modifierSolde(this.getUser(), 100);
+                System.out.println("ci bon");
+                quiz1.setVisible(false);
+        labelQ1Pass.setVisible(true);
+        labelQ2Pass.setVisible(true);
+        labelQ3Pass.setVisible(true);
+        confirmerQuiz1.setVisible(true);
+        confirmerQuiz2.setVisible(false);
+        confirmerQuiz3.setVisible(true);
+        jouerQuiz1.setVisible(true);
+        jouerQuiz2.setVisible(true);
+        jouerQuiz3.setVisible(true);
+        imageQuiz1.setVisible(true);
+        imageQuiz2.setVisible(true);
+        imageQuiz3.setVisible(true);
+        labelg100.setVisible(true);
+        labelg500.setVisible(true);
+        labelg1000.setVisible(true);
+        sg100.setVisible(true);
+        sg500.setVisible(true);
+        sg1000.setVisible(true);
+        labelQuizNum.setVisible(false);
+                
+            
+        }
+    }
+
     public class Poules extends ListCell<CategorieService> {
 
         public Poules() {
@@ -1143,14 +1323,14 @@ public class EspaceServiceFrontController implements Initializable {
                 description.setStyle("-fx-font-size: 15 arial;"
                         + "-fx-pref-width: 158px;");
                 VBox vBox = new VBox(nom, description);
-                vBox.setStyle("-fx-font-color: transparent;");
+                vBox.setStyle("-fx-font-color: transparent;-fx-background-color: #F1F2F6;");
                 vBox.setSpacing(10);
 
                 Image image = new Image("file:/wamp64/www/fixit/web/uploads/images/categorieService/" + item.getImage(), 120, 120, false, false);
                 ImageView img = new ImageView(image);
 
                 HBox hBox = new HBox(img, vBox);
-                hBox.setStyle("-fx-font-color: transparent;");
+                hBox.setStyle("-fx-font-color: transparent;-fx-background-color: #F1F2F6;");
                 hBox.setSpacing(10);
                 setGraphic(hBox);
                 listCategorie.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
@@ -1185,14 +1365,14 @@ public class EspaceServiceFrontController implements Initializable {
                         + "-fx-pref-width: 158px;");
                 nbrProviders.setStyle("-fx-font-size: 10 arial;");
                 VBox vBox = new VBox(nom, description, nbrProviders);
-                vBox.setStyle("-fx-font-color: transparent;");
+                vBox.setStyle("-fx-font-color: transparent;-fx-background-color: #F1F2F6;");
                 vBox.setSpacing(10);
 
                 Image image = new Image("file:/wamp64/www/fixit/web/uploads/images/service/" + item.getImage(), 120, 120, false, false);
                 ImageView img = new ImageView(image);
 
                 HBox hBox = new HBox(img, vBox);
-                hBox.setStyle("-fx-font-color: transparent;");
+                hBox.setStyle("-fx-font-color: transparent;-fx-background-color: #F1F2F6;");
                 hBox.setSpacing(10);
                 setGraphic(hBox);
 
