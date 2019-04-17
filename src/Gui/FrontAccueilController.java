@@ -96,6 +96,7 @@ public class FrontAccueilController implements Initializable {
         Platform.runLater(() -> {
             frontIndexController.setUser(user);
             frontIndexController.loadImage();
+            frontIndexController.refresh();
             frontIndexController.getAccueil().setStyle("-fx-background-color: #f4f4f4");
             init();
         });
