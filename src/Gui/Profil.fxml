@@ -5,11 +5,13 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -312,6 +314,22 @@
                      </children>
                   </AnchorPane>
                </content>
+            </Tab>
+            <Tab fx:id="messagerie" text="Messagerie">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ListView fx:id="listUsers" layoutX="15.0" layoutY="78.0" prefHeight="527.0" prefWidth="253.0" />
+                        <ListView fx:id="messages" layoutX="267.0" layoutY="78.0" prefHeight="454.0" prefWidth="735.0" />
+                        <TextArea fx:id="nouveauMessage" layoutX="268.0" layoutY="531.0" prefHeight="74.0" prefWidth="603.0" promptText="Ecrivez un message..." />
+                        <Button fx:id="envoyer" layoutX="889.0" layoutY="549.0" mnemonicParsing="false" onAction="#envoyerAction" prefHeight="39.0" prefWidth="101.0" stylesheets="@../Resources/style.css" text="Envoyer">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+              </content>
             </Tab>
          </tabs>
       </TabPane>
