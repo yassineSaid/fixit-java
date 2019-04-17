@@ -324,8 +324,9 @@ public class EspaceOutilFrontController implements Initializable {
                                     erreur3.setVisible(false);
                             } else {
                                 outilEpuise.setVisible(true);
+                                outilEpuise.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
                                 detailLocation.setVisible(false);
-                                outilEpuise.setText("L'outil sera disponible");
+                                outilEpuise.setText("L'outil sera disponible à partir de "+list1.get(0).getDateRetour());
                             }
                         }
                         
