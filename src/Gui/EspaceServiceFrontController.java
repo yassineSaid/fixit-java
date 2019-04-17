@@ -33,6 +33,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -869,33 +870,39 @@ public class EspaceServiceFrontController implements Initializable {
     @FXML
     private void confirmerQuiz1(ActionEvent event) {
         int k = 0;
+        String e="Vous devez répondre aux questions";
         if (quiz1Question1.getValue() == null) {
             quiz1Question1.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
             k = 1;
+            e+="\nQuestion1";
         } else {
             quiz1Question1.setStyle("-fx-border-color:none ;");
         }
         if (quiz1Question2.getValue() == null) {
             quiz1Question2.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
             k = 1;
+            e+="\nQuestion2";
         } else {
             quiz1Question2.setStyle("-fx-border-color: none;");
         }
         if (quiz1Question3.getValue() == null) {
             quiz1Question3.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
             k = 1;
+            e+="\nQuestion3";
         } else {
             quiz1Question3.setStyle("-fx-border-color: none");
         }
         if (quiz1Question4.getValue() == null) {
             quiz1Question4.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
             k = 1;
+            e+="\nQuestion4";
         } else {
             quiz1Question4.setStyle("-fx-border-color: nnoe ;");
         }
         if (quiz1Question5.getValue() == null) {
             quiz1Question5.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
             k = 1;
+            e+="\nQuestion5";
         } else {
             quiz1Question5.setStyle("-fx-border-color: none ;");
         }
@@ -1012,6 +1019,14 @@ public class EspaceServiceFrontController implements Initializable {
             }
 
         }
+        else {
+            
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Quiz 1");
+            alert.setHeaderText(null);
+            alert.setContentText(e);
+            alert.showAndWait();
+        }
     }
 
     @FXML
@@ -1041,33 +1056,39 @@ public class EspaceServiceFrontController implements Initializable {
     @FXML
     private void confirmerQuiz2(ActionEvent event) {
            int k = 0;
+           String e="Vous dever répondre aux questions";
         if (quiz1Question1.getValue() == null) {
             quiz1Question1.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
             k = 1;
+            e+="\nQuestion1";
         } else {
             quiz1Question1.setStyle("-fx-border-color:none ;");
         }
         if (quiz1Question2.getValue() == null) {
             quiz1Question2.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
             k = 1;
+            e+="\nQuestion2";
         } else {
             quiz1Question2.setStyle("-fx-border-color: none;");
         }
         if (quiz1Question3.getValue() == null) {
             quiz1Question3.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
             k = 1;
+            e+="\nQuestion3";
         } else {
             quiz1Question3.setStyle("-fx-border-color: none");
         }
         if (quiz1Question4.getValue() == null) {
             quiz1Question4.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
             k = 1;
+            e+="\nQuestion4";
         } else {
             quiz1Question4.setStyle("-fx-border-color: nnoe ;");
         }
         if (quiz1Question5.getValue() == null) {
             quiz1Question5.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
             k = 1;
+            e+="\nQuestion5";
         } else {
             quiz1Question5.setStyle("-fx-border-color: none ;");
         }
@@ -1182,39 +1203,53 @@ public class EspaceServiceFrontController implements Initializable {
             verifierCode.setVisible(false);
         }
         }
+        else{
+            
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Quiz 2");
+            alert.setHeaderText(null);
+            alert.setContentText(e);
+            alert.showAndWait();
+        }
 
     }
 
     @FXML
     private void confirmerQuiz3(ActionEvent event) {
            int k = 0;
+           String e="Vous devez répondre aux questions";
         if (quiz1Question1.getValue() == null) {
             quiz1Question1.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
             k = 1;
+            e+="\nQuestion1";
         } else {
             quiz1Question1.setStyle("-fx-border-color:none ;");
         }
         if (quiz1Question2.getValue() == null) {
             quiz1Question2.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
             k = 1;
+            e+="\nQuestion2";
         } else {
             quiz1Question2.setStyle("-fx-border-color: none;");
         }
         if (quiz1Question3.getValue() == null) {
             quiz1Question3.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
             k = 1;
+            e+="\nQuestion3";
         } else {
             quiz1Question3.setStyle("-fx-border-color: none");
         }
         if (quiz1Question4.getValue() == null) {
             quiz1Question4.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
             k = 1;
+            e+="\nQuestion4";
         } else {
             quiz1Question4.setStyle("-fx-border-color: nnoe ;");
         }
         if (quiz1Question5.getValue() == null) {
             quiz1Question5.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
             k = 1;
+            e+="\nQuestion5";
         } else {
             quiz1Question5.setStyle("-fx-border-color: none ;");
         }
@@ -1329,6 +1364,12 @@ public class EspaceServiceFrontController implements Initializable {
             verifierCode.setVisible(false);
         }
         }
+        
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Quiz 3");
+            alert.setHeaderText(null);
+            alert.setContentText(e);
+            alert.showAndWait();
     }
 
     @FXML
@@ -1506,6 +1547,7 @@ public class EspaceServiceFrontController implements Initializable {
         textSMS.clear();
         envoyerSMS.setVisible(false);
         verifierCode.setVisible(true);
+        labelSMS.setText("Ecrivez le code que vous avez récu ");
 
     }
 
