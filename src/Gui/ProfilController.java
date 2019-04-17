@@ -23,6 +23,8 @@ import java.sql.Timestamp;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -60,6 +62,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 import org.controlsfx.glyphfont.FontAwesome;
 
 /**
@@ -230,28 +233,39 @@ public class ProfilController implements Initializable {
             afficherHorraireAction();
             afficherReposAction();
             loadUsersMessage();
-            nouveauMessage.setDisable(true);
-            envoyer.setDisable(true);
-            MessageService ms=new MessageService();
-            if (ms.checkUnseen(user.getId())){
-                FontAwesome fs = new FontAwesome();
-                Node icon1 = fs.create(FontAwesome.Glyph.INFO_CIRCLE).color(Color.BLACK).size(13);
-                icon1.setId("icon"); 
-                messagerie.setGraphic(icon1);
-            }
-            listUsers.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
-                @Override
-                public void handle(javafx.scene.input.MouseEvent event) {
-                    if (listUsers.getSelectionModel().getSelectedIndex() != -1) {
-
-                    }
-                    HBox h = (HBox) listUsers.getItems().get(listUsers.getSelectionModel().getSelectedIndex());
-                    loadMessages(h.getId());
-                    nouveauMessage.setDisable(false);
-                    envoyer.setDisable(false);
-                }
-            });
+            refreshMessage();
         });
+    }
+
+    @FXML
+    public void refreshMessage() {
+        nouveauMessage.setDisable(true);
+        envoyer.setDisable(true);
+        MessageService ms = new MessageService();
+        if (ms.checkUnseen(user.getId())) {
+            FontAwesome fs = new FontAwesome();
+            Node icon1 = fs.create(FontAwesome.Glyph.INFO_CIRCLE).color(Color.BLACK).size(13);
+            icon1.setId("icon");
+            messagerie.setGraphic(icon1);
+        }
+        listUsers.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
+            @Override
+            public void handle(javafx.scene.input.MouseEvent event) {
+                if (listUsers.getSelectionModel().getSelectedIndex() != -1) {
+                    HBox h = (HBox) listUsers.getItems().get(listUsers.getSelectionModel().getSelectedIndex());
+                loadMessages(h.getId());
+                nouveauMessage.setDisable(false);
+                envoyer.setDisable(false);
+                loadUsersMessage();
+                }
+            }
+        });
+        Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+            loadUsersMessage();
+            if (idMessage!=null) loadMessages(idMessage);
+        }));
+        fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
+        fiveSecondsWonder.play();
     }
 
     @FXML
@@ -614,7 +628,7 @@ public class ProfilController implements Initializable {
                 }
             } else {
                 path = "file:" + currDir.toPath().getRoot().toString() + "wamp64\\www\\fixit\\web\\uploads\\images\\user\\" + us.getUserImage(m.getDestinataire());
-                nomMess.setText(us.getUserName(m.getExpediteur()));
+                nomMess.setText(us.getUserName(m.getDestinataire()));
                 if (m.getContenu().length() > 15) {
                     content = "Vous: " + m.getContenu().substring(0, 15) + "...";
                 } else {
@@ -638,10 +652,18 @@ public class ProfilController implements Initializable {
             h.getChildren().add(v);
             h.setSpacing(5);
             h.setId(String.valueOf(m.getId()));
-            if (!m.isVu() && m.getDestinataire()==user.getId()) h.setStyle("-fx-background-color: grey");
+            if (!m.isVu() && m.getDestinataire() == user.getId()) {
+                nomMess.setStyle("-fx-font-weight: bold");
+                contenu.setStyle("-fx-font-weight: bold");
+                date.setStyle("-fx-font-weight: bold");
+            }
+            //h.setStyle("-fx-background-color: grey;-fx-padding: 0.25em 0.583em 0.25em 0.583em;");
+            //else h.setStyle("-fx-padding: 0.25em 0.583em 0.25em 0.583em;");
+            //h("");
             listHbox.add(h);
         }
         listUsers.setItems(listHbox);
+        //listUsers.setStyle("-fx-control-inner-background:   rgba(255,255,255,0.1); -fx-background-color:   rgba(255,255,255,0.1);");
     }
 
     public void loadMessages(String id) {
@@ -655,7 +677,9 @@ public class ProfilController implements Initializable {
         idMessage = id;
         ms.setSeen(user.getId(), idOther);
         frontIndexController.refresh();
-        if (!ms.checkUnseen(user.getId())) messagerie.setGraphic(null);
+        if (!ms.checkUnseen(user.getId())) {
+            messagerie.setGraphic(null);
+        }
         data = ms.getConversation(user.getId(), contacted.getId());
         for (Message m : data) {
             HBox h = new HBox();
