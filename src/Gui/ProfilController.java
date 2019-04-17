@@ -56,6 +56,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
@@ -242,10 +243,10 @@ public class ProfilController implements Initializable {
         nouveauMessage.setDisable(true);
         envoyer.setDisable(true);
         MessageService ms = new MessageService();
+        FontAwesome fs = new FontAwesome();
+        Node icon1 = fs.create(FontAwesome.Glyph.INFO_CIRCLE).color(Color.BLACK).size(13);
+        icon1.setId("icon");
         if (ms.checkUnseen(user.getId())) {
-            FontAwesome fs = new FontAwesome();
-            Node icon1 = fs.create(FontAwesome.Glyph.INFO_CIRCLE).color(Color.BLACK).size(13);
-            icon1.setId("icon");
             messagerie.setGraphic(icon1);
         }
         listUsers.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
@@ -263,6 +264,10 @@ public class ProfilController implements Initializable {
         Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
             loadUsersMessage();
             if (idMessage!=null) loadMessages(idMessage);
+            if (ms.checkUnnotified(user.getId())){
+                messagerie.setGraphic(icon1);
+                ms.setNotified(user.getId());
+            }
         }));
         fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
         fiveSecondsWonder.play();
