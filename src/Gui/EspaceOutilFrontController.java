@@ -5,9 +5,11 @@
  */
 package Gui;
 
+import Entities.Notification;
 import Entities.Outil;
 import Entities.User;
 import Entities.UserOutil;
+import Services.NotificationService;
 import Services.OutilService;
 import Services.UserOutilService;
 import Services.UserService;
@@ -324,8 +326,9 @@ public class EspaceOutilFrontController implements Initializable {
                                     erreur3.setVisible(false);
                             } else {
                                 outilEpuise.setVisible(true);
+                                outilEpuise.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
                                 detailLocation.setVisible(false);
-                                outilEpuise.setText("L'outil sera disponible");
+                                outilEpuise.setText("L'outil sera disponible à partir de "+list1.get(0).getDateRetour());
                             }
                         }
                         
@@ -426,7 +429,14 @@ public class EspaceOutilFrontController implements Initializable {
             frontIndexController.setUser(user);
             frontIndexController.initialize(null, null);
         solde.setText(String.valueOf(user.getSolde()));
-        
+        NotificationService ns = new NotificationService();
+        Notification n = new Notification();
+        n.setTitle("Location");
+        n.setDescription(user+" va loué "+o.getNom()+" de "+uo.getDateLocation().toString()+" à "+uo.getDateRetour());
+        Byte b=0;
+        n.setSeen(b);
+        n.setIcon(user.getImage());
+        ns.ajouterNotification(n);
         initialize(null, null);
     }
     

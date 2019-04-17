@@ -137,5 +137,20 @@ public class OutilService {
             Logger.getLogger(OutilService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    public Boolean verifierOutil(String nom) {
+        try {
+            PreparedStatement pt = c.prepareStatement("SELECT * from outils where Nom=?");
+            pt.setString(1, nom);
+            ResultSet rs = pt.executeQuery();
+                while (rs.next()) {
+                    return true;
+                }
+            return false;
+        } catch (SQLException ex) {
+            System.out.println("Services.OutilService.getCategorieOutil()");
+            System.out.println(ex);
+        }
+        return null;
+    }
 
 }

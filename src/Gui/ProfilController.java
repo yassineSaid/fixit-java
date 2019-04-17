@@ -1,20 +1,25 @@
 package Gui;
 
+import Entities.CategorieService;
 import Entities.Horraire;
 import Entities.Langue;
+import Entities.Message;
 import Entities.Repos;
 import Entities.User;
 import Services.HorraireService;
 import Services.ImageService;
+import Services.MessageService;
 import Services.ReposService;
 import Services.UserLangueService;
 import Services.UserService;
+import Services.Utils;
 import com.jfoenix.controls.JFXTimePicker;
 import java.io.File;
 import java.io.IOException;
 import static java.lang.Integer.parseInt;
 import java.net.URL;
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,9 +27,11 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -33,20 +40,27 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.controlsfx.glyphfont.FontAwesome;
 
 /**
  * FXML Controller class
@@ -69,6 +83,8 @@ public class ProfilController implements Initializable {
     private ImageView photo;
 
     private User user;
+    private User Contacteduser;
+    private String idMessage;
     @FXML
     private TextField nom;
     @FXML
@@ -183,6 +199,16 @@ public class ProfilController implements Initializable {
     private TextField zip;
     @FXML
     private TextField telephone;
+    @FXML
+    private ListView<HBox> listUsers;
+    @FXML
+    private ListView<VBox> messages;
+    @FXML
+    private TextArea nouveauMessage;
+    @FXML
+    private Button envoyer;
+    @FXML
+    private Tab messagerie;
 
     public User getUser() {
         return user;
@@ -203,9 +229,30 @@ public class ProfilController implements Initializable {
             afficherLanguesAction();
             afficherHorraireAction();
             afficherReposAction();
+            loadUsersMessage();
+            nouveauMessage.setDisable(true);
+            envoyer.setDisable(true);
+            MessageService ms=new MessageService();
+            if (ms.checkUnseen(user.getId())){
+                FontAwesome fs = new FontAwesome();
+                Node icon1 = fs.create(FontAwesome.Glyph.INFO_CIRCLE).color(Color.BLACK).size(13);
+                icon1.setId("icon"); 
+                messagerie.setGraphic(icon1);
+            }
+            listUsers.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
+                @Override
+                public void handle(javafx.scene.input.MouseEvent event) {
+                    if (listUsers.getSelectionModel().getSelectedIndex() != -1) {
+
+                    }
+                    HBox h = (HBox) listUsers.getItems().get(listUsers.getSelectionModel().getSelectedIndex());
+                    loadMessages(h.getId());
+                    nouveauMessage.setDisable(false);
+                    envoyer.setDisable(false);
+                }
+            });
         });
     }
- 
 
     @FXML
     private void modifierAction(ActionEvent event) {
@@ -545,6 +592,113 @@ public class ProfilController implements Initializable {
         stage.showAndWait();
     }
 
-    
+    private void loadUsersMessage() {
+        File currDir = new File(System.getProperty("user.dir", "."));
+        MessageService ms = new MessageService();
+        UserService us = new UserService();
+        ObservableList<Message> data = ms.getLastMessages(user.getId());
+        ObservableList<HBox> listHbox = FXCollections.observableArrayList();
+        for (Message m : data) {
+            HBox h = new HBox();
+            VBox v = new VBox();
+            Label nomMess = new Label();
+            String path;
+            String content;
+            if (m.getDestinataire() == user.getId()) {
+                path = "file:" + currDir.toPath().getRoot().toString() + "wamp64\\www\\fixit\\web\\uploads\\images\\user\\" + us.getUserImage(m.getExpediteur());
+                nomMess.setText(us.getUserName(m.getExpediteur()));
+                if (m.getContenu().length() > 15) {
+                    content = m.getContenu().substring(0, 15) + "...";
+                } else {
+                    content = m.getContenu();
+                }
+            } else {
+                path = "file:" + currDir.toPath().getRoot().toString() + "wamp64\\www\\fixit\\web\\uploads\\images\\user\\" + us.getUserImage(m.getDestinataire());
+                nomMess.setText(us.getUserName(m.getExpediteur()));
+                if (m.getContenu().length() > 15) {
+                    content = "Vous: " + m.getContenu().substring(0, 15) + "...";
+                } else {
+                    content = "Vous: " + m.getContenu();
+                }
+            }
+            Image i = new Image(path, 50, 50, false, false);
+            ImageView iv = new ImageView(i);
+
+            Label contenu = new Label(content);
+
+            Label date = new Label(Utils.formatDateTime(m.getDate()));
+            date.setFont(Font.font(12));
+            nomMess.setFont(Font.font(14));
+            contenu.setFont(Font.font(15));
+            v.getChildren().add(nomMess);
+            v.getChildren().add(contenu);
+            v.getChildren().add(date);
+
+            h.getChildren().add(iv);
+            h.getChildren().add(v);
+            h.setSpacing(5);
+            h.setId(String.valueOf(m.getId()));
+            if (!m.isVu() && m.getDestinataire()==user.getId()) h.setStyle("-fx-background-color: grey");
+            listHbox.add(h);
+        }
+        listUsers.setItems(listHbox);
+    }
+
+    public void loadMessages(String id) {
+        MessageService ms = new MessageService();
+        UserService us = new UserService();
+        ObservableList<Message> data;
+        ObservableList<VBox> listHbox = FXCollections.observableArrayList();
+        int idOther = ms.getIdOtherUser(Integer.parseInt(id), user.getId());
+        User contacted = us.getUser(String.valueOf(idOther));
+        Contacteduser = contacted;
+        idMessage = id;
+        ms.setSeen(user.getId(), idOther);
+        frontIndexController.refresh();
+        if (!ms.checkUnseen(user.getId())) messagerie.setGraphic(null);
+        data = ms.getConversation(user.getId(), contacted.getId());
+        for (Message m : data) {
+            HBox h = new HBox();
+            VBox v = new VBox();
+            String nom;
+            Label contenu = new Label(m.getContenu());
+            if (m.getExpediteur() == user.getId()) {
+                nom = Utils.upperCaseFirst(user.getFirstname());
+                v.setAlignment(Pos.CENTER_RIGHT);
+                contenu.setAlignment(Pos.CENTER_RIGHT);
+            } else {
+                nom = Utils.upperCaseFirst(contacted.getFirstname());
+                v.setAlignment(Pos.CENTER_LEFT);
+                contenu.setAlignment(Pos.CENTER_LEFT);
+            }
+
+            contenu.setFont(Font.font(18));
+            contenu.setWrapText(true);
+            contenu.setMaxWidth(600);
+
+            Label heure = new Label("Par " + nom + ", le " + Utils.formatDateTime(m.getDate()));
+            heure.setFont(Font.font(10));
+
+            v.getChildren().add(contenu);
+            v.getChildren().add(heure);
+
+            listHbox.add(v);
+        }
+        messages.setItems(listHbox);
+        messages.scrollTo(messages.getItems().size() - 1);
+    }
+
+    @FXML
+    private void envoyerAction(ActionEvent event) {
+        if (nouveauMessage.getText().length() < 1) {
+
+        } else {
+            MessageService ms = new MessageService();
+            ms.envoyerMessage(new Message(0, user.getId(), Contacteduser.getId(), true, new Timestamp(System.currentTimeMillis()), nouveauMessage.getText()));
+            loadMessages(idMessage);
+            nouveauMessage.setText("");
+            loadUsersMessage();
+        }
+    }
 
 }

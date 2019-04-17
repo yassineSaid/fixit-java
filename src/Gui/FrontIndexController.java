@@ -6,6 +6,8 @@
 package Gui;
 
 import Entities.User;
+import Services.Like_DislikeService;
+import Services.MessageService;
 import Services.UserService;
 import Services.Utils;
 import java.io.File;
@@ -61,6 +63,10 @@ public class FrontIndexController implements Initializable {
     private Button deconnexion;
     @FXML
     private Button accueil;
+    @FXML
+    private Label likenumber;
+    @FXML
+    private Label dislikenbr;
 
     public User getUser() {
         return user;
@@ -142,12 +148,20 @@ public class FrontIndexController implements Initializable {
         });
     }
     public void refresh(){
+        MessageService ms=new MessageService();
         FontAwesome fs = new FontAwesome();
         Node icon = fs.create(FontAwesome.Glyph.SIGN_OUT).color(Color.WHITE).size(17);
         icon.setId("icon");
         deconnexion.setGraphic(icon);
         userName.setText(Utils.upperCaseFirst(user.getFirstname()) + " " + Utils.upperCaseFirst(user.getLastname()));
         loadImage();
+        getLikeDislike();
+        if (ms.checkUnseen(user.getId())) {
+            Node icon1 = fs.create(FontAwesome.Glyph.INFO_CIRCLE).color(Color.web("#017c00")).size(17);
+            icon1.setId("icon"); 
+            profil.setGraphic(icon1);
+        }
+        else profil.setGraphic(null);
     }
     public void loadImage() {
         File currDir = new File(System.getProperty("user.dir", "."));
@@ -326,6 +340,26 @@ public class FrontIndexController implements Initializable {
         } catch (IOException ex) {
             System.out.println(ex);
         }
+    }
+    public void getLikeDislike()
+    {
+         Like_DislikeService lds = new Like_DislikeService();
+        int nbrLike= lds.countLikes(this.user.getId());
+        int nbrDislike = lds.countDislikes(this.user.getId());
+        System.out.println(nbrDislike);
+        
+        
+        FontAwesome fsLike = new FontAwesome();
+        Node iconLike = fsLike.create(FontAwesome.Glyph.THUMBS_ALT_UP).color(Color.WHITE).size(25);
+        iconLike.setId("likeupempty");
+        likenumber.setGraphic(iconLike);
+        likenumber.setText(" /"+nbrLike);
+         FontAwesome fsDislike = new FontAwesome();
+        Node iconDislike = fsDislike.create(FontAwesome.Glyph.THUMBS_ALT_DOWN).color(Color.WHITE).size(25);
+        iconLike.setId("dislikefull");
+        dislikenbr.setGraphic(iconDislike);
+        dislikenbr.setText(" /"+nbrDislike);
+        
     }
 
 }

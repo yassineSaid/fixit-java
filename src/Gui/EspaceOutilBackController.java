@@ -38,6 +38,7 @@ import javafx.scene.control.Button;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -45,6 +46,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
@@ -142,8 +144,8 @@ public class EspaceOutilBackController implements Initializable {
     private TextField rechercheCategorie;
     @FXML
     private TextField rechercheOutil;
-    String logooo;
-    String imageee;
+    String logooo = "";
+    String imageee = "";
     @FXML
     private Button openFileImage;
     @FXML
@@ -194,11 +196,11 @@ public class EspaceOutilBackController implements Initializable {
                 modifier.setDisable(true);
                 supprimer.setDisable(true);
                 inputCategorie.setText("");
-                
+
                 modifierOutil.setDisable(true);
                 supprimerOutil.setDisable(true);
                 retourner.setDisable(true);
-                
+
                 nomL.setVisible(false);
                 quantiteL.setVisible(false);
                 dureeL.setVisible(false);
@@ -225,12 +227,12 @@ public class EspaceOutilBackController implements Initializable {
                 modifierOutil.setVisible(true);
                 supprimerOutil.setVisible(true);
                 rechercheOutil.setVisible(true);
-                
+
                 Connection c = Connexion.getInstance().getCon();
-                
+
                 nom.setCellValueFactory(new PropertyValueFactory<>("nom"));
                 logo.setCellValueFactory(new PropertyValueFactory<>("Im"));
-                
+
                 CategorieOutilService categorie = new CategorieOutilService();
                 try {
                     table.setItems(categorie.afficherCategorie());
@@ -238,7 +240,7 @@ public class EspaceOutilBackController implements Initializable {
                 } catch (SQLException ex) {
                     Logger.getLogger(EspaceProduitBackController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
+
                 nomOutil.setCellValueFactory(new PropertyValueFactory<>("nom"));
                 dureeOutil.setCellValueFactory(new PropertyValueFactory<>("dureeMaximale"));
                 image.setCellValueFactory(new PropertyValueFactory<>("Im"));
@@ -248,31 +250,30 @@ public class EspaceOutilBackController implements Initializable {
                 categorieOutil.setCellValueFactory(new PropertyValueFactory<>("nomCategorie"));
                 quantiteOutil.setCellValueFactory(new PropertyValueFactory<>("quantite"));
                 villeOutil.setCellValueFactory(new PropertyValueFactory<>("ville"));
-                
+
                 OutilService outil = new OutilService();
                 tableOutil.setItems(outil.afficherOutil());
-                
-                
+
                 nomUser.setCellValueFactory(new PropertyValueFactory<>("user"));
                 userNomOutil.setCellValueFactory(new PropertyValueFactory<>("outil"));
                 dateLocation.setCellValueFactory(new PropertyValueFactory<>("dateLocation"));
                 dateRetour.setCellValueFactory(new PropertyValueFactory<>("dateRetour"));
                 prix.setCellValueFactory(new PropertyValueFactory<>("total"));
-                
+
                 UserOutilService uo = new UserOutilService();
 
                 tableOutilsLoues.setItems(uo.afficherOutil());
-                
+
                 nomUser1.setCellValueFactory(new PropertyValueFactory<>("idUser"));
                 userNomOutil1.setCellValueFactory(new PropertyValueFactory<>("idOutil"));
                 dateLocation1.setCellValueFactory(new PropertyValueFactory<>("dateLocation"));
                 dateRetour1.setCellValueFactory(new PropertyValueFactory<>("dateRetour"));
                 prix1.setCellValueFactory(new PropertyValueFactory<>("total"));
-                
+
                 HistoriqueLocationService ho = new HistoriqueLocationService();
                 tableHistorique.setItems(ho.afficherOutil());
                 // TODO
-                
+
                 ObservableList data = table.getItems();
                 rechercheCategorie.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
                     if (oldValue != null && (newValue.length() < oldValue.length())) {
@@ -280,7 +281,7 @@ public class EspaceOutilBackController implements Initializable {
                     }
                     String value = newValue.toLowerCase();
                     ObservableList<CategorieOutil> subentries = FXCollections.observableArrayList();
-                    
+
                     long count = table.getColumns().stream().count();
                     for (int i = 0; i < table.getItems().size(); i++) {
                         for (int j = 0; j < count; j++) {
@@ -294,7 +295,7 @@ public class EspaceOutilBackController implements Initializable {
                     }
                     table.setItems(subentries);
                 });
-                
+
                 ObservableList data1 = tableOutil.getItems();
                 rechercheOutil.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
                     if (oldValue != null && (newValue.length() < oldValue.length())) {
@@ -302,7 +303,7 @@ public class EspaceOutilBackController implements Initializable {
                     }
                     String value = newValue.toLowerCase();
                     ObservableList<Outil> subentries = FXCollections.observableArrayList();
-                    
+
                     long count = tableOutil.getColumns().stream().count();
                     for (int i = 0; i < tableOutil.getItems().size(); i++) {
                         for (int j = 0; j < count; j++) {
@@ -325,9 +326,8 @@ public class EspaceOutilBackController implements Initializable {
         CategorieOutilService categorie = new CategorieOutilService();
         CategorieOutil c = table.getSelectionModel().getSelectedItem();
         categorie.supprimerCategorie(c.getId());
-        System.out.println("categorie supprimer");
-        Image img =imageNotification.getImage();
-        Notifications notificationBuilder = Notifications.create().title("Notification").text("La catégorie "+c.getNom()+" est supprimée avec succés").graphic(new ImageView(img)).hideAfter(Duration.seconds(15)).position(Pos.BOTTOM_RIGHT).onAction(new EventHandler<ActionEvent>() {
+        Image img = imageNotification.getImage();
+        Notifications notificationBuilder = Notifications.create().title("Notification").text("La catégorie " + c.getNom() + " est supprimée avec succés").graphic(new ImageView(img)).hideAfter(Duration.seconds(10)).position(Pos.BOTTOM_RIGHT).onAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 System.out.println("clicked");
@@ -336,34 +336,54 @@ public class EspaceOutilBackController implements Initializable {
         notificationBuilder.darkStyle();
         notificationBuilder.show();
         initialize(null, null);
+        System.out.println("categorie supprimée");
     }
 
     @FXML
     private void itemSelected(MouseEvent event) {
         modifier.setDisable(false);
         supprimer.setDisable(false);
-
         CategorieOutil c = table.getSelectionModel().getSelectedItem();
-
         inputCategorie.setText(c.getNom());
-
     }
 
     @FXML
     private void modifier(ActionEvent event) {
-
         CategorieOutilService categorie = new CategorieOutilService();
         CategorieOutil c = new CategorieOutil();
-
         c = table.getSelectionModel().getSelectedItem();
         c.setNom(inputCategorie.getText());
-        if (logooo != "") {
+        String err="";
+        if (c.getNom().equals("")) {
+            System.out.println(c.getNom());
+            inputCategorie.setStyle("-fx-border-color: red;");
+            err += "Le nom de la catégorie ne doit être vide";
+        }
+        else if(categorie.verifierCategorie(c.getNom())) {
+            
+            inputCategorie.setStyle("-fx-border-color: red;");
+            err += "Le nom de la catégorie doit être unique";
+        }
+        else{
+            inputCategorie.setStyle("-fx-border-color: transparent;");
+        }
+        if (err != "") {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Modification");
+            alert.setHeaderText(null);
+            alert.setContentText(err);
+            alert.showAndWait();
+            err = "";
+        }
+        else{
+            if (logooo != "") {
             c.setLogo(logooo);
         }
         categorie.modifierCategorie(c);
         logooo = "";
-        Image img =imageNotification.getImage();
-        Notifications notificationBuilder = Notifications.create().title("Notification").text("La catégorie "+c.getNom()+" est modifiée avec succés").graphic(new ImageView(img)).hideAfter(Duration.seconds(15)).position(Pos.BOTTOM_RIGHT).onAction(new EventHandler<ActionEvent>() {
+        Image img = imageNotification.getImage();
+        System.out.println(imageNotification.getImage().toString());
+        Notifications notificationBuilder = Notifications.create().title("Notification").text("La catégorie " + c.getNom() + " est modifiée avec succés").graphic(new ImageView(img)).hideAfter(Duration.seconds(10)).position(Pos.BOTTOM_RIGHT).onAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 System.out.println("clicked");
@@ -372,29 +392,53 @@ public class EspaceOutilBackController implements Initializable {
         notificationBuilder.darkStyle();
         notificationBuilder.show();
         initialize(null, null);
+        System.out.println("categorie modifiée");
+        }
+        
     }
 
     @FXML
     private void ajouter(ActionEvent event) {
         CategorieOutilService categorie = new CategorieOutilService();
-
         CategorieOutil c = new CategorieOutil();
         c.setNom(inputCategorie.getText());
         c.setLogo(logooo);
-        categorie.ajouterCategorie(c);
-        System.out.println("categorie ajoutée");
-        logooo = "";
-            Image img =imageNotification.getImage();
-        Notifications notificationBuilder = Notifications.create().title("Notification").text("La catégorie "+c.getNom()+" est ajoutée avec succés").graphic(new ImageView(img)).hideAfter(Duration.seconds(15)).position(Pos.BOTTOM_RIGHT).onAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("clicked");
-            }
-        });
-        notificationBuilder.darkStyle();
-        notificationBuilder.show();
+        String err = "";
+        if (c.getNom().equals("")) {
+            inputCategorie.setStyle("-fx-border-color: red;");
+            err += "Le nom de la catégorie ne doit être vide";
+        }
+        else if(categorie.verifierCategorie(c.getNom())) {
+            
+            inputCategorie.setStyle("-fx-border-color: red;");
+            err += "Le nom de la catégorie doit être unique";
+        }
+        else{
+            inputCategorie.setStyle("-fx-border-color: transparent;");
+        }
+        if (err != "") {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Ajout");
+            alert.setHeaderText(null);
+            alert.setContentText(err);
+            alert.showAndWait();
+            err = "";
+        } else {
+            categorie.ajouterCategorie(c);
+            logooo = "";
+            Image img = imageNotification.getImage();
+            Notifications notificationBuilder = Notifications.create().title("Notification").text("La catégorie " + c.getNom() + " est ajoutée avec succés").graphic(new ImageView(img)).hideAfter(Duration.seconds(10)).position(Pos.BOTTOM_RIGHT).onAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    System.out.println("clicked");
+                }
+            });
+            notificationBuilder.darkStyle();
+            notificationBuilder.show();
+            initialize(null, null);
+            System.out.println("categorie ajoutée");
+        }
 
-        initialize(null, null);
     }
 
     @FXML
@@ -483,8 +527,8 @@ public class EspaceOutilBackController implements Initializable {
         Outil o = tableOutil.getSelectionModel().getSelectedItem();
         outil.supprimerOutil(o.getId());
         System.out.println("outil supprimer");
-        Image img =imageNotification.getImage();
-        Notifications notificationBuilder = Notifications.create().title("Notification").text("L'outil "+o.getNom()+" est supprimé avec succés").graphic(new ImageView(img)).hideAfter(Duration.seconds(15)).position(Pos.BOTTOM_RIGHT).onAction(new EventHandler<ActionEvent>() {
+        Image img = imageNotification.getImage();
+        Notifications notificationBuilder = Notifications.create().title("Notification").text("L'outil " + o.getNom() + " est supprimé avec succés").graphic(new ImageView(img)).hideAfter(Duration.seconds(10)).position(Pos.BOTTOM_RIGHT).onAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 System.out.println("clicked");
@@ -497,7 +541,85 @@ public class EspaceOutilBackController implements Initializable {
 
     @FXML
     private void confirmerAction(ActionEvent event) {
-        OutilService outil = new OutilService();
+        
+        
+            OutilService outil = new OutilService();
+        String err="";
+         if (inputNom.getText().equals("")) {
+        inputNom.setStyle("-fx-border-color: red;");
+        err += "Le nom de l'outil ne doit être vide";
+        }
+        else if(outil.verifierOutil(inputNom.getText())) {
+        
+        inputNom.setStyle("-fx-border-color: red;");
+        err += "\nLe nom de l'outil doit être unique";
+        }
+        else{
+        inputNom.setStyle("-fx-border-color: transparent;");
+        }
+        if (inputVille.getText().equals("")) {
+        inputVille.setStyle("-fx-border-color: red;");
+        err += "\nLe champ ville ne doit être vide";
+        }
+        else{
+        inputVille.setStyle("-fx-border-color: transparent;");
+        }
+        if (inputAddresse.getText().equals("")) {
+        inputAddresse.setStyle("-fx-border-color: red;");
+        err += "\nLe champ adresse ne doit être vide";
+        }
+        else{
+        inputAddresse.setStyle("-fx-border-color: transparent;");
+        }
+        if (inputQuantite.getText().equals("")) {
+        inputQuantite.setStyle("-fx-border-color: red;");
+        err += "\nLe champ quantitée ne doit être vide";
+        }
+        else{
+        inputQuantite.setStyle("-fx-border-color: transparent;");
+        }
+        if (inputPrix.getText().equals("")) {
+        inputPrix.setStyle("-fx-border-color: red;");
+        err += "\nLe champ prix ne doit être vide";
+        }
+        else{
+        inputPrix.setStyle("-fx-border-color: transparent;");
+        }
+        if (inputDuree.getText().equals("")) {
+        inputDuree.setStyle("-fx-border-color: red;");
+        err += "\nLe champ durée maximale ne doit être vide";
+        }
+        else{
+        inputDuree.setStyle("-fx-border-color: transparent;");
+        }
+        if (inputCategorieOutil.getValue()==null) {
+        inputCategorieOutil.setStyle("-fx-border-color: red;");
+        err += "\nVous devez choisir une catégorie";
+        }
+        else{
+        inputCategorieOutil.setStyle("-fx-border-color: transparent;");
+        }
+        if (inputCodePostal.getText().equals("") ) {
+        inputCodePostal.setStyle("-fx-border-color: red;");
+        err += "\nLe champ code postal ne doit être vide";
+        }
+        else if(Integer.parseInt(inputCodePostal.getText())<1000 || Integer.parseInt(inputCodePostal.getText())>9999){
+        
+        inputCodePostal.setStyle("-fx-border-color: red;");
+        err += "\nLe champ code postal doit comporté 4 chiffres";
+        }
+        else{
+        inputCodePostal.setStyle("-fx-border-color: transparent;");
+        }
+        if (err != "") {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Modification");
+            alert.setHeaderText(null);
+            alert.setContentText(err);
+            alert.showAndWait();
+            err = "";
+        }
+        else{
         Outil o = new Outil();
         o.setNom(inputNom.getText());
         o.setImage(imageee);
@@ -508,11 +630,11 @@ public class EspaceOutilBackController implements Initializable {
         o.setVille(inputVille.getText());
         o.setAdresse(inputAddresse.getText());
         o.setC(inputCategorieOutil.getValue());
-        outil.ajouterOutil(o);
+             outil.ajouterOutil(o);
         System.out.println("outil ajoutée");
         imageee = "";
-        Image img =imageNotification.getImage();
-        Notifications notificationBuilder = Notifications.create().title("Notification").text("L'outil "+o.getNom()+" est ajouté avec succés").graphic(new ImageView(img)).hideAfter(Duration.seconds(15)).position(Pos.BOTTOM_RIGHT).onAction(new EventHandler<ActionEvent>() {
+        Image img = imageNotification.getImage();
+        Notifications notificationBuilder = Notifications.create().title("Notification").text("L'outil " + o.getNom() + " est ajouté avec succés").graphic(new ImageView(img)).hideAfter(Duration.seconds(10)).position(Pos.BOTTOM_RIGHT).onAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 System.out.println("clicked");
@@ -521,6 +643,8 @@ public class EspaceOutilBackController implements Initializable {
         notificationBuilder.darkStyle();
         notificationBuilder.show();
         initialize(null, null);
+        }
+       
     }
 
     @FXML
@@ -556,7 +680,83 @@ public class EspaceOutilBackController implements Initializable {
     @FXML
     private void confirmerModificationAction(ActionEvent event) {
         OutilService outil = new OutilService();
-        Outil o = new Outil();
+        String err="";
+         if (inputNom.getText().equals("")) {
+        inputNom.setStyle("-fx-border-color: red;");
+        err += "Le nom de l'outil ne doit être vide";
+        }
+        else if(outil.verifierOutil(inputNom.getText())) {
+        
+        inputNom.setStyle("-fx-border-color: red;");
+        err += "\nLe nom de l'outil doit être unique";
+        }
+        else{
+        inputNom.setStyle("-fx-border-color: transparent;");
+        }
+        if (inputVille.getText().equals("")) {
+        inputVille.setStyle("-fx-border-color: red;");
+        err += "\nLe champ ville ne doit être vide";
+        }
+        else{
+        inputVille.setStyle("-fx-border-color: transparent;");
+        }
+        if (inputAddresse.getText().equals("")) {
+        inputAddresse.setStyle("-fx-border-color: red;");
+        err += "\nLe champ adresse ne doit être vide";
+        }
+        else{
+        inputAddresse.setStyle("-fx-border-color: transparent;");
+        }
+        if (inputQuantite.getText().equals("")) {
+        inputQuantite.setStyle("-fx-border-color: red;");
+        err += "\nLe champ quantitée ne doit être vide";
+        }
+        else{
+        inputQuantite.setStyle("-fx-border-color: transparent;");
+        }
+        if (inputPrix.getText().equals("")) {
+        inputPrix.setStyle("-fx-border-color: red;");
+        err += "\nLe champ prix ne doit être vide";
+        }
+        else{
+        inputPrix.setStyle("-fx-border-color: transparent;");
+        }
+        if (inputDuree.getText().equals("")) {
+        inputDuree.setStyle("-fx-border-color: red;");
+        err += "\nLe champ durée maximale ne doit être vide";
+        }
+        else{
+        inputDuree.setStyle("-fx-border-color: transparent;");
+        }
+        if (inputCategorieOutil.getValue()==null) {
+        inputCategorieOutil.setStyle("-fx-border-color: red;");
+        err += "\nVous devez choisir une catégorie";
+        }
+        else{
+        inputCategorieOutil.setStyle("-fx-border-color: transparent;");
+        }
+        if (inputCodePostal.getText().equals("") ) {
+        inputCodePostal.setStyle("-fx-border-color: red;");
+        err += "\nLe champ code postal ne doit être vide";
+        }
+        else if(Integer.parseInt(inputCodePostal.getText())<1000 || Integer.parseInt(inputCodePostal.getText())>9999){
+        
+        inputCodePostal.setStyle("-fx-border-color: red;");
+        err += "\nLe champ code postal doit comporté 4 chiffres";
+        }
+        else{
+        inputCodePostal.setStyle("-fx-border-color: transparent;");
+        }
+        if (err != "") {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Modification");
+            alert.setHeaderText(null);
+            alert.setContentText(err);
+            alert.showAndWait();
+            err = "";
+        }
+        else{
+            Outil o = new Outil();
         o = tableOutil.getSelectionModel().getSelectedItem();
         o.setNom(inputNom.getText());
         if (imageee != "") {
@@ -572,8 +772,8 @@ public class EspaceOutilBackController implements Initializable {
         outil.modifierOutil(o);
         System.out.println("outil ajoutée");
         imageee = "";
-        Image img =imageNotification.getImage();
-        Notifications notificationBuilder = Notifications.create().title("Notification").text("L'outil "+o.getNom()+" est modifié avec succés").graphic(new ImageView(img)).hideAfter(Duration.seconds(15)).position(Pos.BOTTOM_RIGHT).onAction(new EventHandler<ActionEvent>() {
+        Image img = imageNotification.getImage();
+        Notifications notificationBuilder = Notifications.create().title("Notification").text("L'outil " + o.getNom() + " est modifié avec succés").graphic(new ImageView(img)).hideAfter(Duration.seconds(10)).position(Pos.BOTTOM_RIGHT).onAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 System.out.println("clicked");
@@ -582,6 +782,8 @@ public class EspaceOutilBackController implements Initializable {
         notificationBuilder.darkStyle();
         notificationBuilder.show();
         initialize(null, null);
+        }
+        
     }
 
     @FXML
@@ -639,7 +841,7 @@ public class EspaceOutilBackController implements Initializable {
         HistoriqueLocation hl = new HistoriqueLocation();
         HistoriqueLocationService hs = new HistoriqueLocationService();
         UserOutilService us = new UserOutilService();
-         OutilService os = new OutilService();
+        OutilService os = new OutilService();
         UserOutil uo = tableOutilsLoues.getSelectionModel().getSelectedItem();
         hl.setDateLocation(uo.getDateLocation());
         hl.setDateRetour(uo.getDateRetour());
@@ -647,8 +849,8 @@ public class EspaceOutilBackController implements Initializable {
         hl.setIdUser(uo.getUser());
         hl.setTotal(uo.getTotal());
         hs.archiver(hl);
-        
-        os.updateQuantie(uo.getOutil(),(1));
+
+        os.updateQuantie(uo.getOutil(), (1));
         us.supprimerUserOutil(uo);
         UserService userservice = new UserService();
         userservice.modifierSolde(uo.getUser(), 10);
@@ -658,5 +860,26 @@ public class EspaceOutilBackController implements Initializable {
     @FXML
     private void itemSelectedOutilLoues(MouseEvent event) {
         retourner.setDisable(false);
+    }
+
+    private void verifier(TextField tf) {
+        String val = tf.getText();
+        System.out.println(val);
+        String newVal = "";
+        for (char ch : val.toCharArray()) {
+            if (Character.isDigit(ch)) {
+                newVal += ch;
+            }
+        }
+        tf.setText(newVal);
+    }
+
+    @FXML
+    private void changerAction(KeyEvent event) {
+        TextField tf = (TextField) event.getSource();
+        char ch = event.getCharacter().charAt(0);
+        if (!Character.isDigit(ch)) {
+            event.consume();
+        }
     }
 }

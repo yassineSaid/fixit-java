@@ -136,11 +136,11 @@
                            </font>
                         </Label>
                         <TextField fx:id="inputNom" layoutX="281.0" layoutY="115.0" />
-                        <TextField fx:id="inputQuantite" layoutX="281.0" layoutY="165.0" />
-                        <TextField fx:id="inputDuree" layoutX="281.0" layoutY="229.0" />
-                        <TextField fx:id="inputPrix" layoutX="281.0" layoutY="282.0" />
+                        <TextField fx:id="inputQuantite" layoutX="281.0" layoutY="165.0" onKeyTyped="#changerAction" />
+                        <TextField fx:id="inputDuree" layoutX="281.0" layoutY="229.0" onKeyTyped="#changerAction" />
+                        <TextField fx:id="inputPrix" layoutX="281.0" layoutY="282.0" onKeyTyped="#changerAction" />
                         <TextField fx:id="inputAddresse" layoutX="628.0" layoutY="115.0" />
-                        <TextField fx:id="inputCodePostal" layoutX="628.0" layoutY="165.0" />
+                        <TextField fx:id="inputCodePostal" layoutX="628.0" layoutY="165.0" onKeyTyped="#changerAction" />
                         <TextField fx:id="inputVille" layoutX="628.0" layoutY="229.0" />
                         <ComboBox fx:id="inputCategorieOutil" layoutX="628.0" layoutY="282.0" prefWidth="150.0" />
                         <Button fx:id="confirmerOutil" layoutX="602.0" layoutY="388.0" mnemonicParsing="false" onAction="#confirmerAction" styleClass="ajouterBack" stylesheets="@../Resources/style.css" text="Confirmer" />

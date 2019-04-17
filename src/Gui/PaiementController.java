@@ -76,7 +76,6 @@ public class PaiementController implements Initializable {
         this.user = user;
     }
 
-    @FXML
     private void payerAction(ActionEvent event) {
         float mn;
         int nbS;
@@ -167,7 +166,6 @@ public class PaiementController implements Initializable {
         montant.setText(String.valueOf(mn) + " DT");
     }
 
-    @FXML
     private void formatCCAction(KeyEvent event) {
         TextField tf=(TextField) event.getSource();
         System.out.println(tf.getText().length());
@@ -213,6 +211,10 @@ public class PaiementController implements Initializable {
         }
         if (!erreur) payerAction(event);
         
+    }
+
+    @FXML
+    private void formatCCAction(ActionEvent event) {
     }
 
 }
