@@ -8,8 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="334.0" prefWidth="590.0" style="-fx-border-width: 2; -fx-border-color: green; -fx-border-style: solid;" stylesheets="@../Resources/style.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="Gui.PaiementController">
+<AnchorPane id="AnchorPane" prefHeight="334.0" prefWidth="590.0" style="-fx-border-width: 2; -fx-border-color: green; -fx-border-style: solid;" stylesheets="@../Resources/style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.PaiementController">
    <children>
       <ImageView fitHeight="343.0" fitWidth="335.0" layoutX="120.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.1;">
          <image>

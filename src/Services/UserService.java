@@ -667,4 +667,34 @@ public class UserService {
         }
     }
     
+    public String getUserImage(int id)
+    {
+        try {
+            PreparedStatement pt = C.prepareStatement("SELECT image FROM user WHERE id=?");
+            pt.setInt(1, id);
+            ResultSet rs = pt.executeQuery();
+            while (rs.next()) {
+                if (rs.getString("image")!=null)
+                    return rs.getString("image");
+                else return "user.png";
+            }
+        } catch (SQLException e) {
+        }
+        return null;
+    }
+    
+    public String getUserName(int id)
+    {
+        try {
+            PreparedStatement pt = C.prepareStatement("SELECT firstname,lastname FROM user WHERE id=?");
+            pt.setInt(1, id);
+            ResultSet rs = pt.executeQuery();
+            while (rs.next()) {
+                return Utils.upperCaseFirst(rs.getString("firstname"))+" "+Utils.upperCaseFirst(rs.getString("lastname"));
+            }
+            return "user.png";
+        } catch (SQLException e) {
+        }
+        return null;
+    }
 }
