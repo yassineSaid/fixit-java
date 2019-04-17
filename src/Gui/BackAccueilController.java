@@ -47,10 +47,15 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * FXML Controller class
@@ -70,6 +75,8 @@ public class BackAccueilController implements Initializable {
     private CategoryAxis mois;
     @FXML
     private ListView<Notification> listNotification;
+    @FXML
+    private ImageView imageLocation;
 
     /**
      * Initializes the controller class.
@@ -86,26 +93,30 @@ public class BackAccueilController implements Initializable {
             if (item != null) {
                 Text title = new Text(item.getTitle());
                 Text description = new Text(item.getDescription());
-                description.setWrappingWidth(200);
                 Text dateNotification = new Text(item.getNotificationDate().toString());
-                Image image = new Image("file:/wamp64/www/fixit/web/uploads/images/user/" + item.getIcon(), 100, 100, false, false);
+                description.setWrappingWidth(150);
+                title.setStyle("-fx-font-weight: bold;	-fx-font-size: 14px; -fx-alignment: center ;");
+                description.setStyle("-fx-font-weight: bold;");
+                dateNotification.setStyle("-fx-font-weight: bold;");
+                Image image = new Image(getClass().getResourceAsStream("/Resources/location.png"),50,50,false,false);
                 ImageView img = new ImageView(image);
-                
-                
+                img.setStyle("	-fx-pref-height: 50px; -fx-pref-width: 50px;");
                 VBox vBox = new VBox(title,description,dateNotification);
-                /*if (item.getSeen()==0) {
-                } else {
-                vBox = vBox2;
-                }*/
-                //vBox.setStyle("-fx-background-color:  transparent;");
                 vBox.setSpacing(10);
-                HBox hBox = new HBox(img, vBox);
-                hBox.setStyle("-fx-background-color:  transparent");
+                VBox vBoxImage = new VBox(new Text(),img,new Text());
+                vBoxImage.setSpacing(10);
+                HBox hBox = new HBox(vBoxImage, vBox);
                 hBox.setSpacing(10);
+                if (item.getSeen()==0) {
+                hBox.setStyle("-fx-background-color:  #6db6c6");
+                } else {
+                hBox.setStyle("-fx-background-color:  transparent");
+                }
                 setGraphic(hBox);
             }
         }
         });
+            listNotification.setStyle("-fx-control-inner-background:  transparent; -fx-background-color:   rgba(255,255,255,0.1);");
         });
     }
 
@@ -137,6 +148,24 @@ public class BackAccueilController implements Initializable {
             //System.err.println("Got an exception! ");
             System.out.println("Gui.EspaceOutilFrontController.loadDataFromDatabase()");
             System.err.println(e.getMessage());
+        }
+    }
+
+    @FXML
+    private void afficherDetailNotification(MouseEvent event) throws IOException {
+        if (event.getClickCount() == 2) {
+        Notification n = (Notification) listNotification.getItems().get(listNotification.getSelectionModel().getSelectedIndex());
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/DetailNotification.fxml"));
+        Parent root = fxmlLoader.load();
+        DetailNotificationController controller = fxmlLoader.<DetailNotificationController>getController();
+        controller.setNotification(n);
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initOwner(((Node) event.getSource()).getScene().getWindow());
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setScene(scene);
+        stage.showAndWait();
         }
     }
 }
