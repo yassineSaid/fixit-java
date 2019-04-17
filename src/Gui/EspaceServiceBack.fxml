@@ -7,12 +7,15 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Pagination?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -104,6 +107,16 @@
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Label>
+                              <ImageView fx:id="imageNotificationDelete" fitHeight="75.0" fitWidth="104.0" layoutX="435.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                                 <image>
+                                    <Image url="@../Resources/delete.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="imageNotificationTik" fitHeight="98.0" fitWidth="117.0" layoutX="316.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                                 <image>
+                                    <Image url="@../Resources/tik.png" />
+                                 </image>
+                              </ImageView>
                            </children>
                         </AnchorPane>
                         <Button fx:id="ajouterS" layoutX="203.0" layoutY="498.0" mnemonicParsing="false" onAction="#ajouterS" prefHeight="30.0" prefWidth="102.0" styleClass="ajouterBack" stylesheets="@../Resources/style.css" text="Ajouter" />
@@ -208,24 +221,56 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <BarChart fx:id="stat" layoutX="143.0" layoutY="85.0" prefHeight="400.0" prefWidth="654.0">
-                          <xAxis>
-                            <CategoryAxis side="BOTTOM" />
-                          </xAxis>
-                          <yAxis>
-                            <NumberAxis side="LEFT" />
-                          </yAxis>
-                        </BarChart>
-                        <Label layoutX="411.0" layoutY="471.0" prefHeight="17.0" prefWidth="231.0" text="Catégories">
-                           <font>
-                              <Font size="19.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="-5.0" layoutY="244.0" prefHeight="17.0" prefWidth="231.0" rotate="-90.0" text="Nombre de services">
-                           <font>
-                              <Font size="19.0" />
-                           </font>
-                        </Label>
+                        <TabPane prefHeight="556.0" prefWidth="1039.0" tabClosingPolicy="UNAVAILABLE">
+                          <tabs>
+                            <Tab text="Nombre de services par catégorie">
+                              <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="267.0" prefWidth="458.0">
+                                       <children>
+                                          <BarChart fx:id="stat" layoutX="139.0" layoutY="64.0" prefHeight="400.0" prefWidth="654.0">
+                                            <xAxis>
+                                              <CategoryAxis side="BOTTOM" />
+                                            </xAxis>
+                                            <yAxis>
+                                              <NumberAxis side="LEFT" />
+                                            </yAxis>
+                                          </BarChart>
+                                          <Label layoutX="423.0" layoutY="485.0" prefHeight="17.0" prefWidth="231.0" text="Catégories">
+                                             <font>
+                                                <Font size="19.0" />
+                                             </font>
+                                          </Label>
+                                          <Label layoutX="-30.0" layoutY="230.0" prefHeight="17.0" prefWidth="231.0" rotate="-90.0" text="Nombre de services">
+                                             <font>
+                                                <Font size="19.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </AnchorPane>
+                              </content>
+                            </Tab>
+                            <Tab text="Utilisateur le plus actif">
+                              <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <ImageView fx:id="imageUserStat" fitHeight="202.0" fitWidth="232.0" layoutX="404.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true" />
+                                          <Separator layoutX="309.0" layoutY="243.0" prefHeight="41.0" prefWidth="458.0" />
+                                          <Label fx:id="nomUserStat" alignment="CENTER" contentDisplay="CENTER" layoutX="309.0" layoutY="284.0" prefHeight="39.0" prefWidth="456.0">
+                                             <font>
+                                                <Font size="27.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="nbrServiceStat" alignment="CENTER" contentDisplay="CENTER" layoutX="295.0" layoutY="368.0" prefHeight="39.0" prefWidth="485.0">
+                                             <font>
+                                                <Font size="27.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </AnchorPane>
+                              </content>
+                            </Tab>
+                          </tabs>
+                        </TabPane>
                      </children>
                   </AnchorPane>
                </content>
