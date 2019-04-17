@@ -47,4 +47,17 @@ public class Utils {
         String date=jour+" "+mois+" "+annee+" à "+heure+":"+minute;
         return date;
     }
+    public static boolean checkVoyelle(String s)
+    {
+        if (s!=null && s!="")
+        {
+            char ch=s.charAt(0);
+            if (ch == 'a' || ch == 'A' || ch == 'e' || ch == 'E' || ch == 'i' ||ch == 'I' || ch == 'o' || ch == 'O' || ch == 'u' || ch=='U')
+            {
+                return true;
+            }
+            else return false;
+        }
+        return false;
+    }
 }

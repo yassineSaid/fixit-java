@@ -8,11 +8,15 @@ package Gui;
 import Entities.Notification;
 import Entities.Outil;
 import Entities.User;
+import Entities.UserLangue;
 import Entities.UserOutil;
 import Services.NotificationService;
 import Services.PaiementService;
 import Services.ServiceService;
+import Services.UserLangueService;
 import Services.UserOutilService;
+import Services.Utils;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -29,33 +33,42 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javax.imageio.ImageIO;
+import org.controlsfx.glyphfont.FontAwesome;
 
 /**
  * FXML Controller class
@@ -75,6 +88,20 @@ public class BackAccueilController implements Initializable {
     private CategoryAxis mois;
     @FXML
     private ListView<Notification> listNotification;
+    @FXML
+    private HBox image1;
+    @FXML
+    private HBox image2;
+    @FXML
+    private HBox image3;
+    @FXML
+    private Label revenusAnnee;
+    @FXML
+    private Label revenusTotal;
+    @FXML
+    private Label languesParlee;
+    @FXML
+    private Button saveAsPng;
 
     /**
      * Initializes the controller class.
@@ -135,11 +162,47 @@ public class BackAccueilController implements Initializable {
         statsAnnee.getData().addAll(data);
         statsAnnee.setBarGap(0);
         statsAnnee.setCategoryGap(30);
-        for(Node n:statsAnnee.lookupAll(".default-color0.chart-bar")) {
+        for (Node n : statsAnnee.lookupAll(".default-color0.chart-bar")) {
             n.setStyle("-fx-bar-fill: #5998ff;");
+        }
+        System.err.println(ps.revenusAnnuels());
+        Label i1 = new Label();
+        Label i2 = new Label();
+        Label i3 = new Label();
+        Label i4 = new Label();
+        FontAwesome fs = new FontAwesome();
+        Node icon1 = fs.create(FontAwesome.Glyph.DOLLAR).color(Color.web("#5b76ff")).size(50);
+        icon1.setId("icon");
+        i1.setGraphic(icon1);
+        i1.setGraphic(icon1);
+        i1.setAlignment(Pos.CENTER);
+        image1.getChildren().add(i1);
+        Node icon2 = fs.create(FontAwesome.Glyph.DOLLAR).color(Color.web("#ff3535")).size(50);
+        icon2.setId("icon");
+        i2.setGraphic(icon2);
+        i2.setGraphic(icon2);
+        i2.setAlignment(Pos.CENTER);
+        image2.getChildren().add(i2);
+        Node icon3 = fs.create(FontAwesome.Glyph.LANGUAGE).color(Color.web("#ff3535")).size(50);
+        icon3.setId("icon");
+        i3.setGraphic(icon3);
+        i3.setGraphic(icon3);
+        i3.setAlignment(Pos.CENTER);
+        image3.getChildren().add(i3);
+        Node icon4 = fs.create(FontAwesome.Glyph.SAVE).color(Color.WHITE).size(12);
+        icon3.setId("icon");
+        saveAsPng.setGraphic(icon4);
+        revenusAnnee.setText(ps.revenusAnnuels() + " DT");
+        revenusTotal.setText(ps.revenusTotaux() + " DT");
+        UserLangueService uls = new UserLangueService();
+        if (Utils.checkVoyelle(uls.languePlusParlee())) {
+            languesParlee.setText("L'" + Utils.upperCaseFirst(uls.languePlusParlee()));
+        } else {
+            languesParlee.setText("Le " + Utils.upperCaseFirst(uls.languePlusParlee()));
         }
 
     }
+
     private void loadDataFromDatabase() {
         try {
             NotificationService service = new NotificationService();
@@ -152,7 +215,6 @@ public class BackAccueilController implements Initializable {
         }
     }
 
-    @FXML
     private void afficherDetailNotification(MouseEvent event) throws IOException {
         if (event.getClickCount() == 2) {
         Notification n = (Notification) listNotification.getItems().get(listNotification.getSelectionModel().getSelectedIndex());
@@ -169,6 +231,30 @@ public class BackAccueilController implements Initializable {
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
         stage.showAndWait();
+    }
+}
+
+    @FXML
+    private void saveAsPngAction(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        WritableImage image = statsAnnee.snapshot(new SnapshotParameters(), null);
+
+        //Set extension filter for text files
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.png");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        //Show save file dialog
+        File file = fileChooser.showSaveDialog(null);
+
+        if (file != null) {
+            try {
+                ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+            } catch (IOException e) {
+                // TODO: handle exception here
+            }
         }
+        
+
+        // TODO: probably use a file chooser here
     }
 }
