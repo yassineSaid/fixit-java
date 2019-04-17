@@ -137,6 +137,7 @@ public class BackAccueilController implements Initializable {
         for(Node n:statsAnnee.lookupAll(".default-color0.chart-bar")) {
             n.setStyle("-fx-bar-fill: #5998ff;");
         }
+        System.err.println(ps.revenusAnnuels());
 
     }
     private void loadDataFromDatabase() {

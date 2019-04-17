@@ -33,9 +33,10 @@ import org.controlsfx.glyphfont.FontAwesome;
  * @author Yassine
  */
 public class PaiementService {
-    Connection C=Connexion.getInstance().getCon();
-    public void ajouterPaiement(User user,double montant, int nombreScoin, String stripeToken)
-    {
+
+    Connection C = Connexion.getInstance().getCon();
+
+    public void ajouterPaiement(User user, double montant, int nombreScoin, String stripeToken) {
         try {
             PreparedStatement pt = C.prepareStatement("INSERT INTO paiement(Montant,NombreScoin,stripeToken,IdUser,datePaiement) VALUES(?,?,?,?,now())");
             pt.setDouble(1, montant);
@@ -47,44 +48,46 @@ public class PaiementService {
             e.printStackTrace();
         }
     }
-    public ObservableList<Paiement> getHistorique(User user)
-    {
+
+    public ObservableList<Paiement> getHistorique(User user) {
         ObservableList<Paiement> data;
-        data=FXCollections.observableArrayList();
+        data = FXCollections.observableArrayList();
         PreparedStatement pt;
         try {
             pt = C.prepareStatement("select * from paiement where IdUser=? ORDER BY datePaiement");
-            pt.setInt(1,user.getId());
-            ResultSet rs=pt.executeQuery();
-            while(rs.next()){
+            pt.setInt(1, user.getId());
+            ResultSet rs = pt.executeQuery();
+            while (rs.next()) {
                 data.add(new Paiement(rs.getDate("datePaiement"), rs.getInt("id"), rs.getInt("IdUser"), rs.getDouble("Montant"), rs.getInt("NombreScoin"), rs.getString("stripeToken")));
             }
-        return data;
+            return data;
         } catch (SQLException ex) {
             Logger.getLogger(UserLangueService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
-    public XYChart.Series statAnnee(){
+
+    public XYChart.Series statAnnee() {
         XYChart.Series data = new XYChart.Series<>();
         PreparedStatement pt;
         try {
-            pt = C.prepareStatement("SELECT month(datePaiement) AS M,year(datePaiement) AS Y,sum(montant) MON from paiement" +
-"                  where datediff(now(),datePaiement)/365<=1 group BY Y,M ORDER BY Y,M");
-            ResultSet rs=pt.executeQuery();
-            while(rs.next()){
-                XYChart.Data d = new XYChart.Data(Utils.convertMonth(rs.getInt("M")),rs.getFloat("MON"));
+            pt = C.prepareStatement("SELECT month(datePaiement) AS M,year(datePaiement) AS Y,sum(montant) MON from paiement"
+                    + "                  where datediff(now(),datePaiement)/365<=1 group BY Y,M ORDER BY Y,M");
+            ResultSet rs = pt.executeQuery();
+            while (rs.next()) {
+                XYChart.Data d = new XYChart.Data(Utils.convertMonth(rs.getInt("M")), rs.getFloat("MON"));
                 //displayLabelForData(d);
                 data.getData().add(d);
                 //data.add();
             }
-        return data;
+            return data;
         } catch (SQLException ex) {
             Logger.getLogger(UserLangueService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
-        private void displayLabelForData(XYChart.Data<String, Number> data) {
+
+    private void displayLabelForData(XYChart.Data<String, Number> data) {
         final Node node = data.getNode();
         final Text dataText = new Text(data.getYValue() + "");
         node.parentProperty().addListener(new ChangeListener<Parent>() {
@@ -94,11 +97,41 @@ public class PaiementService {
                 parentGroup.getChildren().add(dataText);
             }
         });
-        node.boundsInParentProperty().addListener(new ChangeListener<Bounds>(){
+        node.boundsInParentProperty().addListener(new ChangeListener<Bounds>() {
             @Override
             public void changed(ObservableValue<? extends Bounds> observable, Bounds oldValue, Bounds newValue) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
         });
+    }
+    
+    public float revenusAnnuels()
+    {
+        PreparedStatement pt;
+        try {
+            pt = C.prepareStatement("SELECT sum(montant) AS total from paiement where year(datePaiement)=year(sysdate())");
+            ResultSet rs=pt.executeQuery();
+            while(rs.next()){
+                return rs.getFloat("total");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserLangueService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+    
+    public float revenusTotaux()
+    {
+        PreparedStatement pt;
+        try {
+            pt = C.prepareStatement("SELECT sum(montant) AS total from paiement where year(datePaiement)=year(sysdate())");
+            ResultSet rs=pt.executeQuery();
+            while(rs.next()){
+                return rs.getFloat("total");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserLangueService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
     }
 }
