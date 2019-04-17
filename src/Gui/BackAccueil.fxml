@@ -4,8 +4,7 @@
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -21,15 +20,11 @@
              <NumberAxis fx:id="revenus" side="LEFT" />
            </yAxis>
          </BarChart>
+         <ListView fx:id="listNotification" layoutX="786.0" layoutY="49.0" prefHeight="641.0" prefWidth="251.0" style="-fx-border-color: #4b8996; -fx-border-width: 10;" />
          <Label alignment="TOP_CENTER" layoutX="786.0" layoutY="4.0" prefHeight="45.0" prefWidth="251.0" style="-fx-background-color: #4b8996;" text="Notifications" textFill="#543838">
             <font>
                <Font name="System Bold" size="27.0" />
             </font>
          </Label>
-         <ImageView fx:id="imageLocation" fitHeight="76.0" fitWidth="73.0" layoutX="803.0" layoutY="517.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@../Resources/location.png" />
-            </image>
-         </ImageView>
       </children></AnchorPane>
 </AnchorPane>
