@@ -25,11 +25,12 @@ public class NotificationService {
     
     public void ajouterNotification(Notification n) {
         try {
-            PreparedStatement pt = c.prepareStatement("INSERT INTO notification (title,description,icon,seen) Values (?,?,?,?)");
+            PreparedStatement pt = c.prepareStatement("INSERT INTO notification (title,description,icon,route,seen) Values (?,?,?,?,?)");
             pt.setString(1, n.getTitle());
             pt.setString(2, n.getDescription());
             pt.setString(3, n.getIcon());
-            pt.setInt(4, n.getSeen());
+            pt.setString(4, Integer.toString(n.getTelephone()));
+            pt.setInt(5, n.getSeen());
             pt.executeUpdate();
             System.out.println("notification ajoutée");
         } catch (SQLException ex) {
@@ -48,13 +49,14 @@ public class NotificationService {
                 notification.setTitle(rs.getString("title"));
                 notification.setDescription(rs.getString("description"));
                 notification.setNotificationDate(rs.getDate("notification_date"));
+                notification.setTelephone(Integer.parseInt(rs.getString("route")));
                 notification.setIcon(rs.getString("icon"));
                 notification.setSeen(rs.getByte("seen"));
                 list.add(notification);
             }
             return list;
         } catch (SQLException ex) {
-            System.out.println("Services.OutilService.getCategorieOutil()");
+            System.out.println("select all notification load");
             System.out.println(ex);
         return null;
         }

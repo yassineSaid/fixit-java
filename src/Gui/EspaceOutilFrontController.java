@@ -394,7 +394,7 @@ public class EspaceOutilFrontController implements Initializable {
             paginationOutilFront.setPageFactory(this::createPage);
         } catch (Exception e) {
             //System.err.println("Got an exception! ");
-            System.out.println("Gui.EspaceOutilFrontController.loadDataFromDatabase()");
+            System.out.println("load outil front failed");
             System.err.println(e.getMessage());
         }
     }
@@ -435,7 +435,8 @@ public class EspaceOutilFrontController implements Initializable {
         n.setDescription(user+" va loué "+o.getNom()+" de "+uo.getDateLocation().toString()+" à "+uo.getDateRetour());
         Byte b=0;
         n.setSeen(b);
-        n.setIcon(user.getImage());
+        n.setIcon("location");
+        n.setTelephone(user.getPhone());
         ns.ajouterNotification(n);
         initialize(null, null);
     }

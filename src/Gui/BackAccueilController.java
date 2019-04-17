@@ -75,8 +75,6 @@ public class BackAccueilController implements Initializable {
     private CategoryAxis mois;
     @FXML
     private ListView<Notification> listNotification;
-    @FXML
-    private ImageView imageLocation;
 
     /**
      * Initializes the controller class.
@@ -87,7 +85,20 @@ public class BackAccueilController implements Initializable {
             backIndexController.setUser(user);
             afficherStats();
             loadDataFromDatabase();
-            listNotification.setCellFactory(item -> new ListCell<Notification>(){
+           afficherNotifications();
+            listNotification.setStyle("-fx-control-inner-background:  transparent; -fx-background-color:   rgba(255,255,255,0.1);");
+        });
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+    public void afficherNotifications(){
+         listNotification.setCellFactory(item -> new ListCell<Notification>(){
             protected void updateItem(Notification item, boolean bln) {
             super.updateItem(item, bln);
             if (item != null) {
@@ -116,16 +127,6 @@ public class BackAccueilController implements Initializable {
             }
         }
         });
-            listNotification.setStyle("-fx-control-inner-background:  transparent; -fx-background-color:   rgba(255,255,255,0.1);");
-        });
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public void afficherStats() {
@@ -146,7 +147,7 @@ public class BackAccueilController implements Initializable {
             listNotification.setItems(rs);
         } catch (Exception e) {
             //System.err.println("Got an exception! ");
-            System.out.println("Gui.EspaceOutilFrontController.loadDataFromDatabase()");
+            System.out.println("load notification failed");
             System.err.println(e.getMessage());
         }
     }
@@ -155,6 +156,8 @@ public class BackAccueilController implements Initializable {
     private void afficherDetailNotification(MouseEvent event) throws IOException {
         if (event.getClickCount() == 2) {
         Notification n = (Notification) listNotification.getItems().get(listNotification.getSelectionModel().getSelectedIndex());
+        NotificationService ns = new NotificationService();
+        ns.modifierSeen(n);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/DetailNotification.fxml"));
         Parent root = fxmlLoader.load();
         DetailNotificationController controller = fxmlLoader.<DetailNotificationController>getController();

@@ -178,7 +178,6 @@ public class EspaceOutilBackController implements Initializable {
     @FXML
     private TableColumn<HistoriqueLocation, String> prix1;
     private ImageView iiiiiiiiiiiiiii;
-    @FXML
     private ImageView imageNotification;
     
     private User user;
@@ -336,7 +335,7 @@ public class EspaceOutilBackController implements Initializable {
         CategorieOutilService categorie = new CategorieOutilService();
         CategorieOutil c = table.getSelectionModel().getSelectedItem();
         categorie.supprimerCategorie(c.getId());
-        Image img = imageNotification.getImage();
+        Image img = new Image(getClass().getResourceAsStream("/Resources/delete.png"),50,50,false,false);
         Notifications notificationBuilder = Notifications.create().title("Notification").text("La catégorie " + c.getNom() + " est supprimée avec succés").graphic(new ImageView(img)).hideAfter(Duration.seconds(10)).position(Pos.BOTTOM_RIGHT).onAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -391,7 +390,7 @@ public class EspaceOutilBackController implements Initializable {
         }
         categorie.modifierCategorie(c);
         logooo = "";
-        Image img = imageNotification.getImage();
+        Image img = new Image(getClass().getResourceAsStream("/Resources/edit.png"),50,50,false,false);
         System.out.println(imageNotification.getImage().toString());
         Notifications notificationBuilder = Notifications.create().title("Notification").text("La catégorie " + c.getNom() + " est modifiée avec succés").graphic(new ImageView(img)).hideAfter(Duration.seconds(10)).position(Pos.BOTTOM_RIGHT).onAction(new EventHandler<ActionEvent>() {
             @Override
@@ -436,7 +435,7 @@ public class EspaceOutilBackController implements Initializable {
         } else {
             categorie.ajouterCategorie(c);
             logooo = "";
-            Image img = imageNotification.getImage();
+            Image img = new Image(getClass().getResourceAsStream("/Resources/tik.png"),50,50,false,false);
             Notifications notificationBuilder = Notifications.create().title("Notification").text("La catégorie " + c.getNom() + " est ajoutée avec succés").graphic(new ImageView(img)).hideAfter(Duration.seconds(10)).position(Pos.BOTTOM_RIGHT).onAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
@@ -537,7 +536,7 @@ public class EspaceOutilBackController implements Initializable {
         Outil o = tableOutil.getSelectionModel().getSelectedItem();
         outil.supprimerOutil(o.getId());
         System.out.println("outil supprimer");
-        Image img = imageNotification.getImage();
+        Image img = new Image(getClass().getResourceAsStream("/Resources/delete.png"),50,50,false,false);
         Notifications notificationBuilder = Notifications.create().title("Notification").text("L'outil " + o.getNom() + " est supprimé avec succés").graphic(new ImageView(img)).hideAfter(Duration.seconds(10)).position(Pos.BOTTOM_RIGHT).onAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -643,7 +642,7 @@ public class EspaceOutilBackController implements Initializable {
              outil.ajouterOutil(o);
         System.out.println("outil ajoutée");
         imageee = "";
-        Image img = imageNotification.getImage();
+        Image img = new Image(getClass().getResourceAsStream("/Resources/tik.png"),50,50,false,false);
         Notifications notificationBuilder = Notifications.create().title("Notification").text("L'outil " + o.getNom() + " est ajouté avec succés").graphic(new ImageView(img)).hideAfter(Duration.seconds(10)).position(Pos.BOTTOM_RIGHT).onAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -782,7 +781,7 @@ public class EspaceOutilBackController implements Initializable {
         outil.modifierOutil(o);
         System.out.println("outil ajoutée");
         imageee = "";
-        Image img = imageNotification.getImage();
+        Image img = new Image(getClass().getResourceAsStream("/Resources/edit.png"),50,50,false,false);
         Notifications notificationBuilder = Notifications.create().title("Notification").text("L'outil " + o.getNom() + " est modifié avec succés").graphic(new ImageView(img)).hideAfter(Duration.seconds(10)).position(Pos.BOTTOM_RIGHT).onAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
