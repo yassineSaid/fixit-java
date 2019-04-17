@@ -8,11 +8,14 @@ package Gui;
 import Entities.Notification;
 import Entities.Outil;
 import Entities.User;
+import Entities.UserLangue;
 import Entities.UserOutil;
 import Services.NotificationService;
 import Services.PaiementService;
 import Services.ServiceService;
+import Services.UserLangueService;
 import Services.UserOutilService;
+import Services.Utils;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -34,6 +37,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -43,6 +47,7 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
@@ -50,12 +55,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.controlsfx.glyphfont.FontAwesome;
 
 /**
  * FXML Controller class
@@ -76,7 +83,17 @@ public class BackAccueilController implements Initializable {
     @FXML
     private ListView<Notification> listNotification;
     @FXML
-    private ImageView imageLocation;
+    private HBox image1;
+    @FXML
+    private HBox image2;
+    @FXML
+    private HBox image3;
+    @FXML
+    private Label revenusAnnee;
+    @FXML
+    private Label revenusTotal;
+    @FXML
+    private Label languesParlee;
 
     /**
      * Initializes the controller class.
@@ -138,6 +155,36 @@ public class BackAccueilController implements Initializable {
             n.setStyle("-fx-bar-fill: #5998ff;");
         }
         System.err.println(ps.revenusAnnuels());
+        Label i1=new Label();
+        Label i2=new Label();
+        Label i3=new Label();
+        Label i4=new Label();
+        FontAwesome fs = new FontAwesome();
+        Node icon1 = fs.create(FontAwesome.Glyph.DOLLAR).color(Color.web("#5b76ff")).size(50);
+        icon1.setId("icon");
+        i1.setGraphic(icon1);
+        i1.setGraphic(icon1);
+        i1.setAlignment(Pos.CENTER);
+        image1.getChildren().add(i1);
+        Node icon2 = fs.create(FontAwesome.Glyph.DOLLAR).color(Color.web("#ff3535")).size(50);
+        icon2.setId("icon");
+        i2.setGraphic(icon2);
+        i2.setGraphic(icon2);
+        i2.setAlignment(Pos.CENTER);
+        image2.getChildren().add(i2);
+        Node icon3 = fs.create(FontAwesome.Glyph.LANGUAGE).color(Color.web("#ff3535")).size(50);
+        icon3.setId("icon");
+        i3.setGraphic(icon3);
+        i3.setGraphic(icon3);
+        i3.setAlignment(Pos.CENTER);
+        image3.getChildren().add(i3);
+        revenusAnnee.setText(ps.revenusAnnuels()+" DT");
+        revenusTotal.setText(ps.revenusTotaux()+" DT");
+        UserLangueService uls=new UserLangueService();
+        if (Utils.checkVoyelle(uls.languePlusParlee())) 
+            languesParlee.setText("L'"+Utils.upperCaseFirst(uls.languePlusParlee()));
+        else
+            languesParlee.setText("Le "+Utils.upperCaseFirst(uls.languePlusParlee()));
 
     }
     private void loadDataFromDatabase() {
@@ -152,7 +199,6 @@ public class BackAccueilController implements Initializable {
         }
     }
 
-    @FXML
     private void afficherDetailNotification(MouseEvent event) throws IOException {
         if (event.getClickCount() == 2) {
         Notification n = (Notification) listNotification.getItems().get(listNotification.getSelectionModel().getSelectedIndex());

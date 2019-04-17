@@ -124,7 +124,7 @@ public class PaiementService {
     {
         PreparedStatement pt;
         try {
-            pt = C.prepareStatement("SELECT sum(montant) AS total from paiement where year(datePaiement)=year(sysdate())");
+            pt = C.prepareStatement("SELECT sum(montant) AS total from paiement");
             ResultSet rs=pt.executeQuery();
             while(rs.next()){
                 return rs.getFloat("total");

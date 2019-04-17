@@ -32,14 +32,55 @@
             <children>
                <HBox prefHeight="110.0" prefWidth="765.0" spacing="86.0">
                   <children>
-                     <HBox prefHeight="110.0" prefWidth="340.0" style="-fx-background-color: rgba(255,255,255,0.95);" />
-                     <HBox prefHeight="110.0" prefWidth="340.0" style="-fx-background-color: rgba(255,255,255,0.95);" />
+                     <HBox prefHeight="110.0" prefWidth="340.0" style="-fx-background-color: rgba(255,255,255,0.95);">
+                        <children>
+                           <HBox fx:id="image1" alignment="CENTER" prefHeight="110.0" prefWidth="80.0" />
+                           <VBox alignment="CENTER" prefHeight="110.0" prefWidth="260.0">
+                              <children>
+                                 <Label fx:id="revenusAnnee" text="453 DT">
+                                    <font>
+                                       <Font size="24.0" />
+                                    </font>
+                                 </Label>
+                                 <Label text="Revenus cette année" />
+                              </children>
+                           </VBox>
+                        </children>
+                     </HBox>
+                     <HBox prefHeight="110.0" prefWidth="340.0" style="-fx-background-color: rgba(255,255,255,0.95);">
+                        <children>
+                           <HBox fx:id="image2" alignment="CENTER" prefHeight="110.0" prefWidth="80.0" />
+                           <VBox alignment="CENTER" prefHeight="110.0" prefWidth="261.0">
+                              <children>
+                                 <Label fx:id="revenusTotal" text="Label">
+                                    <font>
+                                       <Font size="24.0" />
+                                    </font>
+                                 </Label>
+                                 <Label text="Revenus total" />
+                              </children>
+                           </VBox>
+                        </children>
+                     </HBox>
                   </children>
                </HBox>
-               <HBox prefHeight="110.0" prefWidth="765.0" spacing="86.0">
+               <HBox alignment="CENTER" prefHeight="110.0" prefWidth="765.0" spacing="86.0">
                   <children>
-                     <HBox prefHeight="110.0" prefWidth="340.0" style="-fx-background-color: rgba(255,255,255,0.95);" />
-                     <HBox prefHeight="110.0" prefWidth="340.0" style="-fx-background-color: rgba(255,255,255,0.95);" />
+                     <HBox prefHeight="110.0" prefWidth="340.0" style="-fx-background-color: rgba(255,255,255,0.95);">
+                        <children>
+                           <HBox fx:id="image3" alignment="CENTER" prefHeight="110.0" prefWidth="80.0" />
+                           <VBox alignment="CENTER" prefHeight="110.0" prefWidth="262.0">
+                              <children>
+                                 <Label fx:id="languesParlee" text="Label">
+                                    <font>
+                                       <Font size="24.0" />
+                                    </font>
+                                 </Label>
+                                 <Label text="Est la langue la plus parlée" />
+                              </children>
+                           </VBox>
+                        </children>
+                     </HBox>
                   </children>
                </HBox>
             </children>
