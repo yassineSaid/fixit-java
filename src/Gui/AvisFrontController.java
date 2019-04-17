@@ -140,13 +140,13 @@ public class AvisFrontController implements Initializable {
                     dateRealisation.setStyle("-fx-font-size: 20 arial;");
                     String s = item.getService().getImage();
                     File currDir = new File(System.getProperty("user.dir", "."));
-                    String path = "file:" + currDir.toPath().getRoot().toString() + "wamp64\\www\\fixit1\\web\\uploads\\images\\service\\"+s;
-                    Image image = new Image(path,200, 200, false, false);
-                    ImageView img= new ImageView(image);
+                    String path = "file:" + currDir.toPath().getRoot().toString() + "wamp64\\www\\fixit1\\web\\uploads\\images\\service\\" + s;
+                    Image image = new Image(path, 200, 200, false, false);
+                    ImageView img = new ImageView(image);
                     VBox vBox = new VBox(userOffreur, Service, dateRealisation);
                     vBox.setStyle("-fx-font-color: transparent;");
                     vBox.setSpacing(20);
-                    HBox hBox = new HBox(img,vBox);
+                    HBox hBox = new HBox(img, vBox);
                     hBox.setStyle("-fx-font-color: transparent;");
                     hBox.setSpacing(10);
                     setGraphic(hBox);
@@ -191,39 +191,44 @@ public class AvisFrontController implements Initializable {
         list = rss.getServiceRealise(this.getUser().getId());
         listServiceRealise.setItems(list);
     }
-    public void loadPage(Boolean visibility)
-    {
+
+    public void loadPage(Boolean visibility) {
         label.setVisible(visibility);
         evaluerNote.setVisible(visibility);
         evaluer.setVisible(visibility);
         valueNote.setVisible(visibility);
         sur.setVisible(visibility);
     }
-    public void ajouterNote()
-    {
+
+    public void ajouterNote() {
         RealisationService rs = listServiceRealise.getSelectionModel().getSelectedItem();
         RealisationServiceService rss = new RealisationServiceService();
-        rss.setNoteRealisationService((int)evaluerNote.getRating(), rs.getId());
+        rss.setNoteRealisationService((int) evaluerNote.getRating(), rs.getId());
     }
+
     @FXML
     private void serviceRealiseSelectionne(MouseEvent event) {
         loadPage(true);
         RealisationServiceService rss = new RealisationServiceService();
-        RealisationService rs =rss.getNote(listServiceRealise.getSelectionModel().getSelectedItem().getId());
-        if(rs.getNote()==0)
-        {
+        RealisationService rs = rss.getNote(listServiceRealise.getSelectionModel().getSelectedItem().getId());
+        if (rs.getNote() == 0) {
             evaluerNote.setRating(0);
-        }
-        else
-        {
+        } else {
             evaluerNote.setRating(rs.getNote());
+            valueNote.setText(Integer.toHexString((int) evaluerNote.getRating()));
+
         }
-        
+
     }
 
     @FXML
     private void evaluerAction(ActionEvent event) {
         ajouterNote();
+    }
+
+    @FXML
+    private void choose(MouseEvent event) {
+        valueNote.setText(Integer.toHexString((int) evaluerNote.getRating()));
     }
 
 }
