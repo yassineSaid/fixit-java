@@ -366,7 +366,7 @@ public class EspaceOutilFrontController implements Initializable {
         erreur3.setVisible(false);
         acheter.setVisible(false);
         buttonLouer.setDisable(true);
-        list.setStyle("-fx-control-inner-background:  transparent;");
+        list.setStyle("-fx-control-inner-background:  transparent; -fx-background-color:   rgba(255,255,255,0.1);");
         dateLocation.setValue(null);
         dateRetour.setValue(null);
         conditions.setSelected(false);
@@ -596,7 +596,5 @@ public class EspaceOutilFrontController implements Initializable {
             frontIndexController.initialize(null, null);
         solde.setText(String.valueOf(user.getSolde()));
     }
-    
-    
     
 }

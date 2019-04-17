@@ -70,7 +70,7 @@ public class MessageService {
 
     public void envoyerMessage(Message m) {
         try {
-            PreparedStatement pt = C.prepareStatement("INSERT INTO message(destinataire,expediteur,contenu,date,vu) VALUE (?,?,?,?,0) ");
+            PreparedStatement pt = C.prepareStatement("INSERT INTO message(destinataire,expediteur,contenu,date,vu,notified) VALUE (?,?,?,?,0,0) ");
             pt.setInt(1, m.getDestinataire());
             pt.setInt(2, m.getExpediteur());
             pt.setString(3, m.getContenu());
@@ -148,10 +148,38 @@ public class MessageService {
         }
     }
     
+    public void setNotified(int id)
+    {
+        try {
+            PreparedStatement pt = C.prepareStatement("UPDATE message SET notified=1 WHERE destinataire=?");
+            pt.setInt(1, id);
+            pt.execute();
+        } catch (SQLException e) {
+            System.out.println(e.getCause());
+            e.printStackTrace();
+        }
+    }
+    
     public boolean checkUnseen(int id)
     {
         try {
             PreparedStatement pt = C.prepareStatement("SELECT * FROM message WHERE destinataire=? AND vu=0");
+            pt.setInt(1, id);
+            ResultSet rs = pt.executeQuery();
+            while (rs.next()) {
+                return true;
+            }
+            return false;
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+        return false;
+    }
+    
+    public boolean checkUnnotified(int id)
+    {
+        try {
+            PreparedStatement pt = C.prepareStatement("SELECT * FROM message WHERE destinataire=? AND notified=0");
             pt.setInt(1, id);
             ResultSet rs = pt.executeQuery();
             while (rs.next()) {

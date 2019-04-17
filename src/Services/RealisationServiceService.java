@@ -110,4 +110,21 @@ public class RealisationServiceService {
         }
         return null;
     }
+    
+    public float getAvgNoteUser(int idUser)
+    {
+        try {
+            
+            PreparedStatement pt = c.prepareStatement("SELECT AVG(note) FROM realisation_service where idUserOffreur=?");
+            pt.setInt(1, idUser);
+            ResultSet rs = pt.executeQuery();
+            while (rs.next()) {
+                return rs.getFloat("AVG(note)");
+            }
+          
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return -1;
+    }
 }

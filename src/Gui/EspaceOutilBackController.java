@@ -8,6 +8,7 @@ package Gui;
 import Entities.CategorieOutil;
 import Entities.HistoriqueLocation;
 import Entities.Outil;
+import Entities.User;
 import Entities.UserOutil;
 import Services.CategorieOutilService;
 import Services.Connexion;
@@ -179,10 +180,19 @@ public class EspaceOutilBackController implements Initializable {
     private ImageView iiiiiiiiiiiiiii;
     @FXML
     private ImageView imageNotification;
-
+    
+    private User user;
     /**
      * Initializes the controller class.
      */
+     public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 

@@ -40,7 +40,7 @@ public class NotificationService {
         try {
             ObservableList list = FXCollections.observableArrayList();
             Statement st = c.createStatement();
-            String req = "select * from notification";
+            String req = "select * from notification order by notification_date DESC";
             ResultSet rs = st.executeQuery(req);
             while (rs.next()) {
                 Notification notification = new Notification();

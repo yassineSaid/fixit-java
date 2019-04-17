@@ -3,19 +3,46 @@
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane id="backIndex" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="690.0" prefWidth="1300.0" style="-fx-background-color: #CCCCCC;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.BackAccueilController">
    <fx:include fx:id="backIndex" source="BackIndex.fxml" />
    <AnchorPane layoutX="263.0" prefHeight="690.0" prefWidth="1037.0">
       <children>
-         <BarChart fx:id="statsAnnee" alternativeRowFillVisible="false" barGap="12.0" layoutX="162.0" layoutY="179.0" legendVisible="false" prefHeight="401.0" prefWidth="792.0" styleClass="statsAnnee" stylesheets="@../Resources/style.css" title="Revenus provenants de la vente de SCoins (DT)">
+         <BarChart fx:id="statsAnnee" alternativeRowFillVisible="false" barGap="12.0" layoutY="14.0" legendVisible="false" prefHeight="401.0" prefWidth="784.0" styleClass="statsAnnee" stylesheets="@../Resources/style.css" title="Revenus mensuels provenants de la vente de SCoins (DT)">
            <xAxis>
              <CategoryAxis fx:id="mois" animated="false" />
            </xAxis>
            <yAxis>
-             <NumberAxis fx:id="revenus" side="LEFT" />
+             <NumberAxis fx:id="revenus" label="Somme en dinar" side="LEFT" />
            </yAxis>
          </BarChart>
+         <ListView fx:id="listNotification" layoutX="786.0" layoutY="49.0" prefHeight="641.0" prefWidth="251.0" style="-fx-border-color: #4b8996; -fx-border-width: 10;" />
+         <Label alignment="TOP_CENTER" layoutX="786.0" layoutY="4.0" prefHeight="45.0" prefWidth="251.0" style="-fx-background-color: #4b8996;" text="Notifications" textFill="#543838">
+            <font>
+               <Font name="System Bold" size="27.0" />
+            </font>
+         </Label>
+         <VBox layoutX="10.0" layoutY="410.0" prefHeight="265.0" prefWidth="765.0" spacing="30.0">
+            <children>
+               <HBox prefHeight="110.0" prefWidth="765.0" spacing="86.0">
+                  <children>
+                     <HBox prefHeight="110.0" prefWidth="340.0" style="-fx-background-color: rgba(255,255,255,0.95);" />
+                     <HBox prefHeight="110.0" prefWidth="340.0" style="-fx-background-color: rgba(255,255,255,0.95);" />
+                  </children>
+               </HBox>
+               <HBox prefHeight="110.0" prefWidth="765.0" spacing="86.0">
+                  <children>
+                     <HBox prefHeight="110.0" prefWidth="340.0" style="-fx-background-color: rgba(255,255,255,0.95);" />
+                     <HBox prefHeight="110.0" prefWidth="340.0" style="-fx-background-color: rgba(255,255,255,0.95);" />
+                  </children>
+               </HBox>
+            </children>
+         </VBox>
       </children></AnchorPane>
 </AnchorPane>
