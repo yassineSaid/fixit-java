@@ -5,9 +5,11 @@
  */
 package Gui;
 
+import Entities.Notification;
 import Entities.Outil;
 import Entities.User;
 import Entities.UserOutil;
+import Services.NotificationService;
 import Services.OutilService;
 import Services.UserOutilService;
 import Services.UserService;
@@ -364,7 +366,7 @@ public class EspaceOutilFrontController implements Initializable {
         erreur3.setVisible(false);
         acheter.setVisible(false);
         buttonLouer.setDisable(true);
-        list.setStyle("-fx-control-inner-background:  transparent;");
+        list.setStyle("-fx-control-inner-background:  transparent; -fx-background-color:   rgba(255,255,255,0.1);");
         dateLocation.setValue(null);
         dateRetour.setValue(null);
         conditions.setSelected(false);
@@ -427,7 +429,14 @@ public class EspaceOutilFrontController implements Initializable {
             frontIndexController.setUser(user);
             frontIndexController.initialize(null, null);
         solde.setText(String.valueOf(user.getSolde()));
-        
+        NotificationService ns = new NotificationService();
+        Notification n = new Notification();
+        n.setTitle("Location");
+        n.setDescription(user+" va loué "+o.getNom()+" de "+uo.getDateLocation().toString()+" à "+uo.getDateRetour());
+        Byte b=0;
+        n.setSeen(b);
+        n.setIcon(user.getImage());
+        ns.ajouterNotification(n);
         initialize(null, null);
     }
     
@@ -587,7 +596,5 @@ public class EspaceOutilFrontController implements Initializable {
             frontIndexController.initialize(null, null);
         solde.setText(String.valueOf(user.getSolde()));
     }
-    
-    
     
 }

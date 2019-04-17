@@ -84,8 +84,9 @@ public class BackIndexController implements Initializable {
 
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/EspaceOutilBack.fxml"));
             Parent Rec = fxmlLoader.load();
+            EspaceOutilBackController controller = fxmlLoader.<EspaceOutilBackController>getController();
+            controller.setUser(this.getUser());
             Scene scene = new Scene(Rec);
-
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.show();
             stage.setScene(scene);
