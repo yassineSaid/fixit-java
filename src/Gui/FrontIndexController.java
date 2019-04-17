@@ -18,6 +18,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,8 +32,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.controlsfx.glyphfont.FontAwesome;
 
 /**
@@ -141,7 +145,6 @@ public class FrontIndexController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         Platform.runLater(() -> {
             if (user != null) {
-                
                 refresh();
             }
 
@@ -152,16 +155,27 @@ public class FrontIndexController implements Initializable {
         FontAwesome fs = new FontAwesome();
         Node icon = fs.create(FontAwesome.Glyph.SIGN_OUT).color(Color.WHITE).size(17);
         icon.setId("icon");
+        Node icon1 = fs.create(FontAwesome.Glyph.INFO_CIRCLE).color(Color.web("#017c00")).size(17);
+        icon1.setId("icon"); 
         deconnexion.setGraphic(icon);
         userName.setText(Utils.upperCaseFirst(user.getFirstname()) + " " + Utils.upperCaseFirst(user.getLastname()));
         loadImage();
         getLikeDislike();
         if (ms.checkUnseen(user.getId())) {
-            Node icon1 = fs.create(FontAwesome.Glyph.INFO_CIRCLE).color(Color.web("#017c00")).size(17);
-            icon1.setId("icon"); 
             profil.setGraphic(icon1);
         }
         else profil.setGraphic(null);
+        Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+            if (ms.checkUnnotified(user.getId())){
+                URL path =getClass().getResource("/Resources/message.mp3");
+                AudioClip ac=new AudioClip(path.toString());
+                ac.play();
+                profil.setGraphic(icon1);
+                ms.setNotified(user.getId());
+            }
+        }));
+        fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
+        fiveSecondsWonder.play();
     }
     public void loadImage() {
         File currDir = new File(System.getProperty("user.dir", "."));
