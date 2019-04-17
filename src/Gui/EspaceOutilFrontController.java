@@ -597,6 +597,4 @@ public class EspaceOutilFrontController implements Initializable {
         solde.setText(String.valueOf(user.getSolde()));
     }
     
-    
-    
 }
