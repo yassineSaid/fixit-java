@@ -6,6 +6,7 @@
 package Services;
 
 import Entities.ServiceUser;
+import Gui.EspaceServiceFrontController;
 import Gui.ProfilController;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -36,7 +37,8 @@ public class ProfilMesServices extends ListCell<ServiceUser>{
                     Text description = new Text(item.getDescription());
                     Text prix = new Text(Float.toString(item.getPrix()));
                     Text s =new Text("SCoins");
-                    description.setWrappingWidth(300);;
+                    System.out.println(ss.getServiceName(item.getIdService()));
+                    description.setWrappingWidth(300);
                     nom.setStyle("-fx-font-size: 25 arial;");
                     description.setStyle("-fx-font-size: 15 arial;"
                             + "-fx-pref-width: 158px;");
@@ -51,6 +53,7 @@ public class ProfilMesServices extends ListCell<ServiceUser>{
                     hBox.setStyle("-fx-font-color: transparent;");
                     hBox.setSpacing(10);
                     setGraphic(hBox);
+                    
                     /*   listCategorie.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
                     @Override
                     public void handle(javafx.scene.input.MouseEvent event) {
@@ -62,7 +65,7 @@ public class ProfilMesServices extends ListCell<ServiceUser>{
                     }
                     });*/
                 } catch (SQLException ex) {
-                    Logger.getLogger(ProfilController.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(EspaceServiceFrontController.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
             }

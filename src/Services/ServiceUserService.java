@@ -110,5 +110,25 @@ public class ServiceUserService {
             Logger.getLogger(ServiceService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+     
+       public ObservableList<Integer>  getActifUser () throws SQLException
+    {
+                String list ="";
+                
+                ObservableList<Integer> liste = FXCollections.observableArrayList();
+                PreparedStatement pt=c.prepareStatement("SELECT idUser,Count(*) from service_user group by idUser order by count(*) desc");
+                ResultSet rs= pt.executeQuery();
+                while(rs.next())
+                {
+            //ServiceUser su = new ServiceUser();  
+           // su.set
+            liste.addAll(rs.getInt(1),rs.getInt(2));
+            
+                return liste;
+            //list+=rs.getInt(1);
+                   
+                }
+                return null;
+    }
     
 }
