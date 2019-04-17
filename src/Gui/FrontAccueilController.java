@@ -6,18 +6,23 @@
 package Gui;
 
 import Entities.Avis;
+import Entities.Bonus;
 import Entities.User;
 import Services.AvisService;
+import Services.RealisationServiceService;
 import Services.UserService;
+import Services.bonusService;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -43,6 +48,7 @@ import javafx.util.Duration;
 import javafx.stage.Stage;
 import org.controlsfx.control.GridCell;
 import org.controlsfx.control.GridView;
+import org.controlsfx.control.Notifications;
 import org.controlsfx.control.Rating;
 
 /**
@@ -99,6 +105,7 @@ public class FrontAccueilController implements Initializable {
             frontIndexController.refresh();
             frontIndexController.getAccueil().setStyle("-fx-background-color: #f4f4f4");
             init();
+            bonus();
         });
     }
 
@@ -288,5 +295,40 @@ public class FrontAccueilController implements Initializable {
 
         return listAvis;
     }
+    public void bonus()
+    {
+        bonusService bs = new bonusService();
+        
+        if(bs.getBonusExist(this.user.getId()))
+        {
+            System.out.println("you won't have a bonus !");
+        }
+        else 
+        {
+            RealisationServiceService rss = new RealisationServiceService();
+            if(rss.getAvgNoteUser(this.user.getId())>2)
+            {
+                Date localdate = new Date();
+                java.sql.Date dateAttribution = new java.sql.Date(localdate.getTime());
+                Bonus bonus = new Bonus(this.user,dateAttribution,25);
+                bs.insertBonus(bonus);
+                URL path = getClass().getResource("/Resources/scoin.png");
+                Image img = new Image(path.toString());
+                Notifications notificationBuilder = Notifications.create().title("Notification").text("Vous avez été bien noté pendant ce mois vous aurez un bonus de 25 SCOINs").graphic(new ImageView(img)).hideAfter(Duration.seconds(10)).position(Pos.BOTTOM_RIGHT).onAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("clicked");
+            }
+        });
+        notificationBuilder.darkStyle();
+        notificationBuilder.show();
+            }
+            else
+            {
+                System.out.println("you won't have cuz your average");
+            }
+        }
+    }
+
 
 }

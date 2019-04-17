@@ -8,8 +8,10 @@ package Gui;
 import Entities.User;
 import Services.Like_DislikeService;
 import Services.MessageService;
+import Services.RealisationServiceService;
 import Services.UserService;
 import Services.Utils;
+import Services.bonusService;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -143,6 +145,7 @@ public class FrontIndexController implements Initializable {
             if (user != null) {
                 
                 refresh();
+                
             }
 
         });
@@ -361,5 +364,6 @@ public class FrontIndexController implements Initializable {
         dislikenbr.setText(" /"+nbrDislike);
         
     }
-
+    
+    
 }
