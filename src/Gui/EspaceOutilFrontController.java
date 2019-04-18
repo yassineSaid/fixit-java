@@ -442,7 +442,7 @@ public class EspaceOutilFrontController implements Initializable {
         n.setIcon("location");
         n.setTelephone(user.getPhone());
         ns.ajouterNotification(n);
-        Image img = new Image(getClass().getResourceAsStream("/Resources/delete.png"),50,50,false,false);
+        Image img = new Image(getClass().getResourceAsStream("/Resources/tik.png"),50,50,false,false);
         Notifications notificationBuilder = Notifications.create().title("Notification").text(n.getDescription()).graphic(new ImageView(img)).hideAfter(Duration.seconds(10)).position(Pos.BOTTOM_RIGHT).onAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
