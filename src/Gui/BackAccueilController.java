@@ -37,6 +37,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -72,6 +73,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import javax.imageio.ImageIO;
+import org.controlsfx.control.Notifications;
 import org.controlsfx.glyphfont.FontAwesome;
 
 /**
@@ -147,8 +149,11 @@ public class BackAccueilController implements Initializable {
                     if(item.getIcon().equals("location")){
                         path="location.png";
                     }
-                    else{
+                    else if(item.getIcon().equals("service")){
                         path="service.png";
+                    }
+                    else{
+                        path="produit.png";
                     }
                     Image image = new Image(getClass().getResourceAsStream("/Resources/"+path), 50, 50, false, false);
                     ImageView img = new ImageView(image);
@@ -162,7 +167,7 @@ public class BackAccueilController implements Initializable {
                     if (item.getSeen() == 0) {
                         hBox.setStyle("-fx-background-color:  #6db6c6");
                     } else {
-                        hBox.setStyle("-fx-background-color:  transparent");
+                        hBox.setStyle("-fx-background-color:  #80aef7");
                     }
                     setGraphic(hBox);
                 }
@@ -221,8 +226,12 @@ public class BackAccueilController implements Initializable {
         Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(5), event -> {
             NotificationService service = new NotificationService();
             if (service.checkNotification(nbNotification)) {
+                
+                URL path =getClass().getResource("/Resources/notification.mp3");
+                AudioClip ac=new AudioClip(path.toString());
                 loadNotifications();
                 afficherNotifications();
+                
             }
         }));
         fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);

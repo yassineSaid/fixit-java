@@ -63,6 +63,14 @@ public class DetailNotificationController implements Initializable {
         Platform.runLater(() -> {
         contenu.setText(notification.getDescription());
         contenu.setWrappingWidth(300);
+        
+        if (notification.getIcon().equals("location")) {
+            confirmer.setDisable(false);
+        } else if (notification.getIcon().equals("service")) {
+            confirmer.setDisable(true);
+        } else {
+            confirmer.setDisable(true);
+        }
         });
     }    
 
@@ -71,6 +79,7 @@ public class DetailNotificationController implements Initializable {
         SmsOutilService sms = new SmsOutilService();
         sms.sendSms("+216"+Integer.toString(notification.getTelephone()));
         Image img = new Image(getClass().getResourceAsStream("/Resources/tik.png"),50,50,false,false);
+        
         Notifications notificationBuilder = Notifications.create().title("Notification").text("Vous avez confirmé la location avec succés").graphic(new ImageView(img)).hideAfter(Duration.seconds(10)).position(Pos.BOTTOM_RIGHT).onAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {

@@ -97,7 +97,7 @@ public class Produit {
         pt.setInt(1, idUser);
         ResultSet rs = pt.executeQuery();
         while (rs.next()) {
-            Image image1 = new Image("file:/wamp64/www/fixit/web/uploads/images/produit/" + rs.getString(5), 120, 120, false, false);
+            Image image1 = new Image("file:/wamp64/www/fixit/web/uploads/images/produit/" + rs.getString("image"), 120, 120, false, false);
             produit c = new produit();
             c.setId(rs.getInt("id"));
             c.setNom(rs.getString("Nom"));
@@ -142,11 +142,11 @@ public class Produit {
         }
     }
 
-    public ObservableList<produit> getAllProduit() {
+    public ObservableList<produit> getAllProduit(int id) {
         try {
             ObservableList<produit> list = FXCollections.observableArrayList();
-            PreparedStatement pt = Cn.prepareStatement("Select * from produit p where p.quantite > 0  ");
-
+            PreparedStatement pt = Cn.prepareStatement("Select DISTINCT * from produit p where user not in (select user from produit WHERE user=?)");
+            pt.setInt(1, id);
             ResultSet rs = pt.executeQuery();
             while (rs.next()) {
                 Image image1 = new Image("file:/wamp64/www/fixit/web/uploads/images/produit/" + rs.getString(5), 120, 120, false, false);
@@ -440,19 +440,21 @@ public class Produit {
     public ObservableList<ListAchat> topProduit() {
         try {
             ObservableList<ListAchat> list = FXCollections.observableArrayList();
-            PreparedStatement pt = Cn.prepareStatement("SELECT SUM(p.quantite) somme ,p.produit ,p.image  FROM achat_produit p GROUP BY p.idProduit ORDER BY somme DESC");
+            PreparedStatement pt = Cn.prepareStatement("SELECT SUM(p.quantite) somme ,p.produit nom ,p.image image FROM achat_produit p GROUP BY p.idProduit ORDER BY somme DESC LIMIT 5");
 
             ResultSet rs = pt.executeQuery();
+            int i=0;
 
             while (rs.next()) {
                 Image image1 = new Image("file:/wamp64/www/fixit/web/uploads/images/produit/" + rs.getString(5), 120, 120, false, false);
 
                 ListAchat p = new ListAchat();
-                p.setNom(rs.getString(1));
-                p.setQuantite(rs.getInt(2));
+                p.setNom(rs.getString("nom"));
+                p.setQuantite(rs.getInt("somme"));
                 p.setImage(rs.getString("image"));
                 p.setIm(new ImageView(image1));
                 list.add(p);
+               
             }
             return list;
         } catch (SQLException ex) {

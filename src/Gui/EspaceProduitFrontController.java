@@ -9,11 +9,13 @@ import Entities.ListAchat;
 import Entities.User;
 import Entities.CategorieProduit;
 import Entities.LikeProduit;
+import Entities.Notification;
 import Entities.Outil;
 import Entities.produit;
 import Services.CategorieProduitService;
 import Services.ImageService;
 import Services.MailService;
+import Services.NotificationService;
 import Services.Produit;
 import Services.ReclamationService;
 import Services.UserService;
@@ -172,6 +174,8 @@ public class EspaceProduitFrontController implements Initializable {
     private Button like1;
     @FXML
     private ListView<ListAchat> listProduitAchete;
+    @FXML
+    private ListView<ListAchat> topProduit;
 
     public int getId() {
         return id;
@@ -390,6 +394,7 @@ public class EspaceProduitFrontController implements Initializable {
         });
 
     }
+ 
 
     private void afficher() {
         Platform.runLater(() -> {
@@ -478,11 +483,21 @@ public class EspaceProduitFrontController implements Initializable {
             ct.setImage(imageee);
             ct.setPrix(Integer.parseInt(prix.getText()));
             crud.ajouterProduit(ct);
-            Notifications notificationBuilder = Notifications.create().title("Notification").text("Produit ajoutée").hideAfter(Duration.seconds(10)).position(Pos.BOTTOM_RIGHT).onAction(new EventHandler<ActionEvent>() {
-        @Override
-        public void handle(ActionEvent event) {
-        System.out.println("clicked");
-        }
+             NotificationService ns = new NotificationService();
+        Notification n = new Notification();
+        n.setTitle("Nouveau produit");
+        n.setDescription(user+" a ajoué le produit  "+ct.getNom());
+        Byte b=0;
+        n.setSeen(b);
+        n.setIcon("achat");
+        n.setTelephone(user.getPhone());
+        ns.ajouterNotification(n);
+        Image img = new Image(getClass().getResourceAsStream("/Resources/tik.png"),50,50,false,false);
+        Notifications notificationBuilder = Notifications.create().title("Notification").text("ajout succés").graphic(new ImageView(img)).hideAfter(Duration.seconds(10)).position(Pos.BOTTOM_RIGHT).onAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("clicked");
+            }
         });
         notificationBuilder.darkStyle();
         notificationBuilder.show();
@@ -765,7 +780,7 @@ public class EspaceProduitFrontController implements Initializable {
     private void loadDataFromDatabase() {
         try {
             Produit pro = new Produit();
-            ObservableList<produit> rs = pro.getAllProduit();
+            ObservableList<produit> rs = pro.getAllProduit(user.getId());
             // paginationOutilFront.setPageFactory(this::createPage);
             list.setItems(rs);
         } catch (Exception e) {

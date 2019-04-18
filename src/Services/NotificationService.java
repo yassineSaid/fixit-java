@@ -64,10 +64,11 @@ public class NotificationService {
     public void modifierSeen(Notification n) {
         try {
             PreparedStatement pt = c.prepareStatement("update notification set  seen=?  where id=? ");
-            pt.setInt(1, n.getSeen());
+            pt.setInt(1, 1);
             pt.setInt(2, n.getId());
             pt.execute();
         } catch (SQLException ex) {
+            System.out.println("notification non modifiée");
         }
     }
     

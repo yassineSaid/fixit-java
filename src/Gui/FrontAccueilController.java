@@ -7,12 +7,16 @@ package Gui;
 
 import Entities.Avis;
 import Entities.Bonus;
+import Entities.ListAchat;
 import Entities.Outil;
+import Entities.Service;
 import Entities.User;
 import Entities.UserOutil;
 import Services.AvisService;
 import Services.OutilService;
+import Services.Produit;
 import Services.RealisationServiceService;
+import Services.ServiceService;
 import Services.UserOutilService;
 import Services.UserService;
 import Services.bonusService;
@@ -95,6 +99,14 @@ public class FrontAccueilController implements Initializable {
     private Pagination outilDisponiblePagination;
     @FXML
     private ListView<Outil> outilDisponible;
+    @FXML
+    private Pagination mproduitPagination;
+    @FXML
+    private ListView<ListAchat> mproduit;
+    @FXML
+    private Pagination paginationServicesAccueil;
+    @FXML
+    private ListView<Service> listServiceAccueil;
 
     public User getUser() {
         return user;
@@ -140,6 +152,10 @@ public class FrontAccueilController implements Initializable {
             }
             loadDataFromDatabase();
             afficherOutilsDisponobles();
+            loadServiceFromDatabase();
+            afficherServicesAccueil();
+            loadDataFromDatabaseProduit();
+            affichertopProduit();
         });
     }
 
@@ -408,23 +424,49 @@ public class FrontAccueilController implements Initializable {
 
         });
     }
+
+    private Node createPageService(int pageIndex)  {
+        ServiceService serv = new ServiceService();
+
+        ObservableList<Service> data = FXCollections.observableArrayList();
+        data = serv.serviceAccueil();
+        int fromIndex = pageIndex * 1;
+        int toIndex = Math.min(fromIndex + 1, data.size());
+        listServiceAccueil.setItems(FXCollections.observableArrayList(data.subList(fromIndex, toIndex)));
+
+        return listServiceAccueil;
+    }
+    private void loadServiceFromDatabase() {
+        try {
+            ServiceService service = new ServiceService();
+            ObservableList<Service> rs = service.serviceAccueil();
+            paginationServicesAccueil.setPageFactory(this::createPageService);
+            paginationServicesAccueil.setStyle("-fx-control-inner-background:  transparent; -fx-background-color:   rgba(255,255,255,0.1);");
+        } catch (Exception e) {
+            //System.err.println("Got an exception! ");
+            System.out.println("load service front failed accueil");
+            System.err.println(e.getMessage());
+        }
+    }
+
     private Node createPageOutil(int pageIndex) {
         OutilService recServ = new OutilService();
-        
+
         ObservableList<Outil> data = FXCollections.observableArrayList();
         data = recServ.afficherOutil();
         int fromIndex = pageIndex * 1;
         int toIndex = Math.min(fromIndex + 1, data.size());
         outilDisponible.setItems(FXCollections.observableArrayList(data.subList(fromIndex, toIndex)));
-        
+
         return outilDisponible;
     }
+
     private void loadDataFromDatabase() {
         try {
             OutilService service = new OutilService();
             ObservableList<Outil> rs = service.afficherOutilDisponible();
             outilDisponiblePagination.setPageFactory(this::createPageOutil);
-            outilDisponiblePagination.setStyle("-fx-control-inner-background:  transparent; -fx-background-color:   rgba(255,255,255,0.1);");
+            outilDisponiblePagination.setStyle("-fx-control-inner-background:  gris; -fx-background-color:   rgba(255,255,255,0.1);");
         } catch (Exception e) {
             //System.err.println("Got an exception! ");
             System.out.println("load outil front failed accueil");
@@ -434,35 +476,136 @@ public class FrontAccueilController implements Initializable {
 
     public void afficherOutilsDisponobles() {
         Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(3), event -> {
-        int pos = (outilDisponiblePagination.getCurrentPageIndex() + 1) % outilDisponiblePagination.getPageCount();
-        outilDisponiblePagination.setCurrentPageIndex(pos);
+            int pos = (outilDisponiblePagination.getCurrentPageIndex() + 1) % outilDisponiblePagination.getPageCount();
+            outilDisponiblePagination.setCurrentPageIndex(pos);
         }));
         fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
         fiveSecondsWonder.play();
         outilDisponible.setCellFactory(item -> new ListCell<Outil>() {
             protected void updateItem(Outil item, boolean bln) {
+                super.updateItem(item, bln);
+                if (item != null) {
+                    Text nom = new Text(item.getNom());
+                    Text prix = new Text(Integer.toString(item.getPrix()));
+                    Text adresse = new Text(item.getAdresse() + "  ," + item.getVille());
+                    Text nomCategorie = new Text(item.getNomCategorie());
+                    Image marker = new Image("file:/wamp64/www/fixit/web/service/images/icons/adresse.png", 30, 30, false, false);
+                    ImageView m = new ImageView(marker);
+                    Image scoin = new Image("file:/wamp64/www/fixit/web/service/images/icons/scoin.png", 30, 30, false, false);
+                    ImageView s = new ImageView(scoin);
+                    Image logo = new Image("file:/wamp64/www/fixit/web/uploads/images/categorieOutil/" + item.getC().getLogo(), 30, 30, false, false);
+                    ImageView l = new ImageView(logo);
+                    HBox prixEnScoin = new HBox(s, prix);
+                    HBox adresseM = new HBox(m, adresse);
+                    HBox LogoCategorie = new HBox(l, nomCategorie);
+                    nom.setStyle("-fx-font-size: 30 arial;");
+                    prix.setStyle("-fx-font-size: 20 arial;");
+                    VBox vBox = new VBox(nom, LogoCategorie, adresseM, prixEnScoin);
+                    vBox.setStyle("-fx-background-color:  transparent;");
+                    vBox.setSpacing(10);
+
+                    Image image = new Image("file:/wamp64/www/fixit/web/uploads/images/Outil/" + item.getImage(), 150, 150, false, false);
+                    ImageView img = new ImageView(image);
+                    img.setStyle("-fx-background-color:  transparent");
+
+                    HBox hBox = new HBox(img, vBox);
+                    hBox.setStyle("-fx-background-color:  transparent");
+                    hBox.setSpacing(10);
+                    setGraphic(hBox);
+                }
+            }
+        });
+    }
+
+    public void afficherServicesAccueil() {
+        Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(3), event -> {
+            int pos = (paginationServicesAccueil.getCurrentPageIndex() + 1) % paginationServicesAccueil.getPageCount();
+            paginationServicesAccueil.setCurrentPageIndex(pos);
+        }));
+        fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
+        fiveSecondsWonder.play();
+        listServiceAccueil.setCellFactory(item -> new ListCell<Service>() {
+            protected void updateItem(Service item, boolean bln) {
+                super.updateItem(item, bln);
+                if (item != null) {
+
+                    Text nom = new Text(item.getNom());
+                    Text description = new Text(item.getDescription());
+                    Text nbrProviders = new Text("Nombre de réalisateurs" + Integer.toString(item.getNbrProviders()));
+                    description.setWrappingWidth(300);
+                    nom.setStyle("-fx-font-size: 25 arial;");
+                    description.setStyle("-fx-font-size: 15 arial;"
+                            + "-fx-pref-width: 158px;");
+                    nbrProviders.setStyle("-fx-font-size: 10 arial;");
+                    VBox vBox = new VBox(nom, description, nbrProviders);
+                    vBox.setStyle("-fx-font-color: transparent;-fx-background-color: #F1F2F6;");
+                    vBox.setSpacing(10);
+
+                    Image image = new Image("file:/wamp64/www/fixit/web/uploads/images/service/" + item.getImage(), 120, 120, false, false);
+                    ImageView img = new ImageView(image);
+
+                    HBox hBox = new HBox(img, vBox);
+                    hBox.setStyle("-fx-font-color: transparent;-fx-background-color: #F1F2F6;");
+                    hBox.setSpacing(10);
+                    setGraphic(hBox);
+                }
+            }
+        });
+    }
+
+    private Node createPageProduit(int pageIndex) {
+        Produit recServ = new Produit();
+
+        ObservableList<ListAchat> data = FXCollections.observableArrayList();
+        data = recServ.topProduit();
+        int fromIndex = pageIndex * 1;
+        int toIndex = Math.min(fromIndex + 1, data.size());
+        mproduit.setItems(FXCollections.observableArrayList(data.subList(fromIndex, toIndex)));
+
+        return outilDisponible;
+    }
+
+    private void loadDataFromDatabaseProduit() {
+        try {
+            Produit service = new Produit();
+            ObservableList<ListAchat> rs = service.topProduit();
+            mproduitPagination.setPageFactory(this::createPageProduit);
+            mproduitPagination.setStyle("-fx-control-inner-background:  transparent; -fx-background-color:   rgba(255,255,255,0.1);");
+        } catch (Exception e) {
+            //System.err.println("Got an exception! ");
+            System.out.println("load outil front failed accueil");
+            System.err.println(e.getMessage());
+        }
+    }
+
+    public void affichertopProduit() {
+        Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(3), event -> {
+            int pos = (mproduitPagination.getCurrentPageIndex() + 1) % mproduitPagination.getPageCount();
+            mproduitPagination.setCurrentPageIndex(pos);
+        }));
+        fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
+        fiveSecondsWonder.play();
+        mproduit.setCellFactory(item -> new ListCell<ListAchat>() {
+            protected void updateItem(ListAchat item, boolean bln) {
             super.updateItem(item, bln);
             if (item != null) {
                 Text nom = new Text(item.getNom());
                 Text prix = new Text(Integer.toString(item.getPrix()));
-                Text adresse = new Text(item.getAdresse() + "  ," + item.getVille());
-                Text nomCategorie = new Text(item.getNomCategorie());
-                Image marker = new Image("file:/wamp64/www/fixit/web/service/images/icons/adresse.png", 30, 30, false, false);
-                ImageView m = new ImageView(marker);
+                Text quantite = new Text(Integer.toString(item.getQuantite()));
+                Image marker = new Image("file:/wamp64/www/fixit/web/service/images/icons/quantite.png", 30, 30, false, false);
+                ImageView q = new ImageView(marker);
                 Image scoin = new Image("file:/wamp64/www/fixit/web/service/images/icons/scoin.png", 30, 30, false, false);
                 ImageView s = new ImageView(scoin);
-                Image logo = new Image("file:/wamp64/www/fixit/web/uploads/images/categorieOutil/" + item.getC().getLogo(), 30, 30, false, false);
-                ImageView l = new ImageView(logo);
                 HBox prixEnScoin = new HBox(s, prix);
-                HBox adresseM = new HBox(m, adresse);
-                HBox LogoCategorie = new HBox(l, nomCategorie);
+                HBox quantitlogo = new HBox(q, quantite);
                 nom.setStyle("-fx-font-size: 30 arial;");
                 prix.setStyle("-fx-font-size: 20 arial;");
-                VBox vBox = new VBox(nom, LogoCategorie, adresseM, prixEnScoin);
+                quantite.setStyle("-fx-font-size: 20 arial;");
+                VBox vBox = new VBox(nom, prixEnScoin, quantitlogo);
                 vBox.setStyle("-fx-background-color:  transparent;");
                 vBox.setSpacing(10);
                 
-                Image image = new Image("file:/wamp64/www/fixit/web/uploads/images/Outil/" + item.getImage(), 150, 150, false, false);
+                Image image = new Image("file:/wamp64/www/fixit/web/uploads/images/produit/" + item.getImage(), 150, 150, false, false);
                 ImageView img = new ImageView(image);
                 img.setStyle("-fx-background-color:  transparent");
                 
@@ -471,8 +614,8 @@ public class FrontAccueilController implements Initializable {
                 hBox.setSpacing(10);
                 setGraphic(hBox);
             }
-        }
-        });
-    }
+            }
 
+});
+}
 }
