@@ -466,7 +466,7 @@ public class FrontAccueilController implements Initializable {
             OutilService service = new OutilService();
             ObservableList<Outil> rs = service.afficherOutilDisponible();
             outilDisponiblePagination.setPageFactory(this::createPageOutil);
-            outilDisponiblePagination.setStyle("-fx-control-inner-background:  transparent; -fx-background-color:   rgba(255,255,255,0.1);");
+            outilDisponiblePagination.setStyle("-fx-control-inner-background:  gris; -fx-background-color:   rgba(255,255,255,0.1);");
         } catch (Exception e) {
             //System.err.println("Got an exception! ");
             System.out.println("load outil front failed accueil");
@@ -587,33 +587,32 @@ public class FrontAccueilController implements Initializable {
         fiveSecondsWonder.play();
         mproduit.setCellFactory(item -> new ListCell<ListAchat>() {
             protected void updateItem(ListAchat item, boolean bln) {
-                super.updateItem(item, bln);
-                if (item != null) {
-                    Text nom = new Text(item.getNom());
-                    Text prix = new Text(Integer.toString(item.getPrix()));
-                    Text quantite = new Text(Integer.toString(item.getQuantite()));
-                    Image marker = new Image("file:/wamp64/www/fixit/web/service/images/icons/quantite.png", 30, 30, false, false);
-                    ImageView q = new ImageView(marker);
-                    Image scoin = new Image("file:/wamp64/www/fixit/web/service/images/icons/scoin.png", 30, 30, false, false);
-                    ImageView s = new ImageView(scoin);
-                    HBox prixEnScoin = new HBox(s, prix);
-                    HBox quantitlogo = new HBox(q, quantite);
-                    nom.setStyle("-fx-font-size: 30 arial;");
-                    prix.setStyle("-fx-font-size: 20 arial;");
-                    quantite.setStyle("-fx-font-size: 20 arial;");
-                    VBox vBox = new VBox(nom, prixEnScoin, quantitlogo);
-                    vBox.setStyle("-fx-background-color:  transparent;");
-                    vBox.setSpacing(10);
-
-                    Image image = new Image("file:/wamp64/www/fixit/web/uploads/images/Produit/" + item.getImage(), 150, 150, false, false);
-                    ImageView img = new ImageView(image);
-                    img.setStyle("-fx-background-color:  transparent");
-
-                    HBox hBox = new HBox(img, vBox);
-                    hBox.setStyle("-fx-background-color:  transparent");
-                    hBox.setSpacing(10);
-                    setGraphic(hBox);
-                }
+            super.updateItem(item, bln);
+            if (item != null) {
+                Text nom = new Text(item.getNom());
+                Text prix = new Text(Integer.toString(item.getPrix()));
+                Text quantite = new Text(Integer.toString(item.getQuantite()));
+                Image marker = new Image("file:/wamp64/www/fixit/web/service/images/icons/quantite.png", 30, 30, false, false);
+                ImageView q = new ImageView(marker);
+                Image scoin = new Image("file:/wamp64/www/fixit/web/service/images/icons/scoin.png", 30, 30, false, false);
+                ImageView s = new ImageView(scoin);
+                HBox prixEnScoin = new HBox(s, prix);
+                HBox quantitlogo = new HBox(q, quantite);
+                nom.setStyle("-fx-font-size: 30 arial;");
+                prix.setStyle("-fx-font-size: 20 arial;");
+                quantite.setStyle("-fx-font-size: 20 arial;");
+                VBox vBox = new VBox(nom, prixEnScoin, quantitlogo);
+                vBox.setStyle("-fx-background-color:  transparent;");
+                vBox.setSpacing(10);
+                
+                Image image = new Image("file:/wamp64/www/fixit/web/uploads/images/produit/" + item.getImage(), 150, 150, false, false);
+                ImageView img = new ImageView(image);
+                img.setStyle("-fx-background-color:  transparent");
+                
+                HBox hBox = new HBox(img, vBox);
+                hBox.setStyle("-fx-background-color:  transparent");
+                hBox.setSpacing(10);
+                setGraphic(hBox);
             }
         });
     }

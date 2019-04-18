@@ -780,7 +780,7 @@ public class EspaceProduitFrontController implements Initializable {
     private void loadDataFromDatabase() {
         try {
             Produit pro = new Produit();
-            ObservableList<produit> rs = pro.getAllProduit();
+            ObservableList<produit> rs = pro.getAllProduit(user.getId());
             // paginationOutilFront.setPageFactory(this::createPage);
             list.setItems(rs);
         } catch (Exception e) {

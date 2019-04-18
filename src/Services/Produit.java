@@ -142,11 +142,11 @@ public class Produit {
         }
     }
 
-    public ObservableList<produit> getAllProduit() {
+    public ObservableList<produit> getAllProduit(int id) {
         try {
             ObservableList<produit> list = FXCollections.observableArrayList();
-            PreparedStatement pt = Cn.prepareStatement("Select * from produit p where p.quantite > 0  ");
-
+            PreparedStatement pt = Cn.prepareStatement("Select DISTINCT * from produit p where user not in (select user from produit WHERE user=?)");
+            pt.setInt(1, id);
             ResultSet rs = pt.executeQuery();
             while (rs.next()) {
                 Image image1 = new Image("file:/wamp64/www/fixit/web/uploads/images/produit/" + rs.getString(5), 120, 120, false, false);

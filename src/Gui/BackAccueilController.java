@@ -231,15 +231,7 @@ public class BackAccueilController implements Initializable {
                 AudioClip ac=new AudioClip(path.toString());
                 loadNotifications();
                 afficherNotifications();
-                 Image img = new Image(getClass().getResourceAsStream("/Resources/tik.png"),50,50,false,false);
-        Notifications notificationBuilder = Notifications.create().title("Notification").text("Nouveau location").graphic(new ImageView(img)).hideAfter(Duration.seconds(10)).position(Pos.BOTTOM_RIGHT).onAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("clicked");
-            }
-        });
-        notificationBuilder.darkStyle();
-        notificationBuilder.show();
+                
             }
         }));
         fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);

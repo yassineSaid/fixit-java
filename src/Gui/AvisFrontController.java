@@ -141,7 +141,7 @@ public class AvisFrontController implements Initializable {
                     dateRealisation.setStyle("-fx-font-size: 20 arial;");
                     String s = item.getService().getImage();
                     File currDir = new File(System.getProperty("user.dir", "."));
-                    String path = "file:" + currDir.toPath().getRoot().toString() + "wamp64\\www\\fixit1\\web\\uploads\\images\\service\\" + s;
+                    String path = "file:" + currDir.toPath().getRoot().toString() + "wamp64\\www\\fixit\\web\\uploads\\images\\service\\" + s;
                     Image image = new Image(path, 200, 200, false, false);
                     ImageView img = new ImageView(image);
                     VBox vBox = new VBox(userOffreur, Service, dateRealisation);
