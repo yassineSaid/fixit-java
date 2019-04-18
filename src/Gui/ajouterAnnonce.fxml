@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.AjouterAnnonceController">
+              <fx:include fx:id="frontIndex" source="frontIndex.fxml" />
+   <Label layoutX="390.0" layoutY="204.0" prefHeight="22.0" prefWidth="190.0" text="Desctiption :">
+      <font>
+         <Font size="18.0" />
+      </font></Label>
+   <Label layoutX="390.0" layoutY="244.0" prefHeight="22.0" prefWidth="182.0" text="Type : ">
+      <font>
+         <Font size="18.0" />
+      </font></Label>
+   <Label layoutX="390.0" layoutY="292.0" prefHeight="22.0" prefWidth="182.0" text="Categorie Service">
+      <font>
+         <Font size="18.0" />
+      </font></Label>
+   <Label layoutX="390.0" layoutY="336.0" prefHeight="22.0" prefWidth="182.0" text="Service :">
+      <font>
+         <Font size="18.0" />
+      </font></Label>
+   <Label layoutX="390.0" layoutY="388.0" prefHeight="22.0" prefWidth="182.0" text="Prix :">
+      <font>
+         <Font size="18.0" />
+      </font></Label>
+   <Label layoutX="390.0" layoutY="452.0" prefHeight="22.0" prefWidth="182.0" text="Date :">
+      <font>
+         <Font size="18.0" />
+      </font></Label>
+   <Label layoutX="390.0" layoutY="500.0" prefHeight="22.0" prefWidth="182.0" text="Adresse : ">
+      <font>
+         <Font size="18.0" />
+      </font></Label>
+   <Label layoutX="390.0" layoutY="555.0" prefHeight="22.0" prefWidth="182.0" text="Telephone :">
+      <font>
+         <Font size="18.0" />
+      </font></Label>
+   <TextField fx:id="description" layoutX="621.0" layoutY="205.0" prefHeight="26.0" prefWidth="520.0" stylesheets="@../Resources/style.css" />
+   <TextField fx:id="montant" layoutX="621.0" layoutY="388.0" prefHeight="26.0" prefWidth="520.0" />
+   <TextField fx:id="adresse" layoutX="621.0" layoutY="500.0" prefHeight="26.0" prefWidth="520.0" />
+   <TextField fx:id="tel" layoutX="621.0" layoutY="555.0" prefHeight="26.0" prefWidth="520.0" />
+   <ComboBox fx:id="categorie" layoutX="621.0" layoutY="293.0" prefHeight="26.0" prefWidth="520.0" />
+   <ComboBox fx:id="service" layoutX="621.0" layoutY="336.0" prefHeight="26.0" prefWidth="520.0" />
+   <DatePicker fx:id="date" layoutX="621.0" layoutY="453.0" />
+   <Button layoutX="682.0" layoutY="627.0" mnemonicParsing="false" onAction="#AjouterAction" prefHeight="26.0" prefWidth="182.0" styleClass="greenFront" text="Ajouter">
+      <stylesheets>
+         <URL value="@../Resources/style1.css" />
+         <URL value="@../Resources/style.css" />
+         <URL value="@../Resources/stylep.css" />
+         <URL value="@../Resources/styleY.css" />
+      </stylesheets></Button>
+   <Button layoutX="980.0" layoutY="627.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="182.0" styleClass="redFront" stylesheets="@../Resources/style.css" text="Annuler" />
+   <ComboBox fx:id="type" layoutX="621.0" layoutY="244.0" prefHeight="26.0" prefWidth="520.0" />
+
+</AnchorPane>

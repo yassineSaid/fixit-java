@@ -270,5 +270,23 @@ public class BackIndexController implements Initializable {
             System.out.println(ex);
         }
     }
+    
+    @FXML
+    private void espaceAnnonce(ActionEvent event) {
+        try {
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/annonceBack.fxml"));
+            Parent Rec = fxmlLoader.load();
+
+            Scene scene = new Scene(Rec);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.show();
+            stage.setScene(scene);
+
+        } catch (IOException ex) {
+            System.out.println(ex);
+        }
+    } 
 
 }

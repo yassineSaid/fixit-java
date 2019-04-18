@@ -96,6 +96,26 @@ public class CategorieServiceService {
         }
         return null;
     }
+    
+    //ajouté par achref
+        public static CategorieServiceService su;
+        public static CategorieServiceService getInstance() {
+        if(su == null )
+            su = new CategorieServiceService();
+        return su;
+            
+    }
+    public ResultSet affichercategories() {
+        ResultSet rs = null;
+    try {
+        PreparedStatement pt = c.prepareStatement("select * from categorie_service");
+        rs = pt.executeQuery();
+
+    } catch (SQLException ex) {
+        System.out.println("erreur " + ex.getMessage());
+    }
+    return rs;
+}
 
 
 }

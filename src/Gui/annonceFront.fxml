@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Pagination?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="690.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.AnnonceFrontController">
+   <children>
+      <fx:include fx:id="frontIndex" source="frontIndex.fxml" />
+      <AnchorPane layoutX="275.0" layoutY="14.0" prefHeight="690.0" prefWidth="1300.0" stylesheets="@../Resources/style.css">
+         <children>
+             <TabPane fx:id="Tabwidget" layoutX="10.0" layoutY="-22.0" prefHeight="690.0" prefWidth="1016.0" tabClosingPolicy="UNAVAILABLE">
+             <tabs>
+                  <Tab fx:id="lesannonces" text="Les Annonces">
+                     <content>
+                        <AnchorPane fx:id="annonces" minHeight="0.0" minWidth="0.0" prefHeight="601.0" prefWidth="896.0" stylesheets="@../Resources/style.css">
+                            <children>
+                                <TableView fx:id="table" layoutX="52.0" layoutY="14.0" prefHeight="491.0" prefWidth="870.0" styleClass="table">
+     <columns>
+       <TableColumn fx:id="servcol" prefWidth="108.0" text="Service" />
+       <TableColumn fx:id="descriptioncol" prefWidth="260.79998779296875" text="Description" />
+         <TableColumn fx:id="typecol" prefWidth="124.79998779296875" text="Type" />
+         <TableColumn fx:id="adressecol" prefWidth="231.20013427734375" text="Adresse" />
+         <TableColumn fx:id="datecol" prefWidth="144.800048828125" text="Date" />
+     </columns>
+   </TableView>
+                              <Button layoutX="73.0" layoutY="614.0" mnemonicParsing="false" onAction="#detail" prefHeight="26.0" prefWidth="225.0" styleClass="greenFront" text="Voir plus de détails" />
+                              <Button layoutX="784.0" layoutY="614.0" mnemonicParsing="false" onAction="#AjouterAnAction" prefHeight="26.0" prefWidth="225.0" styleClass="greenFront" text="Ajouter annonce" />
+                              <Pagination fx:id="pagination" layoutX="51.0" layoutY="12.0" prefHeight="552.0" prefWidth="965.0" AnchorPane.bottomAnchor="98.0" AnchorPane.leftAnchor="51.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="12.0" />
+                            </children>    
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                 <Tab fx:id="offres" text="Les offres">
+                     <content>
+                        <AnchorPane fx:id="Lesoffres" minHeight="0.0" minWidth="0.0" prefHeight="601.0" prefWidth="896.0" stylesheets="@../Resources/style.css">
+                            <children>
+                                <TableView fx:id="taboffres" layoutX="52.0" layoutY="8.0" prefHeight="471.0" prefWidth="890.0" styleClass="table">
+                                 <columns>
+                                    <TableColumn fx:id="servcolo" prefWidth="75.0" text="Service" />
+                                    <TableColumn fx:id="descriptioncolo" prefWidth="338.3999938964844" text="Description" />
+                                    <TableColumn fx:id="prixcolo" prefWidth="73.60000610351562" text="Prix" />
+                                    <TableColumn fx:id="adressecolo" prefWidth="142.39996337890625" text="Adresse" />
+                                    <TableColumn fx:id="datecolo" prefWidth="116.800048828125" text="Date" />
+                                    <TableColumn fx:id="telcolo" prefWidth="123.99993896484375" text="tel" />
+                                 </columns>
+                                </TableView>
+                                <Button layoutX="453.0" layoutY="557.0" mnemonicParsing="false" onAction="#detailo" prefHeight="26.0" prefWidth="225.0" styleClass="greenFront" text="Voir plus de détails" />
+                              <Pagination fx:id="paginationo" layoutX="50.0" layoutY="19.0" prefHeight="518.0" prefWidth="966.0" AnchorPane.bottomAnchor="123.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="19.0" />
+
+                            </children>
+                        </AnchorPane>
+                     </content>
+                 </Tab>
+                 <Tab fx:id="demandes" text="Les demandes">
+                     <content>
+                        <AnchorPane fx:id="Lesdemandes" minHeight="0.0" minWidth="0.0" prefHeight="601.0" prefWidth="896.0" stylesheets="@../Resources/style.css">
+                            <children>
+                                <TableView fx:id="tabdemandes" layoutX="51.0" layoutY="4.0" prefHeight="510.0" prefWidth="892.0" styleClass="table">
+                                 <columns>
+                                    <TableColumn fx:id="servcold" prefWidth="75.0" text="Service" />
+                                    <TableColumn fx:id="descriptioncold" prefWidth="338.3999938964844" text="Description" />
+                                    <TableColumn fx:id="prixcold" prefWidth="73.60000610351562" text="Prix" />
+                                    <TableColumn fx:id="adressecold" prefWidth="142.39996337890625" text="Adresse" />
+                                    <TableColumn fx:id="datecold" prefWidth="116.800048828125" text="Date" />
+                                    <TableColumn fx:id="telcold" prefWidth="123.99993896484375" text="tel" />
+                                 </columns>
+                                </TableView>
+                                <Button layoutX="453.0" layoutY="579.0" mnemonicParsing="false" onAction="#detaild" prefHeight="26.0" prefWidth="225.0" styleClass="greenFront" text="Voir plus de détails" />
+                              <Pagination fx:id="paginationd" layoutX="50.0" prefHeight="561.0" prefWidth="966.0" AnchorPane.bottomAnchor="99.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                            </children>
+                        </AnchorPane>
+                     </content>
+                 </Tab>
+                         <Tab fx:id="mesannonces" text="Mes annonces">
+                     <content>
+                        <AnchorPane fx:id="Mesannonces" minHeight="0.0" minWidth="0.0" prefHeight="601.0" prefWidth="896.0" stylesheets="@../Resources/style.css">
+                            <children>
+                                <TableView fx:id="tabmesannonces" layoutX="73.0" layoutY="14.0" prefHeight="599.0" prefWidth="870.0" styleClass="table">
+                                 <columns>
+                                    <TableColumn fx:id="servcola" prefWidth="75.0" text="Service" />
+                                    <TableColumn fx:id="descriptioncola" prefWidth="338.3999938964844" text="Description" />
+                                    <TableColumn fx:id="prixcola" prefWidth="73.60000610351562" text="Prix" />
+                                    <TableColumn fx:id="adressecola" prefWidth="142.39996337890625" text="Adresse" />
+                                    <TableColumn fx:id="datecola" prefWidth="116.800048828125" text="Date" />
+                                    <TableColumn fx:id="telcola" prefWidth="123.99993896484375" text="tel" />
+                                 </columns>
+                                </TableView>
+                              <Button layoutX="467.0" layoutY="613.0" mnemonicParsing="false" onAction="#ModifierAnAction" prefHeight="26.0" prefWidth="218.0" styleClass="blueFront" stylesheets="@../Resources/style1.css" text="Modifier" />
+                              <Button layoutX="735.0" layoutY="613.0" mnemonicParsing="false" onAction="#SupprimerAnAction" prefHeight="26.0" prefWidth="218.0" styleClass="redFront" text="Supprimer" />
+                              <Button layoutX="177.0" layoutY="613.0" mnemonicParsing="false" onAction="#lesCandidatures" prefHeight="26.0" prefWidth="218.0" styleClass="greenFront" text="Les candidatures" />
+                            </children>
+                        </AnchorPane>
+                     </content>
+                </Tab>
+                
+                <Tab fx:id="mescandidatures" text="Mes candidatures">
+                     <content>
+                        <AnchorPane fx:id="Mescandidatures" minHeight="0.0" minWidth="0.0" prefHeight="601.0" prefWidth="896.0" stylesheets="@../Resources/style.css">
+                            <children>
+                            <TableView fx:id="tabmescandidatures" layoutX="73.0" layoutY="14.0" prefHeight="599.0" prefWidth="870.0" styleClass="table">
+                                 <columns>
+                                    <TableColumn fx:id="annoncecolc" prefWidth="89.60003662109375" text="Annonce" />
+                                    <TableColumn fx:id="messagecolc" prefWidth="286.4000549316406" text="Message" />
+                                    <TableColumn fx:id="etatcolc" minWidth="8.0" prefWidth="95.2000732421875" text="Etat" />
+                                    <TableColumn fx:id="emailcolc" prefWidth="159.99993896484375" text="Email" />
+                                    <TableColumn fx:id="telcolc" prefWidth="122.40008544921875" text="Telephone" />
+                                    <TableColumn fx:id="datecolc" prefWidth="118.39984130859375" text="Date" />
+                                 </columns></TableView>
+                              <Button layoutX="257.0" layoutY="613.0" mnemonicParsing="false" onAction="#ModifierCnAction" prefHeight="26.0" prefWidth="171.0" styleClass="blueFront" text="Modifier" />
+                              <Button layoutX="536.0" layoutY="613.0" mnemonicParsing="false" onAction="#SupprimerCanAction" prefHeight="26.0" prefWidth="186.0" styleClass="redFront" text="Supprimer" />
+                            </children>
+                        </AnchorPane>
+                     </content>
+                </Tab>        
+             </tabs>
+             </TabPane>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
