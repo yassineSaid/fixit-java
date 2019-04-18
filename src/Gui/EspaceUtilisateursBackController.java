@@ -82,8 +82,6 @@ public class EspaceUtilisateursBackController implements Initializable {
     @FXML
     private Button bloquer;
     @FXML
-    private Button supprimer;
-    @FXML
     private TextField filterField;
     @FXML
     private Label solde;
@@ -160,7 +158,7 @@ public class EspaceUtilisateursBackController implements Initializable {
         solde.setVisible(false);
         grade.setVisible(false);
         bloquer.setVisible(false);
-        supprimer.setVisible(false);
+        //supprimer.setVisible(false);
         FontAwesome fs1 = new FontAwesome();
         Node icon = fs1.create(FontAwesome.Glyph.HISTORY).color(Color.WHITE).size(17);
         icon.setId("icon");
@@ -168,10 +166,6 @@ public class EspaceUtilisateursBackController implements Initializable {
         historiquePaiement.setVisible(false);
     }
 
-    @FXML
-    private void historiqueAction(ActionEvent event) throws IOException {
-
-    }
 
     public void setActionTab() {
         tableUser.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
@@ -181,7 +175,7 @@ public class EspaceUtilisateursBackController implements Initializable {
                 FontAwesome fs1 = new FontAwesome();
                 Node icon1 = fs1.create(FontAwesome.Glyph.TRASH).color(Color.WHITE).size(17);
                 icon1.setId("icon");
-                supprimer.setGraphic(icon1);
+                /*supprimer.setGraphic(icon1);
                 supprimer.setVisible(true);
                 supprimer.setOnAction((event) -> {
                     UserService us = new UserService();
@@ -189,7 +183,7 @@ public class EspaceUtilisateursBackController implements Initializable {
                     refreshAction();
                     afficherTableAction();
                     setActionTab();
-                });
+                });*/
                 if (newSelection.getRoles().equals("Administrateur")) {
                     FontAwesome fs = new FontAwesome();
                     Node icon = fs.create(FontAwesome.Glyph.ARROW_DOWN).color(Color.WHITE).size(17);

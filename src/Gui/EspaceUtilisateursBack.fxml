@@ -83,7 +83,6 @@
                         <children>
                            <Button fx:id="grade" mnemonicParsing="false" prefHeight="40.0" prefWidth="220.0" text="Promouvoir" />
                            <Button fx:id="bloquer" mnemonicParsing="false" prefHeight="40.0" prefWidth="220.0" styleClass="supprimer" text="Bloquer" textFill="WHITE" />
-                           <Button fx:id="supprimer" mnemonicParsing="false" prefHeight="40.0" prefWidth="220.0" styleClass="supprimer" text="Supprimer" />
                            <Button fx:id="historiquePaiement" mnemonicParsing="false" prefHeight="40.0" prefWidth="220.0" styleClass="historiquePaiement" text="Historique de paiements" />
                         </children>
                      </VBox>
