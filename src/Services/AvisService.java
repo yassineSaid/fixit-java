@@ -113,7 +113,7 @@ public class AvisService {
                 avis.setDescription(rs.getString("Description"));
                 avis.setSatisfaction(rs.getString("satisfaction"));
                 avis.setNote(rs.getInt("note"));
-                
+
                 User u = new User();
                 u.setId(rs.getInt("idUser"));
                 u.setUsername(this.getUserName(rs.getInt("idUser")));
@@ -122,11 +122,54 @@ public class AvisService {
             }
             return list;
         } catch (SQLException ex) {
-                System.out.println(ex);
+            System.out.println(ex);
         }
         return null;
     }
 
+    public int getNonSatisfait() {
+        try {
+
+            PreparedStatement pt = c.prepareStatement("Select COUNT(*) From Avis WHERE satisfaction ='Non Satisfait'");
+            ResultSet rs = pt.executeQuery();
+            while (rs.next()) {
+                return rs.getInt("COUNT(*)");
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return -1;
+    }
+
+    public int getTotalementSatisfait() {
+
+        try {
+
+            PreparedStatement pt = c.prepareStatement("Select COUNT(*) From Avis WHERE satisfaction ='Totalement Satisfait'");
+            ResultSet rs = pt.executeQuery();
+            while (rs.next()) {
+                return rs.getInt("COUNT(*)");
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return -1;
+    }
+
+    public int getMoyennementSatisfait() {
+        try {
+
+            PreparedStatement pt = c.prepareStatement("Select COUNT(*) From Avis WHERE satisfaction ='Moyennement Satisfait'");
+            ResultSet rs = pt.executeQuery();
+            while (rs.next()) {
+                return rs.getInt("COUNT(*)");
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return -1;
+    }
+
 }
-
-

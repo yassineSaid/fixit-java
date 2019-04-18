@@ -6,6 +6,7 @@
 package Gui;
 
 import Entities.CategorieService;
+import Entities.Notification;
 import Entities.Outil;
 import Entities.QuizUser;
 import Entities.Service;
@@ -14,6 +15,7 @@ import Entities.ServicesProposes;
 import Entities.User;
 import Services.CategorieServiceService;
 import Services.MailService;
+import Services.NotificationService;
 import Services.ProfilMesServices;
 import Services.QuizUserService;
 import Services.SMSService;
@@ -33,6 +35,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -41,6 +44,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.HBox;
@@ -178,6 +183,24 @@ public class EspaceServiceFrontController implements Initializable {
     private Label labelSMS;
     @FXML
     private Button verifierCode;
+    @FXML
+    private AnchorPane serviceDetails;
+    @FXML
+    private ImageView imageServiceDetails;
+    @FXML
+    private Label nomServiceDetails;
+    @FXML
+    private Label categorieServiceDetails;
+    @FXML
+    private Label descriptionServiceDetails;
+    @FXML
+    private Label nbrServiceDetails;
+    @FXML
+    private Button retourDetails;
+    @FXML
+    private ImageView imageProviders;
+    @FXML
+    private ImageView imageCategorieDetails;
 
     public User getUser() {
         return user;
@@ -186,7 +209,13 @@ public class EspaceServiceFrontController implements Initializable {
     public void setUser(User user) {
         this.user = user;
     }
-
+ private int montant;
+    private int getMontant(){
+        return this.montant;
+    }
+    private void setMontant(int i){
+        this.montant=i;
+    }
     /**
      * Initializes the controller class.
      */
@@ -195,21 +224,86 @@ public class EspaceServiceFrontController implements Initializable {
 
         Platform.runLater(() -> {
             afficherServices();
+            serviceDetails.setVisible(false);
             frontIndexController.setUser(user);
             frontIndexController.initialize(null, null);
             frontIndexController.getEspaceServ().setStyle("-fx-background-color: #f4f4f4");
             loadCategorieFromDatabase();
-            listCategorie.setCellFactory(lv -> new Poules());
+            loadServiceUserFromDatabase();
+            listCategorie.setCellFactory(item -> new ListCell<CategorieService>() {
+                protected void updateItem(CategorieService item, boolean bln) {
+                    super.updateItem(item, bln);
+                    if (item != null) {
+                        Text nom = new Text(item.getNom());
+                        Text description = new Text(item.getDescription());
+                        description.setWrappingWidth(300);
+                        nom.setStyle("-fx-font-size: 25 arial;");
+                        description.setStyle("-fx-font-size: 15 arial;"
+                                + "-fx-pref-width: 158px;");
+                        VBox vBox = new VBox(nom, description);
+                        vBox.setStyle("-fx-font-color: transparent;-fx-background-color: #F1F2F6;");
+                        vBox.setSpacing(10);
+
+                        Image image = new Image("file:/wamp64/www/fixit/web/uploads/images/categorieService/" + item.getImage(), 120, 120, false, false);
+                        ImageView img = new ImageView(image);
+
+                        HBox hBox = new HBox(img, vBox);
+                        hBox.setStyle("-fx-font-color: transparent;-fx-background-color: #F1F2F6;");
+                        hBox.setSpacing(10);
+                        setGraphic(hBox);
+                        listCategorie.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
+                            @Override
+                            public void handle(javafx.scene.input.MouseEvent event) {
+
+                                CategorieService a = (CategorieService) listCategorie.getItems().get(listCategorie.getSelectionModel().getSelectedIndex());
+                                loadServiceFromDatabase(a.getId());
+                                listService.setCellFactory(item -> new ListCell<Service>() {
+                                    protected void updateItem(Service item, boolean bln) {
+                                        super.updateItem(item, bln);
+                                        if (item != null) {
+                                            Text nom = new Text(item.getNom());
+                                            Text description = new Text(item.getDescription());
+                                            Text nbrProviders = new Text("Nombre de réalisateurs" + Integer.toString(item.getNbrProviders()));
+                                            description.setWrappingWidth(300);
+                                            nom.setStyle("-fx-font-size: 25 arial;");
+                                            description.setStyle("-fx-font-size: 15 arial;"
+                                                    + "-fx-pref-width: 158px;");
+                                            nbrProviders.setStyle("-fx-font-size: 10 arial;");
+                                            VBox vBox = new VBox(nom, description, nbrProviders);
+                                            vBox.setStyle("-fx-font-color: transparent;-fx-background-color: #F1F2F6;");
+                                            vBox.setSpacing(10);
+
+                                            Image image = new Image("file:/wamp64/www/fixit/web/uploads/images/service/" + item.getImage(), 120, 120, false, false);
+                                            ImageView img = new ImageView(image);
+
+                                            HBox hBox = new HBox(img, vBox);
+                                            hBox.setStyle("-fx-font-color: transparent;-fx-background-color: #F1F2F6;");
+                                            hBox.setSpacing(10);
+                                            setGraphic(hBox);
+                                            
+
+                                        }
+                                    }
+
+                                });
+                                System.out.println("test");
+                            }
+                        });
+
+                    }
+                }
+
+            });
             checkQuiz();
             initQuiz();
             listCategorie.setStyle("-fx-background-color: transparent;");
             //listCategorie.
-            
 
         });
         // TODO
     }
-    private void initQuiz(){
+
+    private void initQuiz() {
         quiz1.setVisible(false);
         labelQ1Pass.setVisible(true);
         labelQ2Pass.setVisible(true);
@@ -230,268 +324,267 @@ public class EspaceServiceFrontController implements Initializable {
         sg500.setVisible(true);
         sg1000.setVisible(true);
         labelQuizNum.setVisible(false);
+        this.setMontant(0);
         //SMSForm.setVisible(false);
     }
-    private void SendMail() throws Exception{
-        String mailContentReclamant="<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n" +
-"<html>\n" +
-"<head>\n" +
-"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n" +
-"<!--[if !mso]><!-->\n" +
-"<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />\n" +
-"<!--<![endif]-->\n" +
-"<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n" +
-"<title></title>\n" +
-"<style type=\"text/css\">\n" +
-"* {\n" +
-"	-webkit-font-smoothing: antialiased;\n" +
-"}\n" +
-"body {\n" +
-"	Margin: 0;\n" +
-"	padding: 0;\n" +
-"	min-width: 100%;\n" +
-"	font-family: Arial, sans-serif;\n" +
-"	-webkit-font-smoothing: antialiased;\n" +
-"	mso-line-height-rule: exactly;\n" +
-"}\n" +
-"table {\n" +
-"	border-spacing: 0;\n" +
-"	color: #333333;\n" +
-"	font-family: Arial, sans-serif;\n" +
-"}\n" +
-"img {\n" +
-"	border: 0;\n" +
-"}\n" +
-".wrapper {\n" +
-"	width: 100%;\n" +
-"	table-layout: fixed;\n" +
-"	-webkit-text-size-adjust: 100%;\n" +
-"	-ms-text-size-adjust: 100%;\n" +
-"}\n" +
-".webkit {\n" +
-"	max-width: 600px;\n" +
-"}\n" +
-".outer {\n" +
-"	Margin: 0 auto;\n" +
-"	width: 100%;\n" +
-"	max-width: 600px;\n" +
-"}\n" +
-".full-width-image img {\n" +
-"	width: 100%;\n" +
-"	max-width: 600px;\n" +
-"	height: auto;\n" +
-"}\n" +
-".inner {\n" +
-"	padding: 10px;\n" +
-"}\n" +
-"p {\n" +
-"	Margin: 0;\n" +
-"	padding-bottom: 10px;\n" +
-"}\n" +
-".h1 {\n" +
-"	font-size: 21px;\n" +
-"	font-weight: bold;\n" +
-"	Margin-top: 15px;\n" +
-"	Margin-bottom: 5px;\n" +
-"	font-family: Arial, sans-serif;\n" +
-"	-webkit-font-smoothing: antialiased;\n" +
-"}\n" +
-".h2 {\n" +
-"	font-size: 18px;\n" +
-"	font-weight: bold;\n" +
-"	Margin-top: 10px;\n" +
-"	Margin-bottom: 5px;\n" +
-"	font-family: Arial, sans-serif;\n" +
-"	-webkit-font-smoothing: antialiased;\n" +
-"}\n" +
-".one-column .contents {\n" +
-"	text-align: left;\n" +
-"	font-family: Arial, sans-serif;\n" +
-"	-webkit-font-smoothing: antialiased;\n" +
-"}\n" +
-".one-column p {\n" +
-"	font-size: 14px;\n" +
-"	Margin-bottom: 10px;\n" +
-"	font-family: Arial, sans-serif;\n" +
-"	-webkit-font-smoothing: antialiased;\n" +
-"}\n" +
-".two-column {\n" +
-"	text-align: center;\n" +
-"	font-size: 0;\n" +
-"}\n" +
-".two-column .column {\n" +
-"	width: 100%;\n" +
-"	max-width: 300px;\n" +
-"	display: inline-block;\n" +
-"	vertical-align: top;\n" +
-"}\n" +
-".contents {\n" +
-"	width: 100%;\n" +
-"}\n" +
-".two-column .contents {\n" +
-"	font-size: 14px;\n" +
-"	text-align: left;\n" +
-"}\n" +
-".two-column img {\n" +
-"	width: 100%;\n" +
-"	max-width: 280px;\n" +
-"	height: auto;\n" +
-"}\n" +
-".two-column .text {\n" +
-"	padding-top: 10px;\n" +
-"}\n" +
-".three-column {\n" +
-"	text-align: center;\n" +
-"	font-size: 0;\n" +
-"	padding-top: 10px;\n" +
-"	padding-bottom: 10px;\n" +
-"}\n" +
-".three-column .column {\n" +
-"	width: 100%;\n" +
-"	max-width: 200px;\n" +
-"	display: inline-block;\n" +
-"	vertical-align: top;\n" +
-"}\n" +
-".three-column .contents {\n" +
-"	font-size: 14px;\n" +
-"	text-align: center;\n" +
-"}\n" +
-".three-column img {\n" +
-"	width: 100%;\n" +
-"	max-width: 180px;\n" +
-"	height: auto;\n" +
-"}\n" +
-".three-column .text {\n" +
-"	padding-top: 10px;\n" +
-"}\n" +
-".img-align-vertical img {\n" +
-"	display: inline-block;\n" +
-"	vertical-align: middle;\n" +
-"}\n" +
-"@media only screen and (max-device-width: 480px) {\n" +
-"table[class=hide], img[class=hide], td[class=hide] {\n" +
-"	display: none !important;\n" +
-"}\n" +
-".contents1 {\n" +
-"	width: 100%;\n" +
-"}\n" +
-".contents1 {\n" +
-"	width: 100%;\n" +
-"}\n" +
-"</style>\n" +
-"</head>\n" +
-"\n" +
-"<body style=\"Margin:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;min-width:100%;background-color:#f3f2f0;\">\n" +
-"<center class=\"wrapper\" style=\"width:100%;table-layout:fixed;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;background-color:#f3f2f0;\">\n" +
-"  <table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"background-color:#f3f2f0;\" bgcolor=\"#f3f2f0;\">\n" +
-"    <tr>\n" +
-"      <td width=\"100%\"><div class=\"webkit\" style=\"max-width:600px;Margin:0 auto;\"> \n" +
-"          <table class=\"outer\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"border-spacing:0;Margin:0 auto;width:100%;max-width:600px;\">\n" +
-"            <tr>\n" +
-"              <td style=\"padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;\"><!-- ======= start header ======= -->\n" +
-"                \n" +
-"                <table border=\"0\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\"  >\n" +
-"                  <tr>\n" +
-"                    <td><table style=\"width:100%;\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\">\n" +
-"                        <tbody>\n" +
-"                          <tr>\n" +
-"                            <td align=\"center\"><center>\n" +
-"                                <table border=\"0\" align=\"center\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"Margin: 0 auto;\">\n" +
-"                                  <tbody>\n" +
-"                                    <tr>\n" +
-"                                      <td class=\"one-column\" style=\"padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;\" bgcolor=\"#FFFFFF\"><!-- ======= start header ======= -->\n" +
-"                                        \n" +
-"                                        <table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\" bgcolor=\"#f3f2f0\">\n" +
-"                                          <tr>\n" +
-"                                            <td class=\"two-column\" style=\"padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;text-align:left;font-size:0;\" >                                          \n" +
-"                                              </td>\n" +
-"                                          </tr>\n" +
-"                                          <tr>\n" +
-"                                            <td>&nbsp;</td>\n" +
-"                                          </tr>\n" +
-"                                        </table></td>\n" +
-"                                    </tr>\n" +
-"                                  </tbody>\n" +
-"                                </table>\n" +
-"                              </center></td>\n" +
-"                          </tr>\n" +
-"                        </tbody>\n" +
-"                      </table></td>\n" +
-"                  </tr>\n" +
-"                </table>\n" +
-"                \n" +
-"                <!-- ======= end header ======= --> \n" +
-"                \n" +
-"                <!-- ======= start hero ======= -->\n" +
-"                \n" +
-"                <table class=\"one-column\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"border-spacing:0; border-left:1px solid #e8e7e5; border-right:1px solid #e8e7e5; border-bottom:1px solid #e8e7e5; border-top:1px solid #e8e7e5\" bgcolor=\"#FFFFFF\">\n" +
-"                  <tr>\n" +
-"                    <td background=\"https://gallery.mailchimp.com/fdcaf86ecc5056741eb5cbc18/images/42ba8b72-65d6-4dea-b8ab-3ecc12676337.jpg\" bgcolor=\"#2f9780\" width=\"100\" height=\"100\" valign=\"top\" align=\"center\" style=\"padding:50px 50px 50px 50px\">\n" +
-" \n" +
-"                      \n" +
-"                      <div>\n" +
-"                        <br />\n" +
-"                        <br />\n" +
-"                        <br />\n" +
-"                        <br />\n" +
-"                        <p style=\"color:#ffffff; font-size:60px; text-align:center; font-family: Verdana, Geneva, sans-serif\">FIX IT</p>\n" +
-"                  \n" +
-"                      </div>\n" +
-"                      </td>\n" +
-"                  </tr>\n" +
-"                </table>\n" +
-"                \n" +
-"                <table class=\"one-column\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"border-spacing:0; border-left:1px solid #e8e7e5; border-right:1px solid #e8e7e5; border-bottom:1px solid #e8e7e5; border-top:1px solid #e8e7e5\" bgcolor=\"#FFFFFF\">\n" +
-"                  <tr>\n" +
-"                    <td align=\"center\" style=\"padding:50px 50px 50px 50px\"><p style=\"color:#262626; font-size:24px; text-align:center; font-family: Verdana, Geneva, sans-serif\"><strong>Mr l'administrateur</strong></p>\n" +
-"                      <p style=\"color:#262626; font-size:16px; text-align:center; font-family: Verdana, Geneva, sans-serif; line-height:22px \"> Un service a été proposé par "+this.getUser().getUsername()+" <br />\n" +
-"                      <p> Veuillez Vérifier cette proposition </p>\n" +
-"                        <br />\n" +
-"                        <br />\n" +
-"                      </p>\n" +
-"                     \n" +
-"                          </tr>\n" +
-"                        </tbody>\n" +
-"                      </table>\n" +
-"                      <p style=\"color:#000000; font-size:12px; text-align:center; font-family: Verdana, Geneva, sans-serif; line-height:22px \"> <br />\n" +
-"                        <br />\n" +
-"                        </p></td>\n" +
-"                  </tr>\n" +
-"                </table>\n" +
-"                \n" +
-"                </td>\n" +
-"            </tr>\n" +
-"          </table>\n" +
-"        </div></td>\n" +
-"    </tr>\n" +
-"  </table>\n" +
-"</center>\n" +
-"</body>\n" +
-"</html>";
-        
-        UserService us=new UserService();
+
+    private void SendMail() throws Exception {
+        String mailContentReclamant = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n"
+                + "<html>\n"
+                + "<head>\n"
+                + "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n"
+                + "<!--[if !mso]><!-->\n"
+                + "<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />\n"
+                + "<!--<![endif]-->\n"
+                + "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n"
+                + "<title></title>\n"
+                + "<style type=\"text/css\">\n"
+                + "* {\n"
+                + "	-webkit-font-smoothing: antialiased;\n"
+                + "}\n"
+                + "body {\n"
+                + "	Margin: 0;\n"
+                + "	padding: 0;\n"
+                + "	min-width: 100%;\n"
+                + "	font-family: Arial, sans-serif;\n"
+                + "	-webkit-font-smoothing: antialiased;\n"
+                + "	mso-line-height-rule: exactly;\n"
+                + "}\n"
+                + "table {\n"
+                + "	border-spacing: 0;\n"
+                + "	color: #333333;\n"
+                + "	font-family: Arial, sans-serif;\n"
+                + "}\n"
+                + "img {\n"
+                + "	border: 0;\n"
+                + "}\n"
+                + ".wrapper {\n"
+                + "	width: 100%;\n"
+                + "	table-layout: fixed;\n"
+                + "	-webkit-text-size-adjust: 100%;\n"
+                + "	-ms-text-size-adjust: 100%;\n"
+                + "}\n"
+                + ".webkit {\n"
+                + "	max-width: 600px;\n"
+                + "}\n"
+                + ".outer {\n"
+                + "	Margin: 0 auto;\n"
+                + "	width: 100%;\n"
+                + "	max-width: 600px;\n"
+                + "}\n"
+                + ".full-width-image img {\n"
+                + "	width: 100%;\n"
+                + "	max-width: 600px;\n"
+                + "	height: auto;\n"
+                + "}\n"
+                + ".inner {\n"
+                + "	padding: 10px;\n"
+                + "}\n"
+                + "p {\n"
+                + "	Margin: 0;\n"
+                + "	padding-bottom: 10px;\n"
+                + "}\n"
+                + ".h1 {\n"
+                + "	font-size: 21px;\n"
+                + "	font-weight: bold;\n"
+                + "	Margin-top: 15px;\n"
+                + "	Margin-bottom: 5px;\n"
+                + "	font-family: Arial, sans-serif;\n"
+                + "	-webkit-font-smoothing: antialiased;\n"
+                + "}\n"
+                + ".h2 {\n"
+                + "	font-size: 18px;\n"
+                + "	font-weight: bold;\n"
+                + "	Margin-top: 10px;\n"
+                + "	Margin-bottom: 5px;\n"
+                + "	font-family: Arial, sans-serif;\n"
+                + "	-webkit-font-smoothing: antialiased;\n"
+                + "}\n"
+                + ".one-column .contents {\n"
+                + "	text-align: left;\n"
+                + "	font-family: Arial, sans-serif;\n"
+                + "	-webkit-font-smoothing: antialiased;\n"
+                + "}\n"
+                + ".one-column p {\n"
+                + "	font-size: 14px;\n"
+                + "	Margin-bottom: 10px;\n"
+                + "	font-family: Arial, sans-serif;\n"
+                + "	-webkit-font-smoothing: antialiased;\n"
+                + "}\n"
+                + ".two-column {\n"
+                + "	text-align: center;\n"
+                + "	font-size: 0;\n"
+                + "}\n"
+                + ".two-column .column {\n"
+                + "	width: 100%;\n"
+                + "	max-width: 300px;\n"
+                + "	display: inline-block;\n"
+                + "	vertical-align: top;\n"
+                + "}\n"
+                + ".contents {\n"
+                + "	width: 100%;\n"
+                + "}\n"
+                + ".two-column .contents {\n"
+                + "	font-size: 14px;\n"
+                + "	text-align: left;\n"
+                + "}\n"
+                + ".two-column img {\n"
+                + "	width: 100%;\n"
+                + "	max-width: 280px;\n"
+                + "	height: auto;\n"
+                + "}\n"
+                + ".two-column .text {\n"
+                + "	padding-top: 10px;\n"
+                + "}\n"
+                + ".three-column {\n"
+                + "	text-align: center;\n"
+                + "	font-size: 0;\n"
+                + "	padding-top: 10px;\n"
+                + "	padding-bottom: 10px;\n"
+                + "}\n"
+                + ".three-column .column {\n"
+                + "	width: 100%;\n"
+                + "	max-width: 200px;\n"
+                + "	display: inline-block;\n"
+                + "	vertical-align: top;\n"
+                + "}\n"
+                + ".three-column .contents {\n"
+                + "	font-size: 14px;\n"
+                + "	text-align: center;\n"
+                + "}\n"
+                + ".three-column img {\n"
+                + "	width: 100%;\n"
+                + "	max-width: 180px;\n"
+                + "	height: auto;\n"
+                + "}\n"
+                + ".three-column .text {\n"
+                + "	padding-top: 10px;\n"
+                + "}\n"
+                + ".img-align-vertical img {\n"
+                + "	display: inline-block;\n"
+                + "	vertical-align: middle;\n"
+                + "}\n"
+                + "@media only screen and (max-device-width: 480px) {\n"
+                + "table[class=hide], img[class=hide], td[class=hide] {\n"
+                + "	display: none !important;\n"
+                + "}\n"
+                + ".contents1 {\n"
+                + "	width: 100%;\n"
+                + "}\n"
+                + ".contents1 {\n"
+                + "	width: 100%;\n"
+                + "}\n"
+                + "</style>\n"
+                + "</head>\n"
+                + "\n"
+                + "<body style=\"Margin:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;min-width:100%;background-color:#f3f2f0;\">\n"
+                + "<center class=\"wrapper\" style=\"width:100%;table-layout:fixed;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;background-color:#f3f2f0;\">\n"
+                + "  <table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"background-color:#f3f2f0;\" bgcolor=\"#f3f2f0;\">\n"
+                + "    <tr>\n"
+                + "      <td width=\"100%\"><div class=\"webkit\" style=\"max-width:600px;Margin:0 auto;\"> \n"
+                + "          <table class=\"outer\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"border-spacing:0;Margin:0 auto;width:100%;max-width:600px;\">\n"
+                + "            <tr>\n"
+                + "              <td style=\"padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;\"><!-- ======= start header ======= -->\n"
+                + "                \n"
+                + "                <table border=\"0\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\"  >\n"
+                + "                  <tr>\n"
+                + "                    <td><table style=\"width:100%;\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\">\n"
+                + "                        <tbody>\n"
+                + "                          <tr>\n"
+                + "                            <td align=\"center\"><center>\n"
+                + "                                <table border=\"0\" align=\"center\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"Margin: 0 auto;\">\n"
+                + "                                  <tbody>\n"
+                + "                                    <tr>\n"
+                + "                                      <td class=\"one-column\" style=\"padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;\" bgcolor=\"#FFFFFF\"><!-- ======= start header ======= -->\n"
+                + "                                        \n"
+                + "                                        <table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\" bgcolor=\"#f3f2f0\">\n"
+                + "                                          <tr>\n"
+                + "                                            <td class=\"two-column\" style=\"padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;text-align:left;font-size:0;\" >                                          \n"
+                + "                                              </td>\n"
+                + "                                          </tr>\n"
+                + "                                          <tr>\n"
+                + "                                            <td>&nbsp;</td>\n"
+                + "                                          </tr>\n"
+                + "                                        </table></td>\n"
+                + "                                    </tr>\n"
+                + "                                  </tbody>\n"
+                + "                                </table>\n"
+                + "                              </center></td>\n"
+                + "                          </tr>\n"
+                + "                        </tbody>\n"
+                + "                      </table></td>\n"
+                + "                  </tr>\n"
+                + "                </table>\n"
+                + "                \n"
+                + "                <!-- ======= end header ======= --> \n"
+                + "                \n"
+                + "                <!-- ======= start hero ======= -->\n"
+                + "                \n"
+                + "                <table class=\"one-column\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"border-spacing:0; border-left:1px solid #e8e7e5; border-right:1px solid #e8e7e5; border-bottom:1px solid #e8e7e5; border-top:1px solid #e8e7e5\" bgcolor=\"#FFFFFF\">\n"
+                + "                  <tr>\n"
+                + "                    <td background=\"https://gallery.mailchimp.com/fdcaf86ecc5056741eb5cbc18/images/42ba8b72-65d6-4dea-b8ab-3ecc12676337.jpg\" bgcolor=\"#2f9780\" width=\"100\" height=\"100\" valign=\"top\" align=\"center\" style=\"padding:50px 50px 50px 50px\">\n"
+                + " \n"
+                + "                      \n"
+                + "                      <div>\n"
+                + "                        <br />\n"
+                + "                        <br />\n"
+                + "                        <br />\n"
+                + "                        <br />\n"
+                + "                        <p style=\"color:#ffffff; font-size:60px; text-align:center; font-family: Verdana, Geneva, sans-serif\">FIX IT</p>\n"
+                + "                  \n"
+                + "                      </div>\n"
+                + "                      </td>\n"
+                + "                  </tr>\n"
+                + "                </table>\n"
+                + "                \n"
+                + "                <table class=\"one-column\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"border-spacing:0; border-left:1px solid #e8e7e5; border-right:1px solid #e8e7e5; border-bottom:1px solid #e8e7e5; border-top:1px solid #e8e7e5\" bgcolor=\"#FFFFFF\">\n"
+                + "                  <tr>\n"
+                + "                    <td align=\"center\" style=\"padding:50px 50px 50px 50px\"><p style=\"color:#262626; font-size:24px; text-align:center; font-family: Verdana, Geneva, sans-serif\"><strong>Mr l'administrateur</strong></p>\n"
+                + "                      <p style=\"color:#262626; font-size:16px; text-align:center; font-family: Verdana, Geneva, sans-serif; line-height:22px \"> Un service a été proposé par " + this.getUser().getUsername() + " <br />\n"
+                + "                      <p> Veuillez Vérifier cette proposition </p>\n"
+                + "                        <br />\n"
+                + "                        <br />\n"
+                + "                      </p>\n"
+                + "                     \n"
+                + "                          </tr>\n"
+                + "                        </tbody>\n"
+                + "                      </table>\n"
+                + "                      <p style=\"color:#000000; font-size:12px; text-align:center; font-family: Verdana, Geneva, sans-serif; line-height:22px \"> <br />\n"
+                + "                        <br />\n"
+                + "                        </p></td>\n"
+                + "                  </tr>\n"
+                + "                </table>\n"
+                + "                \n"
+                + "                </td>\n"
+                + "            </tr>\n"
+                + "          </table>\n"
+                + "        </div></td>\n"
+                + "    </tr>\n"
+                + "  </table>\n"
+                + "</center>\n"
+                + "</body>\n"
+                + "</html>";
+
+        UserService us = new UserService();
         ObservableList<User> list = FXCollections.observableArrayList();
         ObservableList<User> list2 = FXCollections.observableArrayList();
-        list=us.getUsers(this.getUser().getId());
+        list = us.getUsers(this.getUser().getId());
         for (User u : list) {
-          if(u.getRoles().equals("Administrateur")){
-            System.out.println(u.getEmail());
-            //  MailService mailService= new MailService("slim.bensalah@esprit.tn","Services Proposés",mailContentReclamant);
-              try{ 
-                  MailService mailService= new MailService(u.getEmail(),"Services Proposés",mailContentReclamant);
-              mailService.sendEmail();
-              }
-              catch(MessagingException e){
-                  System.out.println(e);
-              }
+            if (u.getRoles().equals("Administrateur")) {
+                System.out.println(u.getEmail());
+                //  MailService mailService= new MailService("slim.bensalah@esprit.tn","Services Proposés",mailContentReclamant);
+                try {
+                    MailService mailService = new MailService(u.getEmail(), "Services Proposés", mailContentReclamant);
+                    mailService.sendEmail();
+                } catch (MessagingException e) {
+                    System.out.println(e);
+                }
             }
-            }
-       // MailService mailService= new MailService(list2,"Reclamation contre vous",mailContentReclamant);
-       
-         
-       
-        
+        }
+        // MailService mailService= new MailService(list2,"Reclamation contre vous",mailContentReclamant);
+
     }
+
     private void checkQuiz() {
 
         labelQ1.setMaxWidth(328);
@@ -603,6 +696,7 @@ public class EspaceServiceFrontController implements Initializable {
         try {
             ServiceUserService su = new ServiceUserService();
             ObservableList<ServiceUser> rs = su.afficherServiceUser(this.getUser().getId());
+            System.out.println(rs);
             //paginationOutilFront.setPageFactory(this::createPage);
             mesServices.setItems(rs);
         } catch (Exception e) {
@@ -648,7 +742,7 @@ public class EspaceServiceFrontController implements Initializable {
 
     @FXML
     private void jouerQuiz1(ActionEvent event) {
-        
+
         quiz1Question1.getItems().clear();
         quiz1Question2.getItems().clear();
         quiz1Question3.getItems().clear();
@@ -694,7 +788,7 @@ public class EspaceServiceFrontController implements Initializable {
 
     @FXML
     private void jouerQuiz2(ActionEvent event) {
-        
+
         quiz1Question1.getItems().clear();
         quiz1Question2.getItems().clear();
         quiz1Question3.getItems().clear();
@@ -740,7 +834,7 @@ public class EspaceServiceFrontController implements Initializable {
 
     @FXML
     private void jouerQuiz3(ActionEvent event) {
-        
+
         quiz1Question1.getItems().clear();
         quiz1Question2.getItems().clear();
         quiz1Question3.getItems().clear();
@@ -785,119 +879,166 @@ public class EspaceServiceFrontController implements Initializable {
 
     @FXML
     private void confirmerQuiz1(ActionEvent event) {
-        int j=0;
-        QuizUser qu = new QuizUser();
-        QuizUserService qus = new QuizUserService();
-        if (qus.verifier(this.getUser().getId(), 1)) {
-
-            qu.setIdUser(this.getUser().getId());
-            qu.setIdQuiz(1);
-            qu.setTentative(0);
-            qus.ajouterQuizUser(qu);
-        }
-        if (!qus.verifier(this.getUser().getId(), 1)) {
-
-            int i = qus.getTentative(this.getUser().getId(), 1);
-            qu.setIdUser(this.getUser().getId());
-            qu.setIdQuiz(1);
-            qu.setTentative(i + 1);
-            qus.modifierQuizUser(qu);
-        }
-        if (quiz1Question1.getValue().equals("Le manchot")
-                && quiz1Question2.getValue().equals("Les araignées")
-                && quiz1Question3.getValue().equals("Le bêlement")
-                && quiz1Question4.getValue().equals("Un cheval")
-                && quiz1Question5.getValue().equals("Un mouton")) {
-            j=1;
-            if (qus.getTentative(this.getUser().getId(), 1) == 1) {
-                qu.setIdQuiz(1);
-                qu.setTentative(3);
-                qu.setIdUser(this.getUser().getId());
-                qus.modifierQuizUser(qu);
-                UserService u = new UserService();
-                u.modifierSolde(this.getUser(), 100);
-                resultatQuiz.setText("Bravo vous Avez gagné 10 Scoins");
-            }
-            if (qus.getTentative(this.getUser().getId(), 1) == 2) {
-                qu.setIdQuiz(1);
-                qu.setTentative(3);
-                qu.setIdUser(this.getUser().getId());
-                qus.modifierQuizUser(qu);
-                UserService u = new UserService();
-                u.modifierSolde(this.getUser(), 50);
-                resultatQuiz.setText("Bravo vous Avez gagné 5 Scoins");
-            }
-
+        int k = 0;
+        String e="Vous devez répondre aux questions";
+        if (quiz1Question1.getValue() == null) {
+            quiz1Question1.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+            k = 1;
+            e+="\nQuestion1";
         } else {
-            System.out.println("non");
-            if (qus.getTentative(this.getUser().getId(), 1) == 1) {
+            quiz1Question1.setStyle("-fx-border-color:none ;");
+        }
+        if (quiz1Question2.getValue() == null) {
+            quiz1Question2.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+            k = 1;
+            e+="\nQuestion2";
+        } else {
+            quiz1Question2.setStyle("-fx-border-color: none;");
+        }
+        if (quiz1Question3.getValue() == null) {
+            quiz1Question3.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+            k = 1;
+            e+="\nQuestion3";
+        } else {
+            quiz1Question3.setStyle("-fx-border-color: none");
+        }
+        if (quiz1Question4.getValue() == null) {
+            quiz1Question4.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+            k = 1;
+            e+="\nQuestion4";
+        } else {
+            quiz1Question4.setStyle("-fx-border-color: nnoe ;");
+        }
+        if (quiz1Question5.getValue() == null) {
+            quiz1Question5.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+            k = 1;
+            e+="\nQuestion5";
+        } else {
+            quiz1Question5.setStyle("-fx-border-color: none ;");
+        }
+        if (k == 0) {
+
+            int j = 0;
+            QuizUser qu = new QuizUser();
+            QuizUserService qus = new QuizUserService();
+            if (qus.verifier(this.getUser().getId(), 1)) {
+
+                qu.setIdUser(this.getUser().getId());
                 qu.setIdQuiz(1);
-                qu.setTentative(1);
-                qu.setIdUser(this.getUser().getId());
-                qus.modifierQuizUser(qu);
-                resultatQuiz.setText("Vous avez échoué.Réessayer et gagner 5 SCoins!");
-                labelg100.setText("Gagner 5");
+                qu.setTentative(0);
+                qus.ajouterQuizUser(qu);
             }
-            if (qus.getTentative(this.getUser().getId(), 1) == 2) {
-                qu.setTentative(2);
+            if (!qus.verifier(this.getUser().getId(), 1)) {
+
+                int i = qus.getTentative(this.getUser().getId(), 1);
                 qu.setIdUser(this.getUser().getId());
+                qu.setIdQuiz(1);
+                qu.setTentative(i + 1);
                 qus.modifierQuizUser(qu);
-                resultatQuiz.setText("Tentative épuisés !");
-                labelg100.setVisible(false);
+            }
+            if (quiz1Question1.getValue().equals("Le manchot")
+                    && quiz1Question2.getValue().equals("Les araignées")
+                    && quiz1Question3.getValue().equals("Le bêlement")
+                    && quiz1Question4.getValue().equals("Un cheval")
+                    && quiz1Question5.getValue().equals("Un mouton")) {
+                j = 1;
+                if (qus.getTentative(this.getUser().getId(), 1) == 1) {
+                    qu.setIdQuiz(1);
+                    qu.setTentative(3);
+                    qu.setIdUser(this.getUser().getId());
+                    qus.modifierQuizUser(qu);
+                    UserService u = new UserService();
+                    this.setMontant(10);
+                    resultatQuiz.setText("Bravo vous Avez gagné 10 Scoins");
+                }
+                if (qus.getTentative(this.getUser().getId(), 1) == 2) {
+                    qu.setIdQuiz(1);
+                    qu.setTentative(3);
+                    qu.setIdUser(this.getUser().getId());
+                    qus.modifierQuizUser(qu);
+                    UserService u = new UserService();
+                this.setMontant(5);
+                    resultatQuiz.setText("Bravo vous Avez gagné 5 Scoins");
+                }
+
+            } else {
+                System.out.println("non");
+                if (qus.getTentative(this.getUser().getId(), 1) == 1) {
+                    qu.setIdQuiz(1);
+                    qu.setTentative(1);
+                    qu.setIdUser(this.getUser().getId());
+                    qus.modifierQuizUser(qu);
+                    resultatQuiz.setText("Vous avez échoué.Réessayer et gagner 5 SCoins!");
+                    labelg100.setText("Gagner 5");
+                }
+                if (qus.getTentative(this.getUser().getId(), 1) == 2) {
+                    qu.setTentative(2);
+                    qu.setIdUser(this.getUser().getId());
+                    qus.modifierQuizUser(qu);
+                    resultatQuiz.setText("Tentative épuisés !");
+                    labelg100.setVisible(false);
+                    sg100.setVisible(false);
+                }
+                this.initialize(null, null);
+
+            }
+            quiz1.setVisible(false);
+            labelQ1Pass.setVisible(true);
+            labelQ2Pass.setVisible(true);
+            labelQ3Pass.setVisible(true);
+            confirmerQuiz1.setVisible(true);
+            confirmerQuiz2.setVisible(false);
+            confirmerQuiz3.setVisible(true);
+            jouerQuiz1.setVisible(true);
+            jouerQuiz2.setVisible(true);
+            jouerQuiz3.setVisible(true);
+            imageQuiz1.setVisible(true);
+            imageQuiz2.setVisible(true);
+            imageQuiz3.setVisible(true);
+            labelg100.setVisible(true);
+            labelg500.setVisible(true);
+            labelg1000.setVisible(true);
+            sg100.setVisible(true);
+            sg500.setVisible(true);
+            sg1000.setVisible(true);
+            labelQuizNum.setVisible(false);
+            if (j == 1) {
+                SMSForm.setVisible(true);
+                labelSMS.setText("Tapez votre numéro ,un code vous sera communiqué !");
+                labelSMS.setVisible(true);
+                labelQ1Pass.setVisible(false);
+                labelQ2Pass.setVisible(false);
+                labelQ3Pass.setVisible(false);
+                confirmerQuiz1.setVisible(false);
+                confirmerQuiz2.setVisible(false);
+                confirmerQuiz3.setVisible(false);
+                jouerQuiz1.setVisible(false);
+                jouerQuiz2.setVisible(false);
+                jouerQuiz3.setVisible(false);
+                imageQuiz1.setVisible(false);
+                imageQuiz2.setVisible(false);
+                imageQuiz3.setVisible(false);
                 sg100.setVisible(false);
+                sg500.setVisible(false);
+                sg1000.setVisible(false);
+                labelg100.setVisible(false);
+                labelg500.setVisible(false);
+                labelg1000.setVisible(false);
+                envoyerSMS.setVisible(true);
+                verifierCode.setVisible(false);
+                textSMS.clear();
+                checkQuiz();
             }
-            this.initialize(null, null);
 
         }
-        quiz1.setVisible(false);
-        labelQ1Pass.setVisible(true);
-        labelQ2Pass.setVisible(true);
-        labelQ3Pass.setVisible(true);
-        confirmerQuiz1.setVisible(true);
-        confirmerQuiz2.setVisible(false);
-        confirmerQuiz3.setVisible(true);
-        jouerQuiz1.setVisible(true);
-        jouerQuiz2.setVisible(true);
-        jouerQuiz3.setVisible(true);
-        imageQuiz1.setVisible(true);
-        imageQuiz2.setVisible(true);
-        imageQuiz3.setVisible(true);
-        labelg100.setVisible(true);
-        labelg500.setVisible(true);
-        labelg1000.setVisible(true);
-        sg100.setVisible(true);
-        sg500.setVisible(true);
-        sg1000.setVisible(true);
-        labelQuizNum.setVisible(false);
-        if(j==1){
-            SMSForm.setVisible(true);
-            labelSMS.setText("Tapez votre numéro ,un code vous sera communiqué !");
-            labelSMS.setVisible(true);
-        labelQ1Pass.setVisible(false);
-        labelQ2Pass.setVisible(false);
-        labelQ3Pass.setVisible(false);
-        confirmerQuiz1.setVisible(false);
-        confirmerQuiz2.setVisible(false);
-        confirmerQuiz3.setVisible(false);
-        jouerQuiz1.setVisible(false);
-        jouerQuiz2.setVisible(false);
-        jouerQuiz3.setVisible(false);
-        imageQuiz1.setVisible(false);
-        imageQuiz2.setVisible(false);
-        imageQuiz3.setVisible(false);
-        sg100.setVisible(false);
-        sg500.setVisible(false);
-        sg1000.setVisible(false);
-        labelg100.setVisible(false);
-        labelg500.setVisible(false);
-        labelg1000.setVisible(false);
-        envoyerSMS.setVisible(true);
-        verifierCode.setVisible(false);
+        else if(k==0){
+            
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Quiz 1");
+            alert.setHeaderText(null);
+            alert.setContentText(e);
+            alert.showAndWait();
         }
-      
-
-        
-
     }
 
     @FXML
@@ -926,7 +1067,45 @@ public class EspaceServiceFrontController implements Initializable {
 
     @FXML
     private void confirmerQuiz2(ActionEvent event) {
-        int j=0;
+           int k = 0;
+           String e="Vous dever répondre aux questions";
+        if (quiz1Question1.getValue() == null) {
+            quiz1Question1.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+            k = 1;
+            e+="\nQuestion1";
+        } else {
+            quiz1Question1.setStyle("-fx-border-color:none ;");
+        }
+        if (quiz1Question2.getValue() == null) {
+            quiz1Question2.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+            k = 1;
+            e+="\nQuestion2";
+        } else {
+            quiz1Question2.setStyle("-fx-border-color: none;");
+        }
+        if (quiz1Question3.getValue() == null) {
+            quiz1Question3.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+            k = 1;
+            e+="\nQuestion3";
+        } else {
+            quiz1Question3.setStyle("-fx-border-color: none");
+        }
+        if (quiz1Question4.getValue() == null) {
+            quiz1Question4.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+            k = 1;
+            e+="\nQuestion4";
+        } else {
+            quiz1Question4.setStyle("-fx-border-color: nnoe ;");
+        }
+        if (quiz1Question5.getValue() == null) {
+            quiz1Question5.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+            k = 1;
+            e+="\nQuestion5";
+        } else {
+            quiz1Question5.setStyle("-fx-border-color: none ;");
+        }
+        if (k == 0) {
+        int j = 0;
         QuizUser qu = new QuizUser();
         QuizUserService qus = new QuizUserService();
         if (qus.verifier(this.getUser().getId(), 2)) {
@@ -949,12 +1128,13 @@ public class EspaceServiceFrontController implements Initializable {
                 && quiz1Question3.getValue().equals("Le pacanier")
                 && quiz1Question4.getValue().equals("Le travail")
                 && quiz1Question5.getValue().equals("New Delhi")) {
-            j=1;
+            j = 1;
             if (qus.getTentative(this.getUser().getId(), 2) == 1) {
                 qu.setIdQuiz(2);
                 qu.setTentative(3);
                 qu.setIdUser(this.getUser().getId());
                 qus.modifierQuizUser(qu);
+                this.setMontant(10);
                 /*UserService u = new UserService();
                 u.modifierSolde(this.getUser(), 500);*/
                 resultatQuiz.setText("Bravo vous Avez gagné 10 Scoins");
@@ -964,6 +1144,7 @@ public class EspaceServiceFrontController implements Initializable {
                 qu.setTentative(3);
                 qu.setIdUser(this.getUser().getId());
                 qus.modifierQuizUser(qu);
+                this.setMontant(5);
                 /*UserService u = new UserService();
                 u.modifierSolde(this.getUser(), 250);*/
                 resultatQuiz.setText("Bravo vous Avez gagné 5 Scoins");
@@ -1010,37 +1191,87 @@ public class EspaceServiceFrontController implements Initializable {
         sg500.setVisible(true);
         sg1000.setVisible(true);
         labelQuizNum.setVisible(false);
-        if(j==1){
+        checkQuiz();
+        if (j == 1) {
             SMSForm.setVisible(true);
             labelSMS.setText("Tapez votre numéro ,un code vous sera communiqué !");
             labelSMS.setVisible(true);
-        labelQ1Pass.setVisible(false);
-        labelQ2Pass.setVisible(false);
-        labelQ3Pass.setVisible(false);
-        confirmerQuiz1.setVisible(false);
-        confirmerQuiz2.setVisible(false);
-        confirmerQuiz3.setVisible(false);
-        jouerQuiz1.setVisible(false);
-        jouerQuiz2.setVisible(false);
-        jouerQuiz3.setVisible(false);
-        imageQuiz1.setVisible(false);
-        imageQuiz2.setVisible(false);
-        imageQuiz3.setVisible(false);
-        sg100.setVisible(false);
-        sg500.setVisible(false);
-        sg1000.setVisible(false);
-        labelg100.setVisible(false);
-        labelg500.setVisible(false);
-        labelg1000.setVisible(false);
-        envoyerSMS.setVisible(true);
-        verifierCode.setVisible(false);
+            labelQ1Pass.setVisible(false);
+            labelQ2Pass.setVisible(false);
+            labelQ3Pass.setVisible(false);
+            confirmerQuiz1.setVisible(false);
+            confirmerQuiz2.setVisible(false);
+            confirmerQuiz3.setVisible(false);
+            jouerQuiz1.setVisible(false);
+            jouerQuiz2.setVisible(false);
+            jouerQuiz3.setVisible(false);
+            imageQuiz1.setVisible(false);
+            imageQuiz2.setVisible(false);
+            imageQuiz3.setVisible(false);
+            sg100.setVisible(false);
+            sg500.setVisible(false);
+            sg1000.setVisible(false);
+            labelg100.setVisible(false);
+            labelg500.setVisible(false);
+            labelg1000.setVisible(false);
+            envoyerSMS.setVisible(true);
+            verifierCode.setVisible(false);
+            textSMS.clear();
+            
+        }
+        }
+        else{
+            
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Quiz 2");
+            alert.setHeaderText(null);
+            alert.setContentText(e);
+            alert.showAndWait();
         }
 
     }
 
     @FXML
     private void confirmerQuiz3(ActionEvent event) {
-        int j=0;
+           int k = 0;
+           String e="Vous devez répondre aux questions";
+        if (quiz1Question1.getValue() == null) {
+            quiz1Question1.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+            k = 1;
+            e+="\nQuestion1";
+        } else {
+            quiz1Question1.setStyle("-fx-border-color:none ;");
+        }
+        if (quiz1Question2.getValue() == null) {
+            quiz1Question2.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+            k = 1;
+            e+="\nQuestion2";
+        } else {
+            quiz1Question2.setStyle("-fx-border-color: none;");
+        }
+        if (quiz1Question3.getValue() == null) {
+            quiz1Question3.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+            k = 1;
+            e+="\nQuestion3";
+        } else {
+            quiz1Question3.setStyle("-fx-border-color: none");
+        }
+        if (quiz1Question4.getValue() == null) {
+            quiz1Question4.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+            k = 1;
+            e+="\nQuestion4";
+        } else {
+            quiz1Question4.setStyle("-fx-border-color: nnoe ;");
+        }
+        if (quiz1Question5.getValue() == null) {
+            quiz1Question5.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+            k = 1;
+            e+="\nQuestion5";
+        } else {
+            quiz1Question5.setStyle("-fx-border-color: none ;");
+        }
+        if (k == 0) {
+        int j = 0;
         QuizUser qu = new QuizUser();
         QuizUserService qus = new QuizUserService();
         if (qus.verifier(this.getUser().getId(), 3)) {
@@ -1063,12 +1294,13 @@ public class EspaceServiceFrontController implements Initializable {
                 && quiz1Question3.getValue().equals("Vincent Van Gogh")
                 && quiz1Question4.getValue().equals("Bilbao")
                 && quiz1Question5.getValue().equals("Le baroque")) {
-            j=1;
+            j = 1;
             if (qus.getTentative(this.getUser().getId(), 3) == 1) {
                 qu.setIdQuiz(3);
                 qu.setTentative(3);
                 qu.setIdUser(this.getUser().getId());
                 qus.modifierQuizUser(qu);
+                this.setMontant(10);
                 /*UserService u = new UserService();
                 u.modifierSolde(this.getUser(), 1000);*/
                 resultatQuiz.setText("Bravo vous Avez gagné 10 Scoins");
@@ -1078,6 +1310,7 @@ public class EspaceServiceFrontController implements Initializable {
                 qu.setTentative(3);
                 qu.setIdUser(this.getUser().getId());
                 qus.modifierQuizUser(qu);
+                this.setMontant(5);
                 /*UserService u = new UserService();
                 u.modifierSolde(this.getUser(), 500);*/
                 resultatQuiz.setText("Bravo vous Avez gagné 5 Scoins");
@@ -1124,33 +1357,43 @@ public class EspaceServiceFrontController implements Initializable {
         sg500.setVisible(true);
         sg1000.setVisible(true);
         labelQuizNum.setVisible(false);
-        if(j==1){
+        if (j == 1) {
             SMSForm.setVisible(true);
             labelSMS.setText("Tapez votre numéro ,un code vous sera communiqué !");
             labelSMS.setVisible(true);
-        labelQ1Pass.setVisible(false);
-        labelQ2Pass.setVisible(false);
-        labelQ3Pass.setVisible(false);
-        confirmerQuiz1.setVisible(false);
-        confirmerQuiz2.setVisible(false);
-        confirmerQuiz3.setVisible(false);
-        jouerQuiz1.setVisible(false);
-        jouerQuiz2.setVisible(false);
-        jouerQuiz3.setVisible(false);
-        imageQuiz1.setVisible(false);
-        imageQuiz2.setVisible(false);
-        imageQuiz3.setVisible(false);
-        sg100.setVisible(false);
-        sg500.setVisible(false);
-        sg1000.setVisible(false);
-        labelg100.setVisible(false);
-        labelg500.setVisible(false);
-        labelg1000.setVisible(false);
-        envoyerSMS.setVisible(true);
-        verifierCode.setVisible(false);
+            labelQ1Pass.setVisible(false);
+            labelQ2Pass.setVisible(false);
+            labelQ3Pass.setVisible(false);
+            confirmerQuiz1.setVisible(false);
+            confirmerQuiz2.setVisible(false);
+            confirmerQuiz3.setVisible(false);
+            jouerQuiz1.setVisible(false);
+            jouerQuiz2.setVisible(false);
+            jouerQuiz3.setVisible(false);
+            imageQuiz1.setVisible(false);
+            imageQuiz2.setVisible(false);
+            imageQuiz3.setVisible(false);
+            sg100.setVisible(false);
+            sg500.setVisible(false);
+            sg1000.setVisible(false);
+            labelg100.setVisible(false);
+            labelg500.setVisible(false);
+            labelg1000.setVisible(false);
+            envoyerSMS.setVisible(true);
+            verifierCode.setVisible(false);
+            textSMS.clear();
+            checkQuiz();
+        }
+        }
+        else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Quiz 3");
+            alert.setHeaderText(null);
+            alert.setContentText(e);
+            alert.showAndWait();
         }
     }
-
+   
     @FXML
     private void ajouterUnService(ActionEvent event) {
         mesServices.setVisible(false);
@@ -1169,7 +1412,7 @@ public class EspaceServiceFrontController implements Initializable {
     }
 
     @FXML
-    private void proposerUnService(ActionEvent event){
+    private void proposerUnService(ActionEvent event) {
         mesServices.setVisible(false);
         ajouterUnService.setVisible(false);
         proposerUnService.setVisible(false);
@@ -1194,21 +1437,48 @@ public class EspaceServiceFrontController implements Initializable {
 
     @FXML
     private void ajouterS(ActionEvent event) {
-        ServiceUser s = new ServiceUser();
-        ServiceUserService su = new ServiceUserService();
-        s.setDescription(description.getText());
-        s.setPrix(Integer.parseInt(prix.getText()));
-        s.setIdService(serviceC.getValue().getId());
-        s.setIdUser(this.user.getId());
-        su.ajouterServiceUser(s);
+        int i = 0;
+        if (prix.getText().equals("")) {
+            prix.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+            i = 1;
+        } else {
+            prix.setStyle("-fx-border-color: none;");
+        }
+        if (description.getText().equals("")) {
+            description.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+            i = 1;
+        } else {
+            description.setStyle("-fx-border-color: none ;  ");
+        }
+        if (categorie.getValue() == null) {
+            categorie.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+            i = 1;
+        } else {
+            categorie.setStyle("-fx-border-color: none ;");
+        }
+        if (serviceC.getValue() == null) {
+            serviceC.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+            i = 1;
+        } else {
+            serviceC.setStyle("-fx-border-color: none ;");
+        }
+        if (i == 0) {
+            ServiceUser s = new ServiceUser();
+            ServiceUserService su = new ServiceUserService();
+            s.setDescription(description.getText());
+            s.setPrix(Integer.parseInt(prix.getText()));
+            s.setIdService(serviceC.getValue().getId());
+            s.setIdUser(this.user.getId());
+            su.ajouterServiceUser(s);
 
-        addService.setVisible(false);
-        labelMesServices.setVisible(true);
-        ajouterUnService.setVisible(true);
-        proposerUnService.setVisible(true);
-        mesServices.setVisible(true);
-        supprimerSU.setVisible(true);
-        this.initialize(null, null);
+            addService.setVisible(false);
+            labelMesServices.setVisible(true);
+            ajouterUnService.setVisible(true);
+            proposerUnService.setVisible(true);
+            mesServices.setVisible(true);
+            supprimerSU.setVisible(true);
+            this.initialize(null, null);
+        }
     }
 
     @FXML
@@ -1223,22 +1493,56 @@ public class EspaceServiceFrontController implements Initializable {
 
     @FXML
     private void confirmerProposition(ActionEvent event) throws Exception {
-        ServicesProposes s = new ServicesProposes();
-        ServicesProposesService sp = new ServicesProposesService();
-        s.setNom(nomProposition.getText());
-        s.setDescription(descriptionProposition.getText());
-        s.setCategorieService(categorieProposition.getValue().toString());
-        sp.ajouterService(s);
-        proposerS.setVisible(false);
-        labelMesServices.setVisible(true);
-        ajouterUnService.setVisible(true);
-        proposerUnService.setVisible(true);
-        mesServices.setVisible(true);
-        supprimerSU.setVisible(true);
-    
+        String e = "Vous devez remplir le(s) champ(s) ";
+        int i = 0;
+        if (nomProposition.getText().equals("")) {
+            nomProposition.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+            e += "nom ";
+            i = 1;
+        } else {
+            nomProposition.setStyle("-fx-border-color: none;");
+        }
+        if (descriptionProposition.getText().equals("")) {
+            descriptionProposition.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+            e += "  description ";
+            i = 1;
+        } else {
+            descriptionProposition.setStyle("-fx-border-color: none ;  ");
+        }
+        if (categorieProposition.getValue() == null) {
+            categorieProposition.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+            e += "  categorie ";
+            i = 1;
+        } else {
+            categorieProposition.setStyle("-fx-border-color: none ;");
+        }
+        if (i == 0) {
+
+            ServicesProposes s = new ServicesProposes();
+            ServicesProposesService sp = new ServicesProposesService();
+            s.setNom(nomProposition.getText());
+            s.setDescription(descriptionProposition.getText());
+            s.setCategorieService(categorieProposition.getValue().toString());
+            sp.ajouterService(s);
+            proposerS.setVisible(false);
+            labelMesServices.setVisible(true);
+            ajouterUnService.setVisible(true);
+            proposerUnService.setVisible(true);
+            mesServices.setVisible(true);
+            supprimerSU.setVisible(true);
             SendMail();
-    
-        this.initialize(null, null);
+             NotificationService ns = new NotificationService();
+        Notification n = new Notification();
+        n.setTitle("Proposition de service");
+        n.setDescription(user+" a proposé le service "+s.getNom());
+        Byte b=0;
+        n.setSeen(b);
+        n.setIcon("service");
+        n.setTelephone(user.getPhone());
+        ns.ajouterNotification(n);
+
+            this.initialize(null, null);
+        }
     }
 
     @FXML
@@ -1256,128 +1560,133 @@ public class EspaceServiceFrontController implements Initializable {
     private void supprimerSU(ActionEvent event) {
         ServiceUserService su = new ServiceUserService();
         ServiceUser s = mesServices.getSelectionModel().getSelectedItem();
+        ServiceService a = new ServiceService();
+        Service b = new Service();
         su.supprimerServiceUser(s.getIdService(), s.getIdUser());
         this.initialize(null, null);
     }
 
     @FXML
     private void envoyerSMS(ActionEvent event) {
-        String num="+216"+textSMS.getText();
-        String sender="FIXIT";
-        String code="Votre code est \n FIXIT-"+this.getUser().getId()+"-2019";
-                 SMSService sms=new SMSService();
-                
-                sms.sendSms(code, sender, num);
-                textSMS.clear();
-                envoyerSMS.setVisible(false);
-                verifierCode.setVisible(true);
-        
+        String num = "+216" + textSMS.getText();
+        String sender = "FIXIT";
+        String code = "Votre code est \n FIXIT-" + this.getUser().getId() + "-2019";
+        SMSService sms = new SMSService();
+        if(textSMS.getText().equals("")){
+            textSMS.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+        }
+        else {
+       // sms.sendSms(code, sender, num);
+        //textSMS.clear();
+       textSMS.setStyle("-fx-border-color: none ;");
+        envoyerSMS.setVisible(false);
+        verifierCode.setVisible(true);
+        textSMS.clear();
+        labelSMS.setText("Ecrivez le code que vous avez reçu ");
+        }
+
     }
 
     @FXML
     private void verifierCode(ActionEvent event) {
-        String code="FIXIT-"+this.getUser().getId()+"-2019";
-                
-        if(textSMS.getText().equals(code)){
+        String code = "FIXIT-" + this.getUser().getId() + "-2019";
+        int k=0;
+        if(textSMS.getText().equals("")){
+            textSMS.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+            k=1;
+        }
+        if(k==0){
             
-                UserService u = new UserService();
-                u.modifierSolde(this.getUser(), 100);
-                System.out.println("ci bon");
-                quiz1.setVisible(false);
-        labelQ1Pass.setVisible(true);
-        labelQ2Pass.setVisible(true);
-        labelQ3Pass.setVisible(true);
-        confirmerQuiz1.setVisible(true);
-        confirmerQuiz2.setVisible(false);
-        confirmerQuiz3.setVisible(true);
-        jouerQuiz1.setVisible(true);
-        jouerQuiz2.setVisible(true);
-        jouerQuiz3.setVisible(true);
-        imageQuiz1.setVisible(true);
-        imageQuiz2.setVisible(true);
-        imageQuiz3.setVisible(true);
-        labelg100.setVisible(true);
-        labelg500.setVisible(true);
-        labelg1000.setVisible(true);
-        sg100.setVisible(true);
-        sg500.setVisible(true);
-        sg1000.setVisible(true);
-        labelQuizNum.setVisible(false);
+        
+        if (textSMS.getText().equals(code)) {
+
+            UserService u = new UserService();
+            u.modifierSolde(this.getUser(), 10);
+            System.out.println("ci bon");
+            quiz1.setVisible(false);
+            labelQ1Pass.setVisible(true);
+            labelQ2Pass.setVisible(true);
+            labelQ3Pass.setVisible(true);
+            confirmerQuiz1.setVisible(true);
+            confirmerQuiz2.setVisible(false);
+            confirmerQuiz3.setVisible(true);
+            jouerQuiz1.setVisible(true);
+            jouerQuiz2.setVisible(true);
+            jouerQuiz3.setVisible(true);
+            imageQuiz1.setVisible(true);
+            imageQuiz2.setVisible(true);
+            imageQuiz3.setVisible(true);
+            labelg100.setVisible(true);
+            labelg500.setVisible(true);
+            labelg1000.setVisible(true);
+            sg100.setVisible(true);
+            sg500.setVisible(true);
+            sg1000.setVisible(true);
+            labelQuizNum.setVisible(false);
+            resultatQuiz.setVisible(true);
+            SMSForm.setVisible(false);
+            if(this.getMontant()==10)
+            {
                 
-            
+            resultatQuiz.setText("Bravo vous Avez gagné 10 SCoins");
+            }
+            else if(this.getMontant()==5){
+                resultatQuiz.setText("Bravo vous Avez gagné 5 SCoins");
+            }
+
+        }
+       else {
+               
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Vérification");
+            alert.setHeaderText(null);
+            alert.setContentText("Veuillez vérifier vos données");
+            alert.showAndWait();
+               }
         }
     }
 
-    public class Poules extends ListCell<CategorieService> {
+    @FXML
+    private void detailsService(MouseEvent event) {
+        if (event.getClickCount() == 2) {
+            serviceDetails.setVisible(true);
+            listCategorie.setVisible(false);
+            listService.setVisible(false);
+            Service s = new Service();
+            s = listService.getSelectionModel().getSelectedItem();
+            nomServiceDetails.setText(s.getNom());
+            categorieServiceDetails.setText(s.getCategorie().getNom());
+            descriptionServiceDetails.setText(s.getDescription());
+            descriptionServiceDetails.setMaxWidth(350);
+            descriptionServiceDetails.setWrapText(true);
+            nomServiceDetails.setMaxWidth(357);
+            nomServiceDetails.setWrapText(true);
+            nbrServiceDetails.setText(Integer.toString(s.getNbrProviders()));
+            Image image1 = new Image("file:/wamp64/www/fixit/web/uploads/images/service/" + s.getImage(), 329, 170, false, false);
+            imageServiceDetails.setImage(image1);
+            
+            Image image2 = new Image("file:/wamp64/www/fixit/web/uploads/images/categorieService/" + s.getCategorie().getImage(), 92, 84, false, false);
+            imageCategorieDetails.setImage(image2);
 
-        public Poules() {
-        }
-
-        protected void updateItem(CategorieService item, boolean bln) {
-            super.updateItem(item, bln);
-            if (item != null) {
-                Text nom = new Text(item.getNom());
-                Text description = new Text(item.getDescription());
-                description.setWrappingWidth(300);;
-                nom.setStyle("-fx-font-size: 25 arial;");
-                description.setStyle("-fx-font-size: 15 arial;"
-                        + "-fx-pref-width: 158px;");
-                VBox vBox = new VBox(nom, description);
-                vBox.setStyle("-fx-font-color: transparent;-fx-background-color: #F1F2F6;");
-                vBox.setSpacing(10);
-
-                Image image = new Image("file:/wamp64/www/fixit/web/uploads/images/categorieService/" + item.getImage(), 120, 120, false, false);
-                ImageView img = new ImageView(image);
-
-                HBox hBox = new HBox(img, vBox);
-                hBox.setStyle("-fx-font-color: transparent;-fx-background-color: #F1F2F6;");
-                hBox.setSpacing(10);
-                setGraphic(hBox);
-                listCategorie.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
-                    @Override
-                    public void handle(javafx.scene.input.MouseEvent event) {
-
-                        CategorieService a = (CategorieService) listCategorie.getItems().get(listCategorie.getSelectionModel().getSelectedIndex());
-                        loadServiceFromDatabase(a.getId());
-                        listService.setCellFactory(lv -> new PoulesService());
-                        System.out.println("test");
-                    }
-                });
-
-            }
         }
     }
 
-    public class PoulesService extends ListCell<Service> {
+    @FXML
+    private void retourDetails(ActionEvent event) {
+        serviceDetails.setVisible(false);
+        listCategorie.setVisible(true);
+        listService.setVisible(true);
+    }
 
-        public PoulesService() {
+    @FXML
+    private void checkNumber(KeyEvent event) {
+
+        TextField tf = (TextField) event.getSource();
+        char ch = event.getCharacter().charAt(0);
+        if (!Character.isDigit(ch)) {
+            event.consume();
         }
 
-        protected void updateItem(Service item, boolean bln) {
-            super.updateItem(item, bln);
-            if (item != null) {
-                Text nom = new Text(item.getNom());
-                Text description = new Text(item.getDescription());
-                Text nbrProviders = new Text("Nombre de réalisateurs" + Integer.toString(item.getNbrProviders()));
-                description.setWrappingWidth(300);
-                nom.setStyle("-fx-font-size: 25 arial;");
-                description.setStyle("-fx-font-size: 15 arial;"
-                        + "-fx-pref-width: 158px;");
-                nbrProviders.setStyle("-fx-font-size: 10 arial;");
-                VBox vBox = new VBox(nom, description, nbrProviders);
-                vBox.setStyle("-fx-font-color: transparent;-fx-background-color: #F1F2F6;");
-                vBox.setSpacing(10);
-
-                Image image = new Image("file:/wamp64/www/fixit/web/uploads/images/service/" + item.getImage(), 120, 120, false, false);
-                ImageView img = new ImageView(image);
-
-                HBox hBox = new HBox(img, vBox);
-                hBox.setStyle("-fx-font-color: transparent;-fx-background-color: #F1F2F6;");
-                hBox.setSpacing(10);
-                setGraphic(hBox);
-
-            }
-        }
     }
 
 }

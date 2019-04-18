@@ -5,6 +5,9 @@
  */
 package Services;
 
+import java.sql.Timestamp;
+import java.text.DecimalFormat;
+
 /**
  *
  * @author Yassine
@@ -32,5 +35,29 @@ public class Utils {
         else if (month==10) return "Octobre";
         else if (month==11) return "Novembre";
         else return "Décembre";
+    }
+    public static String formatDateTime(Timestamp m)
+    {
+        String jour=String.valueOf(m.getDate());
+        String mois=convertMonth(m.getMonth()+1);
+        int an=m.getYear()+1900;
+        String annee=String.valueOf(an);
+        String heure=String.format("%02d", m.getHours());
+        String minute=String.format("%02d", m.getMinutes());
+        String date=jour+" "+mois+" "+annee+" à "+heure+":"+minute;
+        return date;
+    }
+    public static boolean checkVoyelle(String s)
+    {
+        if (s!=null && s!="")
+        {
+            char ch=s.charAt(0);
+            if (ch == 'a' || ch == 'A' || ch == 'e' || ch == 'E' || ch == 'i' ||ch == 'I' || ch == 'o' || ch == 'O' || ch == 'u' || ch=='U')
+            {
+                return true;
+            }
+            else return false;
+        }
+        return false;
     }
 }

@@ -8,6 +8,7 @@ package Services;
 import Entities.ListAchat;
 import Entities.User;
 import Entities.CategorieProduit;
+import Entities.LikeProduit;
 import Entities.produit;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,6 +19,7 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -143,7 +145,7 @@ public class Produit {
     public ObservableList<produit> getAllProduit() {
         try {
             ObservableList<produit> list = FXCollections.observableArrayList();
-            PreparedStatement pt = Cn.prepareStatement("Select * from produit ");
+            PreparedStatement pt = Cn.prepareStatement("Select * from produit p where p.quantite > 0  ");
 
             ResultSet rs = pt.executeQuery();
             while (rs.next()) {
@@ -191,7 +193,7 @@ public class Produit {
                 User u = this.getUser(rs.getInt("user"));
                 c.setUser(u);
                 c.setDetaille(supprimer);
-                 c.setIm(new ImageView(image1));
+                c.setIm(new ImageView(image1));
             }
 
             return c;
@@ -285,6 +287,8 @@ public class Produit {
             while (rs.next()) {
                 c.setSolde(rs.getInt("solde"));
                 c.setId(rs.getInt("Id"));
+                c.setEmail(rs.getString("email"));
+                c.setAddress(rs.getString("address"));
             }
 
             return c;
@@ -314,7 +318,8 @@ public class Produit {
         }
 
     }
-     public ObservableList<produit> Disponibleroduit() {
+
+    public ObservableList<produit> Disponibleroduit() {
         try {
             ObservableList<produit> list = FXCollections.observableArrayList();
             PreparedStatement pt = Cn.prepareStatement("Select * from produit where quantite > 0 ");
@@ -343,7 +348,8 @@ public class Produit {
         }
         return null;
     }
-          public ObservableList<produit> NonDisponibleroduit() {
+
+    public ObservableList<produit> NonDisponibleroduit() {
         try {
             ObservableList<produit> list = FXCollections.observableArrayList();
             PreparedStatement pt = Cn.prepareStatement("Select * from produit where quantite = 0 ");
@@ -373,6 +379,225 @@ public class Produit {
         return null;
     }
 
+    public void ajouterLike(LikeProduit l) {
+        try {
 
+            String req = "insert into produit_like (produit, user) VALUES (?,?)";
+            PreparedStatement ste = Cn.prepareStatement(req);
+            ste.setInt(1, l.getProduit());
+            ste.setInt(2, l.getUser());
+            ste.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
 
+    }
+
+    public int NombreLike(int idProd) {
+        int i = 0;
+
+        try {
+            String req = "Select * from produit_like where produit=?";
+            PreparedStatement ste = Cn.prepareStatement(req);
+            ste.setInt(1, idProd);
+            ResultSet rs = ste.executeQuery();
+            LikeProduit c = new LikeProduit();
+            while (rs.next()) {
+                i++;
+            }
+            return i;
+
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+
+        return 0;
+    }
+
+    public int LikeExiste(int idUser, int idProd) {
+        int i = 0;
+
+        try {
+            String req = "Select * from produit_like where user=? and produit=?";
+            PreparedStatement ste = Cn.prepareStatement(req);
+            ste.setInt(1, idUser);
+            ste.setInt(2, idProd);
+            ResultSet rs = ste.executeQuery();
+            LikeProduit c = new LikeProduit();
+            while (rs.next()) {
+                i++;
+                System.out.println(i);
+            }
+            return i;
+
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+
+        return 0;
+    }
+
+    public ObservableList<ListAchat> topProduit() {
+        try {
+            ObservableList<ListAchat> list = FXCollections.observableArrayList();
+            PreparedStatement pt = Cn.prepareStatement("SELECT SUM(p.quantite) somme ,p.produit ,p.image  FROM achat_produit p GROUP BY p.idProduit ORDER BY somme DESC");
+
+            ResultSet rs = pt.executeQuery();
+
+            while (rs.next()) {
+                Image image1 = new Image("file:/wamp64/www/fixit/web/uploads/images/produit/" + rs.getString(5), 120, 120, false, false);
+
+                ListAchat p = new ListAchat();
+                p.setNom(rs.getString(1));
+                p.setQuantite(rs.getInt(2));
+                p.setImage(rs.getString("image"));
+                p.setIm(new ImageView(image1));
+                list.add(p);
+            }
+            return list;
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return null;
+    }
+
+    public ObservableList<produit> getAllProduitBack() {
+        try {
+            ObservableList<produit> list = FXCollections.observableArrayList();
+            PreparedStatement pt = Cn.prepareStatement("Select * from produit p where p.quantite > 0  ");
+
+            ResultSet rs = pt.executeQuery();
+            while (rs.next()) {
+                Image image1 = new Image("file:/wamp64/www/fixit/web/uploads/images/produit/" + rs.getString(5), 120, 120, false, false);
+
+                Button supprimer = new Button();
+                supprimer.setText("Supprimer");
+                supprimer.setId(rs.getString(1));
+                produit p = new produit();
+                p.setId(rs.getInt("id"));
+                p.setNom(rs.getString("Nom"));
+                p.setQuantite(rs.getInt("quantite"));
+                p.setPrix(rs.getInt("prix"));
+                p.setDate_exp(rs.getTimestamp("date_exp"));
+                p.setImage(rs.getString("image"));
+                p.setDetaille(supprimer);
+                p.setIm(new ImageView(image1));
+                list.add(p);
+            }
+            return list;
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return null;
+    }
+
+    public String verificationNom(String nom) {
+        try {
+            String req = "Select * from produit where Nom=?";
+            PreparedStatement ste = Cn.prepareStatement(req);
+            ste.setString(1, nom);
+            ResultSet rs = ste.executeQuery();
+            produit c = new produit();
+            while (rs.next()) {
+                c.setNom(rs.getString("nom"));
+
+            }
+            return c.getNom();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return "";
+    }
+
+    public void supprimerLike(int idUsr, int idProd) {
+        try {
+
+            String req = "DELETE from produit_like where user=? and produit=?";
+            PreparedStatement ste = Cn.prepareStatement(req);
+            ste.setInt(1, idUsr);
+            ste.setInt(2, idProd);
+
+            ste.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+
+    }
+
+    public ObservableList<ListAchat> getAllAchat(int idUsr) {
+        try {
+            ObservableList<ListAchat> list = FXCollections.observableArrayList();
+            PreparedStatement pt = Cn.prepareStatement("Select * from achat_produit where idAcheteur=?  ORDER BY date DESC");
+            pt.setInt(1, idUsr);
+
+            ResultSet rs = pt.executeQuery();
+            while (rs.next()) {
+                Image image1 = new Image("file:/wamp64/www/fixit/web/uploads/images/produit/" + rs.getString(5), 120, 120, false, false);
+                Button supprimer = new Button();
+                supprimer.setText("Annuler");
+                supprimer.setId(rs.getString("id"));
+
+                ListAchat p = new ListAchat();
+                p.setId(rs.getInt("id"));
+                p.setId(rs.getInt("id"));
+                p.setNom(rs.getString("produit"));
+                p.setQuantite(rs.getInt("quantite"));
+                p.setPrix(rs.getInt("prix"));
+                p.setDate(rs.getTimestamp("Date"));
+                p.setImage(rs.getString("image"));
+                p.setIdProduit(rs.getInt("idProduit"));
+                p.setAnnuler(supprimer);
+
+                p.setIm(new ImageView(image1));
+                list.add(p);
+            }
+            return list;
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return null;
+    }
+
+    public void retourStock(int quatite, int idProduit) {
+        try {
+            String req = "Update produit set Quantite=? where id=?";
+            PreparedStatement ste = Cn.prepareStatement(req);
+            ste.setInt(1, quatite);
+            ste.setInt(2, idProduit);
+            ste.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+    }
+
+    public void supprimeAchat(int idAchat) {
+        try {
+            System.out.println(idAchat);
+            String req = "DELETE from achat_produit where id=?";
+            PreparedStatement ste = Cn.prepareStatement(req);
+            ste.setInt(1, idAchat);
+           ste.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+    }
+
+    public int User1(int idProduit) {
+
+        try {
+            String req = "Select user from produit where  id=?";
+            PreparedStatement ste = Cn.prepareStatement(req);
+            ste.setInt(1, idProduit);
+            ResultSet rs = ste.executeQuery();
+            User u=new User();
+          while (rs.next()) {
+                u.setId(rs.getInt("user"));
+
+            }
+            return u.getId();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return 0;
+    }
 }

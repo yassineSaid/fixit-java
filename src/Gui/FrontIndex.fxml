@@ -31,7 +31,7 @@
                <image>
                   <Image url="@../Resources/user.png" />
                </image></ImageView>
-            <Label fx:id="userName" alignment="CENTER" layoutX="13.0" layoutY="237.0" prefHeight="44.0" prefWidth="260.0" text="Nom" textFill="WHITE">
+            <Label fx:id="userName" alignment="CENTER" layoutX="12.0" layoutY="243.0" prefHeight="44.0" prefWidth="260.0" text="Nom" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
@@ -82,6 +82,8 @@
                   </Button>
                </children>
             </VBox>
+            <Label fx:id="likenumber" layoutX="96.0" layoutY="224.0" text="aaa" textFill="WHITE" />
+            <Label fx:id="dislikenbr" layoutX="161.0" layoutY="225.0" text="bbb" textFill="WHITE" />
 
          </children>
          <effect>
