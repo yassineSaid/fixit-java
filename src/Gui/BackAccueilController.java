@@ -142,7 +142,14 @@ public class BackAccueilController implements Initializable {
                     title.setStyle("-fx-font-weight: bold;	-fx-font-size: 14px; -fx-alignment: center ;");
                     description.setStyle("-fx-font-weight: bold;");
                     dateNotification.setStyle("-fx-font-weight: bold;");
-                    Image image = new Image(getClass().getResourceAsStream("/Resources/location.png"), 50, 50, false, false);
+                    String path="";
+                    if(item.getIcon().equals("location")){
+                        path="location.png";
+                    }
+                    else{
+                        path="service.png";
+                    }
+                    Image image = new Image(getClass().getResourceAsStream("/Resources/"+path), 50, 50, false, false);
                     ImageView img = new ImageView(image);
                     img.setStyle("	-fx-pref-height: 50px; -fx-pref-width: 50px;");
                     VBox vBox = new VBox(title, description, dateNotification);
