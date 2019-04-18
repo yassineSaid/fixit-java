@@ -7,6 +7,8 @@ package Gui;
 
 import Entities.Annonce;
 import Entities.Candidature;
+import Entities.CategorieService;
+import Entities.Service;
 import Entities.User;
 import Services.AnnonceService;
 import Services.CandidatureService;
@@ -73,7 +75,7 @@ public class AnnonceFrontController implements Initializable {
             @FXML
 	    private TableView<Annonce> table;
 	    @FXML
-	    private  TableColumn<Annonce, Integer> servcol=new TableColumn<>();
+	    private  TableColumn<Annonce, String> servcol=new TableColumn<>();
 	    @FXML
 	    private  TableColumn<Annonce, String> descriptioncol=new TableColumn<>();
 	    @FXML
@@ -166,7 +168,7 @@ public class AnnonceFrontController implements Initializable {
                 AnnonceService sa = new AnnonceService();
                 frontIndexController.setUser(user);
                 frontIndexController.initialize(null, null);
-	        servcol.setCellValueFactory(new PropertyValueFactory<Annonce, Integer>("IdService"));
+	        servcol.setCellValueFactory(new PropertyValueFactory<>("service"));
 	        descriptioncol.setCellValueFactory(new PropertyValueFactory<Annonce, String>("description"));
 	        typecol.setCellValueFactory(new PropertyValueFactory<Annonce, String>("type"));
 	        adressecol.setCellValueFactory(new PropertyValueFactory<Annonce, String>("adresse"));
@@ -174,7 +176,7 @@ public class AnnonceFrontController implements Initializable {
 	         //buildData();
                  pagination.setPageFactory(this::createPage);
                  
-                servcolo.setCellValueFactory(new PropertyValueFactory<Annonce, Integer>("IdService"));
+                servcolo.setCellValueFactory(new PropertyValueFactory<Annonce, Integer>("service"));
 	        descriptioncolo.setCellValueFactory(new PropertyValueFactory<Annonce, String>("description"));
 	        telcolo.setCellValueFactory(new PropertyValueFactory<>("tel"));
 	        adressecolo.setCellValueFactory(new PropertyValueFactory<Annonce, String>("adresse"));
@@ -183,7 +185,7 @@ public class AnnonceFrontController implements Initializable {
                  //buildOffres();
                 paginationo.setPageFactory(this::createPageo);
                                   
-                servcold.setCellValueFactory(new PropertyValueFactory<Annonce, Integer>("IdService"));
+                servcold.setCellValueFactory(new PropertyValueFactory<Annonce, Integer>("service"));
 	        descriptioncold.setCellValueFactory(new PropertyValueFactory<Annonce, String>("description"));
 	        telcold.setCellValueFactory(new PropertyValueFactory<>("tel"));
 	        adressecold.setCellValueFactory(new PropertyValueFactory<Annonce, String>("adresse"));
@@ -192,7 +194,7 @@ public class AnnonceFrontController implements Initializable {
                 //buildDemandes();
                 paginationd.setPageFactory(this::createPaged);
  
-                servcola.setCellValueFactory(new PropertyValueFactory<Annonce, Integer>("IdService"));
+                servcola.setCellValueFactory(new PropertyValueFactory<>("service"));
 	        descriptioncola.setCellValueFactory(new PropertyValueFactory<Annonce, String>("description"));
 	        telcola.setCellValueFactory(new PropertyValueFactory<>("tel"));
 	        adressecola.setCellValueFactory(new PropertyValueFactory<Annonce, String>("adresse"));
@@ -222,9 +224,28 @@ private void buildData() {
 	        	
  	            ResultSet r = sa.afficher(user.getId());
 	            while(r.next()){
-                        data.add(new Annonce(r.getInt("id"),r.getString("description"),r.getString("type"),
+                        /*data.add(new Annonce(r.getInt("id"),r.getString("description"),r.getString("type"),
 	                		r.getLong("montant"),r.getString("adresse"),r.getDate(6),r.getInt("tel"),r.getInt("nbr_c"),r.getInt("nbr_d"),r.getInt("nbr_o"),
-	                		r.getInt("IdUser"),r.getInt("IdService"),r.getInt("CategorieService")));
+	                		r.getInt("IdUser"),r.getInt("IdService"),r.getInt("CategorieService"),Service service = this.getService(rs.getInt());
+                     ));*/                     
+                        Annonce a = new Annonce();
+                        a.setId(r.getInt("id"));
+                        a.setDescription(r.getString("description"));
+                        a.setType(r.getString("type"));
+                        a.setMontant(r.getLong("montant"));
+                        a.setAdresse(r.getString("adresse"));
+                        a.setDate(r.getDate(6));
+                        a.setTel(r.getInt("tel"));
+                        a.setNbr_c(r.getInt("nbr_c"));
+                        a.setNbr_d(r.getInt("nbr_d"));
+                        a.setNbr_o(r.getInt("nbr_o"));
+                        a.setIdUser(r.getInt("IdUser"));
+                        a.setIdService(r.getInt("IdService"));
+                        a.setCategorieService(r.getInt("CategorieService"));
+                        Service service = sa.getService(r.getInt("IdService"));
+                        a.setService(service);
+                        data.add(a);
+
 	            }
 	            
 	            table.setItems(data);
@@ -241,9 +262,23 @@ private void buildOffres() {
 	        	
  	            ResultSet r = sa.offres(user.getId());
 	            while(r.next()){
-                        datao.add(new Annonce(r.getInt("id"),r.getString("description"),r.getString("type"),
-	                		r.getLong("montant"),r.getString("adresse"),r.getDate(6),r.getInt("tel"),r.getInt("nbr_c"),r.getInt("nbr_d"),r.getInt("nbr_o"),
-	                		r.getInt("IdUser"),r.getInt("IdService"),r.getInt("CategorieService")));
+                        Annonce a = new Annonce();
+                        a.setId(r.getInt("id"));
+                        a.setDescription(r.getString("description"));
+                        a.setType(r.getString("type"));
+                        a.setMontant(r.getLong("montant"));
+                        a.setAdresse(r.getString("adresse"));
+                        a.setDate(r.getDate(6));
+                        a.setTel(r.getInt("tel"));
+                        a.setNbr_c(r.getInt("nbr_c"));
+                        a.setNbr_d(r.getInt("nbr_d"));
+                        a.setNbr_o(r.getInt("nbr_o"));
+                        a.setIdUser(r.getInt("IdUser"));
+                        a.setIdService(r.getInt("IdService"));
+                        a.setCategorieService(r.getInt("CategorieService"));
+                        Service service = sa.getService(r.getInt("IdService"));
+                        a.setService(service);
+                        datao.add(a);
 	            }
 	            
 	            taboffres.setItems(datao);
@@ -260,9 +295,23 @@ private void buildDemandes() {
 	        	
  	            ResultSet r = sa.demandes(user.getId());
 	            while(r.next()){
-                        datad.add(new Annonce(r.getInt("id"),r.getString("description"),r.getString("type"),
-	                		r.getLong("montant"),r.getString("adresse"),r.getDate(6),r.getInt("tel"),r.getInt("nbr_c"),r.getInt("nbr_d"),r.getInt("nbr_o"),
-	                		r.getInt("IdUser"),r.getInt("IdService"),r.getInt("CategorieService")));
+                        Annonce a = new Annonce();
+                        a.setId(r.getInt("id"));
+                        a.setDescription(r.getString("description"));
+                        a.setType(r.getString("type"));
+                        a.setMontant(r.getLong("montant"));
+                        a.setAdresse(r.getString("adresse"));
+                        a.setDate(r.getDate(6));
+                        a.setTel(r.getInt("tel"));
+                        a.setNbr_c(r.getInt("nbr_c"));
+                        a.setNbr_d(r.getInt("nbr_d"));
+                        a.setNbr_o(r.getInt("nbr_o"));
+                        a.setIdUser(r.getInt("IdUser"));
+                        a.setIdService(r.getInt("IdService"));
+                        a.setCategorieService(r.getInt("CategorieService"));
+                        Service service = sa.getService(r.getInt("IdService"));
+                        a.setService(service);
+                        datad.add(a);
 	            }
 	            
 	            tabdemandes.setItems(datad);
@@ -280,9 +329,23 @@ private void buildMesAnnonces() {
 	        	
  	            ResultSet r = sa.mesAnnonces(user.getId());
 	            while(r.next()){
-                        mydata.add(new Annonce(r.getInt("id"),r.getString("description"),r.getString("type"),
-	                		r.getLong("montant"),r.getString("adresse"),r.getDate(6),r.getInt("tel"),r.getInt("nbr_c"),r.getInt("nbr_d"),r.getInt("nbr_o"),
-	                		r.getInt("IdUser"),r.getInt("IdService"),r.getInt("CategorieService")));
+                        Annonce a = new Annonce();
+                        a.setId(r.getInt("id"));
+                        a.setDescription(r.getString("description"));
+                        a.setType(r.getString("type"));
+                        a.setMontant(r.getLong("montant"));
+                        a.setAdresse(r.getString("adresse"));
+                        a.setDate(r.getDate(6));
+                        a.setTel(r.getInt("tel"));
+                        a.setNbr_c(r.getInt("nbr_c"));
+                        a.setNbr_d(r.getInt("nbr_d"));
+                        a.setNbr_o(r.getInt("nbr_o"));
+                        a.setIdUser(r.getInt("IdUser"));
+                        a.setIdService(r.getInt("IdService"));
+                        a.setCategorieService(r.getInt("CategorieService"));
+                        Service service = sa.getService(r.getInt("IdService"));
+                        a.setService(service);
+                        mydata.add(a);
 	            }
 	            
 	            tabmesannonces.setItems(mydata);

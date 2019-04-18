@@ -16,7 +16,7 @@ public class Annonce {
 	private int IdUser;
 	private int IdService;
 	private int CategorieService ;
-        private String nomservice;
+        private Service service;
 	
 	public Annonce() {	
 	}
@@ -166,15 +166,16 @@ public class Annonce {
 		CategorieService = categorieService;
 	}
 
-    public String getNomservice() {
-        return nomservice;
+    public Service getService() {
+        return service;
     }
 
-    public void setNomservice(String nomservice) {
-        this.nomservice = nomservice;
+    public void setService(Service service) {
+        this.service = service;
     }
 
-    public Annonce(String description, String type, long montant, int tel, String adresse, Date date, int nbr_c, int nbr_o, int nbr_d, int IdUser, int IdService, int CategorieService, String nomservice) {
+    public Annonce(int id, String description, String type, long montant, int tel, String adresse, Date date, int nbr_c, int nbr_o, int nbr_d, int IdUser, int IdService, int CategorieService, Service service) {
+        this.id = id;
         this.description = description;
         this.type = type;
         this.montant = montant;
@@ -187,7 +188,10 @@ public class Annonce {
         this.IdUser = IdUser;
         this.IdService = IdService;
         this.CategorieService = CategorieService;
-        this.nomservice = nomservice;
+        this.service = service;
     }
+
+
+
  
 }

@@ -21,8 +21,8 @@
                             <children>
                                 <TableView fx:id="table" layoutX="52.0" layoutY="14.0" prefHeight="491.0" prefWidth="870.0" styleClass="table">
      <columns>
-       <TableColumn fx:id="servcol" prefWidth="108.0" text="Service" />
-       <TableColumn fx:id="descriptioncol" prefWidth="260.79998779296875" text="Description" />
+       <TableColumn fx:id="servcol" prefWidth="172.00006103515625" text="Service" />
+       <TableColumn fx:id="descriptioncol" prefWidth="163.2000732421875" text="Description" />
          <TableColumn fx:id="typecol" prefWidth="124.79998779296875" text="Type" />
          <TableColumn fx:id="adressecol" prefWidth="231.20013427734375" text="Adresse" />
          <TableColumn fx:id="datecol" prefWidth="144.800048828125" text="Date" />
@@ -41,8 +41,8 @@
                             <children>
                                 <TableView fx:id="taboffres" layoutX="52.0" layoutY="8.0" prefHeight="471.0" prefWidth="890.0" styleClass="table">
                                  <columns>
-                                    <TableColumn fx:id="servcolo" prefWidth="75.0" text="Service" />
-                                    <TableColumn fx:id="descriptioncolo" prefWidth="338.3999938964844" text="Description" />
+                                    <TableColumn fx:id="servcolo" prefWidth="172.00006103515625" text="Service" />
+                                    <TableColumn fx:id="descriptioncolo" prefWidth="230.39996337890625" text="Description" />
                                     <TableColumn fx:id="prixcolo" prefWidth="73.60000610351562" text="Prix" />
                                     <TableColumn fx:id="adressecolo" prefWidth="142.39996337890625" text="Adresse" />
                                     <TableColumn fx:id="datecolo" prefWidth="116.800048828125" text="Date" />
@@ -62,7 +62,7 @@
                             <children>
                                 <TableView fx:id="tabdemandes" layoutX="51.0" layoutY="4.0" prefHeight="510.0" prefWidth="892.0" styleClass="table">
                                  <columns>
-                                    <TableColumn fx:id="servcold" prefWidth="75.0" text="Service" />
+                                    <TableColumn fx:id="servcold" prefWidth="172.00006103515625" text="Service" />
                                     <TableColumn fx:id="descriptioncold" prefWidth="338.3999938964844" text="Description" />
                                     <TableColumn fx:id="prixcold" prefWidth="73.60000610351562" text="Prix" />
                                     <TableColumn fx:id="adressecold" prefWidth="142.39996337890625" text="Adresse" />
@@ -82,7 +82,7 @@
                             <children>
                                 <TableView fx:id="tabmesannonces" layoutX="73.0" layoutY="14.0" prefHeight="599.0" prefWidth="870.0" styleClass="table">
                                  <columns>
-                                    <TableColumn fx:id="servcola" prefWidth="75.0" text="Service" />
+                                    <TableColumn fx:id="servcola" prefWidth="172.00006103515625" text="Service" />
                                     <TableColumn fx:id="descriptioncola" prefWidth="338.3999938964844" text="Description" />
                                     <TableColumn fx:id="prixcola" prefWidth="73.60000610351562" text="Prix" />
                                     <TableColumn fx:id="adressecola" prefWidth="142.39996337890625" text="Adresse" />

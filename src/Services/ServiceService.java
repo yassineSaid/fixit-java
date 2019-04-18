@@ -66,14 +66,14 @@ public class ServiceService {
         String req = "select * from service where visible=1";
         ResultSet rs = st.executeQuery(req);
         while (rs.next()) {
-            Image image1 = new Image("file:/wamp64/www/fixit/web/uploads/images/service/"+rs.getString(6), 120, 120, false, false);
+            Image image1 = new Image("file:/wamp64/www/fixit/web/uploads/images/service/"+rs.getString("image_service"), 120, 120, false, false);
              Service serv = new Service();
-            serv.setId(rs.getInt(1));
-            serv.setNom(rs.getString(2));
-            serv.setDescription(rs.getString(4));
-            serv.setNbrProviders(rs.getInt(5));
-            serv.setImage(rs.getString(6));
-            CategorieService categorie = this.getCategorieService(rs.getInt(7));
+            serv.setId(rs.getInt("id"));
+            serv.setNom(rs.getString("nom"));
+            serv.setDescription(rs.getString("description"));
+            serv.setNbrProviders(rs.getInt("NbrProviders"));
+            serv.setImage(rs.getString("image_service"));
+            CategorieService categorie = this.getCategorieService(rs.getInt("idCategorieService"));
             serv.setCategorie(categorie);
             serv.setIm(new ImageView(image1));
             list.add(serv);
@@ -99,14 +99,14 @@ public class ServiceService {
             pt.setInt(1, id);
             ResultSet rs = pt.executeQuery();
             while (rs.next()) {
-                Image image1 = new Image("file:/wamp64/www/fixit/web/uploads/images/service/"+rs.getString(6), 120, 120, false, false);
+                Image image1 = new Image("file:/wamp64/www/fixit/web/uploads/images/service/"+rs.getString("image_service"), 120, 120, false, false);
              Service serv = new Service();
-            serv.setId(rs.getInt(1));
-            serv.setNom(rs.getString(2));
-            serv.setDescription(rs.getString(4));
-            serv.setNbrProviders(rs.getInt(5));
-            serv.setImage(rs.getString(6));
-            CategorieService categorie = this.getCategorieService(rs.getInt(7));
+            serv.setId(rs.getInt("id"));
+            serv.setNom(rs.getString("nom"));
+            serv.setDescription(rs.getString("description"));
+            serv.setNbrProviders(rs.getInt("NbrProviders"));
+            serv.setImage(rs.getString("image_service"));
+            CategorieService categorie = this.getCategorieService(rs.getInt("idCategorieService"));
             serv.setCategorie(categorie);
             serv.setIm(new ImageView(image1));
                 list.add(serv);
@@ -128,10 +128,10 @@ public class ServiceService {
                 while(rs.next())
                 {
                     CategorieService categorie = new CategorieService();
-            categorie.setId(rs.getInt(1));
-            categorie.setNom(rs.getString(2));
-            categorie.setDescription(rs.getString(3));
-            categorie.setImage(rs.getString(4));
+            categorie.setId(rs.getInt("id"));
+            categorie.setNom(rs.getString("nom"));
+            categorie.setDescription(rs.getString("description"));
+            categorie.setImage(rs.getString("image_categorie"));
                     return categorie;
                 }
             }
@@ -149,12 +149,12 @@ public class ServiceService {
         while (rs.next()) {
             Image image1 = new Image("file:/wamp64/www/fixit/web/uploads/images/service/"+rs.getString(6), 120, 120, false, false);
              Service serv = new Service();
-            serv.setId(rs.getInt(1));
-            serv.setNom(rs.getString(2));
-            serv.setDescription(rs.getString(4));
-            serv.setNbrProviders(rs.getInt(5));
-            serv.setImage(rs.getString(6));
-            CategorieService categorie = this.getCategorieService(rs.getInt(7));
+            serv.setId(rs.getInt("id"));
+            serv.setNom(rs.getString("nom"));
+            serv.setDescription(rs.getString("description"));
+            serv.setNbrProviders(rs.getInt("NbrProviders"));
+            serv.setImage(rs.getString("image_service"));
+            CategorieService categorie = this.getCategorieService(rs.getInt("idCategorieService"));
             serv.setCategorie(categorie);
             serv.setIm(new ImageView(image1));
             list.add(serv);

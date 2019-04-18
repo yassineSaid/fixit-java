@@ -1465,6 +1465,11 @@ public class EspaceServiceFrontController implements Initializable {
         if (i == 0) {
             ServiceUser s = new ServiceUser();
             ServiceUserService su = new ServiceUserService();
+            /*ServiceService ss=new ServiceService();
+            Service k=new Service();
+            k.setNbrProviders(+1);
+            k.setId(serviceC.getValue().getId());
+            ss.modifierService(k);*/
             s.setDescription(description.getText());
             s.setPrix(Integer.parseInt(prix.getText()));
             s.setIdService(serviceC.getValue().getId());

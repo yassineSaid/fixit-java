@@ -484,7 +484,7 @@ public class EspaceServiceBackController implements Initializable {
         } else {
             descriptionModif.setStyle("-fx-border-color: none ;");
         }
-        if (e !=""){
+        if (i==1){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Categorie");
             alert.setHeaderText(null);
@@ -612,7 +612,7 @@ public class EspaceServiceBackController implements Initializable {
             i = 1;
         }
         categoS.setStyle("-fx-border-color: none ;");
-        if (e != "") {
+        if (i==1) {
             
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Service");
