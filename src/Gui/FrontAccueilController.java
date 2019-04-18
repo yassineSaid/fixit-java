@@ -531,7 +531,7 @@ public class FrontAccueilController implements Initializable {
                 vBox.setStyle("-fx-background-color:  transparent;");
                 vBox.setSpacing(10);
                 
-                Image image = new Image("file:/wamp64/www/fixit/web/uploads/images/Produit/" + item.getImage(), 150, 150, false, false);
+                Image image = new Image("file:/wamp64/www/fixit/web/uploads/images/produit/" + item.getImage(), 150, 150, false, false);
                 ImageView img = new ImageView(image);
                 img.setStyle("-fx-background-color:  transparent");
                 

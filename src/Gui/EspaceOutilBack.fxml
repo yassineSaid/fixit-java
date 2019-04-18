@@ -169,13 +169,13 @@
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="tableHistorique" layoutX="193.0" layoutY="73.0" prefHeight="421.0" prefWidth="653.0" styleClass="table" stylesheets="@../Resources/style.css">
+                        <TableView fx:id="tableHistorique" layoutX="161.0" layoutY="49.0" prefHeight="459.0" prefWidth="716.0" styleClass="table" stylesheets="@../Resources/style.css">
                            <columns>
-                              <TableColumn fx:id="nomUser1" prefWidth="140.0" text="Nom de l'utilisateur" />
-                              <TableColumn fx:id="userNomOutil1" prefWidth="107.0" text="Nom de l'outil" />
-                              <TableColumn fx:id="dateLocation1" prefWidth="130.0" text="Date de location" />
-                              <TableColumn fx:id="dateRetour1" minWidth="0.0" prefWidth="134.0" text="Date de retour" />
-                              <TableColumn fx:id="prix1" minWidth="0.0" prefWidth="141.0" text="Prix" />
+                              <TableColumn fx:id="nomUser1" prefWidth="183.0" text="Nom de l'utilisateur" />
+                              <TableColumn fx:id="userNomOutil1" prefWidth="153.0" text="Nom de l'outil" />
+                              <TableColumn fx:id="dateLocation1" prefWidth="138.0" text="Date de location" />
+                              <TableColumn fx:id="dateRetour1" minWidth="0.0" prefWidth="124.0" text="Date de retour" />
+                              <TableColumn fx:id="prix1" minWidth="0.0" prefWidth="118.0" text="Prix" />
                            </columns>
                         </TableView>
                      </children>
