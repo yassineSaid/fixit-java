@@ -430,7 +430,7 @@ public class FrontAccueilController implements Initializable {
             OutilService service = new OutilService();
             ObservableList<Outil> rs = service.afficherOutilDisponible();
             outilDisponiblePagination.setPageFactory(this::createPageOutil);
-            outilDisponiblePagination.setStyle("-fx-control-inner-background:  transparent; -fx-background-color:   rgba(255,255,255,0.1);");
+            outilDisponiblePagination.setStyle("-fx-control-inner-background:  gris; -fx-background-color:   rgba(255,255,255,0.1);");
         } catch (Exception e) {
             //System.err.println("Got an exception! ");
             System.out.println("load outil front failed accueil");
