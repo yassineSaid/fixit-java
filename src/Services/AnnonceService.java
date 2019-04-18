@@ -144,19 +144,19 @@ try {
     PreparedStatement pt = c.prepareStatement("SELECT * FROM Annonce ORDER BY ID DESC LIMIT 1 ");
     rs = pt.executeQuery();
                 while (rs.next()){
-    a.setId(rs.getInt(1));
-    a.setDescription(rs.getString(2));
-    a.setType(rs.getString(3));
-    a.setMontant(rs.getLong(4));
-    a.setAdresse(rs.getString(5));
-    a.setDate(rs.getDate(6));
-    a.setTel(rs.getInt(7));
-    a.setNbr_c(rs.getInt(8));
-    a.setNbr_d(rs.getInt(9));
-    a.setNbr_o(rs.getInt(10));
-    a.setIdUser(rs.getInt(11));
-    a.setIdService(rs.getInt(12));
-    a.setCategorieService(rs.getInt(13));
+    a.setId(rs.getInt("id"));
+    a.setDescription(rs.getString("Description"));
+    a.setType(rs.getString("type"));
+    a.setMontant(rs.getLong("montant"));
+    a.setAdresse(rs.getString("adresse"));
+    a.setDate(rs.getDate("date"));
+    a.setTel(rs.getInt("tel"));
+    a.setNbr_c(rs.getInt("nbr_c"));
+    a.setNbr_d(rs.getInt("nbr_d"));
+    a.setNbr_o(rs.getInt("nbr_o"));
+    a.setIdUser(rs.getInt("IdUser"));
+    a.setIdService(rs.getInt("IdService"));
+    a.setCategorieService(rs.getInt("CategorieService"));
                 }
 
 } catch (SQLException ex) {
@@ -199,20 +199,20 @@ try {
     pt.setInt(1, id);
     rs = pt.executeQuery();
                 while (rs.next()){
-    a.setId(rs.getInt(1));
-    a.setDescription(rs.getString(2));
-    a.setType(rs.getString(3));
-    a.setMontant(rs.getLong(4));
-    a.setAdresse(rs.getString(5));
-    a.setDate(rs.getDate(6));
-    a.setTel(rs.getInt(7));
-    a.setNbr_c(rs.getInt(8));
-    a.setNbr_d(rs.getInt(9));
-    a.setNbr_o(rs.getInt(10));
-    a.setIdUser(rs.getInt(11));
-    a.setIdService(rs.getInt(12));
-    a.setCategorieService(rs.getInt(13));
-                }
+    a.setId(rs.getInt("id"));
+    a.setDescription(rs.getString("Description"));
+    a.setType(rs.getString("type"));
+    a.setMontant(rs.getLong("montant"));
+    a.setAdresse(rs.getString("adresse"));
+    a.setDate(rs.getDate("date"));
+    a.setTel(rs.getInt("tel"));
+    a.setNbr_c(rs.getInt("nbr_c"));
+    a.setNbr_d(rs.getInt("nbr_d"));
+    a.setNbr_o(rs.getInt("nbr_o"));
+    a.setIdUser(rs.getInt("IdUser"));
+    a.setIdService(rs.getInt("IdService"));
+    a.setCategorieService(rs.getInt("CategorieService"));
+    }
 
 } catch (SQLException ex) {
     System.out.println("erreur " + ex.getMessage());
