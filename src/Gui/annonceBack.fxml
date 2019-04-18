@@ -64,13 +64,13 @@
              <AnchorPane fx:id="stat" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                   <children>
                      <PieChart fx:id="piechart" layoutX="288.0" layoutY="24.0" prefHeight="378.0" prefWidth="455.0" title="Offres par rapport aux demandes" />
-                     <Button layoutX="288.0" layoutY="442.0" mnemonicParsing="false" onAction="#PieChart" prefHeight="26.0" prefWidth="145.0" styleClass="accueil" text="Pie Chart">
+                     <Button layoutX="288.0" layoutY="442.0" mnemonicParsing="false" onAction="#PieChart" prefHeight="26.0" prefWidth="145.0" styleClass="accueil" text="Diagramme Circulaire">
                         <stylesheets>
                            <URL value="@../Resources/style.css" />
                            <URL value="@../Resources/style1.css" />
                         </stylesheets>
                      </Button>
-                     <Button layoutX="557.0" layoutY="442.0" mnemonicParsing="false" onAction="#BarChart" prefHeight="26.0" prefWidth="145.0" styleClass="accueil" text="Bar Chart">
+                     <Button layoutX="557.0" layoutY="442.0" mnemonicParsing="false" onAction="#BarChart" prefHeight="26.0" prefWidth="145.0" styleClass="accueil" text="Diagramme en baton">
                         <stylesheets>
                            <URL value="@../Resources/style1.css" />
                            <URL value="@../Resources/style.css" />
