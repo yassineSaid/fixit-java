@@ -162,7 +162,7 @@ public class BackAccueilController implements Initializable {
                     if (item.getSeen() == 0) {
                         hBox.setStyle("-fx-background-color:  #6db6c6");
                     } else {
-                        hBox.setStyle("-fx-background-color:  transparent");
+                        hBox.setStyle("-fx-background-color:  #80aef7");
                     }
                     setGraphic(hBox);
                 }
@@ -221,6 +221,9 @@ public class BackAccueilController implements Initializable {
         Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(5), event -> {
             NotificationService service = new NotificationService();
             if (service.checkNotification(nbNotification)) {
+                
+                URL path =getClass().getResource("/Resources/notification.mp3");
+                AudioClip ac=new AudioClip(path.toString());
                 loadNotifications();
                 afficherNotifications();
             }
