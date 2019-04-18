@@ -39,6 +39,7 @@ import javafx.scene.control.Button;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.chart.StackedBarChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -181,6 +182,8 @@ public class EspaceOutilBackController implements Initializable {
     private ImageView imageNotification;
     
     private User user;
+    @FXML
+    private StackedBarChart<String, Number> stat;
     /**
      * Initializes the controller class.
      */
@@ -198,6 +201,8 @@ public class EspaceOutilBackController implements Initializable {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
+                HistoriqueLocationService hs = new HistoriqueLocationService();
+                stat.getData().add(hs.graph());
                 ObservableList<CategorieOutil> list = FXCollections.observableArrayList();
                 CategorieOutilService categorie2 = new CategorieOutilService();
                 list = categorie2.getALLCategorie();
