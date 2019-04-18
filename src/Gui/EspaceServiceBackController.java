@@ -484,13 +484,6 @@ public class EspaceServiceBackController implements Initializable {
         } else {
             descriptionModif.setStyle("-fx-border-color: none ;");
         }
-        if (categoS.getValue() == null) {
-            categoS.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
-            i = 1;
-            e+="\ncategorie";
-        } else {
-            categoS.setStyle("-fx-border-color: none ;");
-        }
         if (e !=""){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Categorie");

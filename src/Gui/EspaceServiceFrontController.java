@@ -6,6 +6,7 @@
 package Gui;
 
 import Entities.CategorieService;
+import Entities.Notification;
 import Entities.Outil;
 import Entities.QuizUser;
 import Entities.Service;
@@ -14,6 +15,7 @@ import Entities.ServicesProposes;
 import Entities.User;
 import Services.CategorieServiceService;
 import Services.MailService;
+import Services.NotificationService;
 import Services.ProfilMesServices;
 import Services.QuizUserService;
 import Services.SMSService;
@@ -207,7 +209,13 @@ public class EspaceServiceFrontController implements Initializable {
     public void setUser(User user) {
         this.user = user;
     }
-
+ private int montant;
+    private int getMontant(){
+        return this.montant;
+    }
+    private void setMontant(int i){
+        this.montant=i;
+    }
     /**
      * Initializes the controller class.
      */
@@ -272,6 +280,7 @@ public class EspaceServiceFrontController implements Initializable {
                                             hBox.setStyle("-fx-font-color: transparent;-fx-background-color: #F1F2F6;");
                                             hBox.setSpacing(10);
                                             setGraphic(hBox);
+                                            
 
                                         }
                                     }
@@ -315,6 +324,7 @@ public class EspaceServiceFrontController implements Initializable {
         sg500.setVisible(true);
         sg1000.setVisible(true);
         labelQuizNum.setVisible(false);
+        this.setMontant(0);
         //SMSForm.setVisible(false);
     }
 
@@ -938,7 +948,7 @@ public class EspaceServiceFrontController implements Initializable {
                     qu.setIdUser(this.getUser().getId());
                     qus.modifierQuizUser(qu);
                     UserService u = new UserService();
-                    u.modifierSolde(this.getUser(), 100);
+                    this.setMontant(10);
                     resultatQuiz.setText("Bravo vous Avez gagné 10 Scoins");
                 }
                 if (qus.getTentative(this.getUser().getId(), 1) == 2) {
@@ -947,7 +957,7 @@ public class EspaceServiceFrontController implements Initializable {
                     qu.setIdUser(this.getUser().getId());
                     qus.modifierQuizUser(qu);
                     UserService u = new UserService();
-                    u.modifierSolde(this.getUser(), 50);
+                this.setMontant(5);
                     resultatQuiz.setText("Bravo vous Avez gagné 5 Scoins");
                 }
 
@@ -1016,10 +1026,12 @@ public class EspaceServiceFrontController implements Initializable {
                 labelg1000.setVisible(false);
                 envoyerSMS.setVisible(true);
                 verifierCode.setVisible(false);
+                textSMS.clear();
+                checkQuiz();
             }
 
         }
-        else {
+        else if(k==0){
             
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Quiz 1");
@@ -1122,6 +1134,7 @@ public class EspaceServiceFrontController implements Initializable {
                 qu.setTentative(3);
                 qu.setIdUser(this.getUser().getId());
                 qus.modifierQuizUser(qu);
+                this.setMontant(10);
                 /*UserService u = new UserService();
                 u.modifierSolde(this.getUser(), 500);*/
                 resultatQuiz.setText("Bravo vous Avez gagné 10 Scoins");
@@ -1131,6 +1144,7 @@ public class EspaceServiceFrontController implements Initializable {
                 qu.setTentative(3);
                 qu.setIdUser(this.getUser().getId());
                 qus.modifierQuizUser(qu);
+                this.setMontant(5);
                 /*UserService u = new UserService();
                 u.modifierSolde(this.getUser(), 250);*/
                 resultatQuiz.setText("Bravo vous Avez gagné 5 Scoins");
@@ -1177,6 +1191,7 @@ public class EspaceServiceFrontController implements Initializable {
         sg500.setVisible(true);
         sg1000.setVisible(true);
         labelQuizNum.setVisible(false);
+        checkQuiz();
         if (j == 1) {
             SMSForm.setVisible(true);
             labelSMS.setText("Tapez votre numéro ,un code vous sera communiqué !");
@@ -1201,6 +1216,8 @@ public class EspaceServiceFrontController implements Initializable {
             labelg1000.setVisible(false);
             envoyerSMS.setVisible(true);
             verifierCode.setVisible(false);
+            textSMS.clear();
+            
         }
         }
         else{
@@ -1283,6 +1300,7 @@ public class EspaceServiceFrontController implements Initializable {
                 qu.setTentative(3);
                 qu.setIdUser(this.getUser().getId());
                 qus.modifierQuizUser(qu);
+                this.setMontant(10);
                 /*UserService u = new UserService();
                 u.modifierSolde(this.getUser(), 1000);*/
                 resultatQuiz.setText("Bravo vous Avez gagné 10 Scoins");
@@ -1292,6 +1310,7 @@ public class EspaceServiceFrontController implements Initializable {
                 qu.setTentative(3);
                 qu.setIdUser(this.getUser().getId());
                 qus.modifierQuizUser(qu);
+                this.setMontant(5);
                 /*UserService u = new UserService();
                 u.modifierSolde(this.getUser(), 500);*/
                 resultatQuiz.setText("Bravo vous Avez gagné 5 Scoins");
@@ -1362,16 +1381,19 @@ public class EspaceServiceFrontController implements Initializable {
             labelg1000.setVisible(false);
             envoyerSMS.setVisible(true);
             verifierCode.setVisible(false);
+            textSMS.clear();
+            checkQuiz();
         }
         }
-        
+        else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Quiz 3");
             alert.setHeaderText(null);
             alert.setContentText(e);
             alert.showAndWait();
+        }
     }
-
+   
     @FXML
     private void ajouterUnService(ActionEvent event) {
         mesServices.setVisible(false);
@@ -1508,8 +1530,16 @@ public class EspaceServiceFrontController implements Initializable {
             proposerUnService.setVisible(true);
             mesServices.setVisible(true);
             supprimerSU.setVisible(true);
-
             SendMail();
+             NotificationService ns = new NotificationService();
+        Notification n = new Notification();
+        n.setTitle("Proposition de service");
+        n.setDescription(user+" a proposé le service "+s.getNom());
+        Byte b=0;
+        n.setSeen(b);
+        n.setIcon("service");
+        n.setTelephone(user.getPhone());
+        ns.ajouterNotification(n);
 
             this.initialize(null, null);
         }
@@ -1542,23 +1572,36 @@ public class EspaceServiceFrontController implements Initializable {
         String sender = "FIXIT";
         String code = "Votre code est \n FIXIT-" + this.getUser().getId() + "-2019";
         SMSService sms = new SMSService();
-
-        sms.sendSms(code, sender, num);
-        textSMS.clear();
+        if(textSMS.getText().equals("")){
+            textSMS.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+        }
+        else {
+       // sms.sendSms(code, sender, num);
+        //textSMS.clear();
+       textSMS.setStyle("-fx-border-color: none ;");
         envoyerSMS.setVisible(false);
         verifierCode.setVisible(true);
-        labelSMS.setText("Ecrivez le code que vous avez récu ");
+        textSMS.clear();
+        labelSMS.setText("Ecrivez le code que vous avez reçu ");
+        }
 
     }
 
     @FXML
     private void verifierCode(ActionEvent event) {
         String code = "FIXIT-" + this.getUser().getId() + "-2019";
-
+        int k=0;
+        if(textSMS.getText().equals("")){
+            textSMS.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+            k=1;
+        }
+        if(k==0){
+            
+        
         if (textSMS.getText().equals(code)) {
 
             UserService u = new UserService();
-            u.modifierSolde(this.getUser(), 100);
+            u.modifierSolde(this.getUser(), 10);
             System.out.println("ci bon");
             quiz1.setVisible(false);
             labelQ1Pass.setVisible(true);
@@ -1580,7 +1623,26 @@ public class EspaceServiceFrontController implements Initializable {
             sg500.setVisible(true);
             sg1000.setVisible(true);
             labelQuizNum.setVisible(false);
+            resultatQuiz.setVisible(true);
+            SMSForm.setVisible(false);
+            if(this.getMontant()==10)
+            {
+                
+            resultatQuiz.setText("Bravo vous Avez gagné 10 SCoins");
+            }
+            else if(this.getMontant()==5){
+                resultatQuiz.setText("Bravo vous Avez gagné 5 SCoins");
+            }
 
+        }
+       else {
+               
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Vérification");
+            alert.setHeaderText(null);
+            alert.setContentText("Veuillez vérifier vos données");
+            alert.showAndWait();
+               }
         }
     }
 
