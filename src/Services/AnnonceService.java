@@ -19,6 +19,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import Entities.Annonce;
+import Entities.CategorieService;
+import Entities.Service;
 import Services.Connexion;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -238,7 +240,30 @@ return rs;
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(tel);
         return matcher.matches();
-    }
+    
+ }
+ public Service getService(int Id)
+        {
+            try
+            {
+                PreparedStatement pt=c.prepareStatement("SELECT * from service where id=?");
+                pt.setInt(1, Id);
+                ResultSet rs= pt.executeQuery();
+                while(rs.next())
+                {
+                    Service service = new Service();
+            service.setId(rs.getInt(1));
+            service.setNom(rs.getString(2));
+            service.setDescription(rs.getString(3));
+            service.setImage(rs.getString(4));
+                    return service;
+                }
+            }
+            catch(SQLException ex)
+            {
+                System.out.println(ex);
+            }  return null;     
+        }
 
 }
 
