@@ -46,6 +46,8 @@ import org.controlsfx.glyphfont.FontAwesome;
 public class EspaceUtilisateursBackController implements Initializable {
 
     @FXML
+    private BackIndexController backIndexController;
+    @FXML
     private TableView<User> tableUser;
     @FXML
     private TableColumn<User, String> colNom;
@@ -94,6 +96,9 @@ public class EspaceUtilisateursBackController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Platform.runLater(() -> {
+            backIndexController.setUser(user);
+            backIndexController.getEspaceUtilisateurs().requestFocus();
+            backIndexController.initialize(null, null);
             refreshAction();
             afficherTableAction();
             setActionTab();

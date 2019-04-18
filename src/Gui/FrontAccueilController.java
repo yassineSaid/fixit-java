@@ -7,17 +7,29 @@ package Gui;
 
 import Entities.Avis;
 import Entities.Bonus;
+import Entities.Outil;
 import Entities.User;
+import Entities.UserOutil;
 import Services.AvisService;
+import Services.OutilService;
 import Services.RealisationServiceService;
+import Services.UserOutilService;
 import Services.UserService;
 import Services.bonusService;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -36,6 +48,7 @@ import javafx.scene.control.Pagination;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -78,6 +91,10 @@ public class FrontAccueilController implements Initializable {
     private AnchorPane accueilPane;
     @FXML
     private ListView<User> emp;
+    @FXML
+    private Pagination outilDisponiblePagination;
+    @FXML
+    private ListView<Outil> outilDisponible;
 
     public User getUser() {
         return user;
@@ -108,18 +125,21 @@ public class FrontAccueilController implements Initializable {
             frontIndexController.refresh();
             frontIndexController.getAccueil().setStyle("-fx-background-color: #f4f4f4");
             init();
-           Date date= new Date();
- 
- long time = date.getTime();
-     //System.out.println("Time in Milliseconds: " + time);
- 
- Timestamp ts = new Timestamp(time);
-            
-            System.out.println(ts.getDate()+1);
-            if(ts.getDate()== 17)
+            Date date = new Date();
+
+            long time = date.getTime();
+            //System.out.println("Time in Milliseconds: " + time);
+
+            Timestamp ts = new Timestamp(time);
+
+            System.out.println(ts.getDate() + 1);
+            if (ts.getDate() == 17) {
                 bonus();
-            else
+            } else {
                 System.out.println("not today");
+            }
+            loadDataFromDatabase();
+            afficherOutilsDisponobles();
         });
     }
 
@@ -135,7 +155,7 @@ public class FrontAccueilController implements Initializable {
                 afficherUsers();
             }
         });
-        if (rech!=null) {
+        if (rech != null) {
             rechercher.setText(rech);
             accueilPane.setVisible(false);
             recherchePane.setVisible(true);
@@ -183,7 +203,7 @@ public class FrontAccueilController implements Initializable {
                     HBox hBox = new HBox(vBox1, vBox);
                     hBox.setStyle("-fx-font-color: transparent;");
                     hBox.setSpacing(50);
- listAvis.setStyle("-fx-control-inner-background:  transparent; -fx-background-color:   rgba(255,255,255,0.1);");
+                    listAvis.setStyle("-fx-control-inner-background:  transparent; -fx-background-color:   rgba(255,255,255,0.1);");
                     setGraphic(hBox);
 
                     // hBox.setStyle("-fx-alignment: center ;");
@@ -310,22 +330,18 @@ public class FrontAccueilController implements Initializable {
 
         return listAvis;
     }
-    public void bonus()
-    {
+
+    public void bonus() {
         bonusService bs = new bonusService();
-        
-        if(bs.getBonusExist(this.user.getId()))
-        {
+
+        if (bs.getBonusExist(this.user.getId())) {
             System.out.println("you won't have a bonus !");
-        }
-        else 
-        {
+        } else {
             RealisationServiceService rss = new RealisationServiceService();
-            if(rss.getAvgNoteUser(this.user.getId())>2)
-            {
+            if (rss.getAvgNoteUser(this.user.getId()) > 2) {
                 Date localdate = new Date();
                 java.sql.Date dateAttribution = new java.sql.Date(localdate.getTime());
-                Bonus bonus = new Bonus(this.user,dateAttribution,25);
+                Bonus bonus = new Bonus(this.user, dateAttribution, 25);
                 bs.insertBonus(bonus);
                 UserService us = new UserService();
                 us.modifierSolde(this.user, 25);
@@ -335,25 +351,22 @@ public class FrontAccueilController implements Initializable {
                 URL path = getClass().getResource("/Resources/scoin.png");
                 Image img = new Image(path.toString());
                 Notifications notificationBuilder = Notifications.create().title("Notification").text("Vous avez été bien noté pendant ce mois vous aurez un bonus de 25 SCOINs").graphic(new ImageView(img)).hideAfter(Duration.seconds(10)).position(Pos.BOTTOM_RIGHT).onAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("clicked");
-            }
-        });
-        notificationBuilder.darkStyle();
-        notificationBuilder.show();
-            }
-            else
-            {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        System.out.println("clicked");
+                    }
+                });
+                notificationBuilder.darkStyle();
+                notificationBuilder.show();
+            } else {
                 System.out.println("you won't have cuz your average");
             }
         }
     }
-    
-    public void EmployeDuMois()
-    {
+
+    public void EmployeDuMois() {
         UserService us = new UserService();
-        
+
         RealisationServiceService rss = new RealisationServiceService();
         ObservableList<User> list = FXCollections.observableArrayList();
         int[] tab = rss.getEmployeeoftheMonth();
@@ -364,21 +377,21 @@ public class FrontAccueilController implements Initializable {
             protected void updateItem(User item, boolean bln) {
                 super.updateItem(item, bln);
                 if (item != null) {
-                    Text userName = new Text(item.getFirstname()+" "+item.getLastname());
+                    Text userName = new Text(item.getFirstname() + " " + item.getLastname());
                     userName.setStyle("-fx-font-size: 25 arial;");
-                    
+
                     Rating rate = new Rating();
                     rate.setRating(tab[0]);
                     EventHandler<MouseEvent> handler = MouseEvent::consume;
                     rate.addEventFilter(MouseEvent.ANY, handler);
                     rate.setMaxHeight(1);
-                    VBox vBox = new VBox(userName,rate);
+                    VBox vBox = new VBox(userName, rate);
                     vBox.setStyle("-fx-font-color: transparent;");
                     File currDir = new File(System.getProperty("user.dir", "."));
-                    String path = "file:" + currDir.toPath().getRoot().toString() + "wamp64\\www\\fixit1\\web\\uploads\\images\\user\\"+item.getImage();
-                    Image image = new Image(path,100, 100, false, false);
-                    ImageView img= new ImageView(image);
-                   
+                    String path = "file:" + currDir.toPath().getRoot().toString() + "wamp64\\www\\fixit1\\web\\uploads\\images\\user\\" + item.getImage();
+                    Image image = new Image(path, 100, 100, false, false);
+                    ImageView img = new ImageView(image);
+
                     VBox vBox1 = new VBox(img, vBox);
                     vBox1.setStyle("-fx-font-color: transparent;");
                     vBox1.setSpacing(15);
@@ -387,7 +400,7 @@ public class FrontAccueilController implements Initializable {
                     hBox.setSpacing(50);
 
                     setGraphic(hBox);
- emp.setStyle("-fx-control-inner-background:  transparent; -fx-background-color:   rgba(255,255,255,0.1);");
+                    emp.setStyle("-fx-control-inner-background:  transparent; -fx-background-color:   rgba(255,255,255,0.1);");
                     // hBox.setStyle("-fx-alignment: center ;");
                     //hBox.gets
                 }
@@ -395,6 +408,71 @@ public class FrontAccueilController implements Initializable {
 
         });
     }
+    private Node createPageOutil(int pageIndex) {
+        OutilService recServ = new OutilService();
+        
+        ObservableList<Outil> data = FXCollections.observableArrayList();
+        data = recServ.afficherOutil();
+        int fromIndex = pageIndex * 1;
+        int toIndex = Math.min(fromIndex + 1, data.size());
+        outilDisponible.setItems(FXCollections.observableArrayList(data.subList(fromIndex, toIndex)));
+        
+        return outilDisponible;
+    }
+    private void loadDataFromDatabase() {
+        try {
+            OutilService service = new OutilService();
+            ObservableList<Outil> rs = service.afficherOutilDisponible();
+            outilDisponiblePagination.setPageFactory(this::createPageOutil);
+            outilDisponiblePagination.setStyle("-fx-control-inner-background:  transparent; -fx-background-color:   rgba(255,255,255,0.1);");
+        } catch (Exception e) {
+            //System.err.println("Got an exception! ");
+            System.out.println("load outil front failed accueil");
+            System.err.println(e.getMessage());
+        }
+    }
 
+    public void afficherOutilsDisponobles() {
+        Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(3), event -> {
+        int pos = (outilDisponiblePagination.getCurrentPageIndex() + 1) % outilDisponiblePagination.getPageCount();
+        outilDisponiblePagination.setCurrentPageIndex(pos);
+        }));
+        fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
+        fiveSecondsWonder.play();
+        outilDisponible.setCellFactory(item -> new ListCell<Outil>() {
+            protected void updateItem(Outil item, boolean bln) {
+            super.updateItem(item, bln);
+            if (item != null) {
+                Text nom = new Text(item.getNom());
+                Text prix = new Text(Integer.toString(item.getPrix()));
+                Text adresse = new Text(item.getAdresse() + "  ," + item.getVille());
+                Text nomCategorie = new Text(item.getNomCategorie());
+                Image marker = new Image("file:/wamp64/www/fixit/web/service/images/icons/adresse.png", 30, 30, false, false);
+                ImageView m = new ImageView(marker);
+                Image scoin = new Image("file:/wamp64/www/fixit/web/service/images/icons/scoin.png", 30, 30, false, false);
+                ImageView s = new ImageView(scoin);
+                Image logo = new Image("file:/wamp64/www/fixit/web/uploads/images/categorieOutil/" + item.getC().getLogo(), 30, 30, false, false);
+                ImageView l = new ImageView(logo);
+                HBox prixEnScoin = new HBox(s, prix);
+                HBox adresseM = new HBox(m, adresse);
+                HBox LogoCategorie = new HBox(l, nomCategorie);
+                nom.setStyle("-fx-font-size: 30 arial;");
+                prix.setStyle("-fx-font-size: 20 arial;");
+                VBox vBox = new VBox(nom, LogoCategorie, adresseM, prixEnScoin);
+                vBox.setStyle("-fx-background-color:  transparent;");
+                vBox.setSpacing(10);
+                
+                Image image = new Image("file:/wamp64/www/fixit/web/uploads/images/Outil/" + item.getImage(), 150, 150, false, false);
+                ImageView img = new ImageView(image);
+                img.setStyle("-fx-background-color:  transparent");
+                
+                HBox hBox = new HBox(img, vBox);
+                hBox.setStyle("-fx-background-color:  transparent");
+                hBox.setSpacing(10);
+                setGraphic(hBox);
+            }
+        }
+        });
+    }
 
 }

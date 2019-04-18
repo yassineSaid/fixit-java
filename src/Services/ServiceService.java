@@ -179,4 +179,38 @@ public class ServiceService {
           }
           return null;
           }
+        
+        //ajouté par Achref
+        public static ServiceService su;
+
+    public static ServiceService getInstance() {
+        if(su == null )
+            su = new ServiceService();
+        return su;
+            
+    }
+    public ResultSet afficherservices() {
+        ResultSet rs = null;
+    try {
+        PreparedStatement pt = c.prepareStatement("select * from service");
+        rs = pt.executeQuery();
+
+    } catch (SQLException ex) {
+        System.out.println("erreur " + ex.getMessage());
+    }
+    return rs;
+}
+       public ResultSet nomservices(int id) {
+        ResultSet rs = null;
+    try {
+        PreparedStatement pt = c.prepareStatement("select * from service where id =?");
+        pt.setInt(1,id);
+        rs = pt.executeQuery();
+
+    } catch (SQLException ex) {
+        System.out.println("erreur " + ex.getMessage());
+    }
+    return rs;
+}
+       
 }

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" stylesheets="@../Resources/style.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.AjouterCandidatureController">
+    <fx:include fx:id="frontIndex" source="frontIndex.fxml" />
+   <Label layoutX="348.0" layoutY="113.0" prefHeight="39.0" prefWidth="154.0" text="Message :">
+      <font>
+         <Font size="18.0" />
+      </font>
+   </Label>
+   <TextArea fx:id="message" layoutX="587.0" layoutY="61.0" prefHeight="142.0" prefWidth="607.0" />
+   <Label layoutX="348.0" layoutY="279.0" prefHeight="39.0" prefWidth="154.0" text="email : ">
+      <font>
+         <Font size="18.0" />
+      </font>
+   </Label>
+   <Label layoutX="348.0" layoutY="399.0" prefHeight="39.0" prefWidth="154.0" text="telephone :">
+      <font>
+         <Font size="18.0" />
+      </font>
+   </Label>
+   <TextField fx:id="email" layoutX="587.0" layoutY="279.0" prefHeight="39.0" prefWidth="398.0" />
+   <TextField fx:id="tel" layoutX="587.0" layoutY="399.0" prefHeight="39.0" prefWidth="398.0" />
+   <Button layoutX="529.0" layoutY="555.0" mnemonicParsing="false" onAction="#AjouterAction" prefHeight="26.0" prefWidth="192.0" styleClass="greenFront" text="Envoyer" />
+   <Button layoutX="819.0" layoutY="555.0" mnemonicParsing="false" onAction="#RetournerAction" prefHeight="26.0" prefWidth="192.0" styleClass="redFront" text="Annuler" />
+</AnchorPane>
