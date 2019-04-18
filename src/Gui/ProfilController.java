@@ -263,11 +263,13 @@ public class ProfilController implements Initializable {
         });
         Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
             loadUsersMessage();
-            if (idMessage!=null) loadMessages(idMessage);
             if (ms.checkUnnotified(user.getId())){
                 messagerie.setGraphic(icon1);
                 ms.setNotified(user.getId());
+                
+            if (idMessage!=null) loadMessages(idMessage);
             }
+            
         }));
         fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
         fiveSecondsWonder.play();

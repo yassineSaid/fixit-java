@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.StackedBarChart?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -8,8 +11,6 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -61,11 +62,6 @@
                         </Label>
                         <TextField fx:id="rechercheCategorie" layoutX="529.0" layoutY="48.0" prefHeight="25.0" prefWidth="220.0" />
                         <Button fx:id="openFileLogo" layoutX="767.0" layoutY="203.0" mnemonicParsing="false" onAction="#importerLogo" prefHeight="30.0" prefWidth="174.0" styleClass="openFile" stylesheets="@../Resources/style.css" text="Importer un logo" />
-                        <ImageView fx:id="imageNotification" fitHeight="75.0" fitWidth="90.0" layoutX="48.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                           <image>
-                              <Image url="@../Resources/tik.png" />
-                           </image>
-                        </ImageView>
                      </children>
                   </AnchorPane>
                </content>
@@ -185,6 +181,27 @@
                      </children>
                   </AnchorPane>
                </content>
+            </Tab>
+            <Tab text="Statistiques">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <StackedBarChart fx:id="stat" layoutX="144.0" layoutY="118.0" prefHeight="435.0" prefWidth="750.0">
+                          <xAxis>
+                            <CategoryAxis side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis side="LEFT" />
+                          </yAxis>
+                        </StackedBarChart>
+                        <Label alignment="CENTER" layoutX="370.0" layoutY="67.0" prefHeight="28.0" prefWidth="299.0" text="Les outils les plus loués">
+                           <font>
+                              <Font name="System Bold" size="19.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+              </content>
             </Tab>
         </tabs>
       </TabPane>

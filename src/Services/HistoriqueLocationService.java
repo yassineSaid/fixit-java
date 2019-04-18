@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.chart.XYChart;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -122,5 +123,24 @@ public class HistoriqueLocationService {
             System.out.println(ex);
         }
     }
+    
+    public XYChart.Series<String,Number> graph(){
+          try{
+                XYChart.Series<String,Number> serie =new XYChart.Series<>();
+                
+        Statement st = c.createStatement();
+        String req = "SELECT COUNT(h.idOutil),o.Nom FROM historique_location h  JOIN outils o on o.id=h.idOutil GROUP BY h.idOutil;";
+        ResultSet rs = st.executeQuery(req);
+        while (rs.next()) {
+        
+            serie.getData().add(new XYChart.Data<>(rs.getString(2),rs.getInt(1)));
+        }
+        return serie;
+        }
+          catch(SQLException ex){
+              System.out.println(ex);
+          }
+          return null;
+          }
     
 }

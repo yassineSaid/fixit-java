@@ -18,25 +18,28 @@ public class Notification {
         private String description;
 	private String icon;
 	private Date notificationDate;
+        private int telephone;
 	private byte seen;
 
     public Notification() {
     }
 
-    public Notification(int id, String title, String description, String icon, Date notificationDate, byte seen) {
+    public Notification(int id, String title, String description, String icon, Date notificationDate, int telephone, byte seen) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.icon = icon;
         this.notificationDate = notificationDate;
+        this.telephone = telephone;
         this.seen = seen;
     }
 
-    public Notification(String title, String description, String icon, Date notificationDate, byte seen) {
+    public Notification(String title, String description, String icon, Date notificationDate, int telephone, byte seen) {
         this.title = title;
         this.description = description;
         this.icon = icon;
         this.notificationDate = notificationDate;
+        this.telephone = telephone;
         this.seen = seen;
     }
 
@@ -80,6 +83,14 @@ public class Notification {
         this.notificationDate = notificationDate;
     }
 
+    public int getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(int telephone) {
+        this.telephone = telephone;
+    }
+
     public byte getSeen() {
         return seen;
     }
@@ -87,6 +98,6 @@ public class Notification {
     public void setSeen(byte seen) {
         this.seen = seen;
     }
-        
+ 
         
 }

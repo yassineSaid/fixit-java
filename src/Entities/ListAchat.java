@@ -6,6 +6,11 @@
 package Entities;
 
 import java.sql.Timestamp;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
+import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 
 /**
  *
@@ -16,6 +21,24 @@ public class ListAchat {
     private String Nom;
     private String Acheteur, image;
     private int id, Quantite, prix, idAcheteur, idProduit;
+     private ImageView im;
+     private Button Annuler;
+
+    public Button getAnnuler() {
+        return Annuler;
+    }
+
+    public void setAnnuler(Button Annuler) {
+        this.Annuler = Annuler;
+    }
+
+    public ImageView getIm() {
+        return im;
+    }
+
+    public void setIm(ImageView im) {
+        this.im = im;
+    }
 
     public String getNom() {
         return Nom;
@@ -93,7 +116,7 @@ public class ListAchat {
     }
 
     
-    public ListAchat(String Nom, String Acheteur, String image, int Quantite, int prix, int idAcheteur, int idProduit, Timestamp date) {
+    public ListAchat(String Nom, String Acheteur, String image, int Quantite, int prix, int idAcheteur, int idProduit, Timestamp date,ImageView im) {
         this.Nom = Nom;
         this.Acheteur = Acheteur;
         this.image = image;
@@ -102,7 +125,12 @@ public class ListAchat {
         this.idAcheteur = idAcheteur;
         this.idProduit = idProduit;
         this.date = date;
+        this.im=im;
     }
     public Timestamp date;
+
+    public void addEventFilter(EventType<MouseEvent> ANY, EventHandler<MouseEvent> handler) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
 }

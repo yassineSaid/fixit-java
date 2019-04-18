@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
@@ -17,14 +23,14 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="690.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.EspaceProduitFrontController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="690.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.EspaceProduitFrontController">
        <children>
     <fx:include fx:id="frontIndex" source="FrontIndex.fxml" />
        <AnchorPane layoutX="275.0" layoutY="14.0" prefHeight="690.0" prefWidth="1300.0">
          <children>
              <TabPane fx:id="Tabwidget" layoutX="10.0" layoutY="-12.0" prefHeight="680.0" prefWidth="1016.0" tabClosingPolicy="UNAVAILABLE">
                <tabs>
-                  <Tab fx:id="interfaceAjout" text="AjouterProduit">
+                  <Tab fx:id="interfaceAjout" text="Mes Produits">
                      <content>
                         <AnchorPane fx:id="ajouterRec" minHeight="0.0" minWidth="0.0" prefHeight="601.0" prefWidth="896.0" stylesheets="@../Resources/style.css">
                            <children>
@@ -51,7 +57,7 @@
                               </Label>
                               <ComboBox fx:id="categorieProduit" layoutX="219.0" layoutY="202.0" prefHeight="31.0" prefWidth="247.0" promptText="Selectionner categorie" />
                               <TextField fx:id="motif" layoutX="220.0" layoutY="331.0" prefHeight="31.0" prefWidth="247.0" />
-                              <Button fx:id="ajouter_Rec" layoutX="246.0" layoutY="508.0" mnemonicParsing="false" onAction="#ajouterProduitClicked" prefHeight="38.0" prefWidth="223.0" text="Ajouter Produit">
+                              <Button fx:id="ajouter_Rec" layoutX="246.0" layoutY="508.0" mnemonicParsing="false" onAction="#ajouterProduitClicked" prefHeight="38.0" prefWidth="223.0" styleClass="greenFront" stylesheets="@../Resources/style.css" text="Ajouter Produit">
                                  <textFill>
                                     <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
                                        <stops>
@@ -76,7 +82,7 @@
                                     <TableColumn fx:id="imageTab" prefWidth="134.0" text="Image" />
                                 </columns>
                               </TableView>
-                              <TextField fx:id="Quantitefield" layoutX="220.0" layoutY="379.0" prefHeight="31.0" prefWidth="247.0" />
+                              <TextField fx:id="Quantitefield" layoutX="220.0" layoutY="379.0" onKeyTyped="#changerAction" prefHeight="31.0" prefWidth="247.0" />
                               <Label layoutX="15.0" layoutY="381.0" text="Quantite">
                                  <font>
                                     <Font size="19.0" />
@@ -92,9 +98,9 @@
                                     <Font size="19.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="prix" layoutX="220.0" layoutY="418.0" prefHeight="31.0" prefWidth="247.0" />
+                              <TextField fx:id="prix" layoutX="220.0" layoutY="418.0" onKeyTyped="#changerAction" prefHeight="31.0" prefWidth="247.0" />
                               <DatePicker fx:id="dateExp" layoutX="215.0" layoutY="263.0" prefHeight="31.0" prefWidth="253.0" style="-fx-background-color: red;" />
-                              <Button fx:id="modifierProduit" layoutX="247.0" layoutY="554.0" mnemonicParsing="false" onAction="#modifierProduitClicked" prefHeight="38.0" prefWidth="223.0" style="-fx-background-color: coral;" text="Modifier Produit">
+                              <Button fx:id="modifierProduit" layoutX="247.0" layoutY="554.0" mnemonicParsing="false" onAction="#modifierProduitClicked" prefHeight="38.0" prefWidth="154.0" styleClass="blueFront" stylesheets="@../Resources/style.css" text="Modifier Produit">
                                  <textFill>
                                     <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
                                        <stops>
@@ -104,7 +110,7 @@
                                     </RadialGradient>
                                  </textFill>
                               </Button>
-                              <Button fx:id="ajouter_Rec2" layoutX="247.0" layoutY="599.0" mnemonicParsing="false" onAction="#supprimerProduitClicked" prefHeight="38.0" prefWidth="223.0" style="-fx-background-color: red;" text="Supprimer Produit">
+                              <Button fx:id="ajouter_Rec2" layoutX="247.0" layoutY="599.0" mnemonicParsing="false" onAction="#supprimerProduitClicked" prefHeight="38.0" prefWidth="223.0" style="-fx-background-color: red;" styleClass="redFront" text="Supprimer Produit">
                                  <textFill>
                                     <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
                                        <stops>
@@ -114,86 +120,127 @@
                                     </RadialGradient>
                                  </textFill>
                               </Button>
-                              <Button fx:id="openFile" layoutX="252.0" layoutY="463.0" mnemonicParsing="false" onAction="#importerImage" prefHeight="30.0" prefWidth="252.0" styleClass="openFile" stylesheets="@../Resources/style.css" text="Importer une image" />
+                              <Button fx:id="openFile" layoutX="245.0" layoutY="463.0" mnemonicParsing="false" onAction="#importerImage" prefHeight="30.0" prefWidth="252.0" styleClass="OpenFileFront" stylesheets="@../Resources/style.css" text="Importer une image" />
                            </children>
                         </AnchorPane>
                      </content>
                   </Tab>
-                  <Tab fx:id="ListProduitVendre" text="ListProduitVendre">
-                     <content>
-                        <AnchorPane fx:id="ajouterRec1" minHeight="0.0" minWidth="0.0" prefHeight="601.0" prefWidth="896.0" stylesheets="@../Resources/style.css">
+                  <Tab fx:id="test" text="liste des produits">
+                    <content>
+                      <AnchorPane fx:id="tous" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: ;" visible="false">
                            <children>
-                              <Label layoutX="252.0" layoutY="115.0">
-                                 <font>
-                                    <Font size="19.0" />
-                                 </font>
-                              </Label>
-                              <AnchorPane layoutX="5.0" layoutY="11.0" prefHeight="604.0" prefWidth="1006.0">
+                              <ListView fx:id="list" layoutX="176.0" layoutY="35.0" prefHeight="544.0" prefWidth="778.0" style="-fx-background-color: transaprent;" />
+                              <AnchorPane fx:id="ajouterRec11" layoutX="-14.0" layoutY="4.0" minHeight="0.0" minWidth="0.0" prefHeight="626.0" prefWidth="1016.0" stylesheets="@../Resources/style.css">
                                  <children>
-                                    <TableView fx:id="allProduit" layoutX="14.0" layoutY="88.0" prefHeight="490.0" prefWidth="887.0">
-                                      <columns>
-                                        <TableColumn fx:id="imageP" prefWidth="197.0" text="Image" />
-                                        <TableColumn fx:id="nomP" prefWidth="92.0" text="Nom" />
-                                          <TableColumn fx:id="QuantiteP" prefWidth="102.0" text="Quantite" />
-                                          <TableColumn fx:id="prixP" prefWidth="75.0" text="Prix" />
-                                          <TableColumn fx:id="dateP" prefWidth="223.0" text="date d'expiration" />
-                                          <TableColumn fx:id="actionP" prefWidth="223.0" text="Action" />
-                                      </columns>
-                                    </TableView>
-                                    <Button fx:id="retourField" layoutX="855.0" layoutY="14.0" mnemonicParsing="false" onAction="#RetourMesProduits" prefHeight="31.0" prefWidth="97.0" text="Retour" />
+                                    <Label layoutX="252.0" layoutY="115.0">
+                                       <font>
+                                          <Font size="19.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="nomF" layoutX="714.0" layoutY="392.0" style="-fx-background-color: transparent;">
+                                       <font>
+                                          <Font name="System Bold" size="19.0" />
+                                       </font>
+                                    </TextField>
+                                    <TextField fx:id="nomF1" layoutX="798.0" layoutY="530.0" style="-fx-background-color: transparent;" />
+                                    <TextField fx:id="nomF2" layoutX="799.0" layoutY="577.0" style="-fx-background-color: transparent;" />
+                                    <Button fx:id="AcheterField" layoutX="109.0" layoutY="416.0" mnemonicParsing="false" onAction="#AcheterField" prefHeight="31.0" prefWidth="183.0" styleClass="greenFront" stylesheets="@../Resources/style.css" text="Acheter" />
+                                    <Label layoutX="130.0" layoutY="209.0" prefHeight="28.0" prefWidth="509.0" text="Saisissez le nombre de produit que vous voulez acheter">
+                                       <font>
+                                          <Font name="System Bold" size="19.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="QuantiteField" layoutX="295.0" layoutY="286.0" onKeyTyped="#changerAction" />
+                                    <Label fx:id="quantiteLab" layoutX="307.0" layoutY="463.0" prefHeight="21.0" prefWidth="175.0" text="Quantite non disponible" textFill="#fc0a0a" />
+                                    <Label fx:id="quantiteLab1" layoutX="309.0" layoutY="496.0" prefHeight="21.0" prefWidth="173.0" text="votre solde insuffisant" textFill="#fc0a0a" />
+                                    <Button fx:id="retourField1" layoutX="371.0" layoutY="416.0" mnemonicParsing="false" onAction="#RetourAllProduit" prefHeight="31.0" prefWidth="97.0" styleClass="redFront" stylesheets="@../Resources/style.css" text="Retour" />
+                                    <Label layoutX="482.0" layoutY="24.0" prefHeight="30.0" prefWidth="122.0" text="vous avez ">
+                                       <font>
+                                          <Font name="System Bold" size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="scoins" layoutX="582.0" layoutY="17.0" prefHeight="45.0" prefWidth="139.0" style="-fx-background-color: transparent; -fx-text-fill: #32CD32;" styleClass="-fx-text-fill">
+                                       <font>
+                                          <Font size="21.0" />
+                                       </font>
+                                    </TextField>
+                                    <ImageView fitHeight="47.0" fitWidth="38.0" layoutX="296.0" layoutY="360.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../Resources/87-877828_save-the-heart-by-ofirma85-instagram-like-icon.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Button fx:id="like" layoutX="340.0" layoutY="362.0" mnemonicParsing="false" onAction="#LikeActionClicked" prefHeight="31.0" prefWidth="64.0" style="-fx-background-color: transparent; -fx-text-fill: red;" text="j'aime" />
+                                    <TextField fx:id="nbr" layoutX="770.0" layoutY="443.0" prefHeight="39.0" prefWidth="63.0" style="-fx-background-color: transparent; -fx-text-fill: red;">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </TextField>
+                                    <Label layoutX="837.0" layoutY="441.0" prefHeight="33.0" prefWidth="48.0" text="(votes)" />
+                                    <ImageView fitHeight="47.0" fitWidth="38.0" layoutX="731.0" layoutY="531.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../Resources/quantite.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="47.0" fitWidth="38.0" layoutX="731.0" layoutY="575.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../Resources/scoin.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="47.0" fitWidth="38.0" layoutX="233.0" layoutY="283.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../Resources/quantite.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="49.0" fitWidth="59.0" layoutX="696.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../Resources/scoin.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Separator layoutX="741.0" layoutY="133.0" prefWidth="200.0" />
+                                    <Label layoutX="785.0" layoutY="98.0" text="Le produit">
+                                       <font>
+                                          <Font name="System Bold" size="23.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="305.0" layoutY="96.0" text="Détail d'achat">
+                                       <font>
+                                          <Font name="System Bold" size="23.0" />
+                                       </font>
+                                    </Label>
+                                    <Separator layoutX="159.0" layoutY="131.0" prefHeight="4.0" prefWidth="423.0" />
+                                    <Separator layoutX="668.0" layoutY="185.0" orientation="VERTICAL" prefHeight="345.0" prefWidth="8.0" />
+                                    <ImageView fx:id="imageDetailProduit" fitHeight="255.0" fitWidth="274.0" layoutX="704.0" layoutY="137.0" pickOnBounds="true" preserveRatio="true" />
+                                    <ImageView fitHeight="47.0" fitWidth="38.0" layoutX="731.0" layoutY="486.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../Resources/date.png" />
+                                       </image>
+                                    </ImageView>
+                                    <TextField fx:id="datee" layoutX="798.0" layoutY="487.0" style="-fx-background-color: transparent;" />
+                                    <Button fx:id="like1" layoutX="340.0" layoutY="362.0" mnemonicParsing="false" onAction="#disLikeActionClicked" prefHeight="31.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-text-fill: red;" text="je n'aime plus" />
+                                    <ImageView fitHeight="40.0" fitWidth="44.0" layoutX="728.0" layoutY="437.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../Resources/25297.png" />
+                                       </image>
+                                    </ImageView>
                                  </children>
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                     </content>
+                    </content>
                   </Tab>
-                  <Tab fx:id="ListProduitVendre1" text="ListProduitVendre">
-                     <content>
-                        <AnchorPane fx:id="ajouterRec11" minHeight="0.0" minWidth="0.0" prefHeight="601.0" prefWidth="896.0" stylesheets="@../Resources/style.css">
+                  <Tab text="Mes Achats">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <Label layoutX="252.0" layoutY="115.0">
-                                 <font>
-                                    <Font size="19.0" />
-                                 </font>
-                              </Label>
-                              <ImageView fx:id="image" fitHeight="182.0" fitWidth="268.0" layoutX="340.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true" />
-                              <TextField fx:id="nomF" layoutX="388.0" layoutY="312.0" style="-fx-background-color: transparent;" />
-                              <TextField fx:id="nomF1" layoutX="387.0" layoutY="286.0" style="-fx-background-color: transparent;" />
-                              <TextField fx:id="nomF2" layoutX="388.0" layoutY="342.0" style="-fx-background-color: transparent;" />
-                              <Label layoutX="203.0" layoutY="317.0" prefHeight="21.0" prefWidth="74.0" text="Nom:" />
-                              <Label layoutX="200.0" layoutY="291.0" prefHeight="21.0" prefWidth="153.0" text="Quantite disponible:" />
-                              <Label layoutX="203.0" layoutY="347.0" prefHeight="21.0" prefWidth="74.0" text="Prix:" />
-                              <Button fx:id="AcheterField" layoutX="442.0" layoutY="423.0" mnemonicParsing="false" onAction="#AcheterField" prefHeight="31.0" prefWidth="90.0" text="Acheter" />
-                              <AnchorPane fx:id="achat" layoutX="216.0" layoutY="414.0" prefHeight="47.0" prefWidth="200.0" />
-                              <Label layoutX="203.0" layoutY="373.0" prefHeight="21.0" prefWidth="82.0" text="Quantite" />
-                              <TextField fx:id="QuantiteField" layoutX="388.0" layoutY="379.0" />
-                              <Label fx:id="quantiteLab" layoutX="400.0" layoutY="483.0" prefHeight="21.0" prefWidth="175.0" text="Quantite non disponible" textFill="#fc0a0a" />
-                              <Label fx:id="quantiteLab1" layoutX="402.0" layoutY="504.0" prefHeight="21.0" prefWidth="173.0" text="votre solde insuffisant" textFill="#fc0a0a" />
-                              <Button fx:id="retourField1" layoutX="880.0" layoutY="23.0" mnemonicParsing="false" onAction="#RetourAllProduit" prefHeight="31.0" prefWidth="97.0" text="Retour" />
-                              <Label layoutX="482.0" layoutY="24.0" prefHeight="30.0" prefWidth="122.0" text="vous avez ">
-                                 <font>
-                                    <Font name="System Bold" size="20.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="scoins" layoutX="582.0" layoutY="17.0" prefHeight="45.0" prefWidth="139.0" style="-fx-background-color: transparent;">
-                                 <font>
-                                    <Font size="21.0" />
-                                 </font>
-                              </TextField>
-                              <Label layoutX="671.0" layoutY="23.0" text="Scoins">
-                                 <font>
-                                    <Font name="System Bold" size="21.0" />
-                                 </font>
-                              </Label>
+                              <ListView fx:id="listProduitAchete" layoutX="154.0" layoutY="87.0" prefHeight="457.0" prefWidth="633.0" />
                            </children>
                         </AnchorPane>
-                     </content>
+                    </content>
                   </Tab>
                </tabs>
             </TabPane>
          </children>
       </AnchorPane>
-      <RadioButton mnemonicParsing="false" text="RadioButton" />
    </children>
     
 </AnchorPane>
