@@ -28,6 +28,8 @@ import java.util.Calendar;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -59,6 +61,7 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
@@ -67,6 +70,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 import javax.imageio.ImageIO;
 import org.controlsfx.glyphfont.FontAwesome;
 
@@ -102,6 +106,7 @@ public class BackAccueilController implements Initializable {
     private Label languesParlee;
     @FXML
     private Button saveAsPng;
+    int nbNotification;
 
     /**
      * Initializes the controller class.
@@ -112,7 +117,7 @@ public class BackAccueilController implements Initializable {
             backIndexController.setUser(user);
             afficherStats();
             loadDataFromDatabase();
-           afficherNotifications();
+            afficherNotifications();
             listNotification.setStyle("-fx-control-inner-background:  transparent; -fx-background-color:   rgba(255,255,255,0.1);");
         });
     }
@@ -124,35 +129,36 @@ public class BackAccueilController implements Initializable {
     public void setUser(User user) {
         this.user = user;
     }
-    public void afficherNotifications(){
-         listNotification.setCellFactory(item -> new ListCell<Notification>(){
+
+    public void afficherNotifications() {
+        listNotification.setCellFactory(item -> new ListCell<Notification>() {
             protected void updateItem(Notification item, boolean bln) {
-            super.updateItem(item, bln);
-            if (item != null) {
-                Text title = new Text(item.getTitle());
-                Text description = new Text(item.getDescription());
-                Text dateNotification = new Text(item.getNotificationDate().toString());
-                description.setWrappingWidth(150);
-                title.setStyle("-fx-font-weight: bold;	-fx-font-size: 14px; -fx-alignment: center ;");
-                description.setStyle("-fx-font-weight: bold;");
-                dateNotification.setStyle("-fx-font-weight: bold;");
-                Image image = new Image(getClass().getResourceAsStream("/Resources/location.png"),50,50,false,false);
-                ImageView img = new ImageView(image);
-                img.setStyle("	-fx-pref-height: 50px; -fx-pref-width: 50px;");
-                VBox vBox = new VBox(title,description,dateNotification);
-                vBox.setSpacing(10);
-                VBox vBoxImage = new VBox(new Text(),img,new Text());
-                vBoxImage.setSpacing(10);
-                HBox hBox = new HBox(vBoxImage, vBox);
-                hBox.setSpacing(10);
-                if (item.getSeen()==0) {
-                hBox.setStyle("-fx-background-color:  #6db6c6");
-                } else {
-                hBox.setStyle("-fx-background-color:  transparent");
+                super.updateItem(item, bln);
+                if (item != null) {
+                    Text title = new Text(item.getTitle());
+                    Text description = new Text(item.getDescription());
+                    Text dateNotification = new Text(item.getNotificationDate().toString());
+                    description.setWrappingWidth(150);
+                    title.setStyle("-fx-font-weight: bold;	-fx-font-size: 14px; -fx-alignment: center ;");
+                    description.setStyle("-fx-font-weight: bold;");
+                    dateNotification.setStyle("-fx-font-weight: bold;");
+                    Image image = new Image(getClass().getResourceAsStream("/Resources/location.png"), 50, 50, false, false);
+                    ImageView img = new ImageView(image);
+                    img.setStyle("	-fx-pref-height: 50px; -fx-pref-width: 50px;");
+                    VBox vBox = new VBox(title, description, dateNotification);
+                    vBox.setSpacing(10);
+                    VBox vBoxImage = new VBox(new Text(), img, new Text());
+                    vBoxImage.setSpacing(10);
+                    HBox hBox = new HBox(vBoxImage, vBox);
+                    hBox.setSpacing(10);
+                    if (item.getSeen() == 0) {
+                        hBox.setStyle("-fx-background-color:  #6db6c6");
+                    } else {
+                        hBox.setStyle("-fx-background-color:  transparent");
+                    }
+                    setGraphic(hBox);
                 }
-                setGraphic(hBox);
             }
-        }
         });
     }
 
@@ -204,10 +210,24 @@ public class BackAccueilController implements Initializable {
     }
 
     private void loadDataFromDatabase() {
+        Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(5), event -> {
+            NotificationService service = new NotificationService();
+            if (service.checkNotification(nbNotification)) {
+                loadNotifications();
+                afficherNotifications();
+            }
+        }));
+        fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
+        fiveSecondsWonder.play();
+        loadNotifications();
+    }
+    private void loadNotifications(){
         try {
             NotificationService service = new NotificationService();
             ObservableList<Notification> rs = service.afficherNotification();
+            listNotification.getItems().clear();
             listNotification.setItems(rs);
+            nbNotification=rs.size();
         } catch (Exception e) {
             //System.err.println("Got an exception! ");
             System.out.println("load notification failed");
@@ -215,24 +235,25 @@ public class BackAccueilController implements Initializable {
         }
     }
 
+    @FXML
     private void afficherDetailNotification(MouseEvent event) throws IOException {
         if (event.getClickCount() == 2) {
-        Notification n = (Notification) listNotification.getItems().get(listNotification.getSelectionModel().getSelectedIndex());
-        NotificationService ns = new NotificationService();
-        ns.modifierSeen(n);
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/DetailNotification.fxml"));
-        Parent root = fxmlLoader.load();
-        DetailNotificationController controller = fxmlLoader.<DetailNotificationController>getController();
-        controller.setNotification(n);
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.initModality(Modality.WINDOW_MODAL);
-        stage.initOwner(((Node) event.getSource()).getScene().getWindow());
-        stage.initStyle(StageStyle.UNDECORATED);
-        stage.setScene(scene);
-        stage.showAndWait();
+            Notification n = (Notification) listNotification.getItems().get(listNotification.getSelectionModel().getSelectedIndex());
+            NotificationService ns = new NotificationService();
+            ns.modifierSeen(n);
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/DetailNotification.fxml"));
+            Parent root = fxmlLoader.load();
+            DetailNotificationController controller = fxmlLoader.<DetailNotificationController>getController();
+            controller.setNotification(n);
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(((Node) event.getSource()).getScene().getWindow());
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setScene(scene);
+            stage.showAndWait();
+        }
     }
-}
 
     @FXML
     private void saveAsPngAction(ActionEvent event) {
@@ -253,7 +274,6 @@ public class BackAccueilController implements Initializable {
                 // TODO: handle exception here
             }
         }
-        
 
         // TODO: probably use a file chooser here
     }

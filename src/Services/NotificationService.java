@@ -80,4 +80,20 @@ public class NotificationService {
             Logger.getLogger(OutilService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    public boolean checkNotification(int nb) {
+        try {
+            Statement st = c.createStatement();
+            String req = "select count(*) AS nb from notification";
+            ResultSet rs = st.executeQuery(req);
+            while (rs.next()) {
+                if (rs.getInt("nb")>nb)
+                    return true;
+            }
+            return false;
+        } catch (SQLException ex) {
+            System.out.println("select all notification load");
+            System.out.println(ex);
+        return false;
+        }
+    }
 }

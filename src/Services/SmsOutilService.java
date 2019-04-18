@@ -22,7 +22,7 @@ public class SmsOutilService {
 			// Construct data
 			String apiKey = "apikey=" + "B2oab4s7nXc-YZbXPtqSfD9pd2maipWI85ihvtW8pZ";
 			String message = "&message=" + "rendez-vous à 10 h";
-			String sender = "&sender=" + "Jims Autos";
+			String sender = "&sender=" + "Fixit";
 			String numbers = "&numbers=" + tel;
 			
 			// Send data

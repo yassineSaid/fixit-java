@@ -5,13 +5,12 @@
  */
 package Gui;
 
-import Entities.CategorieOutil;
 import Entities.Notification;
-import Services.CategorieOutilService;
 import Services.NotificationService;
 import Services.SmsOutilService;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -21,6 +20,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
@@ -41,6 +41,8 @@ public class DetailNotificationController implements Initializable {
     @FXML
     BackAccueilController back;        
     Notification notification;
+    @FXML
+    private Text contenu;
 
     
     
@@ -58,22 +60,18 @@ public class DetailNotificationController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-        // TODO
+        Platform.runLater(() -> {
+        contenu.setText(notification.getDescription());
+        contenu.setWrappingWidth(300);
+        });
     }    
 
     @FXML
     private void confirmerAction(ActionEvent event) {
         SmsOutilService sms = new SmsOutilService();
         sms.sendSms("+216"+Integer.toString(notification.getTelephone()));
-    }
-
-    @FXML
-    private void supprimerAction(ActionEvent event) {
-        NotificationService ns = new NotificationService();
-        ns.supprimerNotification(notification.getId());
-        Image img = new Image(getClass().getResourceAsStream("/Resources/delete.png"));
-        Notifications notificationBuilder = Notifications.create().title("Notification").text("La notification est supprimée avec succés").graphic(new ImageView(img)).hideAfter(Duration.seconds(10)).position(Pos.BOTTOM_RIGHT).onAction(new EventHandler<ActionEvent>() {
+        Image img = new Image(getClass().getResourceAsStream("/Resources/tik.png"),50,50,false,false);
+        Notifications notificationBuilder = Notifications.create().title("Notification").text("Vous avez confirmé la location avec succés").graphic(new ImageView(img)).hideAfter(Duration.seconds(10)).position(Pos.BOTTOM_RIGHT).onAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 System.out.println("clicked");
@@ -81,7 +79,23 @@ public class DetailNotificationController implements Initializable {
         });
         notificationBuilder.darkStyle();
         notificationBuilder.show();
-        initialize(null, null);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.close();
+    }
+
+    @FXML
+    private void supprimerAction(ActionEvent event) {
+        NotificationService ns = new NotificationService();
+        ns.supprimerNotification(notification.getId());
+        Image img = new Image(getClass().getResourceAsStream("/Resources/delete.png"),50,50,false,false);
+        Notifications notificationBuilder = Notifications.create().title("Notification").text("La notification est supprimée avec succés").graphic(new ImageView(img)).hideAfter(Duration.seconds(10)).position(Pos.BOTTOM_RIGHT).onAction(new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent event) {
+        System.out.println("clicked");
+        }
+        });
+        notificationBuilder.darkStyle();
+        notificationBuilder.show();
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
         System.out.println("notification supprimée");

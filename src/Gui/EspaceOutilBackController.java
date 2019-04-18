@@ -391,7 +391,6 @@ public class EspaceOutilBackController implements Initializable {
         categorie.modifierCategorie(c);
         logooo = "";
         Image img = new Image(getClass().getResourceAsStream("/Resources/edit.png"),50,50,false,false);
-        System.out.println(imageNotification.getImage().toString());
         Notifications notificationBuilder = Notifications.create().title("Notification").text("La catégorie " + c.getNom() + " est modifiée avec succés").graphic(new ImageView(img)).hideAfter(Duration.seconds(10)).position(Pos.BOTTOM_RIGHT).onAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
