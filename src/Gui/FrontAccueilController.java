@@ -7,11 +7,13 @@ package Gui;
 
 import Entities.Avis;
 import Entities.Bonus;
+import Entities.ListAchat;
 import Entities.Outil;
 import Entities.User;
 import Entities.UserOutil;
 import Services.AvisService;
 import Services.OutilService;
+import Services.Produit;
 import Services.RealisationServiceService;
 import Services.UserOutilService;
 import Services.UserService;
@@ -95,6 +97,10 @@ public class FrontAccueilController implements Initializable {
     private Pagination outilDisponiblePagination;
     @FXML
     private ListView<Outil> outilDisponible;
+    @FXML
+    private Pagination mproduitPagination;
+    @FXML
+    private ListView<ListAchat> mproduit;
 
     public User getUser() {
         return user;
@@ -463,6 +469,69 @@ public class FrontAccueilController implements Initializable {
                 vBox.setSpacing(10);
                 
                 Image image = new Image("file:/wamp64/www/fixit/web/uploads/images/Outil/" + item.getImage(), 150, 150, false, false);
+                ImageView img = new ImageView(image);
+                img.setStyle("-fx-background-color:  transparent");
+                
+                HBox hBox = new HBox(img, vBox);
+                hBox.setStyle("-fx-background-color:  transparent");
+                hBox.setSpacing(10);
+                setGraphic(hBox);
+            }
+        }
+        });
+    }
+    private Node createPageProduit(int pageIndex) {
+        Produit recServ = new Produit();
+        
+        ObservableList<ListAchat> data = FXCollections.observableArrayList();
+        data = recServ.topProduit();
+        int fromIndex = pageIndex * 1;
+        int toIndex = Math.min(fromIndex + 1, data.size());
+        mproduit.setItems(FXCollections.observableArrayList(data.subList(fromIndex, toIndex)));
+        
+        return outilDisponible;
+    }
+    private void loadDataFromDatabaseProduit() {
+        try {
+            Produit service = new Produit();
+            ObservableList<ListAchat> rs = service.topProduit();
+            mproduitPagination.setPageFactory(this::createPageProduit);
+            mproduitPagination.setStyle("-fx-control-inner-background:  transparent; -fx-background-color:   rgba(255,255,255,0.1);");
+        } catch (Exception e) {
+            //System.err.println("Got an exception! ");
+            System.out.println("load outil front failed accueil");
+            System.err.println(e.getMessage());
+        }
+    }
+
+    public void affichertopProduit() {
+        Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(3), event -> {
+        int pos = (mproduitPagination.getCurrentPageIndex() + 1) % mproduitPagination.getPageCount();
+        mproduitPagination.setCurrentPageIndex(pos);
+        }));
+        fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
+        fiveSecondsWonder.play();
+        mproduit.setCellFactory(item -> new ListCell<ListAchat>() {
+            protected void updateItem(ListAchat item, boolean bln) {
+            super.updateItem(item, bln);
+            if (item != null) {
+                Text nom = new Text(item.getNom());
+                Text prix = new Text(Integer.toString(item.getPrix()));
+                Text quantite = new Text(Integer.toString(item.getQuantite()));
+                Image marker = new Image("file:/wamp64/www/fixit/web/service/images/icons/quantite.png", 30, 30, false, false);
+                ImageView q = new ImageView(marker);
+                Image scoin = new Image("file:/wamp64/www/fixit/web/service/images/icons/scoin.png", 30, 30, false, false);
+                ImageView s = new ImageView(scoin);
+                HBox prixEnScoin = new HBox(s, prix);
+                HBox quantitlogo = new HBox(q, quantite);
+                nom.setStyle("-fx-font-size: 30 arial;");
+                prix.setStyle("-fx-font-size: 20 arial;");
+                quantite.setStyle("-fx-font-size: 20 arial;");
+                VBox vBox = new VBox(nom, prixEnScoin, quantitlogo);
+                vBox.setStyle("-fx-background-color:  transparent;");
+                vBox.setSpacing(10);
+                
+                Image image = new Image("file:/wamp64/www/fixit/web/uploads/images/Produit/" + item.getImage(), 150, 150, false, false);
                 ImageView img = new ImageView(image);
                 img.setStyle("-fx-background-color:  transparent");
                 

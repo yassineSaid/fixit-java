@@ -37,6 +37,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -72,6 +73,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import javax.imageio.ImageIO;
+import org.controlsfx.control.Notifications;
 import org.controlsfx.glyphfont.FontAwesome;
 
 /**
@@ -147,8 +149,11 @@ public class BackAccueilController implements Initializable {
                     if(item.getIcon().equals("location")){
                         path="location.png";
                     }
-                    else{
+                    else if(item.getIcon().equals("service")){
                         path="service.png";
+                    }
+                    else{
+                        path="produit.png";
                     }
                     Image image = new Image(getClass().getResourceAsStream("/Resources/"+path), 50, 50, false, false);
                     ImageView img = new ImageView(image);
@@ -226,6 +231,15 @@ public class BackAccueilController implements Initializable {
                 AudioClip ac=new AudioClip(path.toString());
                 loadNotifications();
                 afficherNotifications();
+                 Image img = new Image(getClass().getResourceAsStream("/Resources/tik.png"),50,50,false,false);
+        Notifications notificationBuilder = Notifications.create().title("Notification").text("Nouveau location").graphic(new ImageView(img)).hideAfter(Duration.seconds(10)).position(Pos.BOTTOM_RIGHT).onAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("clicked");
+            }
+        });
+        notificationBuilder.darkStyle();
+        notificationBuilder.show();
             }
         }));
         fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
