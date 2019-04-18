@@ -145,7 +145,7 @@ public class FrontAccueilController implements Initializable {
             Timestamp ts = new Timestamp(time);
 
             System.out.println(ts.getDate() + 1);
-            if (ts.getDate() == 17) {
+            if (ts.getDate() == 18) {
                 bonus();
             } else {
                 System.out.println("not today");
