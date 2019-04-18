@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
+<?import javafx.scene.chart.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -53,13 +55,39 @@
                         <Button fx:id="modbtn" layoutX="203.0" layoutY="364.0" mnemonicParsing="false" onAction="#ModifierClicked" prefHeight="31.0" prefWidth="139.0" styleClass="modifierBack" stylesheets="@../Resources/style.css" text="modifier" />
                         <Button fx:id="supbtn" layoutX="354.0" layoutY="364.0" mnemonicParsing="false" onAction="#supprimeClicked" prefHeight="31.0" prefWidth="161.0" styleClass="supprimerBack" stylesheets="@../Resources/style.css" text="supprimer" />
                         <Button fx:id="openFile" layoutX="211.0" layoutY="218.0" mnemonicParsing="false" onAction="#importerImage" styleClass="openFile" stylesheets="@../Resources/style.css" text="Importer une image" />
+                        <TextField fx:id="rechercheCategorie" layoutX="65.0" layoutY="52.0" />
+                        <ImageView fitHeight="27.0" fitWidth="53.0" layoutX="252.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Resources/loop.png" />
+                           </image>
+                        </ImageView>
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
           <Tab text="Liste des produits">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <BarChart fx:id="statstique" layoutX="74.0" layoutY="116.0" prefHeight="377.0" prefWidth="678.0">
+                           <xAxis>
+                              <CategoryAxis side="BOTTOM" />
+                           </xAxis>
+                           <yAxis>
+                              <NumberAxis side="LEFT" />
+                           </yAxis>
+                        </BarChart>
+                        <Label layoutX="235.0" layoutY="483.0" prefHeight="21.0" prefWidth="168.0" text="produits">
+                           <font>
+                              <Font size="21.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="7.0" layoutY="169.0" prefHeight="42.0" prefWidth="89.0" text="nombre">
+                           <font>
+                              <Font size="21.0" />
+                           </font>
+                        </Label>
+                     </children></AnchorPane>
             </content>
           </Tab>
             <Tab text="Liste  d'achat">
@@ -76,6 +104,15 @@
                         </TableView>
                      </children></AnchorPane>
                </content>
+            </Tab>
+            <Tab text="Untitled Tab">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ListView fx:id="lisProduit" layoutX="262.0" layoutY="26.0" prefHeight="422.0" prefWidth="598.0" style="-fx-background-color: transparent;" />
+                     </children>
+                  </AnchorPane>
+              </content>
             </Tab>
         </tabs>
       </TabPane>

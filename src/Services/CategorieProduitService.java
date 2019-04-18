@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.chart.XYChart;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -109,5 +110,41 @@ public class CategorieProduitService {
         }
         return null;
     }
+      public XYChart.Series<String,Number> graph(){
+          try{
+                XYChart.Series<String,Number> serie =new XYChart.Series<>();
+                
+        Statement st = Cn.createStatement();
+        String req = "SELECT SUM(p.quantite) somme ,p.produit   FROM achat_produit p GROUP BY p.idProduit ORDER BY somme DESC;";
+        ResultSet rs = st.executeQuery(req);
+        while (rs.next()) {
+        
+            serie.getData().add(new XYChart.Data<>(rs.getString(2),rs.getInt(1)));
+        }
+        return serie;
+        }
+          catch(SQLException ex){
+              System.out.println(ex);
+          }
+          return null;
+          }
+          public String verificationNom(String nom) {
+        try {
+            String req = "Select * from categorie_produit where Nom=?";
+            PreparedStatement ste = Cn.prepareStatement(req);
+            ste.setString(1, nom);
+     ResultSet rs = ste.executeQuery();
+CategorieProduit c = new CategorieProduit();
+            while (rs.next()) {
+              c.setNom(rs.getString("nom"));
+                
+            }
+            return c.getNom();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return "";
+    }
+      
 
 }

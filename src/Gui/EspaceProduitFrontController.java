@@ -16,6 +16,7 @@ import Services.ImageService;
 import Services.MailService;
 import Services.Produit;
 import Services.ReclamationService;
+import Services.UserService;
 import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
 import java.io.File;
 import java.io.IOException;
@@ -26,12 +27,17 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import static java.time.temporal.TemporalQueries.localDate;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -39,6 +45,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -57,12 +64,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import javafx.util.Duration;
+import org.controlsfx.control.Notifications;
 
 /**
  * FXML Controller class
@@ -71,11 +81,12 @@ import javafx.stage.FileChooser;
  */
 public class EspaceProduitFrontController implements Initializable {
 
-    private String imageee;
+    private String imageee = "";
+    private ListAchat lis;
 
     private Produit crud;
     private int quantitee;
-     @FXML
+    @FXML
     private FrontIndexController frontIndexController;
 
     @FXML
@@ -156,8 +167,11 @@ public class EspaceProduitFrontController implements Initializable {
     private Button AcheterField;
     @FXML
     private Button retourField1;
+
     @FXML
-    private ListView<ListAchat> listMeillerProduit;
+    private Button like1;
+    @FXML
+    private ListView<ListAchat> listProduitAchete;
 
     public int getId() {
         return id;
@@ -191,12 +205,6 @@ public class EspaceProduitFrontController implements Initializable {
                         Text nom = new Text(item.getNom());
                         Text prix = new Text(Integer.toString(item.getPrix()));
                         Text Quantite = new Text(Integer.toString(item.getQuantite()));
-
-                        // Timestamp ts = null;
-                        // Date date = new Date();
-                        // date.setTime(ts.getTime());
-                        // String formattedDate = new SimpleDateFormat("yyyyMMdd").format(date);
-                        //Text Date = new Text();
                         Text disponible = new Text("Disponible");
                         Text indisponible = new Text("Indisponible");
                         disponible.setStyle("-fx-font-smoothing-type: lcd;\n"
@@ -211,8 +219,6 @@ public class EspaceProduitFrontController implements Initializable {
                         ImageView m = new ImageView(marker);
                         Image scoin = new Image("file:/wamp64/www/fixit/web/service/images/icons/scoin.png", 30, 30, false, false);
                         ImageView s = new ImageView(scoin);
-                        //  Image logo = new Image("file:/wamp64/www/fixit/web/uploads/images/categorieOutil/" + item.getC().getLogo(), 30, 30, false, false);
-                        // ImageView l = new ImageView(logo);
                         Timestamp ts = item.getDate_exp();
                         Date date = new Date();
                         date.setTime(ts.getTime());
@@ -258,9 +264,8 @@ public class EspaceProduitFrontController implements Initializable {
                         jour.setText(Integer.toString(item.getDureeMaximale()));
                         prix1.setText(Integer.toString(item.getPrix()));
                         int nouveauPrix = (int) (item.getPrix() * 1.25);
-                        prix2.setText(Integer.toString(nouveauPrix));
+                        prix2.setText(Integer.toString(nouveauPrix));*/
 
-                                 */
                             }
                         });
                         VBox vBox = new VBox(nom, adresseM, prixEnScoin, da, btn);
@@ -279,39 +284,104 @@ public class EspaceProduitFrontController implements Initializable {
                     }
 
                 }
-            });/*
-            listMeillerProduit.setCellFactory(it -> new ListCell<ListAchat>() {
-                protected void updateItem(ListAchat it, boolean bln) {
-                    super.updateItem(it, bln);
-                    if (it != null) {
+            });
+            loadDataFromDatabaseAchat();
+            listProduitAchete.setCellFactory(item -> new ListCell<ListAchat>() {
+                protected void updateItem(ListAchat item, boolean bln) {
+                    super.updateItem(item, bln);
+                    if (item != null) {
+                        Text nom = new Text(item.getNom());
+                        Text prix = new Text(Integer.toString(item.getPrix()));
+                        Text Quantite = new Text(Integer.toString(item.getQuantite()));
+                        Text disponible = new Text("Disponible");
+                        Text indisponible = new Text("Indisponible");
+                        disponible.setStyle("-fx-font-smoothing-type: lcd;\n"
+                                + " -fx-fill: green;\n"
+                                + " -fx-font-size: 11pt;"
+                                + "-fx-font-weight: bold;");
+                        indisponible.setStyle("-fx-font-smoothing-type: lcd;\n"
+                                + " -fx-fill: red;\n"
+                                + " -fx-font-size: 11pt;"
+                                + "-fx-font-weight: bold;");
+                        Image marker = new Image("file:/wamp64/www/fixit/web/service/images/icons/quantite.png", 30, 30, false, false);
+                        ImageView m = new ImageView(marker);
+                        Image scoin = new Image("file:/wamp64/www/fixit/web/service/images/icons/scoin.png", 30, 30, false, false);
+                        ImageView s = new ImageView(scoin);
+                        Timestamp ts = item.getDate();
+                        Date date = new Date();
+                        date.setTime(ts.getTime());
+                        String formattedDate = new SimpleDateFormat("yyyy/MM/dd").format(date);
+                        Text dateEx = new Text(formattedDate);
 
-                        Text userName = new Text(it.getNom());
-
-                        userName.setStyle("-fx-font-size: 18 arial;");
-                        ListAchat rate = new ListAchat();
-                        rate.setQuantite(it.getQuantite());
-                        EventHandler<MouseEvent> handler = MouseEvent::consume;
-                        rate.addEventFilter(MouseEvent.ANY, handler);
-                        Image dateE = new Image("file:/wamp64/www/fixit/web/uploads/images/Produit/" + it.getImage(), 30, 30, false, false);
+                        Image dateE = new Image("file:/wamp64/www/fixit/web/service/images/icons/date.png", 30, 30, false, false);
                         ImageView e = new ImageView(dateE);
+                        HBox prixEnScoin = new HBox(s, prix);
+                        HBox adresseM = new HBox(m, Quantite);
+                        HBox da = new HBox(e, dateEx);
+                        ProgressBar bar = new ProgressBar();
+                        Date datee = new Date();
 
-                        VBox vBox = new VBox(e, userName);
+                        long time = datee.getTime();
+                        //System.out.println("Time in Milliseconds: " + time);
+
+                        Timestamp tss = new Timestamp(time);
+                        Timestamp tsa = new Timestamp(time);
+                        tss.setDate(tss.getDate() - 1);
+                        nom.setStyle("-fx-font-size: 35 arial;");
+                        prix.setStyle("-fx-font-size: 20 arial;");
+                        Button btnn = item.getAnnuler();
+                        btnn.setStyle("-fx-background-color: \n"
+                                + "        linear-gradient(#32CD32, #32CD32),\n"
+                                + "        linear-gradient(#32CD32 0%,     #32CD32,    #32CD32 100%),\n"
+                                + "        linear-gradient(#32CD32 0%, #32CD32 50%);\n"
+                                + "    -fx-font-weight: bold;    \n"
+                                + "    -fx-background-radius: 8,7,6;\n"
+                                + "    -fx-background-insets: 0,1,2;\n"
+                                + "    -fx-font-size: 14px;\n"
+                                + "	-fx-pref-height: 25px;\n"
+                                + "    -fx-pref-width: 158px;\n"
+                                + "    -fx-text-fill: white;\n"
+                                + "    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
+
+                        btnn.setOnAction(new javafx.event.EventHandler<ActionEvent>() {
+                            @Override
+                            public void handle(ActionEvent event) {
+                                System.out.println(item.getId());
+                                RetourProduit(item.getIdProduit(), item.getQuantite(), item.getId(), item.getPrix());
+
+                            }
+                        });
+                        if (item.getDate().before(tss)) {
+                            btnn.setVisible(false);
+                            bar.setVisible(false);
+                        } else {
+                            btnn.setVisible(true);
+                            Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(3), event -> {
+
+                                bar.setProgress(bar.getProgress() + 0.1);
+
+                            }));
+                            fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
+                            fiveSecondsWonder.play();
+                        }
+                        VBox vBox = new VBox(nom, adresseM, prixEnScoin, da, btnn, bar);
                         vBox.setStyle("-fx-font-color: transparent;");
                         vBox.setSpacing(10);
-                        Text txt = new Text("");
-                        VBox vBox1 = new VBox(txt, e);
-                        vBox1.setStyle("-fx-font-color: transparent;");
-                        vBox1.setSpacing(15);
-                        HBox hBox = new HBox(vBox1, vBox);
+
+                        Image image = new Image("file:/wamp64/www/fixit/web/uploads/images/Produit/" + item.getImage(), 200, 200, false, false);
+                        ImageView img = new ImageView(image);
+
+                        HBox hBox = new HBox(img, vBox);
                         hBox.setStyle("-fx-font-color: transparent;");
-                        hBox.setSpacing(50);
-
+                        hBox.setSpacing(10);
+                        // hBox.setStyle("-fx-alignment: center ;");
+                        //hBox.gets
                         setGraphic(hBox);
-
                     }
 
                 }
-            });*/
+            });
+
             list.setVisible(true);
             frontIndexController.setUser(user);
             frontIndexController.initialize(null, null);
@@ -366,27 +436,59 @@ public class EspaceProduitFrontController implements Initializable {
         LocalDate today = LocalDate.now();
         produit ct = new produit();
         int h = dateExp.getValue().compareTo(today);
-        ct.setIdCategorieProduit(categorieProduit.getValue());
-        ct.setNom(motif.getText());
-        ct.setQuantite(Integer.parseInt(Quantitefield.getText()));
-        LocalDate stringDate = dateExp.getValue();
-        Timestamp timestamp = Timestamp.valueOf(stringDate.atStartOfDay().plusHours(1));
-        ct.setDate_exp(timestamp);
-        ct.setUser(user);
-        ct.setImage(imageee);
-        ct.setPrix(Integer.parseInt(prix.getText()));
-        String s = Integer.toString(ct.getQuantite());
-
-        if ((ct.getNom().length() == 0) || (categorieProduit.getValue() == null) || h < 0) {
-
-            System.out.println("vérifier vos données");
-        } else {
-            crud.ajouterProduit(ct);
+        String err = "";
+        if (motif.getText().length() == 0) {
+            err += "\nchamp nom est vide";
+            motif.setStyle("-fx-border-color : red");
+        }
+        if (Quantitefield.getText().length() == 0) {
+            err += "\nchamp quantite est vide";
+            Quantitefield.setStyle("-fx-border-color : red");
+        }
+        if (categorieProduit.getValue() == null) {
+            err += "\nchamp categorie est vide";
+            categorieProduit.setStyle("-fx-border-color : red");
+        }
+        if (prix.getText().length() == 0) {
+            err += "\nchamp prix est vide";
+            categorieProduit.setStyle("-fx-border-color : red");
+        }
+        if (h < 0) {
+            err += "\ncette date est déja passé";
 
         }
-        //crud.ajouterProduit(ct);
-        //System.out.println("categorie ajoutée");
-        //initialize();
+        if (motif.getText().equals(crud.verificationNom(motif.getText()))) {
+            err += "\nccette  produit est dèja existe";
+        }
+        if (err != "") {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Ajout de Produit");
+            alert.setHeaderText(null);
+            alert.setContentText(err);
+            alert.showAndWait();
+            err = "";
+        } else {
+            ct.setIdCategorieProduit(categorieProduit.getValue());
+            ct.setNom(motif.getText());
+            ct.setQuantite(Integer.parseInt(Quantitefield.getText()));
+            LocalDate stringDate = dateExp.getValue();
+            Timestamp timestamp = Timestamp.valueOf(stringDate.atStartOfDay().plusHours(1));
+            ct.setDate_exp(timestamp);
+            ct.setUser(user);
+            ct.setImage(imageee);
+            ct.setPrix(Integer.parseInt(prix.getText()));
+            crud.ajouterProduit(ct);
+            Notifications notificationBuilder = Notifications.create().title("Notification").text("Produit ajoutée").hideAfter(Duration.seconds(10)).position(Pos.BOTTOM_RIGHT).onAction(new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent event) {
+        System.out.println("clicked");
+        }
+        });
+        notificationBuilder.darkStyle();
+        notificationBuilder.show();
+
+        }
+
         initialize(null, null);
 
     }
@@ -419,23 +521,67 @@ public class EspaceProduitFrontController implements Initializable {
     @FXML
     private void modifierProduitClicked(ActionEvent event) {
         crud = new Produit();
+        LocalDate today = LocalDate.now();
 
         produit ct = new produit();
-        ct = MesProduitss.getSelectionModel().getSelectedItem();
-        ct.setIdCategorieProduit(categorieProduit.getValue());
-        ct.setNom(motif.getText());
-        ct.setQuantite(Integer.parseInt(Quantitefield.getText()));
-        LocalDate stringDate = dateExp.getValue();
-        Timestamp timestamp = Timestamp.valueOf(stringDate.atStartOfDay().plusHours(1));
-        ct.setDate_exp(timestamp);
-        ct.setUser(user);
-        ct.setPrix(Integer.parseInt(prix.getText()));
-        if (imageee != "") {
-            ct.setImage(imageee);
+        int h = dateExp.getValue().compareTo(today);
+        String err = "";
+        if (motif.getText().length() == 0) {
+            err += "\nchamp nom est vide";
+            motif.setStyle("-fx-border-color : red");
         }
-        crud.modifierProduit(ct);
+        if (Quantitefield.getText().length() == 0) {
+            err += "\nchamp quantite est vide";
+            Quantitefield.setStyle("-fx-border-color : red");
+        }
+        if (categorieProduit.getValue() == null) {
+            err += "\nchamp categorie est vide";
+            categorieProduit.setStyle("-fx-border-color : red");
+        }
+        if (prix.getText().length() == 0) {
+            err += "\nchamp prix est vide";
+            categorieProduit.setStyle("-fx-border-color : red");
+        }
+        if (motif.getText().equals(crud.verificationNom(motif.getText()))) {
+            err += "\nccette  produit est dèja existe";
+        }
+        if (h < 0) {
+            err += "\ncette date est déja passé";
 
-        initialize(null, null);
+        }
+        if (err != "") {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("modification de Produit");
+            alert.setHeaderText(null);
+            alert.setContentText(err);
+            alert.showAndWait();
+            err = "";
+        } else {
+            ct = MesProduitss.getSelectionModel().getSelectedItem();
+            ct.setIdCategorieProduit(categorieProduit.getValue());
+            ct.setNom(motif.getText());
+            ct.setQuantite(Integer.parseInt(Quantitefield.getText()));
+            LocalDate stringDate = dateExp.getValue();
+            Timestamp timestamp = Timestamp.valueOf(stringDate.atStartOfDay().plusHours(1));
+            ct.setDate_exp(timestamp);
+            ct.setUser(user);
+            ct.setPrix(Integer.parseInt(prix.getText()));
+            if (imageee != "") {
+                ct.setImage(imageee);
+            }
+            crud.modifierProduit(ct);
+            Notifications notificationBuilder = Notifications.create().title("Notification").text("Produit modifiée avec succés").hideAfter(Duration.seconds(10)).position(Pos.BOTTOM_RIGHT).onAction(new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent event) {
+        System.out.println("clicked");
+        }
+        });
+        notificationBuilder.darkStyle();
+        notificationBuilder.show();
+
+            initialize(null, null);
+            
+        }
 
     }
 
@@ -445,6 +591,14 @@ public class EspaceProduitFrontController implements Initializable {
         p = MesProduitss.getSelectionModel().getSelectedItem();
         crud.supprimerProduit(p);
         System.out.println("produit ete supprimer");
+        Notifications notificationBuilder = Notifications.create().title("Notification").text("Produit supprimée avec succés").hideAfter(Duration.seconds(10)).position(Pos.BOTTOM_RIGHT).onAction(new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent event) {
+        System.out.println("clicked");
+        }
+        });
+        notificationBuilder.darkStyle();
+        notificationBuilder.show();
         initialize(null, null);
     }
 
@@ -454,7 +608,8 @@ public class EspaceProduitFrontController implements Initializable {
             list.setVisible(false);
             crud = new Produit();
             imageDetailProduit.setVisible(true);
-            like.setDisable(false);
+            like.setVisible(true);
+            like1.setVisible(false);
             scoins.setText(Integer.toString(crud.verifierSolde(user.getId())));
             Button button = (Button) event.getSource();
             produit p1 = new produit();
@@ -476,7 +631,8 @@ public class EspaceProduitFrontController implements Initializable {
             prod = p1;
             if (crud.LikeExiste(user.getId(), prod.getId()) != 0) {
 
-                like.setDisable(true);
+                like.setVisible(false);
+                like1.setVisible(true);
             }
             nbr.setText(Integer.toString(crud.NombreLike(prod.getId())));
             quantiteLab.setVisible(false);
@@ -524,7 +680,7 @@ public class EspaceProduitFrontController implements Initializable {
                     l.setAcheteur(user.getFirstname());
                     l.setIdAcheteur(user.getId());
                     l.setIdProduit(prod.getId());
-                    l.setPrix(prod.getPrix());
+                    l.setPrix(prod.getPrix() * Integer.parseInt(QuantiteField.getText()));
                     l.setQuantite(Integer.parseInt(QuantiteField.getText()));
                     Date date = new Date();
                     Timestamp ts = new Timestamp(date.getTime());
@@ -535,6 +691,14 @@ public class EspaceProduitFrontController implements Initializable {
                     quantitee = l.getQuantite();
                     envoyeMail();
 
+                    Notifications notificationBuilder = Notifications.create().title("Notification").text("achat fait avec succes").hideAfter(Duration.seconds(10)).position(Pos.BOTTOM_RIGHT).onAction(new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent event) {
+        System.out.println("clicked");
+        }
+        });
+        notificationBuilder.darkStyle();
+        notificationBuilder.show();
                     refrechPage(prod);
 
                 } else if (prod.getUser().getId() == user.getId()) {
@@ -549,8 +713,17 @@ public class EspaceProduitFrontController implements Initializable {
             }
 
         } else {
-            QuantiteField.setText("");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Ajout de catégorie");
+            alert.setHeaderText(null);
+            alert.setContentText("saisir le quantite ");
+            alert.showAndWait();
+
         }
+        UserService us = new UserService();
+        user = us.getUser(String.valueOf(user.getId()));
+        frontIndexController.setUser(user);
+        frontIndexController.refresh();
     }
 
     @FXML
@@ -616,7 +789,8 @@ public class EspaceProduitFrontController implements Initializable {
     public void refrechPage(produit p) {
         Platform.runLater(() -> {
 
-            like.setDisable(false);
+            like.setVisible(true);
+            like1.setVisible(false);
 
             Tabwidget.getSelectionModel().select(1);
 
@@ -641,7 +815,8 @@ public class EspaceProduitFrontController implements Initializable {
 
             if (crud.LikeExiste(user.getId(), p1.getId()) != 0) {
 
-                like.setDisable(true);
+                like.setVisible(false);
+                like1.setVisible(true);
             }
             nbr.setText(Integer.toString(crud.NombreLike(p1.getId())));
             quantiteLab.setVisible(false);
@@ -902,5 +1077,74 @@ public class EspaceProduitFrontController implements Initializable {
         alert.setHeaderText(null);
         alert.setContentText("message envoyée");
         alert.showAndWait();
+    }
+
+    @FXML
+    private void changerAction(KeyEvent event) {
+        TextField tf = (TextField) event.getSource();
+        char ch = event.getCharacter().charAt(0);
+        if (!Character.isDigit(ch)) {
+            event.consume();
+        }
+    }
+
+    @FXML
+    private void disLikeActionClicked(ActionEvent event) {
+        LikeProduit l = new LikeProduit();
+
+        crud.supprimerLike(user.getId(), prod.getId());
+        crud.NombreLike(prod.getId());
+
+        refrechPage(prod);
+    }
+
+    private void loadDataFromDatabaseAchat() {
+        try {
+            Produit pro = new Produit();
+            ObservableList<ListAchat> rs = pro.getAllAchat(user.getId());
+            // paginationOutilFront.setPageFactory(this::createPage);
+            listProduitAchete.setItems(rs);
+        } catch (Exception e) {
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+        }
+    }
+
+    public void RetourProduit(int idProduit1, int quantite1, int id11, int prix1) {
+        Produit pro = new Produit();
+        int vendeur = pro.User1(idProduit1);
+        int yy = pro.verifierSolde(user.getId()) - prix1;
+        int zz = pro.verifierSolde(pro.User1(idProduit1)) + prix1;
+
+        int x = pro.verifierQuantite(idProduit1);
+        System.err.println("Prix: " + prix1);
+        if (pro.verifierSolde(vendeur) < prix1) {
+            System.out.println("test retour");
+        } else {
+            pro.retourStock(quantite1 + x, idProduit1);
+            System.out.println(pro.verifierSolde(user.getId()));
+            System.out.println(pro.verifierSolde(pro.User1(idProduit1)));
+            System.out.println((pro.User1(idProduit1)));
+            int y = pro.verifierSolde(user.getId()) + prix1;
+            int z = pro.verifierSolde(pro.User1(idProduit1)) - prix1;
+            pro.ModifierUserAchat(pro.User1(idProduit1), z);
+            pro.ModifierUserAchat(user.getId(), y);
+            pro.supprimeAchat(id11);
+            //System.out.println(id1);
+            UserService us = new UserService();
+            user = us.getUser(String.valueOf(user.getId()));
+            frontIndexController.setUser(user);
+            frontIndexController.refresh();
+            Notifications notificationBuilder = Notifications.create().title("Notification").text("annulation de commande est faits avec succés").hideAfter(Duration.seconds(10)).position(Pos.BOTTOM_RIGHT).onAction(new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent event) {
+        System.out.println("clicked");
+        }
+        });
+        notificationBuilder.darkStyle();
+        notificationBuilder.show();
+
+        }
+
     }
 }

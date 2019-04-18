@@ -30,7 +30,7 @@
          <children>
              <TabPane fx:id="Tabwidget" layoutX="10.0" layoutY="-12.0" prefHeight="680.0" prefWidth="1016.0" tabClosingPolicy="UNAVAILABLE">
                <tabs>
-                  <Tab fx:id="interfaceAjout" text="AjouterProduit">
+                  <Tab fx:id="interfaceAjout" text="Mes Produits">
                      <content>
                         <AnchorPane fx:id="ajouterRec" minHeight="0.0" minWidth="0.0" prefHeight="601.0" prefWidth="896.0" stylesheets="@../Resources/style.css">
                            <children>
@@ -82,7 +82,7 @@
                                     <TableColumn fx:id="imageTab" prefWidth="134.0" text="Image" />
                                 </columns>
                               </TableView>
-                              <TextField fx:id="Quantitefield" layoutX="220.0" layoutY="379.0" prefHeight="31.0" prefWidth="247.0" />
+                              <TextField fx:id="Quantitefield" layoutX="220.0" layoutY="379.0" onKeyTyped="#changerAction" prefHeight="31.0" prefWidth="247.0" />
                               <Label layoutX="15.0" layoutY="381.0" text="Quantite">
                                  <font>
                                     <Font size="19.0" />
@@ -98,7 +98,7 @@
                                     <Font size="19.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="prix" layoutX="220.0" layoutY="418.0" prefHeight="31.0" prefWidth="247.0" />
+                              <TextField fx:id="prix" layoutX="220.0" layoutY="418.0" onKeyTyped="#changerAction" prefHeight="31.0" prefWidth="247.0" />
                               <DatePicker fx:id="dateExp" layoutX="215.0" layoutY="263.0" prefHeight="31.0" prefWidth="253.0" style="-fx-background-color: red;" />
                               <Button fx:id="modifierProduit" layoutX="247.0" layoutY="554.0" mnemonicParsing="false" onAction="#modifierProduitClicked" prefHeight="38.0" prefWidth="154.0" styleClass="blueFront" stylesheets="@../Resources/style.css" text="Modifier Produit">
                                  <textFill>
@@ -150,7 +150,7 @@
                                           <Font name="System Bold" size="19.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="QuantiteField" layoutX="295.0" layoutY="286.0" />
+                                    <TextField fx:id="QuantiteField" layoutX="295.0" layoutY="286.0" onKeyTyped="#changerAction" />
                                     <Label fx:id="quantiteLab" layoutX="307.0" layoutY="463.0" prefHeight="21.0" prefWidth="175.0" text="Quantite non disponible" textFill="#fc0a0a" />
                                     <Label fx:id="quantiteLab1" layoutX="309.0" layoutY="496.0" prefHeight="21.0" prefWidth="173.0" text="votre solde insuffisant" textFill="#fc0a0a" />
                                     <Button fx:id="retourField1" layoutX="371.0" layoutY="416.0" mnemonicParsing="false" onAction="#RetourAllProduit" prefHeight="31.0" prefWidth="97.0" styleClass="redFront" stylesheets="@../Resources/style.css" text="Retour" />
@@ -216,6 +216,7 @@
                                        </image>
                                     </ImageView>
                                     <TextField fx:id="datee" layoutX="798.0" layoutY="487.0" style="-fx-background-color: transparent;" />
+                                    <Button fx:id="like1" layoutX="340.0" layoutY="362.0" mnemonicParsing="false" onAction="#disLikeActionClicked" prefHeight="31.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-text-fill: red;" text="je n'aime plus" />
                                     <ImageView fitHeight="40.0" fitWidth="44.0" layoutX="728.0" layoutY="437.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../Resources/25297.png" />
@@ -227,11 +228,11 @@
                         </AnchorPane>
                     </content>
                   </Tab>
-                  <Tab text="Untitled Tab">
+                  <Tab text="Mes Achats">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <ListView fx:id="listMeillerProduit" layoutX="138.0" layoutY="84.0" prefHeight="118.0" prefWidth="452.0" />
+                              <ListView fx:id="listProduitAchete" layoutX="154.0" layoutY="87.0" prefHeight="457.0" prefWidth="633.0" />
                            </children>
                         </AnchorPane>
                     </content>

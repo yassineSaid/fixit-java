@@ -8,6 +8,7 @@ package Entities;
 import java.sql.Timestamp;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
+import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
@@ -21,6 +22,15 @@ public class ListAchat {
     private String Acheteur, image;
     private int id, Quantite, prix, idAcheteur, idProduit;
      private ImageView im;
+     private Button Annuler;
+
+    public Button getAnnuler() {
+        return Annuler;
+    }
+
+    public void setAnnuler(Button Annuler) {
+        this.Annuler = Annuler;
+    }
 
     public ImageView getIm() {
         return im;
