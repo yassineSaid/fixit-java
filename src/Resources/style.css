@@ -49,9 +49,9 @@
 }
 .supprimer:hover
 {
-    -fx-background-color: #1866e2;
+    -fx-background-color: white;
     -fx-background-radius: 8,7,6;
-    -fx-text-fill: white;
+    -fx-text-fill: red;
     -fx-text-alignment: center;
 }
 .historiquePaiement

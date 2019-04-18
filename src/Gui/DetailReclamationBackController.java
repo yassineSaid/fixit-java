@@ -209,7 +209,7 @@ public class DetailReclamationBackController implements Initializable {
 "</body>\n" +
 "</html>";
             File currDir = new File(System.getProperty("user.dir", "."));
-            String path = currDir.toPath().getRoot().toString() + "wamp64/www/fixit1/web/RapportsReclamation/r"+this.reclamation.getId()+".pdf";
+            String path = currDir.toPath().getRoot().toString() + "wamp64/www/fixit/web/RapportsReclamation/r"+this.reclamation.getId()+".pdf";
             OutputStream file = new FileOutputStream(new File(path));
             Document document = new Document();
             PdfWriter.getInstance(document, file);
