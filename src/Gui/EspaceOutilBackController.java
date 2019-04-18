@@ -180,7 +180,8 @@ public class EspaceOutilBackController implements Initializable {
     private TableColumn<HistoriqueLocation, String> prix1;
     private ImageView iiiiiiiiiiiiiii;
     private ImageView imageNotification;
-    
+    @FXML
+    private BackIndexController backIndexController;
     private User user;
     @FXML
     private StackedBarChart<String, Number> stat;
@@ -201,6 +202,8 @@ public class EspaceOutilBackController implements Initializable {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
+                backIndexController.setUser(user);
+                backIndexController.initialize(null, null);
                 HistoriqueLocationService hs = new HistoriqueLocationService();
                 stat.getData().add(hs.graph());
                 ObservableList<CategorieOutil> list = FXCollections.observableArrayList();

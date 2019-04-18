@@ -18,19 +18,26 @@
       </AnchorPane>
       <AnchorPane id="AnchorPane" fx:id="accueilPane" layoutX="286.0" layoutY="100.0" prefHeight="590.0" prefWidth="1011.0">
          <children>
-            <Pagination fx:id="paginator" layoutX="218.0" layoutY="80.0" prefHeight="162.0" prefWidth="606.0" stylesheets="@../Resources/stylep.css" />
-            <ListView fx:id="listAvis" layoutX="219.0" layoutY="83.0" prefHeight="115.0" prefWidth="606.0" />
-            <Label layoutX="352.0" layoutY="20.0" prefHeight="50.0" prefWidth="288.0" text="Les 5 derniers avis de notre application :">
+            <Pagination fx:id="paginator" layoutX="366.0" layoutY="414.0" prefHeight="162.0" prefWidth="606.0" stylesheets="@../Resources/stylep.css" />
+            <ListView fx:id="listAvis" layoutX="367.0" layoutY="417.0" prefHeight="115.0" prefWidth="606.0" />
+            <Label layoutX="533.0" layoutY="362.0" prefHeight="50.0" prefWidth="288.0" text="Les 5 derniers avis de notre application :">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <ListView fx:id="emp" layoutX="14.0" layoutY="284.0" prefHeight="110.0" prefWidth="527.0" />
-            <Label layoutX="162.0" layoutY="253.0" text="Le meilleur réalisateur de service">
+            <ListView fx:id="emp" layoutX="444.0" layoutY="256.0" prefHeight="110.0" prefWidth="527.0" />
+            <Label layoutX="592.0" layoutY="225.0" text="Le meilleur réalisateur de service">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
+            <Label layoutX="111.0" layoutY="211.0" prefHeight="50.0" prefWidth="157.0" text="Les outils disponibles">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <Pagination fx:id="outilDisponiblePagination" accessibleRole="LIST_VIEW" layoutX="68.0" layoutY="314.0" prefHeight="248.0" prefWidth="270.0" />
+            <ListView fx:id="outilDisponible" layoutX="68.0" layoutY="314.0" prefHeight="200.0" prefWidth="270.0" />
          </children>
       </AnchorPane>
       <TextField fx:id="rechercher" layoutX="1092.0" layoutY="56.0" prefHeight="36.0" prefWidth="187.0" promptText="Trouvez quelqu'un" />

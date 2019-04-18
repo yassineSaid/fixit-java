@@ -65,14 +65,28 @@ public class ReclamationBackController implements Initializable {
     private TextField textfield;
     @FXML
     private Pagination paginator;
+    @FXML
+    private BackIndexController backIndexController;
+    User user;
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Platform.runLater(() -> {
-
+            backIndexController.setUser(user);
+            backIndexController.getEspaceUtilisateurs().requestFocus();
+            backIndexController.initialize(null, null);
             UserReclamant.setCellValueFactory(new PropertyValueFactory<>("userReclamant"));
             UserReclame.setCellValueFactory(new PropertyValueFactory<>("userReclame"));
             dateReclamation.setCellValueFactory(new PropertyValueFactory<>("DateReclamation"));

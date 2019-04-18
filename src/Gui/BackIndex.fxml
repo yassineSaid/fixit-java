@@ -4,16 +4,32 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 
 <AnchorPane id="backIndex" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="690.0" prefWidth="1300.0" style="-fx-background-color: #CCCCCC;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.BackIndexController">
    <children>
       <AnchorPane prefHeight="690.0" prefWidth="263.0" style="-fx-background-color: #9F9F9F;">
          <children>
+            <VBox alignment="CENTER" layoutY="210.0" prefHeight="466.0" prefWidth="263.0">
+               <children>
+                  <Button fx:id="accueil" mnemonicParsing="false" onAction="#accueilAction" prefHeight="51.0" prefWidth="234.0" text="Accueil" />
+                  <Button fx:id="service" mnemonicParsing="false" onAction="#espaceService" prefHeight="57.0" prefWidth="234.0" text="Espace Service" />
+                  <Button fx:id="espaceOutil" mnemonicParsing="false" onAction="#espaceOutil" prefHeight="51.0" prefWidth="234.0" text="Espace Outils" />
+      
+                        <Button fx:id="EspaceProd" mnemonicParsing="false" onAction="#espaceProduit" prefHeight="51.0" prefWidth="234.0" text="Espace Produits" />
+                  <Button fx:id="espaceReclamation" mnemonicParsing="false" onAction="#espaceReclamation" prefHeight="51.0" prefWidth="234.0" text="Espace Réclamations" />
+            
+                        <Button fx:id="espaceUtilisateurs" mnemonicParsing="false" onAction="#espaceUtilisateursAction" prefHeight="51.0" prefWidth="234.0" text="Espace Utilisateurs" />
+                  <Button mnemonicParsing="false" prefHeight="51.0" prefWidth="234.0" text="Espace Annonces" />
+                  <Button fx:id="espaceAvis" mnemonicParsing="false" onAction="#espaceAvis" prefHeight="51.0" prefWidth="234.0" text="Espace Avis" />
+               </children>
+            </VBox>
             <ImageView fitHeight="158.0" fitWidth="131.0" layoutX="61.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Resources/marker.png" />
                </image>
             </ImageView>
+
             <Button fx:id="service" layoutX="13.0" layoutY="202.0" mnemonicParsing="false" onAction="#espaceService" prefHeight="57.0" prefWidth="234.0" text="Espace Service" />
             <Button fx:id="espaceOutil" layoutX="14.0" layoutY="275.0" mnemonicParsing="false" onAction="#espaceOutil" prefHeight="51.0" prefWidth="234.0" text="Espace Outils" />
 
@@ -22,8 +38,8 @@
       
             <Button layoutX="16.0" layoutY="469.0" mnemonicParsing="false" onAction="#espaceUtilisateursAction" prefHeight="51.0" prefWidth="234.0" text="Espace Utilisateurs" />
             <Button layoutX="16.0" layoutY="534.0" mnemonicParsing="false" onAction="#espaceAnnonce" prefHeight="51.0" prefWidth="234.0" text="Espace Annonces" />
+
             <Button layoutY="14.0" mnemonicParsing="false" onAction="#logoutAction" styleClass="logout" stylesheets="@../Resources/styleY.css" text="Déconnexion" />
-            <Button fx:id="espaceAvis" layoutX="16.0" layoutY="597.0" mnemonicParsing="false" onAction="#espaceAvis" prefHeight="51.0" prefWidth="234.0" text="Espace Avis" />
          </children>
       </AnchorPane>
       <ImageView fitHeight="701.0" fitWidth="746.0" layoutX="426.0" layoutY="-5.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.2;">
