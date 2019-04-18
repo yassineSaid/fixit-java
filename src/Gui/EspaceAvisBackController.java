@@ -5,6 +5,7 @@
  */
 package Gui;
 
+import Entities.User;
 import Services.AvisService;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -29,12 +30,27 @@ public class EspaceAvisBackController implements Initializable {
     private Rating rating;
     @FXML
     private PieChart pieChart;
+    @FXML
+    private BackIndexController backIndexController;
+    User user;
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        backIndexController.setUser(user);
+        backIndexController.getEspaceUtilisateurs().requestFocus();
+        backIndexController.initialize(null, null);
         rating.setMaxHeight(1);
         EventHandler<MouseEvent> handler = MouseEvent::consume;
         rating.addEventFilter(MouseEvent.ANY, handler);

@@ -80,7 +80,7 @@ public class DetailNotificationController implements Initializable {
         notificationBuilder.darkStyle();
         notificationBuilder.show();
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.close();
+        //stage.close();
     }
 
     @FXML
@@ -97,9 +97,9 @@ public class DetailNotificationController implements Initializable {
         notificationBuilder.darkStyle();
         notificationBuilder.show();
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.close();
+        //stage.close();
         System.out.println("notification supprimée");
-        back.afficherNotifications();
+        //back.afficherNotifications();
     }
 
     @FXML

@@ -115,6 +115,7 @@ public class BackAccueilController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         Platform.runLater(() -> {
             backIndexController.setUser(user);
+            backIndexController.initialize(null, null);
             afficherStats();
             loadDataFromDatabase();
             afficherNotifications();

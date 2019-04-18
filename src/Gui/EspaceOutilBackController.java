@@ -179,7 +179,8 @@ public class EspaceOutilBackController implements Initializable {
     private TableColumn<HistoriqueLocation, String> prix1;
     private ImageView iiiiiiiiiiiiiii;
     private ImageView imageNotification;
-    
+    @FXML
+    private BackIndexController backIndexController;
     private User user;
     /**
      * Initializes the controller class.
@@ -198,6 +199,8 @@ public class EspaceOutilBackController implements Initializable {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
+                backIndexController.setUser(user);
+                backIndexController.initialize(null, null);
                 ObservableList<CategorieOutil> list = FXCollections.observableArrayList();
                 CategorieOutilService categorie2 = new CategorieOutilService();
                 list = categorie2.getALLCategorie();
