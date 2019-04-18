@@ -212,5 +212,31 @@ public class ServiceService {
     }
     return rs;
 }
+             public ObservableList<Service> serviceAccueil() {
+        try {
+            ObservableList list = FXCollections.observableArrayList();
+            Statement st = c.createStatement();
+            String req = "select * from service where nbrProviders>0";
+            ResultSet rs = st.executeQuery(req);
+            while (rs.next()) {
+                Image image1 = new Image("file:/wamp64/www/fixit/web/uploads/images/service/"+rs.getString(6), 120, 120, false, false);
+                Service serv = new Service();
+                serv.setId(rs.getInt(1));
+                serv.setNom(rs.getString(2));
+                serv.setDescription(rs.getString(4));
+                serv.setNbrProviders(rs.getInt(5));
+                serv.setImage(rs.getString(6));
+                CategorieService categorie = this.getCategorieService(rs.getInt(7));
+                serv.setCategorie(categorie);
+                serv.setIm(new ImageView(image1));
+                list.add(serv);
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(ServiceService.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+       
        
 }
