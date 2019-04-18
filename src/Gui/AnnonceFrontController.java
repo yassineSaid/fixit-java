@@ -234,7 +234,7 @@ private void buildData() {
                         a.setType(r.getString("type"));
                         a.setMontant(r.getLong("montant"));
                         a.setAdresse(r.getString("adresse"));
-                        a.setDate(r.getDate(6));
+                        a.setDate(r.getDate("date"));
                         a.setTel(r.getInt("tel"));
                         a.setNbr_c(r.getInt("nbr_c"));
                         a.setNbr_d(r.getInt("nbr_d"));
@@ -268,7 +268,7 @@ private void buildOffres() {
                         a.setType(r.getString("type"));
                         a.setMontant(r.getLong("montant"));
                         a.setAdresse(r.getString("adresse"));
-                        a.setDate(r.getDate(6));
+                        a.setDate(r.getDate("date"));
                         a.setTel(r.getInt("tel"));
                         a.setNbr_c(r.getInt("nbr_c"));
                         a.setNbr_d(r.getInt("nbr_d"));
@@ -301,7 +301,7 @@ private void buildDemandes() {
                         a.setType(r.getString("type"));
                         a.setMontant(r.getLong("montant"));
                         a.setAdresse(r.getString("adresse"));
-                        a.setDate(r.getDate(6));
+                        a.setDate(r.getDate("date"));
                         a.setTel(r.getInt("tel"));
                         a.setNbr_c(r.getInt("nbr_c"));
                         a.setNbr_d(r.getInt("nbr_d"));
@@ -335,7 +335,7 @@ private void buildMesAnnonces() {
                         a.setType(r.getString("type"));
                         a.setMontant(r.getLong("montant"));
                         a.setAdresse(r.getString("adresse"));
-                        a.setDate(r.getDate(6));
+                        a.setDate(r.getDate("date"));
                         a.setTel(r.getInt("tel"));
                         a.setNbr_c(r.getInt("nbr_c"));
                         a.setNbr_d(r.getInt("nbr_d"));
@@ -363,7 +363,7 @@ private void buildMesAnnonces() {
  	            ResultSet r = sc.mesCandidatures(user.getId());
 	            while(r.next()){
                         mydatac.add(new Candidature(r.getInt("id"),r.getInt("id_annonce"),r.getString("message"),
-	                		r.getString("etat"),r.getString("email"),r.getString("tel"),r.getDate(7),r.getInt("idUser")
+	                		r.getString("etat"),r.getString("email"),r.getString("tel"),r.getDate("date"),r.getInt("idUser")
 	                		));
 	            }
 	            
@@ -644,8 +644,8 @@ private Node createPageo(int pageIndex) {
         
 	buildOffres();
         int fromIndex = pageIndex * 5;
-        int toIndex = Math.min(fromIndex + 5, data.size());
-        taboffres.setItems(FXCollections.observableArrayList(data.subList(fromIndex, toIndex)));
+        int toIndex = Math.min(fromIndex + 5, datao.size());
+        taboffres.setItems(FXCollections.observableArrayList(datao.subList(fromIndex, toIndex)));
 
         return taboffres;
     }
@@ -654,8 +654,8 @@ private Node createPaged(int pageIndex) {
         
 	buildDemandes();
         int fromIndex = pageIndex * 5;
-        int toIndex = Math.min(fromIndex + 5, data.size());
-        tabdemandes.setItems(FXCollections.observableArrayList(data.subList(fromIndex, toIndex)));
+        int toIndex = Math.min(fromIndex + 5, datad.size());
+        tabdemandes.setItems(FXCollections.observableArrayList(datad.subList(fromIndex, toIndex)));
 
         return tabdemandes;
     }    

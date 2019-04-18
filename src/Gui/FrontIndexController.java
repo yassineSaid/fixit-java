@@ -24,9 +24,11 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -38,6 +40,7 @@ import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.controlsfx.control.Notifications;
 import org.controlsfx.glyphfont.FontAwesome;
 
 /**
@@ -174,7 +177,15 @@ public class FrontIndexController implements Initializable {
                 AudioClip ac=new AudioClip(path.toString());
                 ac.play();
                 profil.setGraphic(icon1);
-                ms.setNotified(user.getId());
+                ms.setNotified(user.getId());Image img = new Image(getClass().getResourceAsStream("/Resources/tik.png"),50,50,false,false);
+                Notifications notificationBuilder = Notifications.create().title("Notification").text("Vous avez reçu un nouveau message").hideAfter(Duration.seconds(10)).position(Pos.BOTTOM_RIGHT).onAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        System.out.println("clicked");
+                    }
+                });
+                notificationBuilder.darkStyle();
+                notificationBuilder.show();
             }
         }));
         fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);

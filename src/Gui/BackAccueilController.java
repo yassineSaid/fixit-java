@@ -167,7 +167,7 @@ public class BackAccueilController implements Initializable {
                     if (item.getSeen() == 0) {
                         hBox.setStyle("-fx-background-color:  #6db6c6");
                     } else {
-                        hBox.setStyle("-fx-background-color:  #80aef7");
+                        hBox.setStyle("-fx-background-color:  #95d7e5");
                     }
                     setGraphic(hBox);
                 }
@@ -229,6 +229,7 @@ public class BackAccueilController implements Initializable {
                 
                 URL path =getClass().getResource("/Resources/notification.mp3");
                 AudioClip ac=new AudioClip(path.toString());
+                ac.play();
                 loadNotifications();
                 afficherNotifications();
                 
