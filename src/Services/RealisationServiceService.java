@@ -115,7 +115,8 @@ public class RealisationServiceService {
     {
         try {
             
-            PreparedStatement pt = c.prepareStatement("SELECT AVG(note) FROM realisation_service where idUserOffreur=?");
+            PreparedStatement pt = c.prepareStatement("SELECT AVG(note) FROM realisation_service where idUserOffreur=? and MONTH(dateRealisation)=MONTH(SYSDATE())"
+                    + " and  YEAR(dateRealisation)=YEAR(SYSDATE())");
             pt.setInt(1, idUser);
             ResultSet rs = pt.executeQuery();
             while (rs.next()) {
@@ -126,5 +127,24 @@ public class RealisationServiceService {
             System.out.println(ex);
         }
         return -1;
+    }
+    public int[] getEmployeeoftheMonth()
+    {
+         int[] tab = {0,1};
+        try {
+           
+            PreparedStatement pt = c.prepareStatement("SELECT MAX(avgn) a,q.idUserOffreur FROM ( SELECT AVG(note) avgn,idUserOffreur FROM realisation_service where MONTH(dateRealisation)=MONTH(SYSDATE()) and YEAR(dateRealisation)=YEAR(SYSDATE())) q");
+           
+            ResultSet rs = pt.executeQuery();
+            while (rs.next()) {
+                tab[0]=rs.getInt("a");
+                tab[1]= rs.getInt("idUserOffreur");
+                return tab;
+            }
+          
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return null;
     }
 }

@@ -15,6 +15,7 @@ import Services.bonusService;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.animation.KeyFrame;
@@ -75,6 +76,8 @@ public class FrontAccueilController implements Initializable {
     private AnchorPane recherchePane;
     @FXML
     private AnchorPane accueilPane;
+    @FXML
+    private ListView<User> emp;
 
     public User getUser() {
         return user;
@@ -105,7 +108,18 @@ public class FrontAccueilController implements Initializable {
             frontIndexController.refresh();
             frontIndexController.getAccueil().setStyle("-fx-background-color: #f4f4f4");
             init();
-            bonus();
+           Date date= new Date();
+ 
+ long time = date.getTime();
+     //System.out.println("Time in Milliseconds: " + time);
+ 
+ Timestamp ts = new Timestamp(time);
+            
+            System.out.println(ts.getDate()+1);
+            if(ts.getDate()== 17)
+                bonus();
+            else
+                System.out.println("not today");
         });
     }
 
@@ -128,6 +142,7 @@ public class FrontAccueilController implements Initializable {
         }
         afficherUsers();
         afficherAvis();
+        EmployeDuMois();
     }
 
     public void afficherAvis() {
@@ -168,7 +183,7 @@ public class FrontAccueilController implements Initializable {
                     HBox hBox = new HBox(vBox1, vBox);
                     hBox.setStyle("-fx-font-color: transparent;");
                     hBox.setSpacing(50);
-
+ listAvis.setStyle("-fx-control-inner-background:  transparent; -fx-background-color:   rgba(255,255,255,0.1);");
                     setGraphic(hBox);
 
                     // hBox.setStyle("-fx-alignment: center ;");
@@ -312,6 +327,11 @@ public class FrontAccueilController implements Initializable {
                 java.sql.Date dateAttribution = new java.sql.Date(localdate.getTime());
                 Bonus bonus = new Bonus(this.user,dateAttribution,25);
                 bs.insertBonus(bonus);
+                UserService us = new UserService();
+                us.modifierSolde(this.user, 25);
+                this.setUser(us.getUser(Integer.toString(this.user.getId())));
+                frontIndexController.setUser(this.user);
+                frontIndexController.refresh();
                 URL path = getClass().getResource("/Resources/scoin.png");
                 Image img = new Image(path.toString());
                 Notifications notificationBuilder = Notifications.create().title("Notification").text("Vous avez été bien noté pendant ce mois vous aurez un bonus de 25 SCOINs").graphic(new ImageView(img)).hideAfter(Duration.seconds(10)).position(Pos.BOTTOM_RIGHT).onAction(new EventHandler<ActionEvent>() {
@@ -328,6 +348,52 @@ public class FrontAccueilController implements Initializable {
                 System.out.println("you won't have cuz your average");
             }
         }
+    }
+    
+    public void EmployeDuMois()
+    {
+        UserService us = new UserService();
+        
+        RealisationServiceService rss = new RealisationServiceService();
+        ObservableList<User> list = FXCollections.observableArrayList();
+        int[] tab = rss.getEmployeeoftheMonth();
+        User u = us.getUser(Integer.toString(tab[1]));
+        list.add(u);
+        emp.setItems(list);
+        emp.setCellFactory(item -> new ListCell<User>() {
+            protected void updateItem(User item, boolean bln) {
+                super.updateItem(item, bln);
+                if (item != null) {
+                    Text userName = new Text(item.getFirstname()+" "+item.getLastname());
+                    userName.setStyle("-fx-font-size: 25 arial;");
+                    
+                    Rating rate = new Rating();
+                    rate.setRating(tab[0]);
+                    EventHandler<MouseEvent> handler = MouseEvent::consume;
+                    rate.addEventFilter(MouseEvent.ANY, handler);
+                    rate.setMaxHeight(1);
+                    VBox vBox = new VBox(userName,rate);
+                    vBox.setStyle("-fx-font-color: transparent;");
+                    File currDir = new File(System.getProperty("user.dir", "."));
+                    String path = "file:" + currDir.toPath().getRoot().toString() + "wamp64\\www\\fixit1\\web\\uploads\\images\\user\\"+item.getImage();
+                    Image image = new Image(path,100, 100, false, false);
+                    ImageView img= new ImageView(image);
+                   
+                    VBox vBox1 = new VBox(img, vBox);
+                    vBox1.setStyle("-fx-font-color: transparent;");
+                    vBox1.setSpacing(15);
+                    HBox hBox = new HBox(vBox1, vBox);
+                    hBox.setStyle("-fx-font-color: transparent;");
+                    hBox.setSpacing(50);
+
+                    setGraphic(hBox);
+ emp.setStyle("-fx-control-inner-background:  transparent; -fx-background-color:   rgba(255,255,255,0.1);");
+                    // hBox.setStyle("-fx-alignment: center ;");
+                    //hBox.gets
+                }
+            }
+
+        });
     }
 
 
