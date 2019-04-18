@@ -1581,8 +1581,8 @@ public class EspaceServiceFrontController implements Initializable {
             textSMS.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
         }
         else {
-       // sms.sendSms(code, sender, num);
-        //textSMS.clear();
+        sms.sendSms(code, sender, num);
+       textSMS.clear();
        textSMS.setStyle("-fx-border-color: none ;");
         envoyerSMS.setVisible(false);
         verifierCode.setVisible(true);
