@@ -413,8 +413,8 @@ public class FrontAccueilController implements Initializable {
         
         ObservableList<Outil> data = FXCollections.observableArrayList();
         data = recServ.afficherOutil();
-        int fromIndex = pageIndex * 2;
-        int toIndex = Math.min(fromIndex + 2, data.size());
+        int fromIndex = pageIndex * 1;
+        int toIndex = Math.min(fromIndex + 1, data.size());
         outilDisponible.setItems(FXCollections.observableArrayList(data.subList(fromIndex, toIndex)));
         
         return outilDisponible;
@@ -424,6 +424,7 @@ public class FrontAccueilController implements Initializable {
             OutilService service = new OutilService();
             ObservableList<Outil> rs = service.afficherOutilDisponible();
             outilDisponiblePagination.setPageFactory(this::createPageOutil);
+            outilDisponiblePagination.setStyle("-fx-control-inner-background:  transparent; -fx-background-color:   rgba(255,255,255,0.1);");
         } catch (Exception e) {
             //System.err.println("Got an exception! ");
             System.out.println("load outil front failed accueil");
@@ -432,6 +433,12 @@ public class FrontAccueilController implements Initializable {
     }
 
     public void afficherOutilsDisponobles() {
+        Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(3), event -> {
+        int pos = (outilDisponiblePagination.getCurrentPageIndex() + 1) % outilDisponiblePagination.getPageCount();
+        outilDisponiblePagination.setCurrentPageIndex(pos);
+        }));
+        fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
+        fiveSecondsWonder.play();
         outilDisponible.setCellFactory(item -> new ListCell<Outil>() {
             protected void updateItem(Outil item, boolean bln) {
             super.updateItem(item, bln);
@@ -449,13 +456,13 @@ public class FrontAccueilController implements Initializable {
                 HBox prixEnScoin = new HBox(s, prix);
                 HBox adresseM = new HBox(m, adresse);
                 HBox LogoCategorie = new HBox(l, nomCategorie);
-                nom.setStyle("-fx-font-size: 35 arial;");
+                nom.setStyle("-fx-font-size: 30 arial;");
                 prix.setStyle("-fx-font-size: 20 arial;");
                 VBox vBox = new VBox(nom, LogoCategorie, adresseM, prixEnScoin);
                 vBox.setStyle("-fx-background-color:  transparent;");
                 vBox.setSpacing(10);
                 
-                Image image = new Image("file:/wamp64/www/fixit/web/uploads/images/Outil/" + item.getImage(), 200, 200, false, false);
+                Image image = new Image("file:/wamp64/www/fixit/web/uploads/images/Outil/" + item.getImage(), 150, 150, false, false);
                 ImageView img = new ImageView(image);
                 img.setStyle("-fx-background-color:  transparent");
                 

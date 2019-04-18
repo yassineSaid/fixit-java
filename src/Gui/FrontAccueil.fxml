@@ -25,19 +25,19 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <ListView fx:id="emp" layoutX="444.0" layoutY="256.0" prefHeight="110.0" prefWidth="527.0" />
+            <ListView fx:id="emp" layoutX="546.0" layoutY="256.0" prefHeight="110.0" prefWidth="425.0" />
             <Label layoutX="592.0" layoutY="225.0" text="Le meilleur réalisateur de service">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Label layoutX="111.0" layoutY="211.0" prefHeight="50.0" prefWidth="157.0" text="Les outils disponibles">
+            <Label layoutX="93.0" layoutY="246.0" prefHeight="50.0" prefWidth="187.0" text="Les outils disponibles">
                <font>
-                  <Font name="System Bold" size="15.0" />
+                  <Font name="System Bold" size="17.0" />
                </font>
             </Label>
-            <Pagination fx:id="outilDisponiblePagination" accessibleRole="LIST_VIEW" layoutX="68.0" layoutY="314.0" prefHeight="248.0" prefWidth="270.0" />
-            <ListView fx:id="outilDisponible" layoutX="68.0" layoutY="314.0" prefHeight="200.0" prefWidth="270.0" />
+            <Pagination fx:id="outilDisponiblePagination" accessibleRole="LIST_VIEW" layoutX="10.0" layoutY="295.0" prefHeight="283.0" prefWidth="352.0" style="-fx-background-color: transparent;" stylesheets="@../Resources/stylep.css" />
+            <ListView fx:id="outilDisponible" layoutX="10.0" layoutY="295.0" prefHeight="220.0" prefWidth="352.0" style="-fx-background-color: transparent;" />
          </children>
       </AnchorPane>
       <TextField fx:id="rechercher" layoutX="1092.0" layoutY="56.0" prefHeight="36.0" prefWidth="187.0" promptText="Trouvez quelqu'un" />

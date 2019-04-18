@@ -451,7 +451,7 @@ public class ReclamationFrontController implements Initializable {
         if (event.getClickCount() == 2) {
             if (rec.getTraite() == 1) {
                 File currDir = new File(System.getProperty("user.dir", "."));
-                String path = currDir.toPath().getRoot().toString() + "wamp64/www/fixit1/web/RapportsReclamation/r" + rec.getId() + ".pdf";
+                String path = currDir.toPath().getRoot().toString() + "wamp64/www/fixit/web/RapportsReclamation/r" + rec.getId() + ".pdf";
                 File f = new File(path);
                 try {
                     Desktop.getDesktop().open(f);

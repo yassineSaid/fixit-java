@@ -45,7 +45,7 @@ public class ReclamationService {
         try {
             ObservableList<Service> list = FXCollections.observableArrayList();
             // to correct idUserDemandeur -> idUserOffreur
-            PreparedStatement pt = c.prepareStatement("Select * from service s join realisation_service r on r.idservice=s.id "
+            PreparedStatement pt = c.prepareStatement("Select DISTINCT * from service s join realisation_service r on r.idservice=s.id "
                     + "where idUserOffreur=(select id from User where username =?)");
             pt.setString(1, userName);
             ResultSet rs = pt.executeQuery();
