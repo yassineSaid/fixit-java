@@ -29,9 +29,11 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -54,6 +56,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
+import org.controlsfx.control.Notifications;
 
 /**
  * FXML Controller class
@@ -438,6 +442,15 @@ public class EspaceOutilFrontController implements Initializable {
         n.setIcon("location");
         n.setTelephone(user.getPhone());
         ns.ajouterNotification(n);
+        Image img = new Image(getClass().getResourceAsStream("/Resources/delete.png"),50,50,false,false);
+        Notifications notificationBuilder = Notifications.create().title("Notification").text(n.getDescription()).graphic(new ImageView(img)).hideAfter(Duration.seconds(10)).position(Pos.BOTTOM_RIGHT).onAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("clicked");
+            }
+        });
+        notificationBuilder.darkStyle();
+        notificationBuilder.show();
         initialize(null, null);
     }
     
