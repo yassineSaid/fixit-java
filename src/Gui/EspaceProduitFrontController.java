@@ -86,7 +86,6 @@ public class EspaceProduitFrontController implements Initializable {
 
     private Produit crud;
     private int quantitee;
-    @FXML
     private FrontIndexController frontIndexController;
 
     @FXML
@@ -172,6 +171,8 @@ public class EspaceProduitFrontController implements Initializable {
     private Button like1;
     @FXML
     private ListView<ListAchat> listProduitAchete;
+    @FXML
+    private ListView<ListAchat> topProduit;
 
     public int getId() {
         return id;
@@ -390,6 +391,7 @@ public class EspaceProduitFrontController implements Initializable {
         });
 
     }
+ 
 
     private void afficher() {
         Platform.runLater(() -> {

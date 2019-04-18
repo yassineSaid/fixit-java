@@ -440,9 +440,10 @@ public class Produit {
     public ObservableList<ListAchat> topProduit() {
         try {
             ObservableList<ListAchat> list = FXCollections.observableArrayList();
-            PreparedStatement pt = Cn.prepareStatement("SELECT SUM(p.quantite) somme ,p.produit ,p.image  FROM achat_produit p GROUP BY p.idProduit ORDER BY somme DESC");
+            PreparedStatement pt = Cn.prepareStatement("SELECT SUM(p.quantite) somme ,p.produit ,p.image  FROM achat_produit p GROUP BY p.idProduit ORDER BY somme DESC LIMIT 5");
 
             ResultSet rs = pt.executeQuery();
+            int i=0;
 
             while (rs.next()) {
                 Image image1 = new Image("file:/wamp64/www/fixit/web/uploads/images/produit/" + rs.getString(5), 120, 120, false, false);
@@ -453,6 +454,7 @@ public class Produit {
                 p.setImage(rs.getString("image"));
                 p.setIm(new ImageView(image1));
                 list.add(p);
+               
             }
             return list;
         } catch (SQLException ex) {
