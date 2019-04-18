@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.StackedBarChart?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -129,11 +132,11 @@
                            </font>
                         </Label>
                         <TextField fx:id="inputNom" layoutX="281.0" layoutY="115.0" />
-                        <TextField fx:id="inputQuantite" layoutX="281.0" layoutY="165.0" />
-                        <TextField fx:id="inputDuree" layoutX="281.0" layoutY="229.0" />
-                        <TextField fx:id="inputPrix" layoutX="281.0" layoutY="282.0" />
+                        <TextField fx:id="inputQuantite" layoutX="281.0" layoutY="165.0" onKeyTyped="#changerAction" />
+                        <TextField fx:id="inputDuree" layoutX="281.0" layoutY="229.0" onKeyTyped="#changerAction" />
+                        <TextField fx:id="inputPrix" layoutX="281.0" layoutY="282.0" onKeyTyped="#changerAction" />
                         <TextField fx:id="inputAddresse" layoutX="628.0" layoutY="115.0" />
-                        <TextField fx:id="inputCodePostal" layoutX="628.0" layoutY="165.0" />
+                        <TextField fx:id="inputCodePostal" layoutX="628.0" layoutY="165.0" onKeyTyped="#changerAction" />
                         <TextField fx:id="inputVille" layoutX="628.0" layoutY="229.0" />
                         <ComboBox fx:id="inputCategorieOutil" layoutX="628.0" layoutY="282.0" prefWidth="150.0" />
                         <Button fx:id="confirmerOutil" layoutX="602.0" layoutY="388.0" mnemonicParsing="false" onAction="#confirmerAction" styleClass="ajouterBack" stylesheets="@../Resources/style.css" text="Confirmer" />
@@ -148,7 +151,7 @@
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="tableOutilsLoues" layoutX="193.0" layoutY="51.0" prefHeight="421.0" prefWidth="653.0" styleClass="table" stylesheets="@../Resources/style.css">
+                        <TableView fx:id="tableOutilsLoues" layoutX="193.0" layoutY="51.0" onMousePressed="#itemSelectedOutilLoues" prefHeight="421.0" prefWidth="653.0" styleClass="table" stylesheets="@../Resources/style.css">
                           <columns>
                             <TableColumn fx:id="nomUser" prefWidth="140.0" text="Nom de l'utilisateur" />
                             <TableColumn fx:id="userNomOutil" prefWidth="107.0" text="Nom de l'outil" />
@@ -178,6 +181,27 @@
                      </children>
                   </AnchorPane>
                </content>
+            </Tab>
+            <Tab text="Statistiques">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <StackedBarChart fx:id="stat" layoutX="144.0" layoutY="118.0" prefHeight="435.0" prefWidth="750.0">
+                          <xAxis>
+                            <CategoryAxis side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis side="LEFT" />
+                          </yAxis>
+                        </StackedBarChart>
+                        <Label alignment="CENTER" layoutX="370.0" layoutY="67.0" prefHeight="28.0" prefWidth="299.0" text="Les outils les plus loués">
+                           <font>
+                              <Font name="System Bold" size="19.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+              </content>
             </Tab>
         </tabs>
       </TabPane>

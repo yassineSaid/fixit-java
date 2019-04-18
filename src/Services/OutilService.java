@@ -65,10 +65,10 @@ public class OutilService {
         }
     }
 
-    public void updateQuantie(Outil O) {
+    public void updateQuantie(Outil O,int i) {
         try {
             PreparedStatement pt = c.prepareStatement("update outils set  Quantite=?  where id=? ");
-            pt.setInt(1, (O.getQuantite() - 1));
+            pt.setInt(1, (O.getQuantite() +i));
             pt.setInt(2, O.getId());
             pt.execute();
         } catch (SQLException ex) {
@@ -136,6 +136,21 @@ public class OutilService {
         } catch (SQLException ex) {
             Logger.getLogger(OutilService.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    public Boolean verifierOutil(String nom) {
+        try {
+            PreparedStatement pt = c.prepareStatement("SELECT * from outils where Nom=?");
+            pt.setString(1, nom);
+            ResultSet rs = pt.executeQuery();
+                while (rs.next()) {
+                    return true;
+                }
+            return false;
+        } catch (SQLException ex) {
+            System.out.println("Services.OutilService.getCategorieOutil()");
+            System.out.println(ex);
+        }
+        return null;
     }
 
 }

@@ -14,6 +14,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
@@ -221,6 +223,18 @@ public class UserOutilService {
                  }
                  return null;
         
+    }
+     
+     public void supprimerUserOutil(UserOutil uo) {
+        try {
+            PreparedStatement pt = c.prepareStatement("delete from user_outil where idUser=? and idOutil=?");
+            pt.setInt(1, uo.getUser().getId());
+            pt.setInt(2, uo.getOutil().getId());
+            pt.execute();
+        } catch (SQLException ex) {
+            System.out.println("teeeest");
+            Logger.getLogger(OutilService.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 

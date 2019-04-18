@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-border-color: red; -fx-border-width: 5; -fx-background-radius: 8 7 6;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.DetailNotificationController">
+   <children>
+      <Button fx:id="confirmer" layoutX="143.0" layoutY="266.0" mnemonicParsing="false" onAction="#confirmerAction" styleClass="ajouterBack" stylesheets="@../Resources/style.css" text="Confirmer" />
+      <Button fx:id="supprimer" layoutX="307.0" layoutY="266.0" mnemonicParsing="false" onAction="#supprimerAction" styleClass="supprimerBack" stylesheets="@../Resources/style.css" text="Supprimer" />
+      <Button fx:id="retour" layoutX="435.0" layoutY="337.0" mnemonicParsing="false" onAction="#retourAction" styleClass="supprimerBack" stylesheets="@../Resources/style.css" text="Retour" />
+      <Text fx:id="contenu" fill="#1027bc" layoutX="44.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Foulen va loue l'outil de 12/12/1212 à 14/14/1414 ">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>

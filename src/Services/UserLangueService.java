@@ -92,4 +92,19 @@ public class UserLangueService {
             e.printStackTrace();
         }
     }
+    public String languePlusParlee()
+    {
+        PreparedStatement pt;
+        try {
+            pt = C.prepareStatement("SELECT count(idUser),idLangue,libelle FROM user_langue,langue WHERE id=idLangue GROUP BY idLangue ORDER BY COUNT(idUser) DESC");
+            ResultSet rs=pt.executeQuery();
+            while(rs.next()){
+                return rs.getString("libelle");
+            }
+        return null;
+        } catch (SQLException ex) {
+            Logger.getLogger(UserLangueService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 }

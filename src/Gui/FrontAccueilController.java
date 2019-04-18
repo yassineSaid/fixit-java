@@ -6,18 +6,24 @@
 package Gui;
 
 import Entities.Avis;
+import Entities.Bonus;
 import Entities.User;
 import Services.AvisService;
+import Services.RealisationServiceService;
 import Services.UserService;
+import Services.bonusService;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -43,6 +49,7 @@ import javafx.util.Duration;
 import javafx.stage.Stage;
 import org.controlsfx.control.GridCell;
 import org.controlsfx.control.GridView;
+import org.controlsfx.control.Notifications;
 import org.controlsfx.control.Rating;
 
 /**
@@ -59,7 +66,8 @@ public class FrontAccueilController implements Initializable {
     @FXML
     private TextField rechercher;
 
-    User user;
+    private User user;
+    private String rech;
     @FXML
     private Pagination paginator;
     @FXML
@@ -68,6 +76,8 @@ public class FrontAccueilController implements Initializable {
     private AnchorPane recherchePane;
     @FXML
     private AnchorPane accueilPane;
+    @FXML
+    private ListView<User> emp;
 
     public User getUser() {
         return user;
@@ -75,6 +85,14 @@ public class FrontAccueilController implements Initializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getRech() {
+        return rech;
+    }
+
+    public void setRech(String rech) {
+        this.rech = rech;
     }
 
     /**
@@ -85,23 +103,46 @@ public class FrontAccueilController implements Initializable {
         accueilPane.setVisible(true);
         recherchePane.setVisible(false);
         Platform.runLater(() -> {
-            System.out.println(user.getId());
             frontIndexController.setUser(user);
+            frontIndexController.loadImage();
             frontIndexController.refresh();
             frontIndexController.getAccueil().setStyle("-fx-background-color: #f4f4f4");
-            rechercher.textProperty().addListener((observable, oldValue, newValue) -> {
-                afficherUsers();
-            });
-            rechercher.focusedProperty().addListener((ov, oldV, newV) -> {
-                if (newV) {
-                    accueilPane.setVisible(false);
-                    recherchePane.setVisible(true);
-                    afficherUsers();
-                } 
-            });
-            afficherUsers();
-            afficherAvis();
+            init();
+           Date date= new Date();
+ 
+ long time = date.getTime();
+     //System.out.println("Time in Milliseconds: " + time);
+ 
+ Timestamp ts = new Timestamp(time);
+            
+            System.out.println(ts.getDate()+1);
+            if(ts.getDate()== 17)
+                bonus();
+            else
+                System.out.println("not today");
         });
+    }
+
+    public void init() {
+        rechercher.textProperty().addListener((observable, oldValue, newValue) -> {
+            afficherUsers();
+            rech = rechercher.getText();
+        });
+        rechercher.focusedProperty().addListener((ov, oldV, newV) -> {
+            if (newV) {
+                accueilPane.setVisible(false);
+                recherchePane.setVisible(true);
+                afficherUsers();
+            }
+        });
+        if (rech!=null) {
+            rechercher.setText(rech);
+            accueilPane.setVisible(false);
+            recherchePane.setVisible(true);
+        }
+        afficherUsers();
+        afficherAvis();
+        EmployeDuMois();
     }
 
     public void afficherAvis() {
@@ -117,7 +158,40 @@ public class FrontAccueilController implements Initializable {
         fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
         fiveSecondsWonder.play();
         getAvis();
-        listAvis.setCellFactory(v -> new Poules());
+        listAvis.setCellFactory(item -> new ListCell<Avis>() {
+            protected void updateItem(Avis item, boolean bln) {
+                super.updateItem(item, bln);
+                if (item != null) {
+                    Text satisfaction = new Text(item.getSatisfaction());
+                    Text description = new Text(item.getDescription());
+                    Text userName = new Text(item.getUser().getUsername());
+                    satisfaction.setStyle("-fx-font-size: 23 arial;");
+                    description.setStyle("-fx-font-size: 14 arial;");
+                    userName.setStyle("-fx-font-size: 18 arial;");
+                    Rating rate = new Rating();
+                    rate.setRating(item.getNote());
+                    EventHandler<MouseEvent> handler = MouseEvent::consume;
+                    rate.addEventFilter(MouseEvent.ANY, handler);
+                    rate.setMaxHeight(1);
+                    VBox vBox = new VBox(satisfaction, userName, description);
+                    vBox.setStyle("-fx-font-color: transparent;");
+                    vBox.setSpacing(10);
+                    Text txt = new Text("");
+                    VBox vBox1 = new VBox(txt, rate);
+                    vBox1.setStyle("-fx-font-color: transparent;");
+                    vBox1.setSpacing(15);
+                    HBox hBox = new HBox(vBox1, vBox);
+                    hBox.setStyle("-fx-font-color: transparent;");
+                    hBox.setSpacing(50);
+ listAvis.setStyle("-fx-control-inner-background:  transparent; -fx-background-color:   rgba(255,255,255,0.1);");
+                    setGraphic(hBox);
+
+                    // hBox.setStyle("-fx-alignment: center ;");
+                    //hBox.gets
+                }
+            }
+
+        });
     }
 
     public void afficherUsers() {
@@ -150,6 +224,7 @@ public class FrontAccueilController implements Initializable {
                             Parent Rec = fxmlLoader.load();
                             ProfilUserController controller = fxmlLoader.<ProfilUserController>getController();
                             controller.setUser(user);
+                            controller.setRech(rech);
                             controller.setId(v.getId());
                             Scene scene = new Scene(Rec);
 
@@ -235,42 +310,91 @@ public class FrontAccueilController implements Initializable {
 
         return listAvis;
     }
-
-    public class Poules extends ListCell<Avis> {
-
-        public Poules() {
+    public void bonus()
+    {
+        bonusService bs = new bonusService();
+        
+        if(bs.getBonusExist(this.user.getId()))
+        {
+            System.out.println("you won't have a bonus !");
         }
-
-        protected void updateItem(Avis item, boolean bln) {
-            super.updateItem(item, bln);
-            if (item != null) {
-                Text satisfaction = new Text(item.getSatisfaction());
-                Text description = new Text(item.getDescription());
-                Text userName = new Text(item.getUser().getUsername());
-                satisfaction.setStyle("-fx-font-size: 23 arial;");
-                description.setStyle("-fx-font-size: 14 arial;");
-                userName.setStyle("-fx-font-size: 18 arial;");
-                Rating rate = new Rating();
-                rate.setRating(item.getNote());
-                EventHandler<MouseEvent> handler = MouseEvent::consume;
-                rate.addEventFilter(MouseEvent.ANY, handler);
-                rate.setMaxHeight(1);
-                VBox vBox = new VBox(satisfaction, userName, description);
-                vBox.setStyle("-fx-font-color: transparent;");
-                vBox.setSpacing(10);
-                Text txt = new Text("");
-                VBox vBox1 = new VBox(txt, rate);
-                vBox1.setStyle("-fx-font-color: transparent;");
-                vBox1.setSpacing(15);
-                HBox hBox = new HBox(vBox1, vBox);
-                hBox.setStyle("-fx-font-color: transparent;");
-                hBox.setSpacing(50);
-
-                setGraphic(hBox);
-
-                // hBox.setStyle("-fx-alignment: center ;");
-                //hBox.gets
+        else 
+        {
+            RealisationServiceService rss = new RealisationServiceService();
+            if(rss.getAvgNoteUser(this.user.getId())>2)
+            {
+                Date localdate = new Date();
+                java.sql.Date dateAttribution = new java.sql.Date(localdate.getTime());
+                Bonus bonus = new Bonus(this.user,dateAttribution,25);
+                bs.insertBonus(bonus);
+                UserService us = new UserService();
+                us.modifierSolde(this.user, 25);
+                this.setUser(us.getUser(Integer.toString(this.user.getId())));
+                frontIndexController.setUser(this.user);
+                frontIndexController.refresh();
+                URL path = getClass().getResource("/Resources/scoin.png");
+                Image img = new Image(path.toString());
+                Notifications notificationBuilder = Notifications.create().title("Notification").text("Vous avez été bien noté pendant ce mois vous aurez un bonus de 25 SCOINs").graphic(new ImageView(img)).hideAfter(Duration.seconds(10)).position(Pos.BOTTOM_RIGHT).onAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("clicked");
+            }
+        });
+        notificationBuilder.darkStyle();
+        notificationBuilder.show();
+            }
+            else
+            {
+                System.out.println("you won't have cuz your average");
             }
         }
     }
+    
+    public void EmployeDuMois()
+    {
+        UserService us = new UserService();
+        
+        RealisationServiceService rss = new RealisationServiceService();
+        ObservableList<User> list = FXCollections.observableArrayList();
+        int[] tab = rss.getEmployeeoftheMonth();
+        User u = us.getUser(Integer.toString(tab[1]));
+        list.add(u);
+        emp.setItems(list);
+        emp.setCellFactory(item -> new ListCell<User>() {
+            protected void updateItem(User item, boolean bln) {
+                super.updateItem(item, bln);
+                if (item != null) {
+                    Text userName = new Text(item.getFirstname()+" "+item.getLastname());
+                    userName.setStyle("-fx-font-size: 25 arial;");
+                    
+                    Rating rate = new Rating();
+                    rate.setRating(tab[0]);
+                    EventHandler<MouseEvent> handler = MouseEvent::consume;
+                    rate.addEventFilter(MouseEvent.ANY, handler);
+                    rate.setMaxHeight(1);
+                    VBox vBox = new VBox(userName,rate);
+                    vBox.setStyle("-fx-font-color: transparent;");
+                    File currDir = new File(System.getProperty("user.dir", "."));
+                    String path = "file:" + currDir.toPath().getRoot().toString() + "wamp64\\www\\fixit1\\web\\uploads\\images\\user\\"+item.getImage();
+                    Image image = new Image(path,100, 100, false, false);
+                    ImageView img= new ImageView(image);
+                   
+                    VBox vBox1 = new VBox(img, vBox);
+                    vBox1.setStyle("-fx-font-color: transparent;");
+                    vBox1.setSpacing(15);
+                    HBox hBox = new HBox(vBox1, vBox);
+                    hBox.setStyle("-fx-font-color: transparent;");
+                    hBox.setSpacing(50);
+
+                    setGraphic(hBox);
+ emp.setStyle("-fx-control-inner-background:  transparent; -fx-background-color:   rgba(255,255,255,0.1);");
+                    // hBox.setStyle("-fx-alignment: center ;");
+                    //hBox.gets
+                }
+            }
+
+        });
+    }
+
+
 }

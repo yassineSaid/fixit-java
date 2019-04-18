@@ -47,7 +47,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.controlsfx.glyphfont.FontAwesome;
 
 /**
@@ -70,8 +72,9 @@ public class ProfilUserController implements Initializable {
     @FXML
     private VBox horraires;
 
-    String id;
-    User user;
+    private String id;
+    private String rech;
+    private User user;
     @FXML
     private HBox langues;
     @FXML
@@ -82,6 +85,8 @@ public class ProfilUserController implements Initializable {
     private Button dislike;
     @FXML
     private Button retour;
+    @FXML
+    private Button contact;
 
     public String getId() {
         return id;
@@ -99,6 +104,15 @@ public class ProfilUserController implements Initializable {
         this.user = user;
     }
 
+    public String getRech() {
+        return rech;
+    }
+
+    public void setRech(String rech) {
+        this.rech = rech;
+    }
+    
+
     /**
      * Initializes the controller class.
      */
@@ -114,6 +128,10 @@ public class ProfilUserController implements Initializable {
     }
 
     public void loadUser() {
+        FontAwesome fs = new FontAwesome();
+        Node icon = fs.create(FontAwesome.Glyph.SEND).color(Color.WHITE).size(16);
+        icon.setId("icon");
+        contact.setGraphic(icon);
         UserService us = new UserService();
         HorraireService hs = new HorraireService();
         User u = us.getUser(id);
@@ -391,6 +409,7 @@ public class ProfilUserController implements Initializable {
                 Scene scene = new Scene(Rec);
                 FrontAccueilController controller = fxmlLoader.<FrontAccueilController>getController();
                 controller.setUser(this.user);
+                controller.setRech(rech);
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 stage.show();
                 stage.setScene(scene);
@@ -398,5 +417,27 @@ public class ProfilUserController implements Initializable {
             } catch (IOException ex) {
                 System.out.println(ex);
             }
+    }
+
+    @FXML
+    private void contactAction(ActionEvent event) {
+        try {
+            UserService us = new UserService();
+            User u = us.getUser(id);
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui/Conversation.fxml"));
+            Parent root = fxmlLoader.load();
+            ConversationController controller = fxmlLoader.<ConversationController>getController();
+            controller.setCurrent(user);
+            controller.setContacted(u);
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(((Node) event.getSource()).getScene().getWindow());
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setScene(scene);
+            stage.showAndWait();
+        } catch (IOException ex) {
+            Logger.getLogger(ProfilUserController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

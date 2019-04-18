@@ -38,7 +38,6 @@ public class QuizUserService {
         try
             {                    
                 ObservableList<Integer> list = FXCollections.observableArrayList();
-                    System.out.println("aaaaa");
 
                 PreparedStatement pt=c.prepareStatement("SELECT * from quiz_user where idUser=?");
                 pt.setInt(1, id);
@@ -62,7 +61,6 @@ public class QuizUserService {
         try
             {                    
                 //ObservableList<Integer> list = FXCollections.observableArrayList();
-                    System.out.println("aaaaa");
                     int a=0;
 
                 PreparedStatement pt=c.prepareStatement("SELECT * from quiz_user where idUser=? and idQuiz=?");
@@ -123,6 +121,78 @@ public class QuizUserService {
             {
                 System.out.println(ex);
             }  return false;  
+    }
+        public int nombreUserQuiz1() 
+             {
+        try
+            {              
+                int i=0;
+                // ObservableList<Integer> data = FXCollections.observableArrayList();
+                //ObservableList<Integer> list = FXCollections.observableArrayList();
+
+                PreparedStatement pt=c.prepareStatement("SELECT count(idUser)from quiz_user where tentative =3 and idQuiz=1");
+               
+                ResultSet rs= pt.executeQuery();
+                while(rs.next())
+                {
+                    //data.add(rs.getInt(1));
+                    i+=rs.getInt(1);
+                   
+                }
+                return i;
+            }
+            catch(SQLException ex)
+            {
+                System.out.println("++"+ex);
+            }  return 0;  
+    }
+        public int nombreUserQuiz2() 
+             {
+        try
+            {              
+                int i=0;
+           // ObservableList<Integer> data = FXCollections.observableArrayList();
+                //ObservableList<Integer> list = FXCollections.observableArrayList();
+
+                PreparedStatement pt=c.prepareStatement("SELECT count(idUser)from quiz_user where tentative =3 and idQuiz=2");
+               
+                ResultSet rs= pt.executeQuery();
+                while(rs.next())
+                {
+                    //data.add(rs.getInt(1));
+                    i+=rs.getInt(1);
+                   
+                }
+                return i;
+            }
+            catch(SQLException ex)
+            {
+                System.out.println("++"+ex);
+            }  return 0;  
+    }
+        public int nombreUserQuiz3() 
+             {
+        try
+            {              
+                int i=0;
+           // ObservableList<Integer> data = FXCollections.observableArrayList();
+                //ObservableList<Integer> list = FXCollections.observableArrayList();
+
+                PreparedStatement pt=c.prepareStatement("SELECT count(idUser)from quiz_user where tentative =3 and idQuiz=3");
+               
+                ResultSet rs= pt.executeQuery();
+                while(rs.next())
+                {
+                    //data.add(rs.getInt(1));
+                    i+=rs.getInt(1);
+                   
+                }
+                return i;
+            }
+            catch(SQLException ex)
+            {
+                System.out.println("++"+ex);
+            }  return 0;  
     }
     
 }

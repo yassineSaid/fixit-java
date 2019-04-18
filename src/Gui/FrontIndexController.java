@@ -6,8 +6,12 @@
 package Gui;
 
 import Entities.User;
+import Services.Like_DislikeService;
+import Services.MessageService;
+import Services.RealisationServiceService;
 import Services.UserService;
 import Services.Utils;
+import Services.bonusService;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -16,6 +20,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,8 +34,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.controlsfx.glyphfont.FontAwesome;
 
 /**
@@ -61,6 +69,10 @@ public class FrontIndexController implements Initializable {
     private Button deconnexion;
     @FXML
     private Button accueil;
+    @FXML
+    private Label likenumber;
+    @FXML
+    private Label dislikenbr;
 
     public User getUser() {
         return user;
@@ -135,21 +147,40 @@ public class FrontIndexController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         Platform.runLater(() -> {
             if (user != null) {
-                
                 refresh();
+                
             }
 
         });
     }
     public void refresh(){
+        MessageService ms=new MessageService();
         FontAwesome fs = new FontAwesome();
         Node icon = fs.create(FontAwesome.Glyph.SIGN_OUT).color(Color.WHITE).size(17);
         icon.setId("icon");
+        Node icon1 = fs.create(FontAwesome.Glyph.INFO_CIRCLE).color(Color.web("#017c00")).size(17);
+        icon1.setId("icon"); 
         deconnexion.setGraphic(icon);
         userName.setText(Utils.upperCaseFirst(user.getFirstname()) + " " + Utils.upperCaseFirst(user.getLastname()));
         loadImage();
+        getLikeDislike();
+        if (ms.checkUnseen(user.getId())) {
+            profil.setGraphic(icon1);
+        }
+        else profil.setGraphic(null);
+        Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+            if (ms.checkUnnotified(user.getId())){
+                URL path =getClass().getResource("/Resources/message.mp3");
+                AudioClip ac=new AudioClip(path.toString());
+                ac.play();
+                profil.setGraphic(icon1);
+                ms.setNotified(user.getId());
+            }
+        }));
+        fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
+        fiveSecondsWonder.play();
     }
-    private void loadImage() {
+    public void loadImage() {
         File currDir = new File(System.getProperty("user.dir", "."));
         System.out.println(currDir.toPath().getRoot().toString());
         if (user.getImage() != null) {
@@ -327,5 +358,26 @@ public class FrontIndexController implements Initializable {
             System.out.println(ex);
         }
     }
-
+    public void getLikeDislike()
+    {
+         Like_DislikeService lds = new Like_DislikeService();
+        int nbrLike= lds.countLikes(this.user.getId());
+        int nbrDislike = lds.countDislikes(this.user.getId());
+        System.out.println(nbrDislike);
+        
+        
+        FontAwesome fsLike = new FontAwesome();
+        Node iconLike = fsLike.create(FontAwesome.Glyph.THUMBS_ALT_UP).color(Color.WHITE).size(25);
+        iconLike.setId("likeupempty");
+        likenumber.setGraphic(iconLike);
+        likenumber.setText(" /"+nbrLike);
+         FontAwesome fsDislike = new FontAwesome();
+        Node iconDislike = fsDislike.create(FontAwesome.Glyph.THUMBS_ALT_DOWN).color(Color.WHITE).size(25);
+        iconLike.setId("dislikefull");
+        dislikenbr.setGraphic(iconDislike);
+        dislikenbr.setText(" /"+nbrDislike);
+        
+    }
+    
+    
 }
