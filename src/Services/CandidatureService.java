@@ -125,7 +125,7 @@ System.out.println("erreur " + ex.getMessage());
 {
     try {
         Statement st = c.createStatement();
-        String req = "insert into realisation_service () values('" + cn.getId_annonce() + "','" + cn.getMessage()+ "','" + cn.getEtat()+ "','"+cn.getEmail() +"','" + cn.getTel()  + "' ,'" + cn.getDate()  + "','" + cn.getIdUser()  +"')";
+        String req = "insert into realisation_service () values(?,?,?)";
         st.executeUpdate(req);
         }
         } catch (SQLException ex) {

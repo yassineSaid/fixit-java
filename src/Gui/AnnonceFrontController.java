@@ -73,7 +73,7 @@ public class AnnonceFrontController implements Initializable {
             @FXML
 	    private TableView<Annonce> table;
 	    @FXML
-	    private  TableColumn<Annonce, String> servcol=new TableColumn<>();
+	    private  TableColumn<Annonce, Integer> servcol=new TableColumn<>();
 	    @FXML
 	    private  TableColumn<Annonce, String> descriptioncol=new TableColumn<>();
 	    @FXML
@@ -166,8 +166,7 @@ public class AnnonceFrontController implements Initializable {
                 AnnonceService sa = new AnnonceService();
                 frontIndexController.setUser(user);
                 frontIndexController.initialize(null, null);
-	        //servcol.setCellValueFactory(new PropertyValueFactory<Annonce, Integer>("IdService"));
-                servcol.setCellValueFactory(new PropertyValueFactory<>("nomservice"));
+	        servcol.setCellValueFactory(new PropertyValueFactory<Annonce, Integer>("IdService"));
 	        descriptioncol.setCellValueFactory(new PropertyValueFactory<Annonce, String>("description"));
 	        typecol.setCellValueFactory(new PropertyValueFactory<Annonce, String>("type"));
 	        adressecol.setCellValueFactory(new PropertyValueFactory<Annonce, String>("adresse"));
