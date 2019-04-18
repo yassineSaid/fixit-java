@@ -614,7 +614,8 @@ public class FrontAccueilController implements Initializable {
                 hBox.setSpacing(10);
                 setGraphic(hBox);
             }
-        });
-    }
+            }
 
+});
+}
 }
