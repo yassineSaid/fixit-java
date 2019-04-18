@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Pagination?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.AnnonceBackController">
+        <fx:include fx:id="backIndex" source="backIndex.fxml" />
+   <TabPane layoutX="268.0" layoutY="113.0" prefHeight="576.0" prefWidth="1032.0" tabClosingPolicy="UNAVAILABLE">
+     <tabs>
+       <Tab fx:id="annoncetab" text="Les Annonces">
+         <content>
+           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="522.0" prefWidth="1032.0" stylesheets="@../Resources/style.css">
+                  <children>
+                     <TableView fx:id="annonces" layoutX="8.0" layoutY="14.0" prefHeight="404.0" prefWidth="1015.0" styleClass="table" stylesheets="@../Resources/style.css">
+                        <columns>
+                           <TableColumn fx:id="ida" prefWidth="35.199981689453125" text="id" />
+                           <TableColumn fx:id="servicea" prefWidth="115.20001220703125" text="Service" />
+                           <TableColumn fx:id="descriptiona" prefWidth="321.5999450683594" text="Description" />
+                           <TableColumn fx:id="typea" prefWidth="72.00003051757812" text="Type" />
+                           <TableColumn fx:id="prixa" prefWidth="62.4000244140625" text="Prix" />
+                           <TableColumn fx:id="adressea" prefWidth="132.800048828125" text="Adresse" />
+                           <TableColumn fx:id="datea" prefWidth="100.800048828125" text="Date" />
+                           <TableColumn fx:id="tela" prefWidth="112.7999267578125" text="Telephone" />
+                           <TableColumn fx:id="usera" prefWidth="63.20001220703125" text="User" />
+                        </columns>
+                     </TableView>
+                     <Button layoutX="425.0" layoutY="466.0" mnemonicParsing="false" onAction="#SupprimerAnAction" prefHeight="26.0" prefWidth="239.0" style="-fx-background-color: red;" text="Supprimer" AnchorPane.bottomAnchor="53.200000000000045" AnchorPane.leftAnchor="425.0" AnchorPane.rightAnchor="425.0" />
+                     <Pagination fx:id="paginator" layoutX="4.0" layoutY="2.0" prefHeight="451.0" prefWidth="1024.0" stylesheets="@../Resources/style.css" AnchorPane.bottomAnchor="93.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="2.0" />
+                  </children>
+               </AnchorPane>
+         </content>
+       </Tab>
+       <Tab fx:id="candidaturetab" text="Les Candidatures">
+         <content>
+           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <children>
+                     <TableView fx:id="candidatures" layoutX="8.0" layoutY="8.0" prefHeight="322.0" prefWidth="1015.0" styleClass="table" stylesheets="@../Resources/style.css">
+                       <columns>
+                         <TableColumn fx:id="idc" prefWidth="48.79998779296875" text="id" />
+                         <TableColumn fx:id="annoncec" prefWidth="69.5999755859375" text="Annonce" />
+                           <TableColumn fx:id="messagec" prefWidth="333.6000061035156" text="Message" />
+                           <TableColumn fx:id="etatc" prefWidth="116.0" text="Etat" />
+                           <TableColumn fx:id="emailc" prefWidth="151.20001220703125" text="Email" />
+                           <TableColumn fx:id="telc" prefWidth="120.00006103515625" text="Tel" />
+                           <TableColumn fx:id="datec" prefWidth="124.7999267578125" text="Date" />
+                           <TableColumn fx:id="userc" prefWidth="53.5999755859375" text="User" />
+                       </columns>
+                     </TableView>
+                     <Button layoutX="425.0" layoutY="474.0" mnemonicParsing="false" onAction="#SupprimerCanAction" prefHeight="26.0" prefWidth="239.0" style="-fx-background-color: red;" stylesheets="@../Resources/style.css" text="Supprimer" textAlignment="CENTER" textFill="#191818" AnchorPane.bottomAnchor="45.200000000000045" AnchorPane.leftAnchor="425.0" AnchorPane.rightAnchor="425.0" />
+                     <Pagination fx:id="paginatorc" layoutX="416.0" layoutY="4.0" prefHeight="456.0" prefWidth="1032.0" AnchorPane.bottomAnchor="86.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="4.0" />
+                  </children>
+               </AnchorPane>
+         </content>
+       </Tab>
+         <Tab fx:id="stattab" text="Statistiques">
+           <content>
+             <AnchorPane fx:id="stat" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <children>
+                     <PieChart fx:id="piechart" layoutX="288.0" layoutY="24.0" prefHeight="378.0" prefWidth="455.0" title="Offres par rapport aux demandes" />
+                     <Button layoutX="288.0" layoutY="442.0" mnemonicParsing="false" onAction="#PieChart" prefHeight="26.0" prefWidth="145.0" styleClass="accueil" text="Pie Chart">
+                        <stylesheets>
+                           <URL value="@../Resources/style.css" />
+                           <URL value="@../Resources/style1.css" />
+                        </stylesheets>
+                     </Button>
+                     <Button layoutX="557.0" layoutY="442.0" mnemonicParsing="false" onAction="#BarChart" prefHeight="26.0" prefWidth="145.0" styleClass="accueil" text="Bar Chart">
+                        <stylesheets>
+                           <URL value="@../Resources/style1.css" />
+                           <URL value="@../Resources/style.css" />
+                        </stylesheets></Button>
+                  </children></AnchorPane>
+           </content>
+         </Tab>
+     </tabs>
+   </TabPane>
+
+</AnchorPane>

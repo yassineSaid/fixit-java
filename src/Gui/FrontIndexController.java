@@ -327,5 +327,23 @@ public class FrontIndexController implements Initializable {
             System.out.println(ex);
         }
     }
+        @FXML
+    private void espaceAnAction(ActionEvent event) {
+        try {
+			
+		 			 
+            FXMLLoader Loader = new FXMLLoader(getClass().getResource("/Gui/annonceFront.fxml"));   
+            Parent An = Loader.load();          
+	    AnnonceFrontController controller = Loader.<AnnonceFrontController>getController();
+            controller.setUser(this.getUser());
+            Scene scene = new Scene(An);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.show();
+            stage.setScene(scene);
+            
+        } catch (IOException ex) {
+            System.out.println(ex);
+        }
+    }
 
 }

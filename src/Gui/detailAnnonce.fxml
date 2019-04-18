@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="690.0" prefWidth="1300.0" stylesheets="@../Resources/style.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.DetailAnnonceController">
+      <fx:include fx:id="frontIndex" source="frontIndex.fxml" />
+   <Label layoutX="344.0" layoutY="112.0" prefHeight="42.0" prefWidth="178.0" style="-fx-background-color: #3AEE40;" text="Description : ">
+      <font>
+         <Font size="16.0" />
+      </font>
+   </Label>
+   <Label layoutX="344.0" layoutY="180.0" prefHeight="42.0" prefWidth="178.0" style="-fx-background-color: #3AEE40;" text="Type : ">
+      <font>
+         <Font size="16.0" />
+      </font>
+   </Label>
+   <Label layoutX="344.0" layoutY="245.0" prefHeight="42.0" prefWidth="178.0" style="-fx-background-color: #3AEE40;" text="Prix (dt) :">
+      <font>
+         <Font size="16.0" />
+      </font>
+   </Label>
+   <Label layoutX="344.0" layoutY="307.0" prefHeight="42.0" prefWidth="178.0" style="-fx-background-color: #3AEE40;" text="Adresse :">
+      <font>
+         <Font size="16.0" />
+      </font>
+   </Label>
+   <Label layoutX="344.0" layoutY="371.0" prefHeight="42.0" prefWidth="178.0" style="-fx-background-color: #3AEE40;" text="Date :">
+      <font>
+         <Font size="16.0" />
+      </font>
+   </Label>
+   <Label layoutX="344.0" layoutY="430.0" prefHeight="42.0" prefWidth="178.0" style="-fx-background-color: #3AEE40;" text="Telephone :">
+      <font>
+         <Font size="16.0" />
+      </font>
+   </Label>
+   <Label layoutX="344.0" layoutY="505.0" prefHeight="42.0" prefWidth="178.0" style="-fx-background-color: #3AEE40;" text="Service :">
+      <font>
+         <Font size="16.0" />
+      </font>
+   </Label>
+   <Label fx:id="description" layoutX="603.0" layoutY="106.0" prefHeight="53.0" prefWidth="572.0">
+      <font>
+         <Font size="18.0" />
+      </font></Label>
+   <Label fx:id="type" layoutX="603.0" layoutY="174.0" prefHeight="53.0" prefWidth="572.0">
+      <font>
+         <Font size="18.0" />
+      </font></Label>
+   <Label fx:id="prix" layoutX="603.0" layoutY="239.0" prefHeight="53.0" prefWidth="572.0">
+      <font>
+         <Font size="18.0" />
+      </font></Label>
+   <Label fx:id="adresse" layoutX="603.0" layoutY="301.0" prefHeight="53.0" prefWidth="572.0">
+      <font>
+         <Font size="18.0" />
+      </font></Label>
+   <Label fx:id="date" layoutX="603.0" layoutY="365.0" prefHeight="53.0" prefWidth="572.0">
+      <font>
+         <Font size="18.0" />
+      </font></Label>
+   <Label fx:id="tel" layoutX="603.0" layoutY="424.0" prefHeight="53.0" prefWidth="572.0">
+      <font>
+         <Font size="18.0" />
+      </font></Label>
+   <Label fx:id="service" layoutX="603.0" layoutY="499.0" prefHeight="53.0" prefWidth="572.0">
+      <font>
+         <Font size="18.0" />
+      </font></Label>
+   <Button layoutX="524.0" layoutY="591.0" mnemonicParsing="false" onAction="#PostulerAction" prefHeight="26.0" prefWidth="178.0" styleClass="greenFront" text="Postuler" />
+   <Button layoutX="792.0" layoutY="591.0" mnemonicParsing="false" onAction="#RetournerAction" prefHeight="26.0" prefWidth="178.0" styleClass="redFront" text="Retourner" />
+
+</AnchorPane>
