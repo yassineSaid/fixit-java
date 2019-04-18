@@ -57,7 +57,7 @@
          <URL value="@../Resources/stylep.css" />
          <URL value="@../Resources/styleY.css" />
       </stylesheets></Button>
-   <Button layoutX="980.0" layoutY="627.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="182.0" styleClass="redFront" stylesheets="@../Resources/style.css" text="Annuler" />
+   <Button layoutX="980.0" layoutY="627.0" mnemonicParsing="false" onAction="#RetournerAction" prefHeight="26.0" prefWidth="182.0" styleClass="redFront" stylesheets="@../Resources/style.css" text="Annuler" />
    <ComboBox fx:id="type" layoutX="621.0" layoutY="244.0" prefHeight="26.0" prefWidth="520.0" />
 
 </AnchorPane>

@@ -11,6 +11,7 @@ import Entities.User;
 import Services.AnnonceService;
 import Services.CandidatureService;
 import Services.MailService;
+import Services.SMSCandidature;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
@@ -98,6 +99,7 @@ public class AjouterCandidatureController implements Initializable {
     
     @FXML
     private void AjouterAction (ActionEvent event) throws Exception {
+        
         boolean erreur = false;
         CandidatureService sc = CandidatureService.getInstance();
         Vector<String> erreurs = new Vector<String>();
@@ -143,6 +145,8 @@ public class AjouterCandidatureController implements Initializable {
             });
                 notificationBuilder.darkStyle();
                 notificationBuilder.show();
+                SMSCandidature sms = new SMSCandidature();
+                sms.sendSms("+216"+Integer.toString(annonce.getTel()));
                 try {
                 AnnonceService sa = AnnonceService.getInstance();
                 ResultSet r = sa.AnnonceUser(idannonce);
