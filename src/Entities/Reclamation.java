@@ -15,6 +15,7 @@ public class Reclamation
     private int archive;
     private Service idServiceRealise;
     private Date dateRealisation;
+    
 
     public Reclamation(String objet, String description, User userReclame, User userReclamant, Date dateReclamation, int seen, int traite, int archive, Service idServiceRealise, Date dateRealisation) {
         this.objet = objet;
